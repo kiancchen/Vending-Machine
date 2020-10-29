@@ -20,6 +20,8 @@
   - [Demo](#demo)
 - [Sprint 1 (starts week 9 and ends week 10)](#sprint-1-starts-week-9-and-ends-week-10)
   - [Sprint Planning](#sprint-planning)
+    - [Sprint Goal](#sprint-goal)
+    - [Sprint Task](#sprint-task)
   - [Tasks Board](#tasks-board)
     - [Sprint Backlog](#sprint-backlog)
     - [Product Backlog](#product-backlog)
@@ -35,24 +37,24 @@
 
 ## Roles
 
-1. Product Owner:
+1. Product Owner: Yufei Zuo
 
     Responsible for:
     - maximize value of the product and the work
     - manage the product backlog
     - remove impediments
 
-2. Scrum Master:
+2. Scrum Master: Cheng Chen
 
     Responsible for:
     - record product backlog items and order it
     - optimize the value of the work
-    - ensure  transparency and  clarity of the product backlog
+    - ensure transparency and  clarity of the product backlog
 
-3. Developer1:
-4. Developer2:
-5. Developer3:
-6. Developer4:
+3. Developer1: Yuanqun Wang
+4. Developer2: Zexuan Long
+5. Developer3: Songyin Li
+6. Developer4: Zehui Lin
 
 ## Individual Contribution
 
@@ -233,7 +235,12 @@
 
 ## Sprint Planning
 
-    - identify sprint goal
+   ### Sprint Goal
+
+   - Have initials codebase to setup and code skeleton with appropriate methods to implement basic functionality
+
+   ### Sprint Task
+
     - identify work to be done to deliver this
 
 ## Tasks Board
