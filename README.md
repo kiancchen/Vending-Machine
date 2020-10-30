@@ -260,7 +260,7 @@
 - content:
 - Cheng Chen:
   - What did I do yesterday:
-  - What I will do today:
+  - What I will do today: Setup agile tools
   - Do I see any obstacles:
 - Yuanqun Wang:
   - What did I do yesterday:
