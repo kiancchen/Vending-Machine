@@ -27,7 +27,7 @@ public class DatabaseHandler {
         File file = new File(userDatabaseFilename);
         InputStream input = new FileInputStream(file);
         JsonReader reader = new JsonReader(new InputStreamReader(input));
-        List<User> users = gson.fromJson(reader, new TypeToken<List<User>>() {}.getType());
+        List<User> users = gson.fromJson(reader, new TypeToken<List<UserImpl>>() {}.getType());
         reader.close();
         return users;
     }
