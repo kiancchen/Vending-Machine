@@ -237,7 +237,12 @@
 
    ### Sprint Goal
 
-   - Have initials codebase to setup and code skeleton with appropriate methods to implement basic functionality
+   - Design data structure
+   - Have initials codebase with appropriate methods to implement basic functionality
+   - Features:
+        - Login system
+        - User management System
+        - Database
 
    ### Sprint Task
 
@@ -247,6 +252,20 @@
 
 ### Sprint Backlog
 
+- Main Window
+
+   - Login system
+        - Sign in
+        - Sign up
+        - GUI
+   - User management System
+        - Add user
+        - Remove user
+        - Change user information
+        - GUI
+   - Database
+        - Save data to files
+
 ### Product Backlog
 
 ## User Stories
@@ -255,9 +274,14 @@
 
 ### Meeting 1
 
-- date:
-- attendance:
-- content:
+- date: 30th October
+- attendance: All
+- content: 
+  - Identify the Sprint Goal
+  - Discuss the data structure
+  - Implement the codebase together
+  - Refine, prioritize and assign tasks to team members
+  - Produce the Sprint Backlog
 - Cheng Chen:
   - What did I do yesterday:
   - What I will do today: Setup agile tools

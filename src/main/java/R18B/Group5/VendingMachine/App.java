@@ -3,12 +3,24 @@
  */
 package R18B.Group5.VendingMachine;
 
-public class App {
+import javafx.application.Application;
+import javafx.stage.Stage;
+
+public class App extends Application {
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        MainProcessor processor = new MainProcessor();
+        MainWindow mainWindow = new MainWindow(processor);
+        primaryStage.setScene(mainWindow.getScene());
+        primaryStage.setTitle("Vending Machine");
+        primaryStage.show();
+    }
+
     public String getGreeting() {
         return "Hello world.";
     }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        launch(args);
     }
 }
