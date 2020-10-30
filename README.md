@@ -78,6 +78,8 @@
       - `feat-xxx` for new features
 
       - `fix-xxx` for bug fixes
+      
+      - `report-xxx` for the report
 
    - Using `git checkout -b feat-testing` to create a `feat-testing` branch and checkout to this branch at the same time. `git switch master` could also be used to switch to other branches.
 

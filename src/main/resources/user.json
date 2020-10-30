@@ -1,0 +1,24 @@
+[
+ {
+  "id": 1,
+  "username": "alan",
+  "password": "123",
+  "permissions": {
+   "MANAGE_ITEM": false,
+   "MANAGE_USER": false,
+   "MANAGE_CASH": false
+  },
+  "type": "CUSTOMER"
+ },
+ {
+  "id": 2,
+  "username": "blan",
+  "password": "123",
+  "permissions": {
+   "MANAGE_ITEM": false,
+   "MANAGE_USER": false,
+   "MANAGE_CASH": false
+  },
+  "type": "CUSTOMER"
+ }
+]

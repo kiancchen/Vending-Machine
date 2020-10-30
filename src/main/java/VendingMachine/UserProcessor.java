@@ -11,20 +11,20 @@ public class UserProcessor {
         return true;
     }
 
-    public boolean addUser(String username, String password){
+    public boolean addUser(String username, String password) {
         // 检查用户是否已存在
         return true;
     }
 
-    public boolean hasUser(String username){
+    public boolean hasUser(String username) {
         return true;
     }
 
-    public boolean removeUser(int id){
+    public boolean removeUser(int id) {
         return true;
     }
 
-    public boolean changeUsername(int id, String newUsername){
+    public boolean changeUsername(int id, String newUsername) {
         return true;
     }
 }
