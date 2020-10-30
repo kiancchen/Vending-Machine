@@ -6,7 +6,15 @@ package VendingMachine;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class App extends Application {
+    public static void main(String[] args) throws IOException {
+        launch(args);
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         MainProcessor processor = new MainProcessor();
@@ -14,13 +22,5 @@ public class App extends Application {
         primaryStage.setScene(mainWindow.getScene());
         primaryStage.setTitle("Vending Machine");
         primaryStage.show();
-    }
-
-    public String getGreeting() {
-        return "Hello world.";
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }
