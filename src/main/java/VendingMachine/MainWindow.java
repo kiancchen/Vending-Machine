@@ -1,4 +1,4 @@
-package R18B.Group5.VendingMachine;
+package VendingMachine;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;

@@ -1,4 +1,4 @@
-package R18B.Group5.VendingMachine;
+package VendingMachine;
 
 public interface User {
     String getUsername();

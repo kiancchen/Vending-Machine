@@ -1,4 +1,4 @@
-package R18B.Group5.VendingMachine;
+package VendingMachine;
 
 import java.util.HashMap;
 import java.util.Map;

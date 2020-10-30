@@ -54,5 +54,5 @@ jacocoTestReport {
 
 application {
     // Define the main class for the application.
-    mainClassName = 'R18B.Group5.VendingMachine.App'
+    mainClassName = 'VendingMachine.App'
 }
