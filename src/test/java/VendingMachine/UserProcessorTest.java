@@ -66,8 +66,18 @@ public class UserProcessorTest {
     @Test
     public void testRemoveUser() throws IOException{
         UserProcessor userProcessor = new UserProcessor();
+        userProcessor.addUser("test","test");
         assertTrue(userProcessor.removeUser(3));
         assertFalse(userProcessor.removeUser(10000));
         assertFalse(userProcessor.verifyUser("test","test"));
+    }
+
+    @Test
+    public void testChangeUsername() throws IOException{
+        UserProcessor userProcessor = new UserProcessor();
+        userProcessor.addUser("test","test");
+        assertTrue(userProcessor.changeUsername(3,"test1"));
+        assertTrue(userProcessor.verifyUser("test1","test"));
+        assertFalse(userProcessor.changeUsername(10000,""));
     }
 }
