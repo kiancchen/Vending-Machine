@@ -54,6 +54,7 @@ public class UserProcessorTest {
         userProcessor.addUser("test","test");
         assertTrue(userProcessor.verifyUser("test","test"));
         assertFalse(userProcessor.addUser("test","test"));
+        userProcessor.removeUser(3);
     }
 
     @Test
@@ -66,10 +67,9 @@ public class UserProcessorTest {
     @Test
     public void testRemoveUser() throws IOException{
         UserProcessor userProcessor = new UserProcessor();
-        userProcessor.addUser("test","test");
-        assertTrue(userProcessor.removeUser(3));
+        assertTrue(userProcessor.removeUser(2));
         assertFalse(userProcessor.removeUser(10000));
-        assertFalse(userProcessor.verifyUser("test","test"));
+        assertFalse(userProcessor.verifyUser("blan","123"));
     }
 
     @Test
