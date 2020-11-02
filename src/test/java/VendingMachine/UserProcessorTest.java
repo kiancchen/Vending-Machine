@@ -39,6 +39,7 @@ public class UserProcessorTest {
         UserProcessor userProcessor = new UserProcessor();
         userProcessor.addUser("test","test");
         assertTrue(userProcessor.verifyUser("test","test"));
+        assertFalse(userProcessor.addUser("test","test"));
     }
 
     @Test
