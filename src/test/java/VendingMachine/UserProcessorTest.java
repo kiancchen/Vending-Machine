@@ -75,9 +75,8 @@ public class UserProcessorTest {
     @Test
     public void testChangeUsername() throws IOException{
         UserProcessor userProcessor = new UserProcessor();
-        userProcessor.addUser("test","test");
-        assertTrue(userProcessor.changeUsername(3,"test1"));
-        assertTrue(userProcessor.verifyUser("test1","test"));
+        assertTrue(userProcessor.changeUsername(2,"test1"));
+        assertTrue(userProcessor.verifyUser("test1","123"));
         assertFalse(userProcessor.changeUsername(10000,""));
     }
 }
