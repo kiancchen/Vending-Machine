@@ -31,7 +31,7 @@ public class UserProcessorTest {
             UserProcessor userProcessor = new UserProcessor();
             assertNotNull(userProcessor);
         }catch (IOException e) {
-            System.out.println("File not found");
+            System.out.println("Error");
         }
     }
 
@@ -54,6 +54,7 @@ public class UserProcessorTest {
         userProcessor.addUser("test","test");
         assertTrue(userProcessor.verifyUser("test","test"));
         assertFalse(userProcessor.addUser("test","test"));
+        userProcessor.removeUser(3);
     }
 
     @Test
@@ -61,5 +62,21 @@ public class UserProcessorTest {
         UserProcessor userProcessor = new UserProcessor();
         assertTrue(userProcessor.hasUser("alan"));
         assertFalse(userProcessor.hasUser("anyone"));
+    }
+
+    @Test
+    public void testRemoveUser() throws IOException{
+        UserProcessor userProcessor = new UserProcessor();
+        assertTrue(userProcessor.removeUser(2));
+        assertFalse(userProcessor.removeUser(10000));
+        assertFalse(userProcessor.verifyUser("blan","123"));
+    }
+
+    @Test
+    public void testChangeUsername() throws IOException{
+        UserProcessor userProcessor = new UserProcessor();
+        assertTrue(userProcessor.changeUsername(2,"test1"));
+        assertTrue(userProcessor.verifyUser("test1","123"));
+        assertFalse(userProcessor.changeUsername(10000,""));
     }
 }

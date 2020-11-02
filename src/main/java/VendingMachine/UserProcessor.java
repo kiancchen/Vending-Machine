@@ -43,11 +43,25 @@ public class UserProcessor {
         return false;
     }
 
-    public boolean removeUser(int id) {
-        return true;
+    public boolean removeUser(int id) throws IOException{
+        for (User user: users) {
+            if (user.getId() == id) {
+                users.remove(user);
+                DatabaseHandler.saveUserData(users);
+                return true;
+            }
+        }
+        return false;
     }
 
-    public boolean changeUsername(int id, String newUsername) {
-        return true;
+    public boolean changeUsername(int id, String newUsername) throws IOException{
+        for (User user: users) {
+            if (user.getId() == id) {
+                user.setUsername(newUsername);
+                DatabaseHandler.saveUserData(users);
+                return true;
+            }
+        }
+        return false;
     }
 }
