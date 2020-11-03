@@ -64,4 +64,8 @@ public class UserProcessor {
         }
         return false;
     }
+
+    public User getCurrentUser(){
+      return this.currentUser;
+    }
 }
