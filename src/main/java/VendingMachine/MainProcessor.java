@@ -20,4 +20,8 @@ public class MainProcessor {
     public boolean removeUser(int id) throws IOException{
         return this.userProcessor.removeUser(id);
     }
+
+    public UserProcessor getUserProcessor(){
+      return this.userProcessor;
+    }
 }
