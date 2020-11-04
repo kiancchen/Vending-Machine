@@ -22,7 +22,20 @@ public class MainProcessor {
         return this.userProcessor.removeUser(id);
     }
 
-    public List<User> getUsers() {
-        return userProcessor.getUsers();
+
+    public boolean verifyUser(String username, String password){
+        return this.userProcessor.verifyUser(username,password);
+    }
+
+    public boolean changeUsername(int id, String newUsername) throws IOException {
+        return this.userProcessor.changeUsername(id,newUsername);
+    }
+
+    public List<User> getUsers(){
+        return this.userProcessor.getUsers();
+    }
+
+    public User getCurrentUser() {
+        return this.userProcessor.getCurrentUser();
     }
 }
