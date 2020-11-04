@@ -9,12 +9,14 @@ public class UserProcessor {
 
     public UserProcessor() throws IOException{
         users = DatabaseHandler.loadUserData();
+        this.currentUser = new UserImpl();
     }
 
     public boolean verifyUser(String username, String password){
         // verify the username and password from the database
         for(User user: users) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                this.currentUser = user;
                 return true;
             }
         }
@@ -68,4 +70,9 @@ public class UserProcessor {
     public User getCurrentUser(){
       return this.currentUser;
     }
+
+    public void logoutUser() {
+      this.currentUser = new UserImpl();
+    }
+
 }
