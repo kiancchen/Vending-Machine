@@ -64,4 +64,8 @@ public class UserProcessor {
         }
         return false;
     }
+
+    public List<User> getUsers() {
+        return users;
+    }
 }

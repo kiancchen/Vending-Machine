@@ -1,6 +1,7 @@
 package VendingMachine.Window;
 
 import VendingMachine.MainProcessor;
+import VendingMachine.User;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -57,7 +58,7 @@ public class UserManagementWindow {
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         pane.getChildren().add(table);
 
-        String[] colNames = {"ID", "User Name", "Password", "Type"};
+        String[] colNames = {"ID", "User Name", "Password", "Type"};// change this col
         String[] properties = {"id", "username", "password", "type"};
         for (int i = 0; i < colNames.length; i++) {
             String colName = colNames[i];
@@ -67,6 +68,13 @@ public class UserManagementWindow {
             column.setStyle("-fx-alignment: CENTER;");
             column.setCellValueFactory(new PropertyValueFactory<>(properties[i]));
             table.getColumns().add(column);
+        }
+
+        for (User user : processor.getUsers()) {
+            table.getItems().add(new UserTableEntry(Integer.toString(user.getId()),
+                    user.getUsername(),
+                    user.getPassword(),
+                    user.getTypeString()));
         }
     }
 

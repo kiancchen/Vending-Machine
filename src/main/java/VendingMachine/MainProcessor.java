@@ -1,6 +1,7 @@
 package VendingMachine;
 
 import java.io.IOException;
+import java.util.List;
 
 public class MainProcessor {
     private UserProcessor userProcessor;
@@ -19,5 +20,9 @@ public class MainProcessor {
 
     public boolean removeUser(int id) throws IOException{
         return this.userProcessor.removeUser(id);
+    }
+
+    public List<User> getUsers() {
+        return userProcessor.getUsers();
     }
 }
