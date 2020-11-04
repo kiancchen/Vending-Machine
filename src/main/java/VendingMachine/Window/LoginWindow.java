@@ -2,10 +2,11 @@ package VendingMachine.Window;
 
 import VendingMachine.MainProcessor;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+
 import java.io.IOException;
 
 public class LoginWindow {
@@ -63,9 +64,9 @@ public class LoginWindow {
         inputPassword.setPrefWidth(200);
         inputPassword.setPromptText("password");
         pane.getChildren().add(inputPassword);
-      }
+    }
 
-      private void initButtons() {
+    private void initButtons() {
         signInButton = new Button();
         signInButton.setLayoutX(75);
         signInButton.setLayoutY(105);
@@ -117,11 +118,11 @@ public class LoginWindow {
         String usernameInp = inputUsername.getText();
         String passwordInp = inputPassword.getText();
 
-        if (!(this.processor.hasUser(usernameInp))){
-            try{
-              this.processor.addUser(usernameInp, passwordInp);
-            }catch (IOException e){
-              e.printStackTrace();
+        if (!(this.processor.hasUser(usernameInp))) {
+            try {
+                this.processor.addUser(usernameInp, passwordInp);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
             Alert alert = new Alert(AlertType.INFORMATION, "Sign up successfully.");
             alert.show();

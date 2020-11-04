@@ -112,9 +112,9 @@ public class AddWindowController {
                         table.getItems().add(new UserTableEntry(Integer.toString(user.getId()),
                                 user.getUsername(),
                                 user.getPassword(),
-                                user.getTypeString()));
+                                user.getType().toString()));
                     }
-                }else{
+                } else {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Fail to add.");
                     alert.show();
                 }

@@ -3,7 +3,9 @@ package VendingMachine.Window;
 import VendingMachine.MainProcessor;
 import VendingMachine.User;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -61,7 +63,7 @@ public class UserManagementWindow {
             table.getItems().add(new UserTableEntry(Integer.toString(user.getId()),
                     user.getUsername(),
                     user.getPassword(),
-                    user.getTypeString()));
+                    user.getType().toString()));
         }
     }
 

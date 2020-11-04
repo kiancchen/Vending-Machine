@@ -43,7 +43,7 @@ public class UserImpl implements User {
 
     @Override
     public void initPermissions() {
-        this.permissions = new HashMap<Permission, Boolean>();
+        this.permissions = new HashMap<>();
         permissions.put(Permission.MANAGE_ITEM, false);
         permissions.put(Permission.MANAGE_CASH, false);
         permissions.put(Permission.MANAGE_USER, false);
@@ -90,7 +90,6 @@ public class UserImpl implements User {
     }
 
 
-
     @Override
     public String getString() {
         String s = "";
@@ -100,20 +99,4 @@ public class UserImpl implements User {
         s += getType();
         return s;
     }
-
-    @Override
-    public String getTypeString() {
-        if(type == UserType.CASHIER) {
-            return "cashier";
-        } else if(type == UserType.CUSTOMER) {
-            return "customer";
-        } else if(type == UserType.OWNER) {
-            return "owner";
-        } else if(type == UserType.SELLER) {
-            return "seller";
-        }
-        return "";
-    }
-
-
 }

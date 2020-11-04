@@ -39,23 +39,6 @@ public class RemoveWindowController {
         initCombox();
     }
 
-    private void initCombox() {
-        users = new ComboBox<>();
-        users.setLayoutX(200);
-        users.setLayoutY(40);
-
-        List<User> Users = processor.getUsers();
-
-        for(User u : Users) {
-
-            users.getItems().add(u.getString());
-        }
-
-        users.getSelectionModel().select(0);
-
-        pane.getChildren().add(users);
-    }
-
     private void initButtons() {
         remove = new Button();
 
@@ -69,11 +52,28 @@ public class RemoveWindowController {
         remove.setOnAction(event -> remove());
     }
 
+    private void initCombox() {
+        users = new ComboBox<>();
+        users.setLayoutX(200);
+        users.setLayoutY(40);
+
+        List<User> Users = processor.getUsers();
+
+        for (User u : Users) {
+
+            users.getItems().add(u.getString());
+        }
+
+        users.getSelectionModel().select(0);
+
+        pane.getChildren().add(users);
+    }
+
     public void remove() {
         String[] selectedString = users.getSelectionModel().getSelectedItem().split(",");
         int selected = Integer.parseInt(selectedString[0]);
         try {
-            if(processor.removeUser(selected)) {
+            if (processor.removeUser(selected)) {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "Successfully removed");
                 alert.show();
 
@@ -87,7 +87,7 @@ public class RemoveWindowController {
                     table.getItems().add(new UserTableEntry(Integer.toString(user.getId()),
                             user.getUsername(),
                             user.getPassword(),
-                            user.getTypeString()));
+                            user.getType().toString()));
                 }
             }
         } catch (Exception e) {

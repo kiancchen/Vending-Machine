@@ -24,8 +24,6 @@ public interface User {
 
     String getString();
 
-    String getTypeString();
-
     enum UserType {
         CUSTOMER,
         SELLER,

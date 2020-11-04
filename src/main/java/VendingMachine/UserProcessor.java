@@ -7,14 +7,14 @@ public class UserProcessor {
     private List<User> users;
     private User currentUser;
 
-    public UserProcessor() throws IOException{
+    public UserProcessor() throws IOException {
         users = DatabaseHandler.loadUserData();
         this.currentUser = new UserImpl();
     }
 
-    public boolean verifyUser(String username, String password){
+    public boolean verifyUser(String username, String password) {
         // verify the username and password from the database
-        for(User user: users) {
+        for (User user : users) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
                 this.currentUser = user;
                 return true;
@@ -23,21 +23,21 @@ public class UserProcessor {
         return false;
     }
 
-    public boolean addUser(String username, String password, String type) throws IOException {
-        // check the username is used or not
-        if (!hasUser(username)) {
-            User newUser = new UserImpl(username,password, User.UserType.valueOf(type));
-            users.add(newUser);
-            DatabaseHandler.saveUserData(users);
-            return true;
-        }else {
-            return false;
-        }
-    }
-
     public boolean addUser(String username, String password) throws IOException {
         // check the username is used or not
         return this.addUser(username, password, "CUSTOMER");
+    }
+
+    public boolean addUser(String username, String password, String type) throws IOException {
+        // check the username is used or not
+        if (!hasUser(username)) {
+            User newUser = new UserImpl(username, password, User.UserType.valueOf(type));
+            users.add(newUser);
+            DatabaseHandler.saveUserData(users);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean hasUser(String username) {
@@ -50,8 +50,8 @@ public class UserProcessor {
         return false;
     }
 
-    public boolean removeUser(int id) throws IOException{
-        for (User user: users) {
+    public boolean removeUser(int id) throws IOException {
+        for (User user : users) {
             if (user.getId() == id) {
                 users.remove(user);
                 DatabaseHandler.saveUserData(users);
@@ -61,8 +61,8 @@ public class UserProcessor {
         return false;
     }
 
-    public boolean changeUsername(int id, String newUsername) throws IOException{
-        for (User user: users) {
+    public boolean changeUsername(int id, String newUsername) throws IOException {
+        for (User user : users) {
             if (user.getId() == id) {
                 user.setUsername(newUsername);
                 DatabaseHandler.saveUserData(users);
@@ -73,14 +73,14 @@ public class UserProcessor {
     }
 
     public void logoutUser() {
-      this.currentUser = new UserImpl();
+        this.currentUser = new UserImpl();
     }
 
-    public List<User> getUsers(){
+    public List<User> getUsers() {
         return this.users;
     }
 
-    public User getCurrentUser(){
+    public User getCurrentUser() {
         return this.currentUser;
     }
 }
