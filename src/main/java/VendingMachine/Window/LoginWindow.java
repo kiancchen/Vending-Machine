@@ -16,16 +16,11 @@ public class LoginWindow {
     private AnchorPane pane;
     private TextField inputUsername;
     private TextField inputPassword;
-    private Button signInButton;
-    private Button signUpButton;
-    private Button loginButton;
-    private Label username;
-    private Label password;
-    private Button returnMainButton;
+    private MainWindow mainWindow;
 
-    public LoginWindow(MainProcessor processor, Button loginButton) {
+    public LoginWindow(MainProcessor processor, MainWindow mainWindow) {
         this.processor = processor;
-        this.loginButton = loginButton;
+        this.mainWindow = mainWindow;
 
         stage = new Stage();
         pane = new AnchorPane();
@@ -40,11 +35,11 @@ public class LoginWindow {
     }
 
     private void initLabels() {
-        username = new Label("Username");
+        Label username = new Label("Username");
         username.setLayoutX(50);
         username.setLayoutY(15);
         pane.getChildren().add(username);
-        password = new Label("Password");
+        Label password = new Label("Password");
         password.setLayoutX(350);
         password.setLayoutY(15);
         pane.getChildren().add(password);
@@ -67,7 +62,7 @@ public class LoginWindow {
     }
 
     private void initButtons() {
-        signInButton = new Button();
+        Button signInButton = new Button();
         signInButton.setLayoutX(75);
         signInButton.setLayoutY(105);
         signInButton.setPrefWidth(100);
@@ -76,7 +71,7 @@ public class LoginWindow {
         pane.getChildren().add(signInButton);
         signInButton.setOnAction(event -> signInAction());
 
-        signUpButton = new Button();
+        Button signUpButton = new Button();
         signUpButton.setLayoutX(400);
         signUpButton.setLayoutY(105);
         signUpButton.setPrefWidth(100);
@@ -87,37 +82,25 @@ public class LoginWindow {
     }
 
 
-    public boolean signInAction() {
-
+    public void signInAction() {
         String usernameInp = inputUsername.getText();
         String passwordInp = inputPassword.getText();
         if (this.processor.verifyUser(usernameInp, passwordInp)) {
             Alert alert = new Alert(AlertType.INFORMATION, "Sign in successfully.");
             alert.show();
-            loginButton.setText("Logout");
+            this.mainWindow.changeAccountButtonText("Logout");
+            this.mainWindow.updateCurrencyUserInfo();
             stage.close();
-            return true;
         } else {
-            ButtonType tryAgain = new ButtonType("Try Again", ButtonBar.ButtonData.CANCEL_CLOSE);
-            ButtonType returnMain = new ButtonType("Return Main", ButtonBar.ButtonData.OK_DONE);
-            Alert alert = new Alert(AlertType.ERROR, "Wrong Username/Password or Account is not exists", tryAgain, returnMain);
-            returnMainButton = (Button) alert.getDialogPane().lookupButton(returnMain);
-            alert.setResizable(true);
-            alert.getDialogPane().setPrefSize(400, 150);
-            alert.showAndWait();
-
-            if (alert.getResult() == returnMain) {
-                stage.close();
-            }
-            return false;
+            Alert alert = new Alert(AlertType.WARNING, "Fail to sign in. Wrong username or " +
+                    "password.");
+            alert.show();
         }
     }
 
-    public boolean signUpAction() {
-
+    public void signUpAction() {
         String usernameInp = inputUsername.getText();
         String passwordInp = inputPassword.getText();
-
         if (!(this.processor.hasUser(usernameInp))) {
             try {
                 this.processor.addUser(usernameInp, passwordInp);
@@ -127,20 +110,9 @@ public class LoginWindow {
             Alert alert = new Alert(AlertType.INFORMATION, "Sign up successfully.");
             alert.show();
             stage.close();
-            return true;
         } else {
-            ButtonType tryAgain = new ButtonType("Try Again", ButtonBar.ButtonData.CANCEL_CLOSE);
-            ButtonType returnMain = new ButtonType("Return Main", ButtonBar.ButtonData.OK_DONE);
-            Alert alert = new Alert(AlertType.ERROR, "The Account is exists", tryAgain, returnMain);
-            returnMainButton = (Button) alert.getDialogPane().lookupButton(returnMain);
-            alert.setResizable(true);
-            alert.getDialogPane().setPrefSize(400, 150);
-            alert.showAndWait();
-
-            if (alert.getResult() == returnMain) {
-                stage.close();
-            }
-            return false;
+            Alert alert = new Alert(AlertType.WARNING, "User exists");
+            alert.show();
         }
     }
 

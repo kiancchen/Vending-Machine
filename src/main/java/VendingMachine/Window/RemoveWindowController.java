@@ -13,15 +13,12 @@ import javafx.stage.Stage;
 import java.util.List;
 
 public class RemoveWindowController {
-
     private MainProcessor processor;
     private Stage stage;
     private Scene scene;
     private AnchorPane pane;
 
-    private Button remove;
-
-    private ComboBox<String> users;
+    private ComboBox<String> usersCombo;
     private TableView<UserTableEntry> table;
 
     public RemoveWindowController(MainProcessor processor, TableView<UserTableEntry> table) {
@@ -40,7 +37,7 @@ public class RemoveWindowController {
     }
 
     private void initButtons() {
-        remove = new Button();
+        Button remove = new Button();
 
         remove.setLayoutX(40);
         remove.setLayoutY(40);
@@ -53,24 +50,23 @@ public class RemoveWindowController {
     }
 
     private void initCombox() {
-        users = new ComboBox<>();
-        users.setLayoutX(200);
-        users.setLayoutY(40);
+        usersCombo = new ComboBox<>();
+        usersCombo.setLayoutX(200);
+        usersCombo.setLayoutY(40);
 
-        List<User> Users = processor.getUsers();
-
-        for (User u : Users) {
-
-            users.getItems().add(u.getString());
+        List<User> users = processor.getUsers();
+        for (int i = 1; i < users.size(); i++) {
+            User user = users.get(i);
+            usersCombo.getItems().add(user.getString());
         }
 
-        users.getSelectionModel().select(0);
+        usersCombo.getSelectionModel().select(0);
 
-        pane.getChildren().add(users);
+        pane.getChildren().add(usersCombo);
     }
 
     public void remove() {
-        String[] selectedString = users.getSelectionModel().getSelectedItem().split(",");
+        String[] selectedString = usersCombo.getSelectionModel().getSelectedItem().split(",");
         int selected = Integer.parseInt(selectedString[0]);
         try {
             if (processor.removeUser(selected)) {
@@ -78,11 +74,7 @@ public class RemoveWindowController {
                 alert.show();
 
                 initCombox();
-
-                for (User user : processor.getUsers()) {
-                    table.getItems().clear();
-                }
-
+                table.getItems().clear();
                 for (User user : processor.getUsers()) {
                     table.getItems().add(new UserTableEntry(Integer.toString(user.getId()),
                             user.getUsername(),

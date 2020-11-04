@@ -1,5 +1,16 @@
 [
  {
+  "id": 0,
+  "username": "",
+  "password": "",
+  "permissions": {
+   "MANAGE_USER": false,
+   "MANAGE_ITEM": false,
+   "MANAGE_CASH": false
+  },
+  "type": "ANONYMOUS"
+ },
+ {
   "id": 1,
   "username": "alan",
   "password": "123",
@@ -15,9 +26,9 @@
   "username": "blan",
   "password": "123",
   "permissions": {
-   "MANAGE_USER": false,
-   "MANAGE_ITEM": false,
-   "MANAGE_CASH": false
+   "MANAGE_USER": true,
+   "MANAGE_ITEM": true,
+   "MANAGE_CASH": true
   },
   "type": "OWNER"
  }

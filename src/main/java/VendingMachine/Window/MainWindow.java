@@ -1,9 +1,12 @@
 package VendingMachine.Window;
 
 import VendingMachine.MainProcessor;
+import VendingMachine.User;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 
 public class MainWindow {
     private MainProcessor processor;
@@ -11,6 +14,7 @@ public class MainWindow {
     private AnchorPane pane;
     private Button accountBtn;
     private Button userManagementBtn;
+    private Text currentUserInfo;
 
     public MainWindow(MainProcessor processor) {
         this.processor = processor;
@@ -18,6 +22,8 @@ public class MainWindow {
         scene = new Scene(pane, 600, 480);
         initButtons();
         initBtnActions();
+        initText();
+        updateCurrencyUserInfo();
     }
 
     private void initButtons() {
@@ -40,18 +46,47 @@ public class MainWindow {
 
     private void initBtnActions() {
         accountBtn.setOnAction((event -> {
-            if ("".equals(processor.getCurrentUser().getUsername())) {
-                new LoginWindow(processor, accountBtn);
+            if (processor.getCurrentUser().getType() == User.UserType.ANONYMOUS) {
+                // If the currency user is the Anonymous
+                new LoginWindow(processor, this);
             } else {
                 processor.logoutUser();
                 accountBtn.setText("Account");
+                updateCurrencyUserInfo();
             }
         }));
+        userManagementBtn.setOnAction(event -> {
+            if (processor.getCurrentUser().getPermission(User.Permission.MANAGE_USER)){
+                new UserManagementWindow(processor);
+            }else{
+                Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
+                        "to do this action.");
+                alert.show();
+            }
+        });
 
-        userManagementBtn.setOnAction(event -> new UserManagementWindow(processor));
+    }
+
+    private void initText(){
+        currentUserInfo = new Text();
+        currentUserInfo.setLayoutX(10);
+        currentUserInfo.setLayoutY(20);
+        this.pane.getChildren().add(currentUserInfo);
+    }
+
+    public void updateCurrencyUserInfo() {
+        currentUserInfo.setText(
+                this.processor.getCurrentUser().getUsername()
+                + "   "
+                + this.processor.getCurrentUser().getType()
+        );
     }
 
     public Scene getScene() {
         return scene;
+    }
+
+    public void changeAccountButtonText(String text){
+        this.accountBtn.setText(text);
     }
 }

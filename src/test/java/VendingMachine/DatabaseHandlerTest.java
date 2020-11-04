@@ -23,12 +23,12 @@ public class DatabaseHandlerTest {
             assertEquals(expected.get(i).getPassword(), actual.get(i).getPassword());
             assertEquals(expected.get(i).getUsername(), actual.get(i).getUsername());
             assertEquals(expected.get(i).getType(), actual.get(i).getType());
-            assertEquals(expected.get(i).getPermission(Permission.MANAGE_ITEM),
-                    actual.get(i).getPermission(Permission.MANAGE_ITEM));
-            assertEquals(expected.get(i).getPermission(Permission.MANAGE_CASH),
-                    actual.get(i).getPermission(Permission.MANAGE_CASH));
-            assertEquals(expected.get(i).getPermission(Permission.MANAGE_USER),
-                    actual.get(i).getPermission(Permission.MANAGE_USER));
+            assertEquals(expected.get(i).getPermission(User.Permission.MANAGE_ITEM),
+                    actual.get(i).getPermission(User.Permission.MANAGE_ITEM));
+            assertEquals(expected.get(i).getPermission(User.Permission.MANAGE_CASH),
+                    actual.get(i).getPermission(User.Permission.MANAGE_CASH));
+            assertEquals(expected.get(i).getPermission(User.Permission.MANAGE_USER),
+                    actual.get(i).getPermission(User.Permission.MANAGE_USER));
 
         }
     }

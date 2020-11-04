@@ -3,14 +3,8 @@ package VendingMachine;
 import java.util.HashMap;
 import java.util.Map;
 
-enum Permission {
-    MANAGE_ITEM,
-    MANAGE_CASH,
-    MANAGE_USER
-}
-
 public class UserImpl implements User {
-    private static int totalId = 1;
+    private static int totalId = 0;
     private int id;
     private String username;
     private String password;
@@ -80,8 +74,13 @@ public class UserImpl implements User {
         this.initPermissions();
         if (type == UserType.SELLER) {
             this.setPermission(Permission.MANAGE_ITEM, true);
+        }else if (type == UserType.CASHIER){
+            this.setPermission(Permission.MANAGE_CASH, true);
+        }else if (type == UserType.OWNER) {
+            this.setPermission(Permission.MANAGE_CASH, true);
+            this.setPermission(Permission.MANAGE_ITEM, true);
+            this.setPermission(Permission.MANAGE_USER, true);
         }
-        // TODO
     }
 
     @Override
