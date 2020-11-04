@@ -1,5 +1,6 @@
 package VendingMachine;
 
+import VendingMachine.Processor.MainProcessor;
 import VendingMachine.Processor.UserProcessor;
 import org.junit.*;
 
@@ -29,13 +30,10 @@ public class UserProcessorTest {
      * Test UserProcessor Constructor
      */
     @Test
-    public void UserProcessorConstructor() {
-        try{
+    public void UserProcessorConstructor() throws IOException {
             UserProcessor userProcessor = new UserProcessor();
             assertNotNull(userProcessor);
-        }catch (IOException e) {
-            System.out.println("Error");
-        }
+            assertEquals(User.UserType.ANONYMOUS, userProcessor.getCurrentUser().getType());
     }
 
     /**
@@ -58,6 +56,15 @@ public class UserProcessorTest {
         assertTrue(userProcessor.verifyUser("test","test"));
         assertFalse(userProcessor.addUser("test","test"));
         userProcessor.removeUser(3);
+    }
+
+    @Test
+    public void testAddUserWithType() throws IOException {
+        UserProcessor userProcessor = new UserProcessor();
+        userProcessor.addUser("test","test", "CASHIER");
+        assertTrue(userProcessor.verifyUser("test","test"));
+        assertFalse(userProcessor.addUser("test","test"));
+        assertEquals(User.UserType.CASHIER, userProcessor.getCurrentUser().getType());
     }
 
     @Test
@@ -101,5 +108,14 @@ public class UserProcessorTest {
         userProcessor.verifyUser("alan","123");
         assertEquals("alan",userProcessor.getCurrentUser().getUsername());
         assertEquals("123",userProcessor.getCurrentUser().getPassword());
+        assertEquals(User.UserType.CUSTOMER,userProcessor.getCurrentUser().getType());
+    }
+
+    @Test
+    public void testLogoutUser() throws IOException {
+        UserProcessor userProcessor = new UserProcessor();
+        userProcessor.verifyUser("alan","123");
+        userProcessor.logoutUser();
+        assertEquals(User.UserType.ANONYMOUS, userProcessor.getCurrentUser().getType());
     }
 }

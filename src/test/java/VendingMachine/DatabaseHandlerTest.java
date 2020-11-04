@@ -4,7 +4,9 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
@@ -30,6 +32,22 @@ public class DatabaseHandlerTest {
             assertEquals(expected.get(i).getPermission(User.Permission.MANAGE_USER),
                     actual.get(i).getPermission(User.Permission.MANAGE_USER));
 
+        }
+    }
+
+    @Test
+    public void testSaveAndLoadCashData() throws IOException {
+        Map<Double, Integer> expected = new HashMap<>();
+        double[] values = {100.0, 50.0, 20.0, 10.0, 5.0, 2.0, 1.0, 0.5, 0.2, 0.1, 0.05};
+        for (double value : values) {
+            expected.put(value, 5);
+        }
+        DatabaseHandler.saveCashData(expected);
+
+        Map<Double, Integer> actual = DatabaseHandler.loadCashData();
+        assertEquals(expected.size(), actual.size());
+        for (double value : values) {
+            assertEquals(expected.get(value), actual.get(value));
         }
     }
 }

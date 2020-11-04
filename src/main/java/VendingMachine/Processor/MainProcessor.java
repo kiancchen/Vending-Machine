@@ -36,7 +36,7 @@ public class MainProcessor {
         return this.userProcessor.changeUsername(id, newUsername);
     }
 
-    public boolean addUserWithType(String username, String password, String type) throws IOException {
+    public boolean addUser(String username, String password, String type) throws IOException {
         return this.userProcessor.addUser(username, password, type);
     }
 
