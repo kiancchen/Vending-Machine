@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class UserProcessorTest {
@@ -78,5 +81,25 @@ public class UserProcessorTest {
         assertTrue(userProcessor.changeUsername(2,"test1"));
         assertTrue(userProcessor.verifyUser("test1","123"));
         assertFalse(userProcessor.changeUsername(10000,""));
+    }
+
+    @Test
+    public void testGetUsers() throws IOException{
+        UserProcessor userProcessor = new UserProcessor();
+        List<User> userList = DatabaseHandler.loadUserData();
+        for (int i = 0; i < userList.size(); i ++) {
+            assertEquals(userList.get(i).getId(),userProcessor.getUsers().get(i).getId());
+            assertEquals(userList.get(i).getPassword(),userProcessor.getUsers().get(i).getPassword());
+            assertEquals(userList.get(i).getType(),userProcessor.getUsers().get(i).getType());
+            assertEquals(userList.get(i).getUsername(),userProcessor.getUsers().get(i).getUsername());
+        }
+    }
+
+    @Test
+    public void testGetCurrentUser() throws IOException{
+        UserProcessor userProcessor = new UserProcessor();
+        userProcessor.verifyUser("alan","123");
+        assertEquals("alan",userProcessor.getCurrentUser().getUsername());
+        assertEquals("123",userProcessor.getCurrentUser().getPassword());
     }
 }

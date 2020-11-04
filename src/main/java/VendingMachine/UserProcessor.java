@@ -35,6 +35,29 @@ public class UserProcessor {
         }
     }
 
+    public boolean addUserWithType(String username, String password, String type) throws IOException {
+        // check the username is used or not
+        if (!hasUser(username)) {
+            UserType t = null;
+            if(type == "Customer") {
+                t = UserType.CUSTOMER;
+            } else if(type == "Seller") {
+                t = UserType.SELLER;
+            } else if(type == "Cashier") {
+                t = UserType.CASHIER;
+            } else if(type == "Owner") {
+                t = UserType.OWNER;
+            }
+            User newUser = new UserImpl(username, password, t);
+            users.add(newUser);
+
+            DatabaseHandler.saveUserData(users);
+            return true;
+        }else {
+            return false;
+        }
+    }
+
     public boolean hasUser(String username) {
         // loop users to check the username is exists or not
         for (User user : users) {
@@ -67,12 +90,15 @@ public class UserProcessor {
         return false;
     }
 
-    public User getCurrentUser(){
-      return this.currentUser;
-    }
-
     public void logoutUser() {
       this.currentUser = new UserImpl();
     }
 
+    public List<User> getUsers(){
+        return this.users;
+    }
+
+    public User getCurrentUser(){
+        return this.currentUser;
+    }
 }
