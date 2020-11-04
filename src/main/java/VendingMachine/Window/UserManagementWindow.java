@@ -13,8 +13,6 @@ public class UserManagementWindow {
     private Stage stage;
     private Scene scene;
     private AnchorPane pane;
-    private TextField username_text;
-    private TextField password_text;
     private TableView<UserTableEntry> table;
 
     private Button addButton;
@@ -31,22 +29,9 @@ public class UserManagementWindow {
         stage.setTitle("User Management");
         stage.show();
 
-//        initLabel();
         initTable();
         initButton();
         initButtonActions();
-    }
-
-    private void initLabel() {
-        Label username_label = new Label("User Name");
-        username_label.setLayoutX(20);
-        username_label.setLayoutY(80);
-        pane.getChildren().add(username_label);
-
-        Label password_label = new Label("Password");
-        password_label.setLayoutX(20);
-        password_label.setLayoutY(180);
-        pane.getChildren().add(password_label);
     }
 
     private void initTable() {
@@ -58,7 +43,8 @@ public class UserManagementWindow {
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         pane.getChildren().add(table);
 
-        String[] colNames = {"ID", "User Name", "Password", "Type"};// change this col
+        // create table
+        String[] colNames = {"ID", "User Name", "Password", "Type"};
         String[] properties = {"id", "username", "password", "type"};
         for (int i = 0; i < colNames.length; i++) {
             String colName = colNames[i];
@@ -70,6 +56,7 @@ public class UserManagementWindow {
             table.getColumns().add(column);
         }
 
+        // set data to table
         for (User user : processor.getUsers()) {
             table.getItems().add(new UserTableEntry(Integer.toString(user.getId()),
                     user.getUsername(),
@@ -99,7 +86,8 @@ public class UserManagementWindow {
 
     private void initButtonActions() {
         addButton.setOnAction((event -> new AddWindowController(processor)));
-        removeButton.setOnAction((event -> new RemoveWindowController(processor)));
+        removeButton.setOnAction((event -> new RemoveWindowController(processor, table)));
         changeButton.setOnAction((event -> new ChangeWindowController(processor)));
     }
+
 }
