@@ -1,6 +1,6 @@
 package VendingMachine.Window;
 
-import VendingMachine.MainProcessor;
+import VendingMachine.Processor.MainProcessor;
 import VendingMachine.User;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 import java.util.List;
 
-public class RemoveWindowController {
+public class RemoveUserWindow {
     private MainProcessor processor;
     private Stage stage;
     private Scene scene;
@@ -21,7 +21,7 @@ public class RemoveWindowController {
     private ComboBox<String> usersCombo;
     private TableView<UserTableEntry> table;
 
-    public RemoveWindowController(MainProcessor processor, TableView<UserTableEntry> table) {
+    public RemoveUserWindow(MainProcessor processor, TableView<UserTableEntry> table) {
         this.processor = processor;
         this.table = table;
 

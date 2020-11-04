@@ -1,6 +1,6 @@
 package VendingMachine.Window;
 
-import VendingMachine.MainProcessor;
+import VendingMachine.Processor.MainProcessor;
 import VendingMachine.User;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -87,9 +87,9 @@ public class UserManagementWindow {
     }
 
     private void initButtonActions() {
-        addButton.setOnAction((event -> new AddWindowController(processor, table)));
-        removeButton.setOnAction((event -> new RemoveWindowController(processor, table)));
-        changeButton.setOnAction((event -> new ChangeWindowController(processor)));
+        addButton.setOnAction((event -> new AddUserWindow(processor, table)));
+        removeButton.setOnAction((event -> new RemoveUserWindow(processor, table)));
+        changeButton.setOnAction((event -> new ChangeUserWindow(processor)));
     }
 
 }

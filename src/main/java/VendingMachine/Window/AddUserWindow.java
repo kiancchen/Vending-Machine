@@ -1,13 +1,13 @@
 package VendingMachine.Window;
 
-import VendingMachine.MainProcessor;
+import VendingMachine.Processor.MainProcessor;
 import VendingMachine.User;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class AddWindowController {
+public class AddUserWindow {
 
     private MainProcessor processor;
     private Stage stage;
@@ -20,7 +20,7 @@ public class AddWindowController {
     private ComboBox<String> typeCombo;
     private TableView<UserTableEntry> table;
 
-    public AddWindowController(MainProcessor processor, TableView<UserTableEntry> table) {
+    public AddUserWindow(MainProcessor processor, TableView<UserTableEntry> table) {
         this.table = table;
         this.processor = processor;
 
