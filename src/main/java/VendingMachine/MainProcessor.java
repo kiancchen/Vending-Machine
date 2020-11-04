@@ -30,10 +30,6 @@ public class MainProcessor {
         return this.userProcessor.removeUser(id);
     }
 
-    public boolean verifyUser(String username, String password) {
-        return this.userProcessor.verifyUser(username,password);
-    }
-
     public boolean changeUsername(int id, String newUsername) throws IOException {
         return this.userProcessor.changeUsername(id,newUsername);
     }
