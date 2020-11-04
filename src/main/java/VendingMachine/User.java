@@ -1,12 +1,5 @@
 package VendingMachine;
 
-enum UserType {
-    CUSTOMER,
-    SELLER,
-    CASHIER,
-    OWNER,
-    ANONYMOUS
-}
 
 public interface User {
     boolean getPermission(Permission permission);
@@ -32,5 +25,13 @@ public interface User {
     String getString();
 
     String getTypeString();
+
+    enum UserType {
+        CUSTOMER,
+        SELLER,
+        CASHIER,
+        OWNER,
+        ANONYMOUS
+    }
 
 }

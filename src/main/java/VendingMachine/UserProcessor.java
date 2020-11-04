@@ -22,10 +22,10 @@ public class UserProcessor {
         return false;
     }
 
-    public boolean addUser(String username, String password) throws IOException {
+    public boolean addUser(String username, String password, String type) throws IOException {
         // check the username is used or not
         if (!hasUser(username)) {
-            User newUser = new UserImpl(username,password,UserType.CUSTOMER);
+            User newUser = new UserImpl(username,password, User.UserType.valueOf(type));
             users.add(newUser);
             DatabaseHandler.saveUserData(users);
             return true;
@@ -34,27 +34,9 @@ public class UserProcessor {
         }
     }
 
-    public boolean addUserWithType(String username, String password, String type) throws IOException {
+    public boolean addUser(String username, String password) throws IOException {
         // check the username is used or not
-        if (!hasUser(username)) {
-            UserType t = null;
-            if(type == "Customer") {
-                t = UserType.CUSTOMER;
-            } else if(type == "Seller") {
-                t = UserType.SELLER;
-            } else if(type == "Cashier") {
-                t = UserType.CASHIER;
-            } else if(type == "Owner") {
-                t = UserType.OWNER;
-            }
-            User newUser = new UserImpl(username, password, t);
-            users.add(newUser);
-
-            DatabaseHandler.saveUserData(users);
-            return true;
-        }else {
-            return false;
-        }
+        return this.addUser(username, password, "CUSTOMER");
     }
 
     public boolean hasUser(String username) {

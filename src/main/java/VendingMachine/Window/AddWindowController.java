@@ -17,7 +17,7 @@ public class AddWindowController {
     private Button add;
     private TextField username;
     private TextField password;
-    private ComboBox<String> types;
+    private ComboBox<String> typeCombo;
     private TableView<UserTableEntry> table;
 
     public AddWindowController(MainProcessor processor, TableView<UserTableEntry> table) {
@@ -37,21 +37,6 @@ public class AddWindowController {
         initCombobox();
     }
 
-    private void initCombobox() {
-        types = new ComboBox<>();
-        types.setLayoutX(40);
-        types.setLayoutY(160);
-        String[] typeString = {"Customer", "Seller", "Cashier", "Owner"};
-
-        for(String s : typeString) {
-            types.getItems().add(s);
-        }
-
-        types.getSelectionModel().select(0);
-
-        pane.getChildren().add(types);
-    }
-
     private void initLabels() {
         Label label1 = new Label("Username: ");
         label1.setLayoutX(180);
@@ -62,6 +47,19 @@ public class AddWindowController {
         label.setLayoutX(180);
         label.setLayoutY(130);
         pane.getChildren().add(label);
+    }
+
+    private void initButtons() {
+        add = new Button();
+
+        add.setLayoutX(40);
+        add.setLayoutY(80);
+        add.setPrefWidth(100);
+        add.setPrefHeight(30);
+        add.setText("Add");
+        pane.getChildren().add(add);
+
+        add.setOnAction(event -> add());
     }
 
     private void initTextFields() {
@@ -78,56 +76,52 @@ public class AddWindowController {
         pane.getChildren().add(password);
     }
 
-    private void initButtons() {
-        add = new Button();
+    private void initCombobox() {
+        typeCombo = new ComboBox<>();
+        typeCombo.setLayoutX(40);
+        typeCombo.setLayoutY(160);
 
-        add.setLayoutX(40);
-        add.setLayoutY(80);
-        add.setPrefWidth(100);
-        add.setPrefHeight(30);
-        add.setText("Add");
-        pane.getChildren().add(add);
+        for (User.UserType s : User.UserType.values()) {
+            typeCombo.getItems().add(s.toString());
+        }
 
-        add.setOnAction(event -> add());
+        typeCombo.getSelectionModel().select(0);
+
+        pane.getChildren().add(typeCombo);
     }
 
     private void add() {
 
-        String type = types.getSelectionModel().getSelectedItem();
+        String type = typeCombo.getSelectionModel().getSelectedItem();
 
-        if(!(username.getText() == null || username.getText().trim().isEmpty())) {
-            if(!(password.getText() == null || password.getText().trim().isEmpty())) {
-                try{
-                    if(processor.addUserWithType(username.getText(), password.getText(),type)) {
-                        Alert alert = new Alert(Alert.AlertType.WARNING, "Successfully add");
-                        alert.show();
-
-                        for (User user : processor.getUsers()) {
-                            table.getItems().clear();
-                        }
-
-                        for (User user : processor.getUsers()) {
-                            table.getItems().add(new UserTableEntry(Integer.toString(user.getId()),
-                                    user.getUsername(),
-                                    user.getPassword(),
-                                    user.getTypeString()));
-                        }
-                    }
-                } catch (Exception e) {
-                    Alert alert = new Alert(Alert.AlertType.WARNING, "Can not add user.");
-                    alert.show();
-                }
-            } else {
-                Alert alert = new Alert(Alert.AlertType.WARNING, "Password needed");
-                alert.show();
-            }
-        } else {
+        if (username.getText().trim().isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Username needed");
             alert.show();
+        } else if (password.getText().trim().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Password needed");
+            alert.show();
+        } else {
+            try {
+                if (processor.addUserWithType(username.getText(), password.getText(), type)) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successfully add.");
+                    alert.show();
+
+                    table.getItems().clear();
+
+                    for (User user : processor.getUsers()) {
+                        table.getItems().add(new UserTableEntry(Integer.toString(user.getId()),
+                                user.getUsername(),
+                                user.getPassword(),
+                                user.getTypeString()));
+                    }
+                }else{
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Fail to add.");
+                    alert.show();
+                }
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Can not add user.");
+                alert.show();
+            }
         }
-
-
     }
-
-
 }
