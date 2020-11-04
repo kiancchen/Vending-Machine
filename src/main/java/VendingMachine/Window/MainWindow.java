@@ -1,5 +1,6 @@
 package VendingMachine.Window;
 
+import VendingMachine.DatabaseHandler;
 import VendingMachine.Processor.MainProcessor;
 import VendingMachine.User;
 import javafx.scene.Scene;
@@ -7,6 +8,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+
+import java.io.IOException;
+import java.util.Map;
 
 public class MainWindow {
     private MainProcessor processor;
