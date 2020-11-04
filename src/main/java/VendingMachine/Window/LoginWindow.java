@@ -2,11 +2,9 @@ package VendingMachine.Window;
 
 import VendingMachine.Processor.MainProcessor;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.skin.TextFieldSkin;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -56,7 +54,15 @@ public class LoginWindow {
         inputUsername.setPromptText("Username");
         pane.getChildren().add(inputUsername);
 
+
         inputPassword = new PasswordField();
+        inputPassword.setSkin(new TextFieldSkin(inputPassword) {
+            // Hide the password and show as *
+            @Override
+            protected String maskText(String txt) {
+                return "*".repeat(txt.length());
+            }
+        });
         inputPassword.setLayoutX(350);
         inputPassword.setLayoutY(50);
         inputPassword.setPrefWidth(200);
