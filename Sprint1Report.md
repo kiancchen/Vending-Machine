@@ -4,30 +4,42 @@
 - [Agile Development Tools and Practices](#agile-development-tools-and-practices)
   - [Github](#github)
     - [Workflow](#workflow)
-    - [Release](#release)
+    - [Branch History](#branch-history)
+    - [Pull Request History](#pull-request-history)
+    - [Conflict Issues History](#conflict-issues-history)
+    - [Release History](#release-history)
   - [Gradle](#gradle)
-  - [JUnit](#junit)
+    - [Gradle Command](#gradle-command)
+    - [`build.gradle` Files](#buildgradle-files)
+  - [JUnit and Jacoco](#junit-and-jacoco)
+    - [How to Check Test Report](#how-to-check-test-report)
+      - [JUnit](#junit)
+      - [Jacoco](#jacoco)
+    - [Quality of Testing](#quality-of-testing)
   - [Jenkins](#jenkins)
-    - [Plugins in Jenkins](#plugins-in-jenkins)
-    - [Setup GitHub in Jenkins](#setup-github-in-jenkins)
-    - [Setup Gradle in Jenkins](#setup-gradle-in-jenkins)
-    - [Setup JUnit in Jenkins](#setup-junit-in-jenkins)
-    - [Setup Jacoco in Jenkins](#setup-jacoco-in-jenkins)
-    - [Host Jenkins on internet and Connect to Github](#host-jenkins-on-internet-and-connect-to-github)
+    - [Initial Setup](#initial-setup)
+      - [Plugins in Jenkins](#plugins-in-jenkins)
+      - [Setup GitHub in Jenkins](#setup-github-in-jenkins)
+      - [Setup Gradle in Jenkins](#setup-gradle-in-jenkins)
+      - [Setup JUnit in Jenkins](#setup-junit-in-jenkins)
+      - [Setup Jacoco in Jenkins](#setup-jacoco-in-jenkins)
+      - [Host Jenkins on internet and Connect to Github](#host-jenkins-on-internet-and-connect-to-github)
+    - [Outstanding Example](#outstanding-example)
+      - [Failure Build Example](#failure-build-example)
+      - [Success Build Example](#success-build-example)
+    - [Adopted CI Practices](#adopted-ci-practices)
 - [Application Development](#application-development)
   - [UML Class Diagram](#uml-class-diagram)
   - [Class Document](#class-document)
   - [Demo](#demo)
 - [Sprint Artifacts](#sprint-artifacts)
-  - [Sprint Planning](#sprint-planning)
-    - [Sprint Goal](#sprint-goal)
-    - [Sprint Task](#sprint-task)
+  - [Sprint Goal](#sprint-goal)
   - [Tasks Board](#tasks-board)
-    - [Sprint Backlog](#sprint-backlog)
     - [Product Backlog](#product-backlog)
+    - [Sprint Backlog](#sprint-backlog)
   - [User Stories](#user-stories)
   - [Scrum Meetings](#scrum-meetings)
-    - [Meeting 1](#meeting-1)
+    - [Meeting 1 (Sprint Planning)](#meeting-1-sprint-planning)
     - [Meeting 2](#meeting-2)
   - [Sprint Review](#sprint-review)
   - [Sprint Retrospective](#sprint-retrospective)
@@ -39,16 +51,16 @@
 1. Product Owner: Yufei Zuo
 
     Responsible for:
-    - maximize value of the product and the work
-    - manage the product backlog
-    - remove impediments
+    - Maximize value of the product and the work
+    - Manage the product backlog
+    - Remove impediments
 
 2. Scrum Master: Cheng Chen
 
     Responsible for:
-    - record product backlog items and order it
-    - optimize the value of the work
-    - ensure transparency and  clarity of the product backlog
+    - Record product backlog items and order it
+    - Optimize the value of the work
+    - Ensure transparency and  clarity of the product backlog
 
 3. Developer1: Yuanqun Wang
 4. Developer2: Zexuan Long
@@ -145,15 +157,52 @@
    - Otherwise, you may encounter the following issue
 
       <img src='https://i.loli.net/2020/10/03/fGRNOkm7de6pjaI.png' alt='fGRNOkm7de6pjaI'/>
-### Release
+
+### Branch History
+
+Todo (直接抄上一个asm，换上这次asm的配图)
+
+### Pull Request History
+
+Todo (直接抄上一个asm，换上这次asm的配图)
+
+### Conflict Issues History
+
+Todo (直接抄上一个asm，换上这次asm的配图)
+
+### Release History
+
+Todo (每次sprint提交前再提交release)
 
 ## Gradle
 
-## JUnit
+### Gradle Command
+
+Todo (直接抄上一个asm，换上这次asm的配图)
+
+### `build.gradle` Files
+
+Todo (直接抄上一个asm，换上这次asm的配图)
+
+## JUnit and Jacoco
+
+### How to Check Test Report
+
+#### JUnit
+
+Todo (直接抄上一个asm，换上这次asm的配图)
+
+#### Jacoco
+
+Todo (直接抄上一个asm，换上这次asm的配图)
+
+### Quality of Testing
 
 ## Jenkins
 
-### Plugins in Jenkins
+### Initial Setup
+
+#### Plugins in Jenkins
 1.  Go to `Jenkins > Manage Jenkins > Manage Plugins > Download`, and ensure the following plugins have been installed. *Notes: Jenkins requires to restart after adding new plugins.*
 
        - JUnit
@@ -163,7 +212,7 @@
        - Jacoco
 2. Create a new project for `Vending Machine`. First go to `Jenkins > New Item`, write the project name at `Enter an iterm name` and select `Freestyle project`.
 
-### Setup GitHub in Jenkins
+#### Setup GitHub in Jenkins
 
 1. Go to `Jenkins > Manage Jenkins > Configure System > GitHub Enterprise Servers`, write `https://github.sydney.edu.au/api/v3` at API Endpoint and set name to be `Github Sydney`.
 
@@ -177,7 +226,7 @@
 
    <img src='https://i.loli.net/2020/09/30/DWOIpLk1M57ZTzr.png' alt='DWOIpLk1M57ZTzr' style="width:50%"/>
 
-### Setup Gradle in Jenkins
+#### Setup Gradle in Jenkins
 
 1.  Go to `Jenkins > Manage Jenkins > Global Tool Configuration > Gradle > Gradle Installation`. Then set gradle name with `gradle_build` and select `Gradle 6.7-rc-1` as Gradle.org Version.
 
@@ -191,7 +240,7 @@
 
    <img src='https://i.loli.net/2020/09/30/k3vAD6g9h1URcBH.png' alt='k3vAD6g9h1URcBH' style="width:50%"/>
 
-### Setup JUnit in Jenkins
+#### Setup JUnit in Jenkins
 
 1. Go to `Currency Converter > Configure > Post-build Actions` and select `Publish JUnit test result report`.
 
@@ -201,14 +250,14 @@
 
    <img src='https://i.loli.net/2020/09/30/1ELOifHtyD4plr8.png' alt='1ELOifHtyD4plr8'/>
 
-### Setup Jacoco in Jenkins
+#### Setup Jacoco in Jenkins
 
 1. Go to `Currency Converter > Configure > Post-build Actions` and select `Record JaCoCo coverage report`.
 
    <img src='https://i.loli.net/2020/09/25/grLqx4UbiAZsJly.png' alt='grLqx4UbiAZsJly' style="width:50%"/>
 
 
-### Host Jenkins on internet and Connect to Github
+#### Host Jenkins on internet and Connect to Github
 
 1. Go to [GCP](https://console.cloud.google.com/), create a cluster under `Kubernetes Engine`, then click `Application` and search `Jenkins`. Then you should find this:
 
@@ -224,62 +273,85 @@
 
    <img src='https://i.loli.net/2020/10/06/W2Nn1ZY8beXvxHl.png' alt='' style="width:80%"/>
 
+### Outstanding Example
+
+#### Failure Build Example
+
+Todo (直接抄上一个asm，换上这次asm的配图)
+
+#### Success Build Example
+
+Todo (直接抄上一个asm，换上这次asm的配图)
+
+### Adopted CI Practices
+
+Todo (直接抄上一个asm，换上这次asm的配图)
+
 # Application Development
 
 ## UML Class Diagram
 
+Todo
+
 ## Class Document
+
+Todo (按照java的class写heading)
 
 ## Demo
 
+Todo (按照功能写heading)
+
 # Sprint Artifacts
 
-## Sprint Planning
+## Sprint Goal
 
-   ### Sprint Goal
-
-   - Design data structure
    - Have initials codebase with appropriate methods to implement basic functionality
-   - Features:
-        - Login system
-        - User management System
-        - Database
-
-   ### Sprint Task
-
-    - identify work to be done to deliver this
+   - Implement the login system with different type of users.
+   - Implement the user management system so that owner could change manages all the users.
+   - Implement the cash system so that it will automatically calculate the change.
+   - Implement the database to record the users and cash within the machine.
 
 ## Tasks Board
 
+### Product Backlog
+
+The product backlog contains a set of all features and sub-features to build the vending machine, including functions, requirements, enhancements and fixes identified from previous sprints. The items in product backlog are ordered by priority and constantly changed. Any additional requirements from client should be directly added to product backlog instead of sprint backlog.
+
+|             Product Backlog             	|      Role     	| Story Points 	|
+|:---------------------------------------:	|:-------------:	|:------------:	|
+|           Application codebase          	| Collaborative 	|       5      	|
+|      Select variety types of snacks     	|      N/A      	|       5      	|
+| Customer can cancel transaction anytime 	|      N/A      	|       3      	|
+
+Todo (现在先不用写，交之前把jira上的task抄上去就行了)
+
 ### Sprint Backlog
 
-- Main Window
+The sprint backlog contains a set of items selected for this sprint. It is considered as a plan for delivering the product increment and realize the sprint goal. It is visible to anyone and to be added or modified by the development team.
 
-   - Login system
-        - Sign in
-        - Sign up
-        - GUI
-   - User management System
-        - Add user
-        - Remove user
-        - Change user information
-        - GUI
-   - Database
-        - Save data to files
+|             Product Backlog             	|      Role     	| Story Points 	| Finished 	|
+|:---------------------------------------:	|:-------------:	|:------------:	|----------	|
+|           Application codebase          	| Collaborative 	|       5      	| √        	|
+| Setup database that is able to save data to file | Cheng Chen |       5     	| √       	|
+| Login system is able to sign in, sign up 	|      Zexuan Long     	|       4      	| V        	|
 
-### Product Backlog
+Todo (现在先不用写，交之前把jira上的task抄上去就行了)
 
 ## User Stories
 
+Todo (重点写！！)
+
 ## Scrum Meetings
 
-### Meeting 1
+### Meeting 1 (Sprint Planning)
+
+<img src='https://i.loli.net/2020/11/04/OBaT23sQecx9Cz4.png' alt='OBaT23sQecx9Cz4'/>
 
 - Date: 30th October
 - Attendencs: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
 - Content:
   - Identify the Sprint Goal
-  - Discuss the data structure
+  - Discuss the data structure of users
   - Implement the codebase together
   - Refine, prioritize and assign tasks to team members
   - Produce the Sprint Backlog
@@ -293,11 +365,11 @@
   - What I will do today: Working on data handling of cash.
   - Do I see any obstacles: None at the moment.
 - Yuanqun Wang:
-  - What did I do yesterday: Finished GUI of main window.
+  - What did I do yesterday: Finished part of user management GUI.
   - What I will do today: Working on table on user management GUI.
   - Do I see any obstacles: None at the moment.
 - Yufei Zuo:
-  - What did I do yesterday: Finished part of user management GUI.
+  - What did I do yesterday: Finished GUI of main window.
   - What I will do today: Working on GUI of user management.
   - Do I see any obstacles: None at the moment.
 - Zexuan Long:
