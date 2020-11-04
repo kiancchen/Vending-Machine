@@ -1,17 +1,17 @@
 package VendingMachine.Window;
 
-import VendingMachine.MainProcessor;
+import VendingMachine.Processor.MainProcessor;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class ChangeWindowController {
+public class ChangeUserWindow {
     private MainProcessor processor;
     private Stage stage;
     private Scene scene;
     private AnchorPane pane;
 
-    public ChangeWindowController(MainProcessor processor) {
+    public ChangeUserWindow(MainProcessor processor) {
         this.processor = processor;
 
         stage = new Stage();

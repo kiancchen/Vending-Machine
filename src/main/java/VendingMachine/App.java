@@ -1,5 +1,6 @@
 package VendingMachine;
 
+import VendingMachine.Processor.MainProcessor;
 import VendingMachine.Window.MainWindow;
 import javafx.application.Application;
 import javafx.stage.Stage;

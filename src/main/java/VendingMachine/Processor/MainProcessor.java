@@ -1,4 +1,6 @@
-package VendingMachine;
+package VendingMachine.Processor;
+
+import VendingMachine.User;
 
 import java.io.IOException;
 import java.util.List;

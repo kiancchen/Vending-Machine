@@ -1,6 +1,6 @@
 package VendingMachine.Window;
 
-import VendingMachine.MainProcessor;
+import VendingMachine.Processor.MainProcessor;
 import VendingMachine.User;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
