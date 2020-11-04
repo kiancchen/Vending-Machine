@@ -22,7 +22,7 @@ public class MainProcessor {
         return this.userProcessor.removeUser(id);
     }
 
-    public boolean verifyUser(String username, String password) throws IOException{
+    public boolean verifyUser(String username, String password) {
         return this.userProcessor.verifyUser(username,password);
     }
 
