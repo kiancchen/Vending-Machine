@@ -37,4 +37,8 @@ public class MainProcessor {
     public User getCurrentUser() {
         return this.userProcessor.getCurrentUser();
     }
+
+    public boolean addUserWithType(String username, String password, String type) throws IOException  {
+        return this.userProcessor.addUserWithType(username, password, type);
+    }
 }

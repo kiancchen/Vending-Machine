@@ -85,7 +85,7 @@ public class UserManagementWindow {
     }
 
     private void initButtonActions() {
-        addButton.setOnAction((event -> new AddWindowController(processor)));
+        addButton.setOnAction((event -> new AddWindowController(processor, table)));
         removeButton.setOnAction((event -> new RemoveWindowController(processor, table)));
         changeButton.setOnAction((event -> new ChangeWindowController(processor)));
     }
