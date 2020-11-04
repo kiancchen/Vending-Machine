@@ -12,8 +12,8 @@ public class DatabaseHandlerTest {
     @Test
     public void testSaveAndLoadUserData() throws IOException {
         List<User> expected = new ArrayList<>();
-        expected.add(new UserImpl("alan", "123", UserType.CUSTOMER));
-        expected.add(new UserImpl("blan", "123", UserType.OWNER));
+        expected.add(new UserImpl("alan", "123", User.UserType.CUSTOMER));
+        expected.add(new UserImpl("blan", "123", User.UserType.OWNER));
         DatabaseHandler.saveUserData(expected);
 
         List<User> actual = DatabaseHandler.loadUserData();
