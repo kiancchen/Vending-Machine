@@ -22,7 +22,7 @@ public class MainProcessor {
         return this.userProcessor.removeUser(id);
     }
 
-    public boolean verifyUser(String username, String password){
+    public boolean verifyUser(String username, String password) throws IOException{
         return this.userProcessor.verifyUser(username,password);
     }
 
@@ -30,7 +30,7 @@ public class MainProcessor {
         return this.userProcessor.changeUsername(id,newUsername);
     }
 
-    public List<User> getUsers(){
+    public List<User> getUsers() {
         return this.userProcessor.getUsers();
     }
 
