@@ -1,15 +1,24 @@
 package VendingMachine.Window;
 
 import VendingMachine.MainProcessor;
+import VendingMachine.UserImpl;
+import VendingMachine.User;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 
+enum UserType {
+    CUSTOMER,
+    SELLER,
+    CASHIER,
+    OWNER,
+    ANONYMOUS
+}
 public class MainWindow {
     private MainProcessor processor;
     private Scene scene;
     private AnchorPane pane;
-    private Button adminBtn;
+    private Button accountBtn;
     private Button userManagementBtn;
 
     public MainWindow(MainProcessor processor) {
@@ -21,11 +30,11 @@ public class MainWindow {
     }
 
     private void initButtons() {
-        adminBtn = new Button();
+        accountBtn = new Button();
         userManagementBtn = new Button();
 
-        Button[] buttons = {adminBtn, userManagementBtn};
-        String[] texts = {"Admin", "Manage User"};
+        Button[] buttons = {accountBtn, userManagementBtn};
+        String[] texts = {"Account", "Manage User"};
 
         for (int i = 0; i < buttons.length; i++) {
             Button button = buttons[i];
@@ -39,7 +48,17 @@ public class MainWindow {
     }
 
     private void initBtnActions() {
-        adminBtn.setOnAction(event -> new LoginWindow(processor));
+        //accountBtn.setOnAction(event -> new LoginWindow(processor,accountBtn));
+
+        accountBtn.setOnAction((event -> {
+            if (processor.getCurrentUser().getUsername().equals("")) {
+                new LoginWindow(processor,accountBtn);
+            } else {
+                processor.logoutUser();
+                accountBtn.setText("Account");
+            }
+        }));
+        
         userManagementBtn.setOnAction(event -> new UserManagementWindow(processor));
     }
 

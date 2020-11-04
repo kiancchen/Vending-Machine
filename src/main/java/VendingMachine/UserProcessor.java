@@ -9,6 +9,7 @@ public class UserProcessor {
 
     public UserProcessor() throws IOException{
         users = DatabaseHandler.loadUserData();
+        this.currentUser = new UserImpl();
     }
 
     public boolean verifyUser(String username, String password){
@@ -69,6 +70,10 @@ public class UserProcessor {
             }
         }
         return false;
+    }
+
+    public void logoutUser() {
+      this.currentUser = new UserImpl();
     }
 
     public List<User> getUsers(){
