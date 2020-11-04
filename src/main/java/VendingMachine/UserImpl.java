@@ -74,9 +74,9 @@ public class UserImpl implements User {
         this.initPermissions();
         if (type == UserType.SELLER) {
             this.setPermission(Permission.MANAGE_ITEM, true);
-        }else if (type == UserType.CASHIER){
+        } else if (type == UserType.CASHIER) {
             this.setPermission(Permission.MANAGE_CASH, true);
-        }else if (type == UserType.OWNER) {
+        } else if (type == UserType.OWNER) {
             this.setPermission(Permission.MANAGE_CASH, true);
             this.setPermission(Permission.MANAGE_ITEM, true);
             this.setPermission(Permission.MANAGE_USER, true);
@@ -88,13 +88,12 @@ public class UserImpl implements User {
         return this.id;
     }
 
-
     @Override
     public String getString() {
         String s = "";
-        s += id + ",";
-        s += username + ",";
-        s += password + ",";
+        s += id + ", ";
+        s += username + ", ";
+        s += password + ", ";
         s += getType();
         return s;
     }

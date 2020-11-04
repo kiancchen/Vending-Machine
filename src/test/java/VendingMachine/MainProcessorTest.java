@@ -1,6 +1,7 @@
 package VendingMachine;
 
 import VendingMachine.Processor.MainProcessor;
+import VendingMachine.Processor.UserProcessor;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -94,5 +95,22 @@ public class MainProcessorTest {
         mainProcessor.verifyUser("alan","123");
         assertEquals("alan",mainProcessor.getCurrentUser().getUsername());
         assertEquals("123",mainProcessor.getCurrentUser().getPassword());
+    }
+
+    @Test
+    public void testLogoutUser() throws IOException {
+        MainProcessor mainProcessor = new MainProcessor();
+        mainProcessor.verifyUser("alan","123");
+        mainProcessor.logoutUser();
+        assertEquals(User.UserType.ANONYMOUS, mainProcessor.getCurrentUser().getType());
+    }
+
+    @Test
+    public void testAddUserWithType() throws IOException {
+        MainProcessor mainProcessor = new MainProcessor();
+        mainProcessor.addUser("test","test", "CASHIER");
+        assertTrue(mainProcessor.verifyUser("test","test"));
+        assertFalse(mainProcessor.addUser("test","test"));
+        assertEquals(User.UserType.CASHIER, mainProcessor.getCurrentUser().getType());
     }
 }

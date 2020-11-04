@@ -102,7 +102,7 @@ public class AddUserWindow {
             alert.show();
         } else {
             try {
-                if (processor.addUserWithType(username.getText(), password.getText(), type)) {
+                if (processor.addUser(username.getText(), password.getText(), type)) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successfully add.");
                     alert.show();
 

@@ -1,6 +1,5 @@
 package VendingMachine.Window;
 
-import VendingMachine.DatabaseHandler;
 import VendingMachine.Processor.MainProcessor;
 import VendingMachine.User;
 import javafx.scene.Scene;
@@ -8,9 +7,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-
-import java.io.IOException;
-import java.util.Map;
 
 public class MainWindow {
     private MainProcessor processor;
@@ -60,9 +56,9 @@ public class MainWindow {
             }
         }));
         userManagementBtn.setOnAction(event -> {
-            if (processor.getCurrentUser().getPermission(User.Permission.MANAGE_USER)){
+            if (processor.getCurrentUser().getPermission(User.Permission.MANAGE_USER)) {
                 new UserManagementWindow(processor);
-            }else{
+            } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
                         "to do this action.");
                 alert.show();
@@ -71,7 +67,7 @@ public class MainWindow {
 
     }
 
-    private void initText(){
+    private void initText() {
         currentUserInfo = new Text();
         currentUserInfo.setLayoutX(10);
         currentUserInfo.setLayoutY(20);
@@ -81,16 +77,16 @@ public class MainWindow {
     public void updateCurrencyUserInfo() {
         currentUserInfo.setText(
                 this.processor.getCurrentUser().getUsername()
-                + "   "
-                + this.processor.getCurrentUser().getType()
+                        + "   "
+                        + this.processor.getCurrentUser().getType()
         );
+    }
+
+    public void changeAccountButtonText(String text) {
+        this.accountBtn.setText(text);
     }
 
     public Scene getScene() {
         return scene;
-    }
-
-    public void changeAccountButtonText(String text){
-        this.accountBtn.setText(text);
     }
 }
