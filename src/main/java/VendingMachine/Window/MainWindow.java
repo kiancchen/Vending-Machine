@@ -1,19 +1,10 @@
 package VendingMachine.Window;
 
 import VendingMachine.MainProcessor;
-import VendingMachine.UserImpl;
-import VendingMachine.User;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 
-enum UserType {
-    CUSTOMER,
-    SELLER,
-    CASHIER,
-    OWNER,
-    ANONYMOUS
-}
 public class MainWindow {
     private MainProcessor processor;
     private Scene scene;
@@ -48,17 +39,15 @@ public class MainWindow {
     }
 
     private void initBtnActions() {
-        //accountBtn.setOnAction(event -> new LoginWindow(processor,accountBtn));
-
         accountBtn.setOnAction((event -> {
-            if (processor.getCurrentUser().getUsername().equals("")) {
-                new LoginWindow(processor,accountBtn);
+            if ("".equals(processor.getCurrentUser().getUsername())) {
+                new LoginWindow(processor, accountBtn);
             } else {
                 processor.logoutUser();
                 accountBtn.setText("Account");
             }
         }));
-        
+
         userManagementBtn.setOnAction(event -> new UserManagementWindow(processor));
     }
 
