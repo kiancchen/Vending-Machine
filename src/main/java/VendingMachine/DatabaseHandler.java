@@ -8,14 +8,15 @@ import com.google.gson.stream.JsonWriter;
 
 import java.io.*;
 import java.util.List;
+import java.util.Map;
 
 public class DatabaseHandler {
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    private static final String userDatabaseFilename = "src/main/resources/user.json";
+    private static final File userFile = new File("src/main/resources/user.json");
+    private static final File cashFile = new File("src/main/resources/cash.json");
 
     public static void saveUserData(List<User> users) throws IOException {
-        File file = new File(userDatabaseFilename);
-        FileWriter fileWriter = new FileWriter(file);
+        FileWriter fileWriter = new FileWriter(userFile);
         JsonWriter jsonWriter = new JsonWriter(fileWriter);
         jsonWriter.setIndent(" ");
         gson.toJson(users, new TypeToken<List<User>>() {}.getType(), jsonWriter);
@@ -24,11 +25,28 @@ public class DatabaseHandler {
     }
 
     public static List<User> loadUserData() throws IOException {
-        File file = new File(userDatabaseFilename);
-        InputStream input = new FileInputStream(file);
+        InputStream input = new FileInputStream(userFile);
         JsonReader reader = new JsonReader(new InputStreamReader(input));
         List<User> users = gson.fromJson(reader, new TypeToken<List<UserImpl>>() {}.getType());
         reader.close();
         return users;
+    }
+
+    public static void saveCashData(Map<Double, Integer> cashes) throws IOException {
+        FileWriter fileWriter = new FileWriter(cashFile);
+        JsonWriter jsonWriter = new JsonWriter(fileWriter);
+        jsonWriter.setIndent(" ");
+        gson.toJson(cashes, new TypeToken<Map<Double, Integer>>() {}.getType(), jsonWriter);
+        jsonWriter.flush();
+        jsonWriter.close();
+    }
+
+    public static Map<Double, Integer> loadCashData() throws IOException {
+        InputStream input = new FileInputStream(cashFile);
+        JsonReader reader = new JsonReader(new InputStreamReader(input));
+        Map<Double, Integer> cashes = gson.fromJson(reader,
+                new TypeToken<Map<Double, Integer>>() {}.getType());
+        reader.close();
+        return cashes;
     }
 }
