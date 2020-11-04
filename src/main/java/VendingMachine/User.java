@@ -29,4 +29,8 @@ public interface User {
 
     int getId();
 
+    String getString();
+
+    String getTypeString();
+
 }
