@@ -32,4 +32,10 @@ public interface User {
         ANONYMOUS
     }
 
+    enum Permission {
+        MANAGE_ITEM,
+        MANAGE_CASH,
+        MANAGE_USER
+    }
+
 }

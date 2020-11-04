@@ -114,6 +114,7 @@ public class AddWindowController {
                                 user.getPassword(),
                                 user.getType().toString()));
                     }
+                    this.stage.close();
                 } else {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Fail to add.");
                     alert.show();
