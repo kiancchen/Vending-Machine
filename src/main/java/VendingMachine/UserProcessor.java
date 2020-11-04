@@ -64,4 +64,12 @@ public class UserProcessor {
         }
         return false;
     }
+
+    public List<User> getUsers() {
+        return this.users;
+    }
+
+    public User getCurrentUser() {
+        return this.currentUser;
+    }
 }

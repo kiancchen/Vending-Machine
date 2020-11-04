@@ -1,6 +1,7 @@
 package VendingMachine;
 
 import java.io.IOException;
+import java.util.List;
 
 public class MainProcessor {
     private UserProcessor userProcessor;
@@ -19,5 +20,21 @@ public class MainProcessor {
 
     public boolean removeUser(int id) throws IOException{
         return this.userProcessor.removeUser(id);
+    }
+
+    public boolean verifyUser(String username, String password){
+        return this.userProcessor.verifyUser(username,password);
+    }
+
+    public boolean changeUsername(int id, String newUsername) throws IOException {
+        return this.userProcessor.changeUsername(id,newUsername);
+    }
+
+    public List<User> getUsers(){
+        return this.userProcessor.getUsers();
+    }
+
+    public User getCurrentUser() {
+        return this.userProcessor.getCurrentUser();
     }
 }
