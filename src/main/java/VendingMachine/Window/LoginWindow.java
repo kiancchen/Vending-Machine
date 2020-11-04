@@ -1,7 +1,6 @@
 package VendingMachine.Window;
 
 import VendingMachine.MainProcessor;
-import VendingMachine.UserProcessor;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -19,8 +18,6 @@ public class LoginWindow {
     private Button signInButton;
     private Button signUpButton;
     private Button loginButton;
-    private boolean signInStatus;
-    private boolean signUpStatus;
     private Label username;
     private Label password;
     private Button returnMainButton;
@@ -93,9 +90,7 @@ public class LoginWindow {
 
         String usernameInp = inputUsername.getText();
         String passwordInp = inputPassword.getText();
-        UserProcessor users = this.processor.getUserProcessor();
-        if (users.verifyUser(usernameInp, passwordInp)) {
-            signInStatus = true;
+        if (this.processor.verifyUser(usernameInp, passwordInp)) {
             Alert alert = new Alert(AlertType.INFORMATION, "Sign in successfully.");
             alert.show();
             loginButton.setText("Logout");
@@ -128,7 +123,6 @@ public class LoginWindow {
             }catch (IOException e){
               e.printStackTrace();
             }
-            signUpStatus = true;
             Alert alert = new Alert(AlertType.INFORMATION, "Sign up successfully.");
             alert.show();
             stage.close();
