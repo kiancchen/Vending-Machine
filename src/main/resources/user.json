@@ -1,16 +1,5 @@
 [
  {
-  "id": 1,
-  "username": "alan",
-  "password": "123",
-  "permissions": {
-   "MANAGE_USER": false,
-   "MANAGE_ITEM": false,
-   "MANAGE_CASH": false
-  },
-  "type": "CUSTOMER"
- },
- {
   "id": 2,
   "username": "blan",
   "password": "123",
