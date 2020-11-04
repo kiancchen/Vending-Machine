@@ -89,7 +89,7 @@ public class RemoveWindowController {
                             user.getPassword(),
                             user.getTypeString()));
                 }
-            };
+            }
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "User selected is not existed");
             alert.show();
