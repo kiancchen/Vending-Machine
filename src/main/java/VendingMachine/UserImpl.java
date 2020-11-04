@@ -88,4 +88,32 @@ public class UserImpl implements User {
     public int getId() {
         return this.id;
     }
+
+
+
+    @Override
+    public String getString() {
+        String s = "";
+        s += id + ",";
+        s += username + ",";
+        s += password + ",";
+        s += getType();
+        return s;
+    }
+
+    @Override
+    public String getTypeString() {
+        if(type == UserType.CASHIER) {
+            return "cashier";
+        } else if(type == UserType.CUSTOMER) {
+            return "customer";
+        } else if(type == UserType.OWNER) {
+            return "owner";
+        } else if(type == UserType.SELLER) {
+            return "seller";
+        }
+        return "";
+    }
+
+
 }
