@@ -15,7 +15,7 @@ public class LoginWindow {
     private Scene scene;
     private AnchorPane pane;
     private TextField inputUsername;
-    private TextField inputPassword;
+    private PasswordField inputPassword;
     private MainWindow mainWindow;
 
     public LoginWindow(MainProcessor processor, MainWindow mainWindow) {
@@ -53,7 +53,7 @@ public class LoginWindow {
         inputUsername.setPromptText("Username");
         pane.getChildren().add(inputUsername);
 
-        inputPassword = new TextField();
+        inputPassword = new PasswordField();
         inputPassword.setLayoutX(350);
         inputPassword.setLayoutY(50);
         inputPassword.setPrefWidth(200);
