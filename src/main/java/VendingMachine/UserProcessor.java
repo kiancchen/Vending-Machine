@@ -15,6 +15,7 @@ public class UserProcessor {
         // verify the username and password from the database
         for(User user: users) {
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                this.currentUser = user;
                 return true;
             }
         }
@@ -65,11 +66,11 @@ public class UserProcessor {
         return false;
     }
 
-    public List<User> getUsers() {
+    public List<User> getUsers(){
         return this.users;
     }
 
-    public User getCurrentUser() {
+    public User getCurrentUser(){
         return this.currentUser;
     }
 }
