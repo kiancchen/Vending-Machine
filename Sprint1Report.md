@@ -230,17 +230,17 @@ Regarding the issues of `branch`, because we have wrote all the process of `bran
 
 ### Release History
 
-Todo
+![CleanShot 2020-11-05 at 20.34.32@2x](https://i.loli.net/2020/11/05/Q2K8Px1IoRGmJte.png)
+
+This is the version that's submmitted as the product at the end of Sprint 1.
+
+You can use the account `blan` with password `123` to test functionalities.
+
+Note if you run tests, the database will be restored to the initial state and all changed you made will lose (Note `gradle build` will run the tests automatically).
 
 ## Gradle
 
-### Gradle Command
-
-Todo
-
-### `build.gradle` Files
-
-## Build.Gradle File
+## build.gradle File
 
 We have following content in this file
 
@@ -287,6 +287,32 @@ We have following content in this file
 We define the main class `VendingMachine.App` for the application
 
 ![CleanShot 2020-11-05 at 13.46.21@2x](https://i.loli.net/2020/11/05/K7D1pdkN4QmBzXv.png)
+
+## Gradle command
+
+- `gradle clean`: clean the output of last build
+
+![CleanShot 2020-11-05 at 20.40.15@2x](https://i.loli.net/2020/11/05/syY1nRcxvMGuPgw.png)
+
+- `gradle build`: build the program, link dependencies. Note this will run tests automatically.
+
+![CleanShot 2020-11-05 at 20.40.31@2x](https://i.loli.net/2020/11/05/To65muQyeWj9Hgw.png)
+
+- `gradle run`: run the application. This will invoke the GUI.
+
+![CleanShot 2020-11-05 at 20.40.46@2x](https://i.loli.net/2020/11/05/ixNRZ718k2Idl9J.png)
+
+- `gradle test`: run all tests using `Junit`
+
+![CleanShot 2020-11-05 at 20.41.13@2x](https://i.loli.net/2020/11/05/CMnuR3BArog8ycW.png)
+
+- `gradle test jacocoTestReport`: run all tests and produce a coverage report by `Jacoco`
+
+![CleanShot 2020-11-05 at 20.41.40@2x](https://i.loli.net/2020/11/05/holF2VZ7HwyMakP.png)
+
+Then you can see the report in `build/jacocoHtml/index.html`
+
+![CleanShot 2020-11-05 at 20.43.03@2x](https://i.loli.net/2020/11/05/9R5tu7OZLBHQleX.png)
 
 ## JUnit and Jacoco
 
