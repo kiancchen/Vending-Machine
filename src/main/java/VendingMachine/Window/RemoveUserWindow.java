@@ -81,6 +81,7 @@ public class RemoveUserWindow {
                             user.getPassword(),
                             user.getType().toString()));
                 }
+                stage.close();
             }
         } catch (Exception e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "User selected is not existed");
