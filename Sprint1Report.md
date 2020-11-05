@@ -41,6 +41,7 @@
   - [Scrum Meetings](#scrum-meetings)
     - [Meeting 1 (Sprint Planning)](#meeting-1-sprint-planning)
     - [Meeting 2](#meeting-2)
+    - [Meeting 3](#meeting-3)
   - [Sprint Review](#sprint-review)
   - [Sprint Retrospective](#sprint-retrospective)
 
@@ -348,7 +349,7 @@ Todo (重点写！！)
 <img src='https://i.loli.net/2020/11/04/OBaT23sQecx9Cz4.png' alt='OBaT23sQecx9Cz4'/>
 
 - Date: 30th October
-- Attendencs: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
+- Attendance: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
 - Content:
   - Identify the Sprint Goal
   - Discuss the data structure of users
@@ -359,7 +360,11 @@ Todo (重点写！！)
 ### Meeting 2
 
 - Date : 3rd November
-- Attendencs: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
+- Attendance: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
+- Content:
+  - Online debug the obstacle in the code.
+  - Discussion about the progress of each tasks.
+  - Discussion about the code base of cash processor, and modified the map with enum to support double.
 - Cheng Chen:
   - What did I do yesterday: Finished data handling of users and review pull request.
   - What I will do today: Working on data handling of cash.
@@ -384,6 +389,39 @@ Todo (重点写！！)
   - What did I do yesterday: Finished GUI of login system.
   - What I will do today: Working on the user stories and UML Class Diagram.
   - Do I see any obstacles: The code written by teammates does not satisfy the functionality of my part of code, so I need to negotiate with him.
+
+### Meeting 3
+
+- Date : 5th November
+- Attendance: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
+- Content:
+  - Emphasize that if you meets the situation when a specific method is required, but has not been implemented, you should write yourself, and then notify the teammates who is responsible for that part, to add more test cases.
+  - Discussion about the progression of each tasks.
+  - Emphasize the important of burndown chart and change the status of each task as soon as possible.
+- Cheng Chen:
+  - What did I do yesterday: Modified some features of the code to looks nicer.
+  - What I will do today: Continues working on refactor the code.
+  - Do I see any obstacles: None at the moment.
+- Yuanqun Wang:
+  - What did I do yesterday: Finished add or remove user GUI
+  - What I will do today: Working on change user GUI.
+  - Do I see any obstacles: None at the moment.
+- Yufei Zuo:
+  - What did I do yesterday: Proofreading the report.
+  - What I will do today: Continues proofreading the report.
+  - Do I see any obstacles: None at the moment.
+- Zexuan Long:
+  - What did I do yesterday: Finished adding more test cases.
+  - What I will do today: Writing report about class document.
+  - Do I see any obstacles: None at the moment.
+- Songyin Li:
+  - What did I do yesterday: Finished part of cash system.
+  - What I will do today: Working on GUI of cash system.
+  - Do I see any obstacles: None at the moment.
+- Zehui Lin:
+  - What did I do yesterday: Finished UML class diagram.
+  - What I will do today: Working on the user stories.
+  - Do I see any obstacles: None at the moment.
 
 ## Sprint Review
 
