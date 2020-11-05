@@ -444,6 +444,8 @@ We maintained two projects on Jenkins, one is for master branch only, and the ot
 
 ## Demo
 
+`blan` is an owner. Its password is `123`. Feel free to use this account to test functionalities.
+
 ### Sign In or Sign Up
 
 At first the window will display the current user is `anonymous` by default.
