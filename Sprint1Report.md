@@ -92,17 +92,17 @@
 
       - `report-xxx` for the report
 
-   - Using `git checkout -b feat-testing` to create a `feat-testing` branch and checkout to this branch at the same time. `git switch master` could also be used to switch to other branches.
+   - Using `git checkout -b feat-testing` or `git switch -c feat-testing` to create a `feat-testing` branch and switch to this branch at the same time.
 
-      ![4gJKLn5UqFGdpBO](https://i.loli.net/2020/09/30/4gJKLn5UqFGdpBO.png)
+      ![CleanShot 2020-11-05 at 12.04.33@2x](https://i.loli.net/2020/11/05/TxgP7tNIcMRvjAd.png)
 
 2. Write your code in `feat-xxx` or `fix-xxx` branch **only** and test it **on local** if you completed a single feature. **DO NOT PUSH NOT WORKING APPLICATION**. If fails to build or test, fix it and test again.
 
-3. If it passes local build or test and ready to push to remote repository, using `git pull origin master` to **get the latest version of project before pushing your own code** (your teammates may change it before you).
+3. If build and test successfully on local and ready to push to remote repository, using `git pull origin master` to **get the latest version of project before pushing your own code** (your teammates may change it before you).
 
-   - At first, git will try to merge for you, if might appears the following image. If it happens, first type `i` and write your comment below, then click `esc` and type `:wq`.
+   - At first, git will try to merge for you, it might appears the following image. If it happens, first type `i` and write your comment below, then click `esc` and type `:wq`.
 
-      <img src='https://i.loli.net/2020/10/03/PbS1L8ImVE7ioJp.png' alt='PbS1L8ImVE7ioJp'/>
+      ![CleanShot 2020-11-05 at 12.09.45@2x](https://i.loli.net/2020/11/05/R8WOF73Youec5dz.png)
 
    - If git cannot automatically merge for you, it will list all the conflict file.
 
