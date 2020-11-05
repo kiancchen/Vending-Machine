@@ -49,4 +49,8 @@ public class DatabaseHandler {
         reader.close();
         return cashes;
     }
+
+    public static List<Product> loadProductData() throws IOException {
+        return null;
+    }
 }
