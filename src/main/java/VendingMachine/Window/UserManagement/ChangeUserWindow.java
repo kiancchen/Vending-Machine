@@ -1,4 +1,4 @@
-package VendingMachine.Window;
+package VendingMachine.Window.UserManagement;
 
 import VendingMachine.Processor.MainProcessor;
 import VendingMachine.User;
@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 import java.util.List;
 
-public class ChangeCashWindow {
+public class ChangeUserWindow {
     private MainProcessor processor;
     private Stage stage;
     private Scene scene;
@@ -20,10 +20,9 @@ public class ChangeCashWindow {
     private TextField password;
     private ComboBox<String> typesCombo;
     private Button changeButton;
-    private TableView<CashTableEntry> table;
+    private TableView<UserTableEntry> table;
 
-
-    public ChangeCashWindow(MainProcessor processor, TableView<CashTableEntry> table) {
+    public ChangeUserWindow(MainProcessor processor, TableView<UserTableEntry> table) {
         this.processor = processor;
         this.table = table;
 
@@ -65,6 +64,9 @@ public class ChangeCashWindow {
                 processor.changeUsername(selectedID, username.getText());
                 processor.changePassword(selectedID, password.getText());
                 processor.changeType(selectedID, typesCombo.getSelectionModel().getSelectedItem());
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Change successfully.");
+                alert.show();
+                stage.close();
             } catch (Exception e) {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "Change failed.");
                 alert.show();
@@ -83,12 +85,12 @@ public class ChangeCashWindow {
 
             table.getItems().clear();
 
-//            for (User user : processor.getUsers()) {
-//                table.getItems().add(new UserTableEntry(Integer.toString(user.getId()),
-//                        user.getUsername(),
-//                        user.getPassword(),
-//                        user.getType().toString()));
-//            }
+            for (User user : processor.getUsers()) {
+                table.getItems().add(new UserTableEntry(Integer.toString(user.getId()),
+                        user.getUsername(),
+                        user.getPassword(),
+                        user.getType().toString()));
+            }
         }
     }
 

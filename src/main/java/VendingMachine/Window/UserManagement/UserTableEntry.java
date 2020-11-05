@@ -1,4 +1,4 @@
-package VendingMachine.Window;
+package VendingMachine.Window.UserManagement;
 
 public class UserTableEntry {
     private String id;

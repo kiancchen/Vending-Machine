@@ -1,4 +1,4 @@
-package VendingMachine.Window;
+package VendingMachine.Window.UserManagement;
 
 import VendingMachine.Processor.MainProcessor;
 import VendingMachine.User;

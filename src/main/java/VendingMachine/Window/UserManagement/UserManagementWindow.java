@@ -1,6 +1,7 @@
-package VendingMachine.Window;
-import VendingMachine.DatabaseHandler;
+package VendingMachine.Window.UserManagement;
+
 import VendingMachine.Processor.MainProcessor;
+import VendingMachine.User;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -9,31 +10,30 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-
-import java.util.Map;
-
-public class CashManagementWindow {
+public class UserManagementWindow {
     private MainProcessor processor;
     private Stage stage;
     private Scene scene;
     private AnchorPane pane;
-    private TableView<CashTableEntry> table;
+    private TableView<UserTableEntry> table;
 
+    private Button addButton;
     private Button changeButton;
+    private Button removeButton;
 
 
-    public CashManagementWindow(MainProcessor processor)  {
-
+    public UserManagementWindow(MainProcessor processor) {
         this.processor = processor;
         stage = new Stage();
         pane = new AnchorPane();
         scene = new Scene(pane, 600, 480);
         stage.setScene(scene);
-        stage.setTitle("Cash Management");
+        stage.setTitle("User Management");
         stage.show();
+
         initTable();
-//        initButton();
-//        initButtonActions();
+        initButton();
+        initButtonActions();
     }
 
     private void initTable() {
@@ -46,38 +46,40 @@ public class CashManagementWindow {
         pane.getChildren().add(table);
 
         // create table
-        String[] colNames = {"Value","Number"};
-        String[] properties = {"cashType","amount"};
+        String[] colNames = {"ID", "User Name", "Password", "Type"};
+        String[] properties = {"id", "username", "password", "type"};
         for (int i = 0; i < colNames.length; i++) {
             String colName = colNames[i];
-            TableColumn<CashTableEntry, String> column = new TableColumn<>(colName);
+            TableColumn<UserTableEntry, String> column = new TableColumn<>(colName);
             column.setSortable(false);
             column.setPrefWidth(118);
             column.setStyle("-fx-alignment: CENTER;");
             column.setCellValueFactory(new PropertyValueFactory<>(properties[i]));
             table.getColumns().add(column);
         }
-        Map<Double,Integer> cashMap=processor.getCashMap();
-        cashMap.forEach((k,v)->{
-            table.getItems().add(new CashTableEntry(k,v));
-        });
 
+        // set data to table
+        for (User user : processor.getUsers()) {
+            table.getItems().add(new UserTableEntry(Integer.toString(user.getId()),
+                    user.getUsername(),
+                    user.getPassword(),
+                    user.getType().toString()));
         }
-
+    }
 
     private void initButton() {
-
+        addButton = new Button();
         changeButton = new Button();
+        removeButton = new Button();
 
-
-        Button[] buttons = {changeButton};
-        String[] texts = {"Change amount"};
+        Button[] buttons = {addButton, changeButton, removeButton};
+        String[] texts = {"Add", "Change", "Remove"};
 
         for (int i = 0; i < buttons.length; i++) {
             Button button = buttons[i];
-            button.setLayoutX(200);
+            button.setLayoutX(90 + 150 * i);
             button.setLayoutY(400);
-            button.setPrefWidth(200);
+            button.setPrefWidth(100);
             button.setPrefHeight(30);
             button.setText(texts[i]);
             pane.getChildren().add(button);
@@ -85,7 +87,9 @@ public class CashManagementWindow {
     }
 
     private void initButtonActions() {
-
-        changeButton.setOnAction((event -> new ChangeCashWindow(this.processor, this.table)));
+        addButton.setOnAction((event -> new AddUserWindow(processor, table)));
+        removeButton.setOnAction((event -> new RemoveUserWindow(processor, table)));
+        changeButton.setOnAction((event -> new ChangeUserWindow(processor, table)));
     }
+
 }

@@ -1,7 +1,5 @@
-package VendingMachine.Window;
-
+package VendingMachine.Window.CashManagement;
 import VendingMachine.Processor.MainProcessor;
-import VendingMachine.User;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -10,30 +8,31 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-public class UserManagementWindow {
+
+import java.util.Map;
+
+public class CashManagementWindow {
     private MainProcessor processor;
     private Stage stage;
     private Scene scene;
     private AnchorPane pane;
-    private TableView<UserTableEntry> table;
+    private TableView<CashTableEntry> table;
 
-    private Button addButton;
     private Button changeButton;
-    private Button removeButton;
 
 
-    public UserManagementWindow(MainProcessor processor) {
+    public CashManagementWindow(MainProcessor processor)  {
+
         this.processor = processor;
         stage = new Stage();
         pane = new AnchorPane();
         scene = new Scene(pane, 600, 480);
         stage.setScene(scene);
-        stage.setTitle("User Management");
+        stage.setTitle("Cash Management");
         stage.show();
-
         initTable();
-        initButton();
-        initButtonActions();
+//        initButton();
+//        initButtonActions();
     }
 
     private void initTable() {
@@ -46,40 +45,38 @@ public class UserManagementWindow {
         pane.getChildren().add(table);
 
         // create table
-        String[] colNames = {"ID", "User Name", "Password", "Type"};
-        String[] properties = {"id", "username", "password", "type"};
+        String[] colNames = {"Value","Number"};
+        String[] properties = {"cashType","amount"};
         for (int i = 0; i < colNames.length; i++) {
             String colName = colNames[i];
-            TableColumn<UserTableEntry, String> column = new TableColumn<>(colName);
+            TableColumn<CashTableEntry, String> column = new TableColumn<>(colName);
             column.setSortable(false);
             column.setPrefWidth(118);
             column.setStyle("-fx-alignment: CENTER;");
             column.setCellValueFactory(new PropertyValueFactory<>(properties[i]));
             table.getColumns().add(column);
         }
+        Map<Double,Integer> cashMap=processor.getCashMap();
+        cashMap.forEach((k,v)->{
+            table.getItems().add(new CashTableEntry(k,v));
+        });
 
-        // set data to table
-        for (User user : processor.getUsers()) {
-            table.getItems().add(new UserTableEntry(Integer.toString(user.getId()),
-                    user.getUsername(),
-                    user.getPassword(),
-                    user.getType().toString()));
         }
-    }
+
 
     private void initButton() {
-        addButton = new Button();
-        changeButton = new Button();
-        removeButton = new Button();
 
-        Button[] buttons = {addButton, changeButton, removeButton};
-        String[] texts = {"Add", "Change", "Remove"};
+        changeButton = new Button();
+
+
+        Button[] buttons = {changeButton};
+        String[] texts = {"Change amount"};
 
         for (int i = 0; i < buttons.length; i++) {
             Button button = buttons[i];
-            button.setLayoutX(90 + 150 * i);
+            button.setLayoutX(200);
             button.setLayoutY(400);
-            button.setPrefWidth(100);
+            button.setPrefWidth(200);
             button.setPrefHeight(30);
             button.setText(texts[i]);
             pane.getChildren().add(button);
@@ -87,9 +84,7 @@ public class UserManagementWindow {
     }
 
     private void initButtonActions() {
-        addButton.setOnAction((event -> new AddUserWindow(processor, table)));
-        removeButton.setOnAction((event -> new RemoveUserWindow(processor, table)));
-        changeButton.setOnAction((event -> new ChangeUserWindow(processor, table)));
-    }
 
+        changeButton.setOnAction((event -> new ChangeCashWindow(this.processor, this.table)));
+    }
 }

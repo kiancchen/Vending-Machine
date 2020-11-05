@@ -1,7 +1,8 @@
-package VendingMachine.Window;
+package VendingMachine.Window.CashManagement;
 
 import VendingMachine.Processor.MainProcessor;
 import VendingMachine.User;
+import VendingMachine.Window.CashManagement.CashTableEntry;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -9,7 +10,7 @@ import javafx.stage.Stage;
 
 import java.util.List;
 
-public class ChangeUserWindow {
+public class ChangeCashWindow {
     private MainProcessor processor;
     private Stage stage;
     private Scene scene;
@@ -20,9 +21,10 @@ public class ChangeUserWindow {
     private TextField password;
     private ComboBox<String> typesCombo;
     private Button changeButton;
-    private TableView<UserTableEntry> table;
+    private TableView<CashTableEntry> table;
 
-    public ChangeUserWindow(MainProcessor processor, TableView<UserTableEntry> table) {
+
+    public ChangeCashWindow(MainProcessor processor, TableView<CashTableEntry> table) {
         this.processor = processor;
         this.table = table;
 
@@ -64,9 +66,6 @@ public class ChangeUserWindow {
                 processor.changeUsername(selectedID, username.getText());
                 processor.changePassword(selectedID, password.getText());
                 processor.changeType(selectedID, typesCombo.getSelectionModel().getSelectedItem());
-                Alert alert = new Alert(Alert.AlertType.WARNING, "Change successfully.");
-                alert.show();
-                stage.close();
             } catch (Exception e) {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "Change failed.");
                 alert.show();
@@ -85,12 +84,12 @@ public class ChangeUserWindow {
 
             table.getItems().clear();
 
-            for (User user : processor.getUsers()) {
-                table.getItems().add(new UserTableEntry(Integer.toString(user.getId()),
-                        user.getUsername(),
-                        user.getPassword(),
-                        user.getType().toString()));
-            }
+//            for (User user : processor.getUsers()) {
+//                table.getItems().add(new UserTableEntry(Integer.toString(user.getId()),
+//                        user.getUsername(),
+//                        user.getPassword(),
+//                        user.getType().toString()));
+//            }
         }
     }
 

@@ -2,13 +2,13 @@ package VendingMachine.Window;
 
 import VendingMachine.Processor.MainProcessor;
 import VendingMachine.User;
+import VendingMachine.Window.CashManagement.CashManagementWindow;
+import VendingMachine.Window.UserManagement.UserManagementWindow;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
-
-import java.io.IOException;
 
 public class MainWindow {
     private MainProcessor processor;

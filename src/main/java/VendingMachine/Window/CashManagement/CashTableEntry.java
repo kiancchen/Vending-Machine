@@ -1,4 +1,4 @@
-package VendingMachine.Window;
+package VendingMachine.Window.CashManagement;
 
 public class CashTableEntry {
     private double cashType ;
