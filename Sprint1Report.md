@@ -4,13 +4,16 @@
 - [Agile Development Tools and Practices](#agile-development-tools-and-practices)
   - [Github](#github)
     - [Workflow](#workflow)
-    - [Branch History](#branch-history)
-    - [Pull Request History](#pull-request-history)
+    - [Branch](#branch)
+      - [Issues of Branches](#issues-of-branches)
+    - [Pull Request](#pull-request)
+      - [Pull request history](#pull-request-history)
     - [Conflict Issues History](#conflict-issues-history)
     - [Release History](#release-history)
   - [Gradle](#gradle)
     - [Gradle Command](#gradle-command)
     - [`build.gradle` Files](#buildgradle-files)
+  - [Build.Gradle File](#buildgradle-file)
   - [JUnit and Jacoco](#junit-and-jacoco)
     - [How to Check Test Report](#how-to-check-test-report)
       - [JUnit](#junit)
@@ -30,13 +33,13 @@
     - [Adopted CI Practices](#adopted-ci-practices)
 - [Application Development](#application-development)
   - [UML Class Diagram](#uml-class-diagram)
-  - [Class Document](#class-document)
   - [Demo](#demo)
     - [Sign In or Sign Up](#sign-in-or-sign-up)
     - [Display Users](#display-users)
     - [Add Users](#add-users)
     - [Change Users](#change-users)
     - [Remove Users](#remove-users)
+    - [Display Cash](#display-cash)
 - [Sprint Artifacts](#sprint-artifacts)
   - [Sprint Goal](#sprint-goal)
   - [Tasks Board](#tasks-board)
@@ -48,6 +51,8 @@
     - [Meeting 2](#meeting-2)
     - [Meeting 3](#meeting-3)
   - [Sprint Review](#sprint-review)
+    - [Client Feedback](#client-feedback)
+    - [Revisited Product Backlog](#revisited-product-backlog)
   - [Sprint Retrospective](#sprint-retrospective)
 
 # Scrum Teams
@@ -249,7 +254,7 @@ We have following content in this file
 
 - Javafx
 
-  We add two required modules, 
+  We add two required modules,
 
   - `javafx.controls` modules used for define UI controls, charts and appearances that can be used in the JavaFX UI toolbox.
   - `javafx.fxml` modules used for defines the FXML APIs for the JavaFX UI toolkit.
@@ -412,17 +417,13 @@ Todo
 
 <img src='https://i.loli.net/2020/11/05/wkTBlMWon2xdCa7.png' alt='wkTBlMWon2xdCa7'/>
 
-## Class Document
-
-Todo
-
 ## Demo
 
 ### Sign In or Sign Up
 
 At first the window will display the current user is `anonymous` by default.
 
-<img src='https://i.loli.net/2020/11/05/H9WyOpgE41j8LGU.png' alt='H9WyOpgE41j8LGU'/>
+<img src='https://i.loli.net/2020/11/05/esZRBvgfGN9tKVx.png' alt='esZRBvgfGN9tKVx'/>
 
 After click on `Account` button, it display a window to sign in or sign up.
 
@@ -473,6 +474,12 @@ The owner first need to select which users he want to change, then write the cor
 The owner can select which users he want to remove, then click on `Remove` button. Then table will automatically remove the row with the user that have just removed.
 
 <img src='https://i.loli.net/2020/11/05/6EnXNj3FIrbADdT.png' alt='6EnXNj3FIrbADdT'/>
+
+### Display Cash
+
+<img src='https://i.loli.net/2020/11/05/12kCufNReFHyr8o.png' alt='12kCufNReFHyr8o'/>
+
+The table can display all the amount of cash in the machine. after click on `Manage Cash` Button.
 
 # Sprint Artifacts
 
@@ -605,4 +612,35 @@ Todo
 
 ## Sprint Review
 
+### Client Feedback
+
+Our client is satisfy with output of current sprint. However, client has pointed out that the product backlog has not been associated with corresponding user stories well. There should be more description and accepted criteria for each task.
+
+- What has been done?
+  - The database that stores users and cashes has been implemented.
+  - The user is able to log in and log out.
+  - The user can log in automatically after sign up.
+  - The owner can add, change or remove user(s).
+  - A table of users is displayed.
+  - A table of cash amounts is displayed.
+- What has not been done?
+  - The feature that should be able to set the cash is not yet implemented.
+  - The feature that should be able to calculate the change is not yet implemented.
+
+### Revisited Product Backlog
+
+The tasks have not initialized enough at the Sprint Planning, thus it will cause more conflict later when a new feature should be added. To make things better, the new feature in backlog should label with `NEW`, which helps indicate which tasks are initial and revisited.
+
+Besides, the tasks have not been prioritize at the beginning, so that it will extends the duration of other tasks if specific task is not implemented yet. In the next sprint, all the tasks should be prioritize first, and teammates aim to finished tasks with higher priority first.
+
 ## Sprint Retrospective
+
+- Date: 5th November
+- What went well during the Sprint?
+  - Finished all the tasks on time.
+  - Working on different features on different branches.
+  - All agile practices have been deployed, e.g. no conflict when merge to master on origin.
+- What can be improved in the future?
+  - More description and acceptance criteria of each task.
+  - Associate tasks with corresponding user stories.
+  - Prioritize all the tasks at the beginning.
