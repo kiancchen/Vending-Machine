@@ -32,8 +32,8 @@ public class CashManagementWindow {
         stage.setTitle("Cash Management");
         stage.show();
         initTable();
-        initButton();
-        initButtonActions();
+//        initButton();
+//        initButtonActions();
     }
 
     private void initTable() {
@@ -86,6 +86,6 @@ public class CashManagementWindow {
 
     private void initButtonActions() {
 
-//        changeButton.setOnAction((event -> new ChangeUserWindow;
+        changeButton.setOnAction((event -> new ChangeCashWindow(this.processor, this.table)));
     }
 }
