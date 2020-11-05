@@ -8,12 +8,15 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
+
 public class MainWindow {
     private MainProcessor processor;
     private Scene scene;
     private AnchorPane pane;
     private Button accountBtn;
     private Button userManagementBtn;
+    private Button cashierManageBtn;
     private Text currentUserInfo;
 
     public MainWindow(MainProcessor processor) {
@@ -29,9 +32,10 @@ public class MainWindow {
     private void initButtons() {
         accountBtn = new Button();
         userManagementBtn = new Button();
+        cashierManageBtn = new Button();
 
-        Button[] buttons = {accountBtn, userManagementBtn};
-        String[] texts = {"Account", "Manage User"};
+        Button[] buttons = {accountBtn, userManagementBtn,cashierManageBtn};
+        String[] texts = {"Account", "Manage User","Manage Cash"};
 
         for (int i = 0; i < buttons.length; i++) {
             Button button = buttons[i];
@@ -64,6 +68,16 @@ public class MainWindow {
                 alert.show();
             }
         });
+        cashierManageBtn.setOnAction(event -> {
+            if (processor.getCurrentUser().getPermission(User.Permission.MANAGE_CASH)){
+                new CashManagementWindow(processor);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
+                        "to do this action.");
+                alert.show();
+            }
+        });
+
 
     }
 
