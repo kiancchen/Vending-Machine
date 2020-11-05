@@ -36,6 +36,14 @@ public class MainProcessor {
         return this.userProcessor.changeUsername(id, newUsername);
     }
 
+    public boolean changePassword(int id, String newPassword) throws IOException {
+        return this.userProcessor.changePassword(id, newPassword);
+    }
+
+    public boolean changeType(int id, String newType) throws IOException {
+        return this.userProcessor.changeType(id, newType);
+    }
+
     public boolean addUser(String username, String password, String type) throws IOException {
         return this.userProcessor.addUser(username, password, type);
     }
