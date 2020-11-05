@@ -398,18 +398,43 @@ During this process, we have successful and failed build output on jerkin, here 
 
 - `Edit Built Information` page: make the display name and write description for that
 
+![](https://i.loli.net/2020/11/05/5YWy9euDxbim4wg.png)
+
 - `Deleted` page: delete this build
 
+![CleanShot 2020-11-05 at 18.50.55@2x](https://i.loli.net/2020/11/05/hsi84zkYC6SL3mf.png)
+
 - `Polling Log` page: This page captures the polling log that triggered this build.
+
+![CleanShot 2020-11-05 at 18.51.03@2x](https://i.loli.net/2020/11/05/fDNub37Scy2P9Ev.png)
+
 - `Git Build Data` page: This page display the git revision and the branches has been build.
+
+![CleanShot 2020-11-05 at 18.51.20@2x](https://i.loli.net/2020/11/05/EKzW8OI7FbovXn6.png)
 
 #### Success Build Example
 
-Todo
+![CleanShot 2020-11-05 at 18.53.50@2x](https://i.loli.net/2020/11/05/8CbHy6DJfpWmagd.png)
+
+`Build #48` is an examples of successful build.
+
+- In the `Status` page, it briefly described some information include any changes in this build,why Jenkins started this built based on that change and git revision about which branch is associated with. The difference between these builds and failure one is that these also have test result and Jacoco - Overall Coverage Summary
+- In the Test Result page, you can see the Junit test report
+
+![CleanShot 2020-11-05 at 18.56.20@2x](https://i.loli.net/2020/11/05/GsC7if4xaZpUkOu.png)
+
+- In the Coverage Report page, you can see the Jacoco test coverage report
+
+![CleanShot 2020-11-05 at 18.56.41@2x](https://i.loli.net/2020/11/05/egBiy3YHQVpFN5R.png)
 
 ### Adopted CI Practices
 
-Todo
+We maintained two projects on Jenkins, one is for master branch only, and the other one is for all branches.
+
+![CleanShot 2020-11-05 at 18.59.06@2x](https://i.loli.net/2020/11/05/hSyJTR2riaMlzBG.png)
+
+- `Vending Machine - All branches` builds and tests all branches. It's convenient for each teammate to check if their code works and determine whether to create a pull request or not.
+- `Vending Machine - Master Branch` only builds and tests master branch. It's used to test the integrated code on master branch, which maybe released later as a working program.
 
 # Application Development
 
@@ -485,11 +510,11 @@ The table can display all the amount of cash in the machine. after click on `Man
 
 ## Sprint Goal
 
-   - Have initials codebase with appropriate methods to implement basic functionality
-   - Implement the login system with different type of users.
-   - Implement the user management system so that owner could change manages all the users.
-   - Implement the cash system so that it will automatically calculate the change.
-   - Implement the database to record the users and cash within the machine.
+   - Have initial codebase with appropriate methods and data structure to implement basic functionality
+   - Implement the login system with different roles of users.
+   - Implement the user management system so that owner could manages all users.
+   - Implement the cash system so that it will automatically calculate the change. And the owner and cashier can change the number of cashes.
+   - Implement the database handler to save the users and cash data to files.
 
 ## Tasks Board
 
@@ -586,24 +611,24 @@ Todo
   - Discussion about the progression of each tasks.
   - Emphasize the important of burndown chart and change the status of each task as soon as possible.
 - Cheng Chen:
-  - What did I do yesterday: Modified some features of the code to looks nicer.
-  - What I will do today: Continues working on refactor the code.
+  - What did I do yesterday: Review codes written by other teammates. Beeatify the code structure and remove unnecessary codes.
+  - What I will do today: Continue working on refactoring the code.
   - Do I see any obstacles: None at the moment.
 - Yuanqun Wang:
-  - What did I do yesterday: Finished add or remove user GUI
-  - What I will do today: Working on change user GUI.
+  - What did I do yesterday: Finished adding or removing user GUI
+  - What I will do today: Working on changing user information GUI.
   - Do I see any obstacles: None at the moment.
 - Yufei Zuo:
   - What did I do yesterday: Proofreading the report.
-  - What I will do today: Continues proofreading the report.
+  - What I will do today: Continue proofreading the report.
   - Do I see any obstacles: None at the moment.
 - Zexuan Long:
   - What did I do yesterday: Finished adding more test cases.
   - What I will do today: Writing report about class document.
   - Do I see any obstacles: None at the moment.
 - Songyin Li:
-  - What did I do yesterday: Finished part of cash system.
-  - What I will do today: Working on GUI of cash system.
+  - What did I do yesterday: GUI of cash system
+  - What I will do today: Continue working on GUI of cash system.
   - Do I see any obstacles: None at the moment.
 - Zehui Lin:
   - What did I do yesterday: Finished UML class diagram.
@@ -614,33 +639,37 @@ Todo
 
 ### Client Feedback
 
-Our client is satisfy with output of current sprint. However, client has pointed out that the product backlog has not been associated with corresponding user stories well. There should be more description and accepted criteria for each task.
+Our client is satisfied with output of current sprint. However, client pointed out that the product backlog were not associated with corresponding user stories well. There should be more description and accepted criteria for each task.
 
 - What has been done?
-  - The database that stores users and cashes has been implemented.
+  - The database that stores users and cashes.
   - The user is able to log in and log out.
   - The user can log in automatically after sign up.
-  - The owner can add, change or remove user(s).
-  - A table of users is displayed.
-  - A table of cash amounts is displayed.
+  - The owner can add, change or remove users.
+  - A table of users can be displayed.
+  - A table of numbers of cashes can be displayed.
 - What has not been done?
-  - The feature that should be able to set the cash is not yet implemented.
-  - The feature that should be able to calculate the change is not yet implemented.
+  - The cashier and owner being able to set the cash is not yet implemented.
+  - The feature that calculates the specific changes is not yet implemented.
 
 ### Revisited Product Backlog
 
-The tasks have not initialized enough at the Sprint Planning, thus it will cause more conflict later when a new feature should be added. To make things better, the new feature in backlog should label with `NEW`, which helps indicate which tasks are initial and revisited.
+The tasks have not created carefully and detailedly at the Sprint Planning, thus it will cause much conflict later when a new feature should be added. To improve this, we should spend more time on user stories and create tasks for each user stories while planning next sprint.
 
-Besides, the tasks have not been prioritize at the beginning, so that it will extends the duration of other tasks if specific task is not implemented yet. In the next sprint, all the tasks should be prioritize first, and teammates aim to finished tasks with higher priority first.
+Besides, the tasks were not prioritized at the beginning, so that it will extend the duration of other tasks if one task that should have higher priority is not implemented yet in time. And the teammate have to wait for that task being completed. In the next sprint, all the tasks should be prioritized first, and teammates aim to finish tasks with higher priority first.
+
+Also, we assigned some tasks to teammates that are not good at that. For example, some teammates are not familar with `Javafx` but we asked them to complete an GUI task. In the next sprint, we should consider the ability of each teammate and ask them to do what they are good at to improve the efficiency.
 
 ## Sprint Retrospective
 
 - Date: 5th November
 - What went well during the Sprint?
-  - Finished all the tasks on time.
-  - Working on different features on different branches.
-  - All agile practices have been deployed, e.g. no conflict when merge to master on origin.
+  - Completed all the tasks on time.
+  - Worked on different features on different branches by different teammate well.
+  - All agile tools and practices were utilized.
+  - The communication among teammate was efficient so that we can adjust our tasks in time during the progress of the development.
 - What can be improved in the future?
   - More description and acceptance criteria of each task.
   - Associate tasks with corresponding user stories.
   - Prioritize all the tasks at the beginning.
+  - Assign tasks to the right teammates.
