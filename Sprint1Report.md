@@ -221,7 +221,7 @@ Todo
 
 ### Gradle Command
 
-Todo (直接抄上一个asm，换上这次asm的配图)
+Todo
 
 ### `build.gradle` Files
 
@@ -386,17 +386,30 @@ During this process, we have successful and failed build output on jerkin, here 
 
 - In the `Status` page, it briefly describes some information include any changes in this build,why jenkins started this built based on that change and commit id about which branch is associated with.
 
-  - According to the commit message provided by the submitter, `Build #51` did the following 4 changes 1.sketch of window 2.convert version 3.convert version Final 4.convert version Final. Jerkin started a built based on cche7346 push these change to the master.
-
   ![CleanShot 2020-11-05 at 14.10.20@2x](https://i.loli.net/2020/11/05/PnsSEj6vJociZRX.png)
+
+- In the `Changes` page, you can see the commit history of this branch
+
+![CleanShot 2020-11-05 at 14.54.18@2x](https://i.loli.net/2020/11/05/EVDRoldSuNHnxXs.png)
+
+- To find the error, go to `Console Output`
+
+![CleanShot 2020-11-05 at 14.57.15@2x](https://i.loli.net/2020/11/05/S7hjcefsLmnbMgk.png)
+
+- `Edit Built Information` page: make the display name and write description for that
+
+- `Deleted` page: delete this build
+
+- `Polling Log` page: This page captures the polling log that triggered this build.
+- `Git Build Data` page: This page display the git revision and the branches has been build.
 
 #### Success Build Example
 
-Todo (直接抄上一个asm，换上这次asm的配图)
+Todo
 
 ### Adopted CI Practices
 
-Todo (直接抄上一个asm，换上这次asm的配图)
+Todo
 
 # Application Development
 
@@ -490,7 +503,7 @@ The product backlog contains a set of all features and sub-features to build the
 |      Select variety types of snacks     	|      N/A      	|       5      	|
 | Customer can cancel transaction anytime 	|      N/A      	|       3      	|
 
-Todo (现在先不用写，交之前把jira上的task抄上去就行了)
+Todo
 
 ### Sprint Backlog
 
@@ -502,7 +515,7 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
 | Setup database that is able to save data to file | Cheng Chen |       5     	| √       	|
 | Login system is able to sign in, sign up 	|      Zexuan Long     	|       4      	| V        	|
 
-Todo (现在先不用写，交之前把jira上的task抄上去就行了)
+Todo
 
 ## User Stories
 

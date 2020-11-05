@@ -32,8 +32,8 @@ public class CashManagementWindow {
         stage.setTitle("Cash Management");
         stage.show();
         initTable();
-        initButton();
-        initButtonActions();
+//        initButton();
+//        initButtonActions();
     }
 
     private void initTable() {
@@ -75,7 +75,7 @@ public class CashManagementWindow {
 
         for (int i = 0; i < buttons.length; i++) {
             Button button = buttons[i];
-            button.setLayoutX(200 + 150 * i);
+            button.setLayoutX(200);
             button.setLayoutY(400);
             button.setPrefWidth(200);
             button.setPrefHeight(30);
@@ -86,6 +86,6 @@ public class CashManagementWindow {
 
     private void initButtonActions() {
 
-//        changeButton.setOnAction((event -> new ChangeUserWindow;
+        changeButton.setOnAction((event -> new ChangeCashWindow(this.processor, this.table)));
     }
 }
