@@ -32,6 +32,11 @@
   - [UML Class Diagram](#uml-class-diagram)
   - [Class Document](#class-document)
   - [Demo](#demo)
+    - [Sign In or Sign Up](#sign-in-or-sign-up)
+    - [Display Users](#display-users)
+    - [Add Users](#add-users)
+    - [Change Users](#change-users)
+    - [Remove Users](#remove-users)
 - [Sprint Artifacts](#sprint-artifacts)
   - [Sprint Goal](#sprint-goal)
   - [Tasks Board](#tasks-board)
@@ -292,7 +297,7 @@ Todo (直接抄上一个asm，换上这次asm的配图)
 
 ## UML Class Diagram
 
-Todo
+<img src='https://i.loli.net/2020/11/05/wkTBlMWon2xdCa7.png' alt='wkTBlMWon2xdCa7'/>
 
 ## Class Document
 
@@ -300,7 +305,61 @@ Todo (按照java的class写heading)
 
 ## Demo
 
-Todo (按照功能写heading)
+### Sign In or Sign Up
+
+At first the window will display the current user is `anonymous` by default.
+
+<img src='https://i.loli.net/2020/11/05/H9WyOpgE41j8LGU.png' alt='H9WyOpgE41j8LGU'/>
+
+After click on `Account` button, it display a window to sign in or sign up.
+
+<img src='https://i.loli.net/2020/11/05/EGFWUjfksDiKBrM.png' alt='EGFWUjfksDiKBrM'/>
+
+When it sign in with correct username and password, it will display an alert to show sign in successfully, and the main window will display corresponding username and its type on the top right corner, as well as the text on button will change to `Logout` instead of `Account`.
+
+<img src='https://i.loli.net/2020/11/05/EAfrc6dzkVbGWaT.png' alt='EAfrc6dzkVbGWaT'/>
+
+When it sign in with wrong username or password, it will display an alert to notify user it has wrong username or password.
+
+<img src='https://i.loli.net/2020/11/05/RsQorqTLCEMVWZa.png' alt='RsQorqTLCEMVWZa'/>
+
+When it sign up with different username not exists in the database, it will display an alert to notify sign up successfully.
+
+<img src='https://i.loli.net/2020/11/05/FMrwN2eBJaX9EC5.png' alt='FMrwN2eBJaX9EC5'/>
+
+### Display Users
+
+The user management window is only available for owner users. If current user is not owner, it will display an alert to notify current user have no access to this feature.
+
+<img src='https://i.loli.net/2020/11/05/y7VEQN8AOe9Fkgd.png' alt='y7VEQN8AOe9Fkgd'/>
+
+There is a table of all the users that have been registered in the system. Besides, there are three more operations, add or change or remove users, that owner have access.
+
+<img src='https://i.loli.net/2020/11/05/bY89vVtRzAmnKUP.png' alt='bY89vVtRzAmnKUP'/>
+
+### Add Users
+
+<img src='https://i.loli.net/2020/11/05/7lRXZSmgdse4fCx.png' alt='7lRXZSmgdse4fCx'/>
+
+The owner can input new username, password and user type, then click on `Add` button. An alert box will notify it is successfully added and the table will update accordingly.
+
+<img src='https://i.loli.net/2020/11/05/hnmqVSKLUQRz8DW.png' alt='hnmqVSKLUQRz8DW'/>
+
+### Change Users
+
+<img src='https://i.loli.net/2020/11/05/81KnGjpJzLxq3Ce.png' alt='81KnGjpJzLxq3Ce'/>
+
+The owner first need to select which users he want to change, then write the corresponding username, password and user type again, then click on `Change` button. The table will automatically change the data inside.
+
+<img src='https://i.loli.net/2020/11/05/sCvueUbHEmjFIVp.png' alt='sCvueUbHEmjFIVp'/>
+
+### Remove Users
+
+<img src='https://i.loli.net/2020/11/05/KjzosDu1Y8rxHPa.png' alt='KjzosDu1Y8rxHPa'/>
+
+The owner can select which users he want to remove, then click on `Remove` button. Then table will automatically remove the row with the user that have just removed.
+
+<img src='https://i.loli.net/2020/11/05/6EnXNj3FIrbADdT.png' alt='6EnXNj3FIrbADdT'/>
 
 # Sprint Artifacts
 
