@@ -64,6 +64,9 @@ public class ChangeUserWindow {
                 processor.changeUsername(selectedID, username.getText());
                 processor.changePassword(selectedID, password.getText());
                 processor.changeType(selectedID, typesCombo.getSelectionModel().getSelectedItem());
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Change successfully.");
+                alert.show();
+                stage.close();
             } catch (Exception e) {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "Change failed.");
                 alert.show();

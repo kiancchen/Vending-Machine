@@ -126,12 +126,13 @@
 
 4. Push the `feat-xxx` or `fix-xxx` branch to rempte repository with appropriate comments.
    ```
+   git status
    git add xxx
    git commit -m "consice message"
    git push origin feat-xxx
    ```
 
-   ![bzhJfO4wuvoYAr5](https://i.loli.net/2020/09/30/bzhJfO4wuvoYAr5.png)
+![CleanShot 2020-11-05 at 12.17.21@2x](https://i.loli.net/2020/11/05/bKjYHatNBFWx31C.png)
 
 5. Open a new pull request by clicking on `Compare & pull request` on Github's repository page on the top right corner. Write more details about what you have changed.
 
@@ -156,29 +157,60 @@
 
       ![EXGvkQheW2PuBlj](https://i.loli.net/2020/09/30/EXGvkQheW2PuBlj.png)
 
-9. At last, using `git pull  orign master` again and delete the `feat-xxx` or `fix-xxx` branch locally using `git branch -d feat-xxx`.
+9. At last, using `git pull orign master` again and delete the merged branch locally using `git branch -d branch_name`.
 
    <img src='https://i.loli.net/2020/10/03/aoipLxsVlRQ5CtT.png' alt='aoipLxsVlRQ5CtT' style="width:80%"/>
 
-   - Otherwise, you may encounter the following issue
+   - Otherwise, you may encounter the following issue. Make sure you want to delete it. If so, use the flag `-D` to force to delete the branch.
 
       <img src='https://i.loli.net/2020/10/03/fGRNOkm7de6pjaI.png' alt='fGRNOkm7de6pjaI'/>
 
-### Branch History
+### Branch
 
-Todo (直接抄上一个asm，换上这次asm的配图)
+- As name convention in the [Workflow](https://github.sydney.edu.au/SOFT2412-2020S2/R18B-Group5-CurrencyConverter#workflow)，we use `feat` as prefix with feature to name our branch. For example, as in the following picture, I am responsible to hide the password and show it as asterisk (\*), when I finish that part I push it and name as `feat-passwordField`
 
-### Pull Request History
+![CleanShot 2020-11-05 at 12.56.34@2x](https://i.loli.net/2020/11/05/1Uf3YzAuSQL5eq9.png)
 
-Todo (直接抄上一个asm，换上这次asm的配图)
+And you can see all merged branches in the commit history
+
+![CleanShot 2020-11-05 at 13.18.12@2x](https://i.loli.net/2020/11/05/bTVLmhANpk26HCZ.png)
+
+#### Issues of Branches
+
+Regarding the issues of `branch`, because we have wrote all the process of `branch` in the [Workflow](#workflow) part of the report first before we divided the code tasks, the team members would browse the report and easily get answer when they are confused about how to make branch or what is our name convention.
+
+### Pull Request
+
+1. Follow the process of [Workflow](#workflow), click the `Compare & pull request` button to create a pull request.
+
+![CleanShot 2020-11-05 at 14.33.12@2x](https://i.loli.net/2020/11/05/1pYOnS5rC4QdVtK.png)
+
+2. Then the code reviewer will review your code
+
+   ![CleanShot 2020-11-05 at 14.34.54@2x](https://i.loli.net/2020/11/05/Eq5pSadHCJ19vIV.png)
+
+   3. If the code has no problems, this branch will be merged to the master and deleted afterwards.
+
+   ![CleanShot 2020-11-05 at 14.36.04@2x](https://i.loli.net/2020/11/05/JhwDembGWyIuFnK.png)
+
+   4. Then you can see a new merging commit.
+
+   ![CleanShot 2020-11-05 at 13.38.34@2x](https://i.loli.net/2020/11/05/SLMvdrHcNJeFQKg.png)
+
+#### Pull request history
+
+![CleanShot 2020-11-05 at 13.33.07@2x](https://i.loli.net/2020/11/05/3y7TrFtf1dDPYmU.png)
 
 ### Conflict Issues History
 
-Todo (直接抄上一个asm，换上这次asm的配图)
+- The main issues we encountered during the project is that after pulling request, we will encounter conflicts during the merge process. Chen is the code reviewer for this project, so when there is a conflict, he will communicate with the committer to resolve the conflict.
+- In the following picture, the new version submitted by Yufei conflicts with the version of the master. The system shows the conflict is this sentence `“The following sections of code has written by Cheng Chen:”` Then reviewer Chen communicated with the programmer Yufei to decide which version as the final one.
+
+![CleanShot 2020-11-05 at 13.41.38@2x](https://i.loli.net/2020/11/05/H6JOjrmBIqD9QR7.png)
 
 ### Release History
 
-Todo (每次sprint提交前再提交release)
+Todo
 
 ## Gradle
 
@@ -188,7 +220,53 @@ Todo (直接抄上一个asm，换上这次asm的配图)
 
 ### `build.gradle` Files
 
-Todo (直接抄上一个asm，换上这次asm的配图)
+## Build.Gradle File
+
+We have following content in this file
+
+- `Plugins`
+
+  We used four plugins to support gradle.
+
+  - `java` : apply the java plugin to add support for Java
+  - `application`: apply the application plugin to add support for building a CLI application.
+  - `jacoco` :apply JaCoCo plugin ti provides code coverage metrics for Java code.
+  - `javafx`: apply Javafx JavaFX to use highly portable modern hardware accelerated user interface to create Java applications.
+
+  [![img](https://i.loli.net/2020/10/10/1vSf4oYT8nwjkze.png)](https://sm.ms/image/1vSf4oYT8nwjkze)
+
+- `Repositories`
+
+  Use jcenter for resolving dependencies and you can declare any Maven/Ivy/file repository here.
+
+  [![img](https://i.loli.net/2020/10/10/89rhLdBKsi5qej1.png)](https://sm.ms/image/89rhLdBKsi5qej1)
+
+- `Dependencies`
+
+  This part declared for a Gradle project applies to a specific scope. Follow the order of `dependencies` from top to bottom. we applied to use application, `json` library, `junit `test framework
+
+  ![CleanShot 2020-11-05 at 13.44.45@2x](https://i.loli.net/2020/11/05/69ZPvCUymMh1auT.png)
+
+- Javafx
+
+  We add two required modules, 
+
+  - `javafx.controls` modules used for define UI controls, charts and appearances that can be used in the JavaFX UI toolbox.
+  - `javafx.fxml` modules used for defines the FXML APIs for the JavaFX UI toolkit.
+
+[![img](https://i.loli.net/2020/10/10/ApydPgaxe6Gt8zJ.png)](https://sm.ms/image/ApydPgaxe6Gt8zJ)
+
+- `Jacoco and Jacoco Test Report`
+  - We use jacoco with version 0.8.4, and will put report to the directory `coverge`.
+  - For jacoco test report, we will put it into the directory `jacocoHtml`. We also have restriction for this report, both xml and csv formats are not enabled and we only allow html format.
+
+[![img](https://i.loli.net/2020/10/10/K4GsbLVdkf3Ug2w.png)](https://sm.ms/image/K4GsbLVdkf3Ug2w)
+
+- `application`
+
+We define the main class `VendingMachine.App` for the application
+
+![CleanShot 2020-11-05 at 13.46.21@2x](https://i.loli.net/2020/11/05/K7D1pdkN4QmBzXv.png)
 
 ## JUnit and Jacoco
 
@@ -196,11 +274,36 @@ Todo (直接抄上一个asm，换上这次asm的配图)
 
 #### JUnit
 
-Todo (直接抄上一个asm，换上这次asm的配图)
+1. Choose a build
+2. Click Test Result
+
+![CleanShot 2020-11-05 at 13.51.31@2x](https://i.loli.net/2020/11/05/bzKTt5l9fi87dR6.png)
+
+3. Click VendingMachine to see tests class by class.
+
+![CleanShot 2020-11-05 at 13.51.47@2x](https://i.loli.net/2020/11/05/j7TBCWG3rMxuOIq.png)
+
+4. Choose a class to see tested methods
+
+![CleanShot 2020-11-05 at 13.52.42@2x](https://i.loli.net/2020/11/05/FvMC1qAfuwSnTgH.png)
 
 #### Jacoco
 
-Todo (直接抄上一个asm，换上这次asm的配图)
+1. Choose a build and click Coverage Report
+
+![CleanShot 2020-11-05 at 13.53.55@2x](https://i.loli.net/2020/11/05/eGWjO3aIDxRpbuh.png)
+
+2. Choose a package to see coverage of each class
+
+![CleanShot 2020-11-05 at 13.56.06@2x](https://i.loli.net/2020/11/05/YLxoMSFEz8aBXJU.png)
+
+3. Choose a method to see coverage of every method
+
+![CleanShot 2020-11-05 at 13.56.47@2x](https://i.loli.net/2020/11/05/tVsGorXjBd1PgJc.png)
+
+4. Below this you can see all statements that are tested or not. Red means it's not tested. Green means it's tested. Yellow means only part of branch is tested.
+
+![CleanShot 2020-11-05 at 14.00.03@2x](https://i.loli.net/2020/11/05/S2EhbTsyYa7L3pI.png)
 
 ### Quality of Testing
 
@@ -219,10 +322,6 @@ Todo (直接抄上一个asm，换上这次asm的配图)
 2. Create a new project for `Vending Machine`. First go to `Jenkins > New Item`, write the project name at `Enter an iterm name` and select `Freestyle project`.
 
 #### Setup GitHub in Jenkins
-
-1. Go to `Jenkins > Manage Jenkins > Configure System > GitHub Enterprise Servers`, write `https://github.sydney.edu.au/api/v3` at API Endpoint and set name to be `Github Sydney`.
-
-   <img src='https://i.loli.net/2020/09/25/kxcrwBy1qiSaXtH.png' alt='kxcrwBy1qiSaXtH'/>
 
 2. Go to `Currency Converter > Configure > Source Code Management` and select `Git`. Then add repository URL to `Repository URL` and set Credentials to one of group members.
 
@@ -262,28 +361,29 @@ Todo (直接抄上一个asm，换上这次asm的配图)
 
    <img src='https://i.loli.net/2020/09/25/grLqx4UbiAZsJly.png' alt='grLqx4UbiAZsJly' style="width:50%"/>
 
-
 #### Host Jenkins on internet and Connect to Github
 
-1. Go to [GCP](https://console.cloud.google.com/), create a cluster under `Kubernetes Engine`, then click `Application` and search `Jenkins`. Then you should find this:
+The system used to host Jenkins is MacOS.
 
-   <img src='https://i.loli.net/2020/10/06/GWMqYL2DzNixIRP.png' alt='' style="width:80%"/>
+1. Start the Jenkins on local by the command `brew services start jenkins`
+2. Then you can visit Jenkins on local by http://localhost:8080/
+3. To host it on internet, you need to download [ngrok](https://ngrok.com/). Then run it by `./ngrok http 8080`. You'll get a public URL to the Jenkins server.
 
-2. Deploy this application and then you can see the address.
-
-   <img src='https://i.loli.net/2020/10/06/I5Bat4inL8UVdxP.png' alt='' style="width:80%"/>
-
-3. Append `/github-webhook/` to the Jenkins address, which is `http://35.244.146.248/github-webhook/`
-
-5. Go to `Github > Settings > Hooks > Add webhook` and add this link at `Payload URL`, e.g. `https://<hostname>/github-webhook/`. Then select `application/json` as `Content Type`.
-
-   <img src='https://i.loli.net/2020/10/06/W2Nn1ZY8beXvxHl.png' alt='' style="width:80%"/>
+![CleanShot 2020-11-05 at 14.04.52@2x](https://i.loli.net/2020/11/05/YBIwRxPmTja9fHz.png)
 
 ### Outstanding Example
 
+During this process, we have successful and failed build output on jerkin, here are 4 examples selected from all the builds.
+
 #### Failure Build Example
 
-Todo (直接抄上一个asm，换上这次asm的配图)
+`Build #29` are an example of failure build.
+
+- In the `Status` page, it briefly describes some information include any changes in this build,why jenkins started this built based on that change and commit id about which branch is associated with.
+
+  - According to the commit message provided by the submitter, `Build #51` did the following 4 changes 1.sketch of window 2.convert version 3.convert version Final 4.convert version Final. Jerkin started a built based on cche7346 push these change to the master.
+
+  ![CleanShot 2020-11-05 at 14.10.20@2x](https://i.loli.net/2020/11/05/PnsSEj6vJociZRX.png)
 
 #### Success Build Example
 
@@ -408,7 +508,6 @@ Todo (现在先不用写，交之前把jira上的task抄上去就行了)
 | As an owner, I want to remove users except anonymous users, so that the user I removed needs to sign up a new account. | Owner need to be logged in before removing users.<br/>The system asks owner to choose a user to remove from a ComboBox.<br/>In case the owner removes successfully, the removed user information disappears on table. |
 | As an owner, I want to change user information except anonymous users, so that the user I changed needs new login information when login or have different permissions. | Owner need to be logged in before changing users.<br>The system asks owner to choose a user to change from a ComboBox, or enter new username or password, or choose a new user type from a ComboBox.<br>In case the owner changes successfully, new user information displays on table. |
 |                                                              |                                                              |
-
 
 ## Scrum Meetings
 
