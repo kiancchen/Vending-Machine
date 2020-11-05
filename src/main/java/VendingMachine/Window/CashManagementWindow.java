@@ -75,7 +75,7 @@ public class CashManagementWindow {
 
         for (int i = 0; i < buttons.length; i++) {
             Button button = buttons[i];
-            button.setLayoutX(100);
+            button.setLayoutX(200);
             button.setLayoutY(400);
             button.setPrefWidth(200);
             button.setPrefHeight(30);
