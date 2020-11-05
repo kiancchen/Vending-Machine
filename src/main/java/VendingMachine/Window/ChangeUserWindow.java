@@ -69,9 +69,16 @@ public class ChangeUserWindow {
                 alert.show();
             }
 
-            // change data
-            initCombobox();
-            initTextFields();
+            usersCombo.getItems().clear();
+            List<User> users = processor.getUsers();
+            for (int i = 1; i < users.size(); i++) {
+                User user = users.get(i);
+                usersCombo.getItems().add(user.getString());
+            }
+            usersCombo.getSelectionModel().select(0);
+
+            username.setText("");
+            password.setText("");
 
             table.getItems().clear();
 
