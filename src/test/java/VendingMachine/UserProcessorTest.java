@@ -118,4 +118,23 @@ public class UserProcessorTest {
         userProcessor.logoutUser();
         assertEquals(User.UserType.ANONYMOUS, userProcessor.getCurrentUser().getType());
     }
+
+    @Test
+    public void testChangePassword() throws IOException{
+        UserProcessor userProcessor = new UserProcessor();
+        assertTrue(userProcessor.changePassword(2,"test1"));
+        assertTrue(userProcessor.verifyUser("blan","test1"));
+        assertFalse(userProcessor.changePassword(10000,"123"));
+    }
+
+    @Test
+    public void testChangeType() throws IOException{
+        UserProcessor userProcessor = new UserProcessor();
+        assertTrue(userProcessor.changeType(2, "CASHIER"));
+        List<User> userList = DatabaseHandler.loadUserData();
+        for (int i = 0; i < userList.size(); i ++) {
+            assertEquals(userList.get(i).getType(),userProcessor.getUsers().get(i).getType());
+        }
+        assertFalse(userProcessor.changeType(10000,"CASHIER"));
+    }
 }

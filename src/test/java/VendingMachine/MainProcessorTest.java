@@ -113,4 +113,23 @@ public class MainProcessorTest {
         assertFalse(mainProcessor.addUser("test","test"));
         assertEquals(User.UserType.CASHIER, mainProcessor.getCurrentUser().getType());
     }
+
+    @Test
+    public void testChangePassword() throws IOException{
+        MainProcessor mainProcessor = new MainProcessor();
+        assertTrue(mainProcessor.changePassword(2,"test1"));
+        assertTrue(mainProcessor.verifyUser("blan","test1"));
+        assertFalse(mainProcessor.changePassword(10000,"123"));
+    }
+
+    @Test
+    public void testChangeType() throws IOException{
+        MainProcessor mainProcessor = new MainProcessor();
+        assertTrue(mainProcessor.changeType(2, "CASHIER"));
+        List<User> userList = DatabaseHandler.loadUserData();
+        for (int i = 0; i < userList.size(); i ++) {
+            assertEquals(userList.get(i).getType(),mainProcessor.getUsers().get(i).getType());
+        }
+        assertFalse(mainProcessor.changeType(10000,"CASHIER"));
+    }
 }
