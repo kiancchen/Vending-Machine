@@ -69,9 +69,9 @@
 2. Scrum Master: Cheng Chen
 
     Responsible for:
-    - Record product backlog items and order it
     - Optimize the value of the work
-    - Ensure transparency and  clarity of the product backlog
+    - Ensure transparency and clarity of the product backlog
+    - Coordinate the work among teammates
 
 3. Developer1: Yuanqun Wang
 4. Developer2: Zexuan Long
@@ -520,43 +520,27 @@ The table can display all the amount of cash in the machine. after click on `Man
    - Implement the cash system so that it will automatically calculate the change. And the owner and cashier can change the number of cashes.
    - Implement the database handler to save the users and cash data to files.
 
-## Tasks Board
-
-### Product Backlog
+## Product Backlog
 
 The product backlog contains a set of all features and sub-features to build the vending machine, including functions, requirements, enhancements and fixes identified from previous sprints. The items in product backlog are ordered by priority and constantly changed. Any additional requirements from client should be directly added to product backlog instead of sprint backlog.
 
-|             Product Backlog             	|      Role     	| Story Points 	|
-|:---------------------------------------:	|:-------------:	|:------------:	|
-|           Application codebase          	| Collaborative 	|       5      	|
-|      Select variety types of snacks     	|      N/A      	|       5      	|
-| Customer can cancel transaction anytime 	|      N/A      	|       3      	|
-
-Todo
-
-### Sprint Backlog
+| Product Backlog                         | Role          | Story Points |
+| --------------------------------------- | ------------- | ------------ |
+| Application codebase                    | Collaborative | 5            |
+| Select variety types of snacks          | N/A           | 5            |
+| Customer can cancel transaction anytime | N/A           | 3            |
+## User Stories and Sprint Backlog
 
 The sprint backlog contains a set of items selected for this sprint. It is considered as a plan for delivering the product increment and realize the sprint goal. It is visible to anyone and to be added or modified by the development team.
 
-|             Product Backlog             	|      Role     	| Story Points 	| Finished 	|
-|:---------------------------------------:	|:-------------:	|:------------:	|----------	|
-|           Application codebase          	| Collaborative 	|       5      	| √        	|
-| Setup database that is able to save data to file | Cheng Chen |       5     	| √       	|
-| Login system is able to sign in, sign up 	|      Zexuan Long     	|       4      	| V        	|
-
-Todo
-
-## User Stories
-
-| User Story                                                   | Acceptance Criteria                                          |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| As a machine user, I want to sign up an accout, so that I can have my own privacy | The system needs to verify that the username is exists or not.<br>The System needs to ask user to enterr username and passwor.<br>In case the user enters an exists userrname then the system asks to try again or return to main window. |
-| As a machine user, I want to sign in own account, so that I can do transactions base on the records. | The system needs to verify that the username exists and that the password is correct. <br/>The system needs to ask user to enter username and password.<br/>In case the user enters a wrong username or password then the system displays wrong message and back to login window. |
-| As a machine user except anonymous users, I want to log out own account, so that I can protect own privacy and provide use to other users. | The system automatically provides the logout button when the user logs in.<br/>In case the user clicks the logout button, the system changes to anonymous user, backs to main window and displays last five products. |
-| As an owner, I want to add users except anonymous users, so that the users I added can sign in immediately without signing up. | Owner need to be logged in before adding users.<br/>The system asks owner to either enter username and password and or choose a user type from a ComboBox.<br/>In case the owner adds successfully, new user information displays on table. |
-| As an owner, I want to remove users except anonymous users, so that the user I removed needs to sign up a new account. | Owner need to be logged in before removing users.<br/>The system asks owner to choose a user to remove from a ComboBox.<br/>In case the owner removes successfully, the removed user information disappears on table. |
-| As an owner, I want to change user information except anonymous users, so that the user I changed needs new login information when login or have different permissions. | Owner need to be logged in before changing users.<br>The system asks owner to choose a user to change from a ComboBox, or enter new username or password, or choose a new user type from a ComboBox.<br>In case the owner changes successfully, new user information displays on table. |
-|                                                              |                                                              |
+| User Story                                                   | Acceptance Criteria                                          | Backlog                                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| As a user, <br/>I want to sign up an account, <br/>so that I can have my own data | The system needs to verify that the username is exists or not.<br>The System needs to ask user to enterr username and passwor.<br>In case the user enters an existed username then the system asks to try again.<br/>The  system should login automatically after the user signs up. | Check if the user exists in the database.<br/>The GUI of the sign up system. |
+| As a user, <br/>I want to sign in own account, <br/>so that I can do transactions base on the records. | The system needs to verify that the username exists and that the password is correct. <br/>The system needs to ask user to enter username and password.<br/>In case the user enters a wrong username or password then the system displays wrong message and back to login window. | Check if the user exists in the database.<br/>The GUI of the sign in system. |
+| As a user,<br/>I want to log out own account, <br/>so that I can protect own privacy and provide use to other users. | The system automatically provides the logout button when the user logs in.<br/>In case the user clicks the logout button, the system changes to anonymous user. | Switch the current user to the anonymous<br/>                |
+| As an owner, <br/>I want to add users, <br/>so that the users I added can sign in. | Owner need to be logged in before adding users.<br/>The system asks owner to either enter username and password and or choose a user type from a ComboBox.<br/>In case the owner adds successfully, new user information displays on table. | Add a new user to the database<br/>Adding users GUI          |
+| As an owner, <br/>I want to remove users, <br/>so that the user I removed needs to sign up a new account. | Owner need to be logged in before removing users.<br/>The system asks owner to choose a user to remove from a ComboBox.<br/>In case the owner removes successfully, the removed user information disappears on table. | Remove an user from the database<br/>Removing users GUI      |
+| As an owner, <br/>I want to change user information, <br/>so that the user I changed needs new login information when login or have different permissions. | Owner need to be logged in before changing users.<br>The system asks owner to choose a user to change from a ComboBox, or enter new username or password, or choose a new user type from a ComboBox.<br>In case the owner changes successfully, new user information displays on table. | Change the information of an user from the database<br/>Changing users GUI |
 
 ## Scrum Meetings
 
