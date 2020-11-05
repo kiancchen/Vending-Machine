@@ -32,6 +32,11 @@
   - [UML Class Diagram](#uml-class-diagram)
   - [Class Document](#class-document)
   - [Demo](#demo)
+    - [Sign In or Sign Up](#sign-in-or-sign-up)
+    - [Display Users](#display-users)
+    - [Add Users](#add-users)
+    - [Change Users](#change-users)
+    - [Remove Users](#remove-users)
 - [Sprint Artifacts](#sprint-artifacts)
   - [Sprint Goal](#sprint-goal)
   - [Tasks Board](#tasks-board)
@@ -41,6 +46,7 @@
   - [Scrum Meetings](#scrum-meetings)
     - [Meeting 1 (Sprint Planning)](#meeting-1-sprint-planning)
     - [Meeting 2](#meeting-2)
+    - [Meeting 3](#meeting-3)
   - [Sprint Review](#sprint-review)
   - [Sprint Retrospective](#sprint-retrospective)
 
@@ -124,10 +130,10 @@
    git add xxx
    git commit -m "consice message"
    git push origin feat-xxx
-```
-   
+   ```
+
 ![CleanShot 2020-11-05 at 12.17.21@2x](https://i.loli.net/2020/11/05/bKjYHatNBFWx31C.png)
-   
+
 5. Open a new pull request by clicking on `Compare & pull request` on Github's repository page on the top right corner. Write more details about what you have changed.
 
    ![zJikeRHTANL2OYf](https://i.loli.net/2020/09/30/zJikeRHTANL2OYf.png)
@@ -391,7 +397,7 @@ Todo (直接抄上一个asm，换上这次asm的配图)
 
 ## UML Class Diagram
 
-Todo
+<img src='https://i.loli.net/2020/11/05/wkTBlMWon2xdCa7.png' alt='wkTBlMWon2xdCa7'/>
 
 ## Class Document
 
@@ -399,7 +405,61 @@ Todo (按照java的class写heading)
 
 ## Demo
 
-Todo (按照功能写heading)
+### Sign In or Sign Up
+
+At first the window will display the current user is `anonymous` by default.
+
+<img src='https://i.loli.net/2020/11/05/H9WyOpgE41j8LGU.png' alt='H9WyOpgE41j8LGU'/>
+
+After click on `Account` button, it display a window to sign in or sign up.
+
+<img src='https://i.loli.net/2020/11/05/EGFWUjfksDiKBrM.png' alt='EGFWUjfksDiKBrM'/>
+
+When it sign in with correct username and password, it will display an alert to show sign in successfully, and the main window will display corresponding username and its type on the top right corner, as well as the text on button will change to `Logout` instead of `Account`.
+
+<img src='https://i.loli.net/2020/11/05/EAfrc6dzkVbGWaT.png' alt='EAfrc6dzkVbGWaT'/>
+
+When it sign in with wrong username or password, it will display an alert to notify user it has wrong username or password.
+
+<img src='https://i.loli.net/2020/11/05/RsQorqTLCEMVWZa.png' alt='RsQorqTLCEMVWZa'/>
+
+When it sign up with different username not exists in the database, it will display an alert to notify sign up successfully.
+
+<img src='https://i.loli.net/2020/11/05/FMrwN2eBJaX9EC5.png' alt='FMrwN2eBJaX9EC5'/>
+
+### Display Users
+
+The user management window is only available for owner users. If current user is not owner, it will display an alert to notify current user have no access to this feature.
+
+<img src='https://i.loli.net/2020/11/05/y7VEQN8AOe9Fkgd.png' alt='y7VEQN8AOe9Fkgd'/>
+
+There is a table of all the users that have been registered in the system. Besides, there are three more operations, add or change or remove users, that owner have access.
+
+<img src='https://i.loli.net/2020/11/05/bY89vVtRzAmnKUP.png' alt='bY89vVtRzAmnKUP'/>
+
+### Add Users
+
+<img src='https://i.loli.net/2020/11/05/7lRXZSmgdse4fCx.png' alt='7lRXZSmgdse4fCx'/>
+
+The owner can input new username, password and user type, then click on `Add` button. An alert box will notify it is successfully added and the table will update accordingly.
+
+<img src='https://i.loli.net/2020/11/05/hnmqVSKLUQRz8DW.png' alt='hnmqVSKLUQRz8DW'/>
+
+### Change Users
+
+<img src='https://i.loli.net/2020/11/05/81KnGjpJzLxq3Ce.png' alt='81KnGjpJzLxq3Ce'/>
+
+The owner first need to select which users he want to change, then write the corresponding username, password and user type again, then click on `Change` button. The table will automatically change the data inside.
+
+<img src='https://i.loli.net/2020/11/05/sCvueUbHEmjFIVp.png' alt='sCvueUbHEmjFIVp'/>
+
+### Remove Users
+
+<img src='https://i.loli.net/2020/11/05/KjzosDu1Y8rxHPa.png' alt='KjzosDu1Y8rxHPa'/>
+
+The owner can select which users he want to remove, then click on `Remove` button. Then table will automatically remove the row with the user that have just removed.
+
+<img src='https://i.loli.net/2020/11/05/6EnXNj3FIrbADdT.png' alt='6EnXNj3FIrbADdT'/>
 
 # Sprint Artifacts
 
@@ -439,7 +499,15 @@ Todo (现在先不用写，交之前把jira上的task抄上去就行了)
 
 ## User Stories
 
-
+| User Story                                                   | Acceptance Criteria                                          |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| As a machine user, I want to sign up an accout, so that I can have my own privacy | The system needs to verify that the username is exists or not.<br>The System needs to ask user to enterr username and passwor.<br>In case the user enters an exists userrname then the system asks to try again or return to main window. |
+| As a machine user, I want to sign in own account, so that I can do transactions base on the records. | The system needs to verify that the username exists and that the password is correct. <br/>The system needs to ask user to enter username and password.<br/>In case the user enters a wrong username or password then the system displays wrong message and back to login window. |
+| As a machine user except anonymous users, I want to log out own account, so that I can protect own privacy and provide use to other users. | The system automatically provides the logout button when the user logs in.<br/>In case the user clicks the logout button, the system changes to anonymous user, backs to main window and displays last five products. |
+| As an owner, I want to add users except anonymous users, so that the users I added can sign in immediately without signing up. | Owner need to be logged in before adding users.<br/>The system asks owner to either enter username and password and or choose a user type from a ComboBox.<br/>In case the owner adds successfully, new user information displays on table. |
+| As an owner, I want to remove users except anonymous users, so that the user I removed needs to sign up a new account. | Owner need to be logged in before removing users.<br/>The system asks owner to choose a user to remove from a ComboBox.<br/>In case the owner removes successfully, the removed user information disappears on table. |
+| As an owner, I want to change user information except anonymous users, so that the user I changed needs new login information when login or have different permissions. | Owner need to be logged in before changing users.<br>The system asks owner to choose a user to change from a ComboBox, or enter new username or password, or choose a new user type from a ComboBox.<br>In case the owner changes successfully, new user information displays on table. |
+|                                                              |                                                              |
 
 ## Scrum Meetings
 
@@ -448,7 +516,7 @@ Todo (现在先不用写，交之前把jira上的task抄上去就行了)
 <img src='https://i.loli.net/2020/11/04/OBaT23sQecx9Cz4.png' alt='OBaT23sQecx9Cz4'/>
 
 - Date: 30th October
-- Attendencs: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
+- Attendance: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
 - Content:
   - Identify the Sprint Goal
   - Discuss the data structure of users
@@ -459,7 +527,11 @@ Todo (现在先不用写，交之前把jira上的task抄上去就行了)
 ### Meeting 2
 
 - Date : 3rd November
-- Attendencs: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
+- Attendance: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
+- Content:
+  - Online debug the obstacle in the code.
+  - Discussion about the progress of each tasks.
+  - Discussion about the code base of cash processor, and modified the map with enum to support double.
 - Cheng Chen:
   - What did I do yesterday: Finished data handling of users and review pull request.
   - What I will do today: Working on data handling of cash.
@@ -484,6 +556,39 @@ Todo (现在先不用写，交之前把jira上的task抄上去就行了)
   - What did I do yesterday: Finished GUI of login system.
   - What I will do today: Working on the user stories and UML Class Diagram.
   - Do I see any obstacles: The code written by teammates does not satisfy the functionality of my part of code, so I need to negotiate with him.
+
+### Meeting 3
+
+- Date : 5th November
+- Attendance: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
+- Content:
+  - Emphasize that if you meets the situation when a specific method is required, but has not been implemented, you should write yourself, and then notify the teammates who is responsible for that part, to add more test cases.
+  - Discussion about the progression of each tasks.
+  - Emphasize the important of burndown chart and change the status of each task as soon as possible.
+- Cheng Chen:
+  - What did I do yesterday: Modified some features of the code to looks nicer.
+  - What I will do today: Continues working on refactor the code.
+  - Do I see any obstacles: None at the moment.
+- Yuanqun Wang:
+  - What did I do yesterday: Finished add or remove user GUI
+  - What I will do today: Working on change user GUI.
+  - Do I see any obstacles: None at the moment.
+- Yufei Zuo:
+  - What did I do yesterday: Proofreading the report.
+  - What I will do today: Continues proofreading the report.
+  - Do I see any obstacles: None at the moment.
+- Zexuan Long:
+  - What did I do yesterday: Finished adding more test cases.
+  - What I will do today: Writing report about class document.
+  - Do I see any obstacles: None at the moment.
+- Songyin Li:
+  - What did I do yesterday: Finished part of cash system.
+  - What I will do today: Working on GUI of cash system.
+  - Do I see any obstacles: None at the moment.
+- Zehui Lin:
+  - What did I do yesterday: Finished UML class diagram.
+  - What I will do today: Working on the user stories.
+  - Do I see any obstacles: None at the moment.
 
 ## Sprint Review
 

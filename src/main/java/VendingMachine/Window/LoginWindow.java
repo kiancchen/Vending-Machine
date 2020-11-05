@@ -110,17 +110,20 @@ public class LoginWindow {
     public void signUpAction() {
         String usernameInp = inputUsername.getText();
         String passwordInp = inputPassword.getText();
-        if (!(this.processor.hasUser(usernameInp))) {
-            try {
-                this.processor.addUser(usernameInp, passwordInp);
-            } catch (IOException e) {
-                e.printStackTrace();
+        try {
+            if (this.processor.addUser(usernameInp, passwordInp)) {
+
+                Alert alert = new Alert(AlertType.INFORMATION, "Sign up successfully.");
+                alert.show();
+                this.processor.verifyUser(usernameInp, passwordInp);
+                this.mainWindow.updateCurrencyUserInfo();
+                stage.close();
+            } else {
+                Alert alert = new Alert(AlertType.WARNING, "User exists");
+                alert.show();
             }
-            Alert alert = new Alert(AlertType.INFORMATION, "Sign up successfully.");
-            alert.show();
-            stage.close();
-        } else {
-            Alert alert = new Alert(AlertType.WARNING, "User exists");
+        } catch (IOException e) {
+            Alert alert = new Alert(AlertType.WARNING, "Something went wrong.");
             alert.show();
         }
     }

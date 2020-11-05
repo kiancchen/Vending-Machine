@@ -4,12 +4,16 @@ import VendingMachine.User;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public class MainProcessor {
     private UserProcessor userProcessor;
+    private CashProcessor cashProcessor;
+
 
     public MainProcessor() throws IOException {
         userProcessor = new UserProcessor();
+        cashProcessor = new CashProcessor();
     }
 
     public boolean verifyUser(String username, String password) {
@@ -52,6 +56,9 @@ public class MainProcessor {
         return this.userProcessor.getUsers();
     }
 
+    public Map<Double, Integer> getCashMap() {
+        return this.cashProcessor.getCashMap();
+    }
     public User getCurrentUser() {
         return this.userProcessor.getCurrentUser();
     }
