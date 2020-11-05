@@ -116,6 +116,7 @@ public class LoginWindow {
                 Alert alert = new Alert(AlertType.INFORMATION, "Sign up successfully.");
                 alert.show();
                 this.processor.verifyUser(usernameInp, passwordInp);
+                this.mainWindow.changeAccountButtonText("Logout");
                 this.mainWindow.updateCurrencyUserInfo();
                 stage.close();
             } else {
