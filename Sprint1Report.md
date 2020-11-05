@@ -81,11 +81,26 @@
 ## Individual Contribution
 
 1. Cheng Chen (cche7436):
+
+   - Agile tools setup and their report
+   - Storyboard
+   - User data structure
+   - User database handler
+   - Cash database handler
+   - Calculating changes in cash functionality
 2. Yuanqun Wang (ywan3184):
+   - User management GUI
 3. Yufei Zuo (yzuo4982):
+   - Demonstration
 4. Zexuan Long (zlon4018):
+   - Logic of sign in and sign up, and their tests
 5. Songyin Li (soli3733):
+   - A table shows the cash information
 6. Zehui Lin (zlin3338):
+   - User Story
+   - UML
+   - Sign out logic
+   - Login system GUI
 
 # Agile Development Tools and Practices
 
@@ -544,6 +559,16 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
 | As an owner, <br/>I want to remove users, <br/>so that the user I removed needs to sign up a new account. | The owner needs to login before removing users.<br/>The system asks owner to choose a user.<br/>In case the owner removes successfully, the removed user information disappears on table. | Remove an user from the database<br/>Removing users GUI      | 1<br/>2<br/>  |
 | As an owner, <br/>I want to change user information, <br/>so that the user changed needs new account information to login or have different permissions. | The owner need to login before changing users.<br>The system asks the owner to choose a user to change,then enter new username or password, and choose a new user type.<br>In case the owner changes successfully, the new user information should be displayed on the table. | Change the information of an user from the database<br/>Changing users GUI | 1<br/>2<br/>  |
 | As an owner or cashier,<br/>I want to see the information of all cashes, <br/>so that the I can change the number of cashes. | An owner or cashier should login.<br/>A table of cashes should be displayed. | Get all cash information from the system.<br/>A table shows the cash information | 1<br/>2       |
+
+## Storyboard
+
+### Main window
+
+![CleanShot 2020-11-05 at 20.21.13@2x](https://i.loli.net/2020/11/05/jSvtx5oN2XfZyBe.png)
+
+### User management window
+
+![CleanShot 2020-11-05 at 20.24.32@2x](https://i.loli.net/2020/11/05/vxIn96oQieO2MBc.png)
 
 ## Scrum Meetings
 
