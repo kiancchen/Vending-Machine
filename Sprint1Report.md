@@ -414,7 +414,7 @@ Todo
 
 ## Class Document
 
-Todo (按照java的class写heading)
+Todo
 
 ## Demo
 
@@ -496,7 +496,7 @@ The product backlog contains a set of all features and sub-features to build the
 |      Select variety types of snacks     	|      N/A      	|       5      	|
 | Customer can cancel transaction anytime 	|      N/A      	|       3      	|
 
-Todo (现在先不用写，交之前把jira上的task抄上去就行了)
+Todo
 
 ### Sprint Backlog
 
@@ -508,7 +508,7 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
 | Setup database that is able to save data to file | Cheng Chen |       5     	| √       	|
 | Login system is able to sign in, sign up 	|      Zexuan Long     	|       4      	| V        	|
 
-Todo (现在先不用写，交之前把jira上的task抄上去就行了)
+Todo
 
 ## User Stories
 
