@@ -69,6 +69,7 @@ public class ChangeUserWindow {
                 alert.show();
             }
 
+            // change data
             initCombobox();
             initTextFields();
 
@@ -103,7 +104,9 @@ public class ChangeUserWindow {
         typesCombo.setLayoutY(160);
 
         for (User.UserType s : User.UserType.values()) {
-            typesCombo.getItems().add(s.toString());
+            if(s != User.UserType.ANONYMOUS) {
+                typesCombo.getItems().add(s.toString());
+            }
         }
 
         typesCombo.getSelectionModel().select(0);
