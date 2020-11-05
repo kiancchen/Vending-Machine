@@ -124,7 +124,7 @@ public class UserProcessorTest {
         UserProcessor userProcessor = new UserProcessor();
         assertTrue(userProcessor.changePassword(2,"test1"));
         assertTrue(userProcessor.verifyUser("blan","test1"));
-        assertFalse(userProcessor.changeUsername(10000,""));
+        assertFalse(userProcessor.changePassword(10000,"123"));
     }
 
     @Test
@@ -135,6 +135,6 @@ public class UserProcessorTest {
         for (int i = 0; i < userList.size(); i ++) {
             assertEquals(userList.get(i).getType(),userProcessor.getUsers().get(i).getType());
         }
-        assertFalse(userProcessor.changeUsername(10000,""));
+        assertFalse(userProcessor.changeType(10000,"CASHIER"));
     }
 }
