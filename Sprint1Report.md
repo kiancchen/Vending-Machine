@@ -415,7 +415,7 @@ Todo
 
 ## UML Class Diagram
 
-<img src='https://i.loli.net/2020/11/05/wkTBlMWon2xdCa7.png' alt='wkTBlMWon2xdCa7'/>
+<a href="https://sm.ms/image/VsNzxmUQOXbfdMg" target="_blank"><img src="https://i.loli.net/2020/11/05/VsNzxmUQOXbfdMg.png" ></a>
 
 ## Demo
 
