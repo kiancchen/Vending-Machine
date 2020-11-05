@@ -82,7 +82,9 @@ public class AddUserWindow {
         typeCombo.setLayoutY(160);
 
         for (User.UserType s : User.UserType.values()) {
-            typeCombo.getItems().add(s.toString());
+            if(s != User.UserType.ANONYMOUS) {
+                typeCombo.getItems().add(s.toString());
+            }
         }
 
         typeCombo.getSelectionModel().select(0);

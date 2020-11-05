@@ -76,6 +76,28 @@ public class UserProcessor {
         return false;
     }
 
+    public boolean changePassword(int id, String newPassword) throws IOException {
+        for (User user : users) {
+            if (user.getId() == id) {
+                user.setPassword(newPassword);
+                DatabaseHandler.saveUserData(users);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean changeType(int id, String newType) throws IOException {
+        for (User user : users) {
+            if (user.getId() == id) {
+                user.setType(User.UserType.valueOf(newType));
+                DatabaseHandler.saveUserData(users);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void logoutUser() {
         this.currentUser = this.users.get(0);
     }

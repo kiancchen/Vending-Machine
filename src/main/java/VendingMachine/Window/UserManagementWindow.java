@@ -89,7 +89,7 @@ public class UserManagementWindow {
     private void initButtonActions() {
         addButton.setOnAction((event -> new AddUserWindow(processor, table)));
         removeButton.setOnAction((event -> new RemoveUserWindow(processor, table)));
-        changeButton.setOnAction((event -> new ChangeUserWindow(processor)));
+        changeButton.setOnAction((event -> new ChangeUserWindow(processor, table)));
     }
 
 }
