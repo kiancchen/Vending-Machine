@@ -446,6 +446,8 @@ We maintained two projects on Jenkins, one is for master branch only, and the ot
 
 `blan` is an owner. Its password is `123`. Feel free to use this account to test functionalities.
 
+Here we are using the code with tag `1.0` for demonstration which you can see on Release page on Github.
+
 ### Sign In or Sign Up
 
 At first the window will display the current user is `anonymous` by default.
