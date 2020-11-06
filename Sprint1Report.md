@@ -565,13 +565,9 @@ The table can display all the amount of cash in the machine. after click on `Man
 
 The product backlog contains a set of all features and sub-features to build the vending machine, including functions, requirements, enhancements and fixes identified from previous sprints. The items in product backlog are ordered by priority and constantly changed. Any additional requirements from client should be directly added to product backlog instead of sprint backlog.
 
-| Product Backlog                         | Role          | Story Points |
-| --------------------------------------- | ------------- | ------------ |
-| Application codebase                    | Collaborative | 5            |
-| Select variety types of snacks          | N/A           | 5            |
-| Customer can cancel transaction anytime | N/A           | 3            |
+<img src='https://i.loli.net/2020/11/06/yK4pkjBSG3nu8CT.png' alt='yK4pkjBSG3nu8CT'/>
 
-TODO!!!
+This table can be accessed at this [link](https://docs.google.com/spreadsheets/d/1bW-7sIUqPr8Pr3uHav8PKmb57BtOSc3_Uw_Vm2mQ-A8/edit?usp=sharing).
 
 ## Sprint Goal
 
