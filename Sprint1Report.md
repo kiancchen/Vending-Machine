@@ -566,7 +566,7 @@ The table can display all the amount of cash in the machine. after click on `Man
 
 The product backlog contains a set of all features and sub-features to build the vending machine, including functions, requirements, enhancements and fixes identified from previous sprints. The items in product backlog are ordered by priority and constantly changed. Any additional requirements from client should be directly added to product backlog instead of sprint backlog.
 
-![](https://i.loli.net/2020/11/06/LY3ERJ1Khz4eT6X.png)
+![CleanShot 2020-11-06 at 12.58.43@2x](https://i.loli.net/2020/11/06/MJkeKuVYPNHUq19.png)
 
 If you can't see this table clearly, please refer to this [link](https://docs.google.com/spreadsheets/d/1bW-7sIUqPr8Pr3uHav8PKmb57BtOSc3_Uw_Vm2mQ-A8/edit?usp=sharing) (google sheet).
 
@@ -582,9 +582,9 @@ If you can't see this table clearly, please refer to this [link](https://docs.go
 
 The sprint backlog contains a set of items selected for this sprint. It is considered as a plan for delivering the product increment and realize the sprint goal. It is visible to anyone and to be added or modified by the development team.
 
-![CleanShot 2020-11-06 at 12.38.57@2x](https://i.loli.net/2020/11/06/lwcCGjofRi3rQM2.png)
+![CleanShot 2020-11-06 at 12.57.43@2x](https://i.loli.net/2020/11/06/fm6CTaqnGvKw912.png)
 
-If you can't see this image clearly, please refer to the [link](https://i.loli.net/2020/11/06/lwcCGjofRi3rQM2.png). Or you can just visit this table from [link](https://docs.google.com/spreadsheets/d/1bW-7sIUqPr8Pr3uHav8PKmb57BtOSc3_Uw_Vm2mQ-A8/edit?usp=sharing) (google sheet).
+If you can't see this image clearly, please refer to the [link](https://i.loli.net/2020/11/06/fm6CTaqnGvKw912.png). Or you can just visit this table from [link](https://docs.google.com/spreadsheets/d/1bW-7sIUqPr8Pr3uHav8PKmb57BtOSc3_Uw_Vm2mQ-A8/edit?usp=sharing) (google sheet).
 
 ## Burndown chart
 
