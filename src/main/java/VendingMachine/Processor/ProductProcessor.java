@@ -11,9 +11,8 @@ public class ProductProcessor {
 
     public ProductProcessor() throws IOException {
         products = DatabaseHandler.loadProductData();
-
-
     }
+
     public boolean addProduct(Product.Category category, String name, double price, int quantity) {
         return false;
     }
@@ -33,8 +32,5 @@ public class ProductProcessor {
     public boolean setProductPrice(int code, double price){
         return false;
     }
-
-
-
 
 }
