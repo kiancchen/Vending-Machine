@@ -43,6 +43,7 @@
   - [Product Backlog](#product-backlog)
   - [Sprint Goal](#sprint-goal)
   - [User Stories and Sprint Backlog](#user-stories-and-sprint-backlog)
+  - [Burndown chart](#burndown-chart)
   - [Storyboard](#storyboard)
     - [Main window](#main-window)
     - [User management window](#user-management-window)
