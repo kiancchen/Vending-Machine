@@ -87,6 +87,7 @@
    - User database handler
    - Cash database handler
    - Calculating changes in cash functionality
+   - Review pull requests
 2. Yuanqun Wang (ywan3184):
    - Add user GUI
    - Change user GUI
@@ -565,9 +566,9 @@ The table can display all the amount of cash in the machine. after click on `Man
 
 The product backlog contains a set of all features and sub-features to build the vending machine, including functions, requirements, enhancements and fixes identified from previous sprints. The items in product backlog are ordered by priority and constantly changed. Any additional requirements from client should be directly added to product backlog instead of sprint backlog.
 
-<img src='https://i.loli.net/2020/11/06/yK4pkjBSG3nu8CT.png' alt='yK4pkjBSG3nu8CT'/>
+![](https://i.loli.net/2020/11/06/LY3ERJ1Khz4eT6X.png)
 
-This table can be accessed at this [link](https://docs.google.com/spreadsheets/d/1bW-7sIUqPr8Pr3uHav8PKmb57BtOSc3_Uw_Vm2mQ-A8/edit?usp=sharing).
+If you can't see this table clearly, please refer to this [link](https://docs.google.com/spreadsheets/d/1bW-7sIUqPr8Pr3uHav8PKmb57BtOSc3_Uw_Vm2mQ-A8/edit?usp=sharing) (google sheet).
 
 ## Sprint Goal
 
@@ -581,16 +582,13 @@ This table can be accessed at this [link](https://docs.google.com/spreadsheets/d
 
 The sprint backlog contains a set of items selected for this sprint. It is considered as a plan for delivering the product increment and realize the sprint goal. It is visible to anyone and to be added or modified by the development team.
 
-| User Story                                                   | Acceptance Criteria                                          | Backlog                                                      | Story Points  |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------- |
-| As a user, <br/>I want to sign up an account, <br/>so that I can have my own data | The system needs to verify that the username is exists or not.<br>The System needs to ask user to enterr username and passwor.<br>In case the user enters an existed username then the system asks to try again.<br/>The  system should login automatically after the user signs up. | Check if the user exists in the database.<br/>The GUI of the sign up system.<br/>The user database. | 1<br/>2<br/>3 |
-| As a user, <br/>I want to sign in own account, <br/>so that I can do transactions base on the records. | The system needs to verify that the username exists and the password is correct. <br/>The system needs to ask user to enter username and password.<br/>In case the user enters a wrong username or password then the system should warn the user. | Check if the user exists in the database.<br/>The GUI of the sign in system. | 1<br/>2<br/>  |
-| As a user,<br/>I want to log out own account, <br/>so that I can protect own privacy and provide use to other users. | The system automatically provides the logout button when the user logs in.<br/>In case the user clicks the logout button, the system changes to the anonymous user. | Switch the current user to the anonymous<br/>                | 1<br/>        |
-| As an owner, <br/>I want to see the information of all users, <br/>so that I can make changes on them. | The owner needs to login before adding users.<br/>A table of users should be displayed. | Get all users from the system<br/>A table shows the users.   | 2             |
-| As an owner, <br/>I want to add users, <br/>so that the users I added can sign in. | The owner needs to login before adding users.<br/>The system asks owner to enter username and password and choose a user role.<br/>In case the owner adds successfully, new user information should be displayed on table. | Add a new user to the database<br/>Adding users GUI          | 1<br/>2<br/>  |
-| As an owner, <br/>I want to remove users, <br/>so that the user I removed needs to sign up a new account. | The owner needs to login before removing users.<br/>The system asks owner to choose a user.<br/>In case the owner removes successfully, the removed user information disappears on table. | Remove an user from the database<br/>Removing users GUI      | 1<br/>2<br/>  |
-| As an owner, <br/>I want to change user information, <br/>so that the user changed needs new account information to login or have different permissions. | The owner need to login before changing users.<br>The system asks the owner to choose a user to change,then enter new username or password, and choose a new user type.<br>In case the owner changes successfully, the new user information should be displayed on the table. | Change the information of an user from the database<br/>Changing users GUI | 1<br/>2<br/>  |
-| As an owner or cashier,<br/>I want to see the information of all cashes, <br/>so that the I can change the number of cashes. | An owner or cashier should login.<br/>A table of cashes should be displayed. | Get all cash information from the system.<br/>A table shows the cash information | 1<br/>2       |
+![CleanShot 2020-11-06 at 12.38.57@2x](https://i.loli.net/2020/11/06/lwcCGjofRi3rQM2.png)
+
+If you can't see this image clearly, please refer to the [link](https://i.loli.net/2020/11/06/lwcCGjofRi3rQM2.png). Or you can just visit this table from [link](https://docs.google.com/spreadsheets/d/1bW-7sIUqPr8Pr3uHav8PKmb57BtOSc3_Uw_Vm2mQ-A8/edit?usp=sharing) (google sheet).
+
+## Burndown chart
+
+![CleanShot 2020-11-06 at 12.57.04@2x](https://i.loli.net/2020/11/06/y5VJZtm38qpKkTb.png)
 
 ## Storyboard
 
