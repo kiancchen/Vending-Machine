@@ -11,9 +11,8 @@
     - [Conflict Issues History](#conflict-issues-history)
     - [Release History](#release-history)
   - [Gradle](#gradle)
-    - [Gradle Command](#gradle-command)
-    - [`build.gradle` Files](#buildgradle-files)
-  - [Build.Gradle File](#buildgradle-file)
+  - [build.gradle File](#buildgradle-file)
+  - [Gradle command](#gradle-command)
   - [JUnit and Jacoco](#junit-and-jacoco)
     - [How to Check Test Report](#how-to-check-test-report)
       - [JUnit](#junit)
@@ -41,11 +40,12 @@
     - [Remove Users](#remove-users)
     - [Display Cash](#display-cash)
 - [Sprint Artifacts](#sprint-artifacts)
+  - [Product Backlog](#product-backlog)
   - [Sprint Goal](#sprint-goal)
-  - [Tasks Board](#tasks-board)
-    - [Product Backlog](#product-backlog)
-    - [Sprint Backlog](#sprint-backlog)
-  - [User Stories](#user-stories)
+  - [User Stories and Sprint Backlog](#user-stories-and-sprint-backlog)
+  - [Storyboard](#storyboard)
+    - [Main window](#main-window)
+    - [User management window](#user-management-window)
   - [Scrum Meetings](#scrum-meetings)
     - [Meeting 1 (Sprint Planning)](#meeting-1-sprint-planning)
     - [Meeting 2](#meeting-2)
@@ -81,7 +81,6 @@
 ## Individual Contribution
 
 1. Cheng Chen (cche7436):
-
    - Agile tools setup and their report
    - Storyboard
    - User data structure
@@ -89,16 +88,25 @@
    - Cash database handler
    - Calculating changes in cash functionality
 2. Yuanqun Wang (ywan3184):
-   - User management GUI
+   - Add user GUI
+   - Change user GUI
+   - Remove user GUI
+   - Owner's user stories
 3. Yufei Zuo (yzuo4982):
-   - Demonstration
+   - Application demo report
+   - Main window GUI
+   - User management GUI
+   - Sprint goal, review, retrospective report
 4. Zexuan Long (zlon4018):
-   - Logic of sign in and sign up, and their tests
+   - Logic of user processor
+   - Tests of user processor
 5. Songyin Li (soli3733):
    - A table shows the cash information
+   - Cash management GUI
+   - Customer's user stories
 6. Zehui Lin (zlin3338):
-   - User Story
-   - UML
+   - User and owner's user Story
+   - UML class diagram
    - Sign out logic
    - Login system GUI
 
@@ -274,45 +282,45 @@ We have following content in this file
   - `javafx.controls` modules used for define UI controls, charts and appearances that can be used in the JavaFX UI toolbox.
   - `javafx.fxml` modules used for defines the FXML APIs for the JavaFX UI toolkit.
 
-[![img](https://i.loli.net/2020/10/10/ApydPgaxe6Gt8zJ.png)](https://sm.ms/image/ApydPgaxe6Gt8zJ)
+  [![img](https://i.loli.net/2020/10/10/ApydPgaxe6Gt8zJ.png)](https://sm.ms/image/ApydPgaxe6Gt8zJ)
 
 - `Jacoco and Jacoco Test Report`
   - We use jacoco with version 0.8.4, and will put report to the directory `coverge`.
   - For jacoco test report, we will put it into the directory `jacocoHtml`. We also have restriction for this report, both xml and csv formats are not enabled and we only allow html format.
 
-[![img](https://i.loli.net/2020/10/10/K4GsbLVdkf3Ug2w.png)](https://sm.ms/image/K4GsbLVdkf3Ug2w)
+  [![img](https://i.loli.net/2020/10/10/K4GsbLVdkf3Ug2w.png)](https://sm.ms/image/K4GsbLVdkf3Ug2w)
 
 - `application`
 
 We define the main class `VendingMachine.App` for the application
 
-![CleanShot 2020-11-05 at 13.46.21@2x](https://i.loli.net/2020/11/05/K7D1pdkN4QmBzXv.png)
+  ![CleanShot 2020-11-05 at 13.46.21@2x](https://i.loli.net/2020/11/05/K7D1pdkN4QmBzXv.png)
 
 ## Gradle command
 
 - `gradle clean`: clean the output of last build
 
-![CleanShot 2020-11-05 at 20.40.15@2x](https://i.loli.net/2020/11/05/syY1nRcxvMGuPgw.png)
+  ![CleanShot 2020-11-05 at 20.40.15@2x](https://i.loli.net/2020/11/05/syY1nRcxvMGuPgw.png)
 
 - `gradle build`: build the program, link dependencies. Note this will run tests automatically.
 
-![CleanShot 2020-11-05 at 20.40.31@2x](https://i.loli.net/2020/11/05/To65muQyeWj9Hgw.png)
+  ![CleanShot 2020-11-05 at 20.40.31@2x](https://i.loli.net/2020/11/05/To65muQyeWj9Hgw.png)
 
 - `gradle run`: run the application. This will invoke the GUI.
 
-![CleanShot 2020-11-05 at 20.40.46@2x](https://i.loli.net/2020/11/05/ixNRZ718k2Idl9J.png)
+  ![CleanShot 2020-11-05 at 20.40.46@2x](https://i.loli.net/2020/11/05/ixNRZ718k2Idl9J.png)
 
 - `gradle test`: run all tests using `Junit`
 
-![CleanShot 2020-11-05 at 20.41.13@2x](https://i.loli.net/2020/11/05/CMnuR3BArog8ycW.png)
+  ![CleanShot 2020-11-05 at 20.41.13@2x](https://i.loli.net/2020/11/05/CMnuR3BArog8ycW.png)
 
 - `gradle test jacocoTestReport`: run all tests and produce a coverage report by `Jacoco`
 
-![CleanShot 2020-11-05 at 20.41.40@2x](https://i.loli.net/2020/11/05/holF2VZ7HwyMakP.png)
+  ![CleanShot 2020-11-05 at 20.41.40@2x](https://i.loli.net/2020/11/05/holF2VZ7HwyMakP.png)
 
 Then you can see the report in `build/jacocoHtml/index.html`
 
-![CleanShot 2020-11-05 at 20.43.03@2x](https://i.loli.net/2020/11/05/9R5tu7OZLBHQleX.png)
+  ![CleanShot 2020-11-05 at 20.43.03@2x](https://i.loli.net/2020/11/05/9R5tu7OZLBHQleX.png)
 
 ## JUnit and Jacoco
 
@@ -323,33 +331,33 @@ Then you can see the report in `build/jacocoHtml/index.html`
 1. Choose a build
 2. Click Test Result
 
-![CleanShot 2020-11-05 at 13.51.31@2x](https://i.loli.net/2020/11/05/bzKTt5l9fi87dR6.png)
+  ![CleanShot 2020-11-05 at 13.51.31@2x](https://i.loli.net/2020/11/05/bzKTt5l9fi87dR6.png)
 
 3. Click VendingMachine to see tests class by class.
 
-![CleanShot 2020-11-05 at 13.51.47@2x](https://i.loli.net/2020/11/05/j7TBCWG3rMxuOIq.png)
+  ![CleanShot 2020-11-05 at 13.51.47@2x](https://i.loli.net/2020/11/05/j7TBCWG3rMxuOIq.png)
 
 4. Choose a class to see tested methods
 
-![CleanShot 2020-11-05 at 13.52.42@2x](https://i.loli.net/2020/11/05/FvMC1qAfuwSnTgH.png)
+  ![CleanShot 2020-11-05 at 13.52.42@2x](https://i.loli.net/2020/11/05/FvMC1qAfuwSnTgH.png)
 
 #### Jacoco
 
 1. Choose a build and click Coverage Report
 
-![CleanShot 2020-11-05 at 13.53.55@2x](https://i.loli.net/2020/11/05/eGWjO3aIDxRpbuh.png)
+  ![CleanShot 2020-11-05 at 13.53.55@2x](https://i.loli.net/2020/11/05/eGWjO3aIDxRpbuh.png)
 
 2. Choose a package to see coverage of each class
 
-![CleanShot 2020-11-05 at 13.56.06@2x](https://i.loli.net/2020/11/05/YLxoMSFEz8aBXJU.png)
+  ![CleanShot 2020-11-05 at 13.56.06@2x](https://i.loli.net/2020/11/05/YLxoMSFEz8aBXJU.png)
 
 3. Choose a method to see coverage of every method
 
-![CleanShot 2020-11-05 at 13.56.47@2x](https://i.loli.net/2020/11/05/tVsGorXjBd1PgJc.png)
+  ![CleanShot 2020-11-05 at 13.56.47@2x](https://i.loli.net/2020/11/05/tVsGorXjBd1PgJc.png)
 
 4. Below this you can see all statements that are tested or not. Red means it's not tested. Green means it's tested. Yellow means only part of branch is tested.
 
-![CleanShot 2020-11-05 at 14.00.03@2x](https://i.loli.net/2020/11/05/S2EhbTsyYa7L3pI.png)
+  ![CleanShot 2020-11-05 at 14.00.03@2x](https://i.loli.net/2020/11/05/S2EhbTsyYa7L3pI.png)
 
 ### Quality of Testing
 
@@ -358,8 +366,8 @@ Then you can see the report in `build/jacocoHtml/index.html`
 ### Initial Setup
 
 #### Plugins in Jenkins
-1.  Go to `Jenkins > Manage Jenkins > Manage Plugins > Download`, and ensure the following plugins have been installed. *Notes: Jenkins requires to restart after adding new plugins.*
 
+1.  Go to `Jenkins > Manage Jenkins > Manage Plugins > Download`, and ensure the following plugins have been installed. *Notes: Jenkins requires to restart after adding new plugins.*
        - JUnit
        - Gradle
        - Github
@@ -415,7 +423,7 @@ The system used to host Jenkins is MacOS.
 2. Then you can visit Jenkins on local by http://localhost:8080/
 3. To host it on internet, you need to download [ngrok](https://ngrok.com/). Then run it by `./ngrok http 8080`. You'll get a public URL to the Jenkins server.
 
-![CleanShot 2020-11-05 at 14.04.52@2x](https://i.loli.net/2020/11/05/YBIwRxPmTja9fHz.png)
+  ![CleanShot 2020-11-05 at 14.04.52@2x](https://i.loli.net/2020/11/05/YBIwRxPmTja9fHz.png)
 
 ### Outstanding Example
 
@@ -431,48 +439,48 @@ During this process, we have successful and failed build output on jerkin, here 
 
 - In the `Changes` page, you can see the commit history of this branch
 
-![CleanShot 2020-11-05 at 14.54.18@2x](https://i.loli.net/2020/11/05/EVDRoldSuNHnxXs.png)
+  ![CleanShot 2020-11-05 at 14.54.18@2x](https://i.loli.net/2020/11/05/EVDRoldSuNHnxXs.png)
 
 - To find the error, go to `Console Output`
 
-![CleanShot 2020-11-05 at 14.57.15@2x](https://i.loli.net/2020/11/05/S7hjcefsLmnbMgk.png)
+  ![CleanShot 2020-11-05 at 14.57.15@2x](https://i.loli.net/2020/11/05/S7hjcefsLmnbMgk.png)
 
 - `Edit Built Information` page: make the display name and write description for that
 
-![](https://i.loli.net/2020/11/05/5YWy9euDxbim4wg.png)
+  ![](https://i.loli.net/2020/11/05/5YWy9euDxbim4wg.png)
 
 - `Deleted` page: delete this build
 
-![CleanShot 2020-11-05 at 18.50.55@2x](https://i.loli.net/2020/11/05/hsi84zkYC6SL3mf.png)
+  ![CleanShot 2020-11-05 at 18.50.55@2x](https://i.loli.net/2020/11/05/hsi84zkYC6SL3mf.png)
 
 - `Polling Log` page: This page captures the polling log that triggered this build.
 
-![CleanShot 2020-11-05 at 18.51.03@2x](https://i.loli.net/2020/11/05/fDNub37Scy2P9Ev.png)
+  ![CleanShot 2020-11-05 at 18.51.03@2x](https://i.loli.net/2020/11/05/fDNub37Scy2P9Ev.png)
 
 - `Git Build Data` page: This page display the git revision and the branches has been build.
 
-![CleanShot 2020-11-05 at 18.51.20@2x](https://i.loli.net/2020/11/05/EKzW8OI7FbovXn6.png)
+  ![CleanShot 2020-11-05 at 18.51.20@2x](https://i.loli.net/2020/11/05/EKzW8OI7FbovXn6.png)
 
 #### Success Build Example
 
-![CleanShot 2020-11-05 at 18.53.50@2x](https://i.loli.net/2020/11/05/8CbHy6DJfpWmagd.png)
+  ![CleanShot 2020-11-05 at 18.53.50@2x](https://i.loli.net/2020/11/05/8CbHy6DJfpWmagd.png)
 
 `Build #48` is an examples of successful build.
 
 - In the `Status` page, it briefly described some information include any changes in this build,why Jenkins started this built based on that change and git revision about which branch is associated with. The difference between these builds and failure one is that these also have test result and Jacoco - Overall Coverage Summary
 - In the Test Result page, you can see the Junit test report
 
-![CleanShot 2020-11-05 at 18.56.20@2x](https://i.loli.net/2020/11/05/GsC7if4xaZpUkOu.png)
+  ![CleanShot 2020-11-05 at 18.56.20@2x](https://i.loli.net/2020/11/05/GsC7if4xaZpUkOu.png)
 
 - In the Coverage Report page, you can see the Jacoco test coverage report
 
-![CleanShot 2020-11-05 at 18.56.41@2x](https://i.loli.net/2020/11/05/egBiy3YHQVpFN5R.png)
+  ![CleanShot 2020-11-05 at 18.56.41@2x](https://i.loli.net/2020/11/05/egBiy3YHQVpFN5R.png)
 
 ### Adopted CI Practices
 
 We maintained two projects on Jenkins, one is for master branch only, and the other one is for all branches.
 
-![CleanShot 2020-11-05 at 18.59.06@2x](https://i.loli.net/2020/11/05/hSyJTR2riaMlzBG.png)
+  ![CleanShot 2020-11-05 at 18.59.06@2x](https://i.loli.net/2020/11/05/hSyJTR2riaMlzBG.png)
 
 - `Vending Machine - All branches` builds and tests all branches. It's convenient for each teammate to check if their code works and determine whether to create a pull request or not.
 - `Vending Machine - Master Branch` only builds and tests master branch. It's used to test the integrated code on master branch, which maybe released later as a working program.
@@ -562,6 +570,8 @@ The product backlog contains a set of all features and sub-features to build the
 | Application codebase                    | Collaborative | 5            |
 | Select variety types of snacks          | N/A           | 5            |
 | Customer can cancel transaction anytime | N/A           | 3            |
+
+TODO!!!
 
 ## Sprint Goal
 
@@ -653,7 +663,7 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
   - Discussion about the progression of each tasks.
   - Emphasize the important of burndown chart and change the status of each task as soon as possible.
 - Cheng Chen:
-  - What did I do yesterday: Review codes written by other teammates. Beeatify the code structure and remove unnecessary codes.
+  - What did I do yesterday: Review codes written by other teammates. Beatify the code structure and remove unnecessary codes.
   - What I will do today: Continue working on refactoring the code.
   - Do I see any obstacles: None at the moment.
 - Yuanqun Wang:
@@ -696,11 +706,11 @@ Our client is satisfied with output of current sprint. However, client pointed o
 
 ### Revisited Product Backlog
 
-The tasks have not created carefully and detailedly at the Sprint Planning, thus it will cause much conflict later when a new feature should be added. To improve this, we should spend more time on user stories and create tasks for each user stories while planning next sprint.
+The tasks have not created carefully and detailed at the Sprint Planning, thus it will cause much conflict later when a new feature should be added. To improve this, we should spend more time on user stories and create tasks for each user stories while planning next sprint.
 
 Besides, the tasks were not prioritized at the beginning, so that it will extend the duration of other tasks if one task that should have higher priority is not implemented yet in time. And the teammate have to wait for that task being completed. In the next sprint, all the tasks should be prioritized first, and teammates aim to finish tasks with higher priority first.
 
-Also, we assigned some tasks to teammates that are not good at that. For example, some teammates are not familar with `Javafx` but we asked them to complete an GUI task. In the next sprint, we should consider the ability of each teammate and ask them to do what they are good at to improve the efficiency.
+Also, we assigned some tasks to teammates that are not good at that. For example, some teammates are not familiar with `Javafx` but we asked them to complete an GUI task. In the next sprint, we should consider the ability of each teammate and ask them to do what they are good at to improve the efficiency.
 
 ## Sprint Retrospective
 
