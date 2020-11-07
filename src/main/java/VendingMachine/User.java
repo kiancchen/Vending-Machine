@@ -1,6 +1,8 @@
 package VendingMachine;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class User {
@@ -10,12 +12,24 @@ public class User {
     private String password;
     private Map<Permission, Boolean> permissions;
     private UserType type;
+    private List<Transaction> transactions;
+    private Transaction shoppingCart;
 
     public User() {
         this.username = "";
         this.password = "";
         this.setType(UserType.ANONYMOUS);
         this.id = totalId++;
+        this.transactions = new ArrayList<>();
+        this.shoppingCart = new Transaction();
+    }
+
+    public void addProduct(Product product){
+        this.shoppingCart.add(product);
+    }
+
+    public void removeProduct(Product product){
+        this.shoppingCart.remove(product);
     }
 
     public void initPermissions() {

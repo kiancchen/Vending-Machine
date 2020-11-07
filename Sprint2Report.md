@@ -577,7 +577,7 @@ If you can't see this table clearly, please refer to this [link](https://docs.go
 
 ## Sprint Goal
 
-   - Implement the code structure for `Product` and `Transaction`
+   - Implement the code structure for `Product` and `VendingMachine.Transaction`
    - Implement the product management system
    - Complete the cash management system 
    - The customer can select products they want to purchase, see the shopping cart and shopping history
