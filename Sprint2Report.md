@@ -81,6 +81,8 @@
 
 ## Individual Contribution
 
+==TODO==
+
 1. Cheng Chen (cche7436):
    - Agile tools setup and their report
    - Storyboard
@@ -489,6 +491,8 @@ We maintained two projects on Jenkins, one is for master branch only, and the ot
 
 # Application Development
 
+==TODO==
+
 ## UML Class Diagram
 
 <a href="https://sm.ms/image/VsNzxmUQOXbfdMg" target="_blank"><img src="https://i.loli.net/2020/11/05/VsNzxmUQOXbfdMg.png" ></a>
@@ -573,33 +577,25 @@ If you can't see this table clearly, please refer to this [link](https://docs.go
 
 ## Sprint Goal
 
-   - Have initial codebase with appropriate methods and data structure to implement basic functionality
-   - Implement the login system with different roles of users.
-   - Implement the user management system so that owner could manages all users.
-   - Implement the cash system so that it will automatically calculate the change. And the owner and cashier can change the number of cashes.
-   - Implement the database handler to save the users and cash data to files.
+   - Implement the code structure for `Product` and `Transaction`
+   - Implement the product management system
+   - Complete the cash management system 
+   - The customer can select products they want to purchase, see the shopping cart and shopping history
+   - Implement the cash payment system
 
 ## User Stories and Sprint Backlog
 
 The sprint backlog contains a set of items selected for this sprint. It is considered as a plan for delivering the product increment and realize the sprint goal. It is visible to anyone and to be added or modified by the development team.
 
-![CleanShot 2020-11-06 at 12.57.43@2x](https://i.loli.net/2020/11/06/fm6CTaqnGvKw912.png)
-
-If you can't see this image clearly, please refer to the [link](https://i.loli.net/2020/11/06/fm6CTaqnGvKw912.png). Or you can just visit this table from [link](https://docs.google.com/spreadsheets/d/1bW-7sIUqPr8Pr3uHav8PKmb57BtOSc3_Uw_Vm2mQ-A8/edit?usp=sharing) (google sheet).
+==TODO==
 
 ## Burndown chart
 
-![CleanShot 2020-11-06 at 12.57.04@2x](https://i.loli.net/2020/11/06/y5VJZtm38qpKkTb.png)
+==TODO==
 
 ## Storyboard
 
-### Main window
-
-![CleanShot 2020-11-05 at 20.21.13@2x](https://i.loli.net/2020/11/05/jSvtx5oN2XfZyBe.png)
-
-### User management window
-
-![CleanShot 2020-11-05 at 20.24.32@2x](https://i.loli.net/2020/11/05/vxIn96oQieO2MBc.png)
+==TODO==
 
 ## Scrum Meetings
 
@@ -607,16 +603,18 @@ If you can't see this image clearly, please refer to the [link](https://i.loli.n
 
 <img src='https://i.loli.net/2020/11/04/OBaT23sQecx9Cz4.png' alt='OBaT23sQecx9Cz4'/>
 
-- Date: 30th October
+- Date: 7th November
 - Attendance: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
 - Content:
   - Identify the Sprint Goal
-  - Discuss the data structure of users
+  - Discuss the data structure of product and transaction
   - Implement the codebase together
   - Refine, prioritize and assign tasks to team members
   - Produce the Sprint Backlog
 
 ### Meeting 2
+
+==TODO==
 
 - Date : 3rd November
 - Attendance: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
@@ -650,6 +648,8 @@ If you can't see this image clearly, please refer to the [link](https://i.loli.n
   - Do I see any obstacles: The code written by teammates does not satisfy the functionality of my part of code, so I need to negotiate with him.
 
 ### Meeting 3
+
+==TODO==
 
 - Date : 5th November
 - Attendance: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
