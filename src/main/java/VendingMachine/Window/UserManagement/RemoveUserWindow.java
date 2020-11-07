@@ -70,7 +70,7 @@ public class RemoveUserWindow {
         int selected = Integer.parseInt(selectedString[0]);
         try {
             if (processor.removeUser(selected)) {
-                Alert alert = new Alert(Alert.AlertType.WARNING, "Successfully removed");
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successfully removed");
                 alert.show();
 
                 initCombox();

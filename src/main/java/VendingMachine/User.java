@@ -1,30 +1,97 @@
 package VendingMachine;
 
+import java.util.HashMap;
+import java.util.Map;
 
-public interface User {
-    boolean getPermission(Permission permission);
+public class User {
+    private static int totalId = 0;
+    private int id;
+    private String username;
+    private String password;
+    private Map<Permission, Boolean> permissions;
+    private UserType type;
 
-    void setPermission(Permission permission, boolean accessibility);
+    public User() {
+        this.username = "";
+        this.password = "";
+        this.setType(UserType.ANONYMOUS);
+        this.id = totalId++;
+    }
 
-    void initPermissions();
+    public void initPermissions() {
+        this.permissions = new HashMap<>();
+        permissions.put(Permission.MANAGE_ITEM, false);
+        permissions.put(Permission.MANAGE_CASH, false);
+        permissions.put(Permission.MANAGE_USER, false);
+    }
 
-    String getUsername();
+    public void setPermission(Permission permission, boolean accessibility) {
+        this.permissions.put(permission, accessibility);
+    }
 
-    void setUsername(String username);
 
-    String getPassword();
+    public User(String username, String password, UserType type) {
+        this.username = username;
+        this.password = password;
+        this.setType(type);
+        this.id = totalId++;
+    }
 
-    void setPassword(String password);
+    public boolean getPermission(Permission permission) {
+        return this.permissions.get(permission);
+    }
 
-    UserType getType();
+    public String getUsername() {
+        return username;
+    }
 
-    void setType(UserType type);
 
-    int getId();
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-    String getString();
 
-    enum UserType {
+    public String getPassword() {
+        return password;
+    }
+
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public String getString() {
+        String s = "";
+        s += id + ", ";
+        s += username + ", ";
+        s += password + ", ";
+        s += getType();
+        return s;
+    }
+
+    public UserType getType() {
+        return type;
+    }
+
+    public void setType(UserType type) {
+        this.type = type;
+        this.initPermissions();
+        if (type == UserType.SELLER) {
+            this.setPermission(Permission.MANAGE_ITEM, true);
+        } else if (type == UserType.CASHIER) {
+            this.setPermission(Permission.MANAGE_CASH, true);
+        } else if (type == UserType.OWNER) {
+            this.setPermission(Permission.MANAGE_CASH, true);
+            this.setPermission(Permission.MANAGE_ITEM, true);
+            this.setPermission(Permission.MANAGE_USER, true);
+        }
+    }
+
+    public enum UserType {
         CUSTOMER,
         SELLER,
         CASHIER,
@@ -32,10 +99,9 @@ public interface User {
         ANONYMOUS
     }
 
-    enum Permission {
+    public enum Permission {
         MANAGE_ITEM,
         MANAGE_CASH,
         MANAGE_USER
     }
-
 }

@@ -27,7 +27,7 @@ public class DatabaseHandler {
     public static List<User> loadUserData() throws IOException {
         InputStream input = new FileInputStream(userFile);
         JsonReader reader = new JsonReader(new InputStreamReader(input));
-        List<User> users = gson.fromJson(reader, new TypeToken<List<UserImpl>>() {}.getType());
+        List<User> users = gson.fromJson(reader, new TypeToken<List<User>>() {}.getType());
         reader.close();
         return users;
     }

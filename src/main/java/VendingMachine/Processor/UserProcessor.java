@@ -2,7 +2,6 @@ package VendingMachine.Processor;
 
 import VendingMachine.DatabaseHandler;
 import VendingMachine.User;
-import VendingMachine.UserImpl;
 
 import java.io.IOException;
 import java.util.List;
@@ -35,7 +34,7 @@ public class UserProcessor {
     public boolean addUser(String username, String password, String type) throws IOException {
         // check the username is used or not
         if (!hasUser(username)) {
-            User newUser = new UserImpl(username, password, User.UserType.valueOf(type));
+            User newUser = new User(username, password, User.UserType.valueOf(type));
             users.add(newUser);
             DatabaseHandler.saveUserData(users);
             return true;

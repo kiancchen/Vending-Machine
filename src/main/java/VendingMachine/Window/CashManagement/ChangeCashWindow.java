@@ -2,7 +2,6 @@ package VendingMachine.Window.CashManagement;
 
 import VendingMachine.Processor.MainProcessor;
 import VendingMachine.User;
-import VendingMachine.Window.CashManagement.CashTableEntry;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
