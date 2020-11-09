@@ -16,6 +16,7 @@ public class DatabaseHandler {
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private static final File userFile = new File("src/main/resources/user.json");
     private static final File cashFile = new File("src/main/resources/cash.json");
+    private static final File productFile = new File("src/main/resources/product.json");
 
     public static void saveUserData(List<User> users) throws IOException {
         FileWriter fileWriter = new FileWriter(userFile);
@@ -52,7 +53,21 @@ public class DatabaseHandler {
         return cashes;
     }
 
-    public static List<Product> loadProductData() throws IOException {
-        return null;
+    public static void saveProductData(Map<Product.Category, List<Product>> productMap) throws IOException {
+        FileWriter fileWriter = new FileWriter(productFile);
+        JsonWriter jsonWriter = new JsonWriter(fileWriter);
+        jsonWriter.setIndent(" ");
+        gson.toJson(productMap, new TypeToken<Map<Product.Category, List<Product>>>() {}.getType(), jsonWriter);
+        jsonWriter.flush();
+        jsonWriter.close();
+    }
+
+    public static Map<Product.Category, List<Product>> loadProductData() throws IOException {
+        InputStream input = new FileInputStream(productFile);
+        JsonReader reader = new JsonReader(new InputStreamReader(input));
+        Map<Product.Category, List<Product>> products = gson.fromJson(reader,
+                new TypeToken<Map<Product.Category, List<Product>>>() {}.getType());
+        reader.close();
+        return products;
     }
 }
