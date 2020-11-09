@@ -1,35 +1,35 @@
 [
-  {
-    "id": 0,
-    "username": "",
-    "password": "",
-    "permissions": {
-      "MANAGE_USER": false,
-      "MANAGE_ITEM": false,
-      "MANAGE_CASH": false
-    },
-    "type": "ANONYMOUS"
+ {
+  "id": 0,
+  "username": "",
+  "password": "",
+  "permissions": {
+   "MANAGE_USER": false,
+   "MANAGE_ITEM": false,
+   "MANAGE_CASH": false
   },
-  {
-    "id": 2,
-    "username": "blan",
-    "password": "123",
-    "permissions": {
-      "MANAGE_USER": true,
-      "MANAGE_ITEM": true,
-      "MANAGE_CASH": true
-    },
-    "type": "OWNER"
+  "type": "ANONYMOUS"
+ },
+ {
+  "id": 1,
+  "username": "alan",
+  "password": "123",
+  "permissions": {
+   "MANAGE_USER": false,
+   "MANAGE_ITEM": false,
+   "MANAGE_CASH": false
   },
-  {
-    "id": 3,
-    "username": "123",
-    "password": "123",
-    "permissions": {
-      "MANAGE_CASH": false,
-      "MANAGE_USER": false,
-      "MANAGE_ITEM": false
-    },
-    "type": "CUSTOMER"
-  }
+  "type": "CUSTOMER"
+ },
+ {
+  "id": 2,
+  "username": "blan",
+  "password": "123",
+  "permissions": {
+   "MANAGE_USER": true,
+   "MANAGE_ITEM": true,
+   "MANAGE_CASH": true
+  },
+  "type": "OWNER"
+ }
 ]
