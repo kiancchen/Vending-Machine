@@ -1,4 +1,5 @@
 package VendingMachine.Window.CashManagement;
+
 import VendingMachine.Processor.MainProcessor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -8,11 +9,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-
 import java.util.Map;
 
 public class CashManagementWindow {
-    private MainProcessor processor;
     private Stage stage;
     private Scene scene;
     private AnchorPane pane;
@@ -21,9 +20,7 @@ public class CashManagementWindow {
     private Button changeButton;
 
 
-    public CashManagementWindow(MainProcessor processor)  {
-
-        this.processor = processor;
+    public CashManagementWindow() {
         stage = new Stage();
         pane = new AnchorPane();
         scene = new Scene(pane, 600, 480);
@@ -45,8 +42,8 @@ public class CashManagementWindow {
         pane.getChildren().add(table);
 
         // create table
-        String[] colNames = {"Value","Number"};
-        String[] properties = {"cashType","amount"};
+        String[] colNames = {"Value", "Number"};
+        String[] properties = {"cashType", "amount"};
         for (int i = 0; i < colNames.length; i++) {
             String colName = colNames[i];
             TableColumn<CashTableEntry, String> column = new TableColumn<>(colName);
@@ -56,12 +53,10 @@ public class CashManagementWindow {
             column.setCellValueFactory(new PropertyValueFactory<>(properties[i]));
             table.getColumns().add(column);
         }
-        Map<Double,Integer> cashMap=processor.getCashMap();
-        cashMap.forEach((k,v)->{
-            table.getItems().add(new CashTableEntry(k,v));
-        });
+        Map<Double, Integer> cashMap = MainProcessor.getCashProcessor().getCashMap();
+        cashMap.forEach((k, v) -> table.getItems().add(new CashTableEntry(k, v)));
 
-        }
+    }
 
 
     private void initButton() {
@@ -85,6 +80,6 @@ public class CashManagementWindow {
 
     private void initButtonActions() {
 
-        changeButton.setOnAction((event -> new ChangeCashWindow(this.processor, this.table)));
+        changeButton.setOnAction((event -> new ChangeCashWindow(this.table)));
     }
 }

@@ -1,6 +1,7 @@
 package VendingMachine.Window.CashManagement;
 
 import VendingMachine.Processor.MainProcessor;
+import VendingMachine.Processor.UserProcessor;
 import VendingMachine.User;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -10,7 +11,6 @@ import javafx.stage.Stage;
 import java.util.List;
 
 public class ChangeCashWindow {
-    private MainProcessor processor;
     private Stage stage;
     private Scene scene;
     private AnchorPane pane;
@@ -23,8 +23,7 @@ public class ChangeCashWindow {
     private TableView<CashTableEntry> table;
 
 
-    public ChangeCashWindow(MainProcessor processor, TableView<CashTableEntry> table) {
-        this.processor = processor;
+    public ChangeCashWindow(TableView<CashTableEntry> table) {
         this.table = table;
 
         stage = new Stage();
@@ -38,88 +37,6 @@ public class ChangeCashWindow {
         initCombobox();
         initTextFields();
         initButtons();
-    }
-
-    private void initButtons() {
-        changeButton = new Button("Change");
-        changeButton.setLayoutX(220);
-        changeButton.setLayoutY(230);
-
-        changeButton.setOnAction(event -> change());
-
-        pane.getChildren().add(changeButton);
-    }
-
-    private void change() {
-        String[] selectedString = usersCombo.getSelectionModel().getSelectedItem().split(",");
-        int selectedID = Integer.parseInt(selectedString[0]);
-
-        if (username.getText().trim().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Username needed.");
-            alert.show();
-        } else if (password.getText().trim().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Password needed.");
-            alert.show();
-        } else {
-            try{
-                processor.changeUsername(selectedID, username.getText());
-                processor.changePassword(selectedID, password.getText());
-                processor.changeType(selectedID, typesCombo.getSelectionModel().getSelectedItem());
-            } catch (Exception e) {
-                Alert alert = new Alert(Alert.AlertType.WARNING, "Change failed.");
-                alert.show();
-            }
-
-            usersCombo.getItems().clear();
-            List<User> users = processor.getUsers();
-            for (int i = 1; i < users.size(); i++) {
-                User user = users.get(i);
-                usersCombo.getItems().add(user.getString());
-            }
-            usersCombo.getSelectionModel().select(0);
-
-            username.setText("");
-            password.setText("");
-
-            table.getItems().clear();
-
-//            for (User user : processor.getUsers()) {
-//                table.getItems().add(new UserTableEntry(Integer.toString(user.getId()),
-//                        user.getUsername(),
-//                        user.getPassword(),
-//                        user.getType().toString()));
-//            }
-        }
-    }
-
-    private void initCombobox() {
-        usersCombo = new ComboBox<>();
-        usersCombo.setLayoutX(50);
-        usersCombo.setLayoutY(80);
-
-        List<User> users = processor.getUsers();
-        for (int i = 1; i < users.size(); i++) {
-            User user = users.get(i);
-            usersCombo.getItems().add(user.getString());
-        }
-
-        usersCombo.getSelectionModel().select(0);
-
-        pane.getChildren().add(usersCombo);
-
-        typesCombo = new ComboBox<>();
-        typesCombo.setLayoutX(50);
-        typesCombo.setLayoutY(160);
-
-        for (User.UserType s : User.UserType.values()) {
-            if(s != User.UserType.ANONYMOUS) {
-                typesCombo.getItems().add(s.toString());
-            }
-        }
-
-        typesCombo.getSelectionModel().select(0);
-
-        pane.getChildren().add(typesCombo);
     }
 
     private void initLabels() {
@@ -144,6 +61,36 @@ public class ChangeCashWindow {
         pane.getChildren().add(label4);
     }
 
+    private void initCombobox() {
+        usersCombo = new ComboBox<>();
+        usersCombo.setLayoutX(50);
+        usersCombo.setLayoutY(80);
+
+        List<User> users = MainProcessor.getUserProcessor().getUsers();
+        for (int i = 1; i < users.size(); i++) {
+            User user = users.get(i);
+            usersCombo.getItems().add(user.getString());
+        }
+
+        usersCombo.getSelectionModel().select(0);
+
+        pane.getChildren().add(usersCombo);
+
+        typesCombo = new ComboBox<>();
+        typesCombo.setLayoutX(50);
+        typesCombo.setLayoutY(160);
+
+        for (User.UserType s : User.UserType.values()) {
+            if (s != User.UserType.ANONYMOUS) {
+                typesCombo.getItems().add(s.toString());
+            }
+        }
+
+        typesCombo.getSelectionModel().select(0);
+
+        pane.getChildren().add(typesCombo);
+    }
+
     private void initTextFields() {
         username = new TextField();
         username.setLayoutX(290);
@@ -155,5 +102,51 @@ public class ChangeCashWindow {
 
         pane.getChildren().add(username);
         pane.getChildren().add(password);
+    }
+
+    private void initButtons() {
+        changeButton = new Button("Change");
+        changeButton.setLayoutX(220);
+        changeButton.setLayoutY(230);
+
+        changeButton.setOnAction(event -> change());
+
+        pane.getChildren().add(changeButton);
+    }
+
+    private void change() {
+        UserProcessor userProcessor = MainProcessor.getUserProcessor();
+        String[] selectedString = usersCombo.getSelectionModel().getSelectedItem().split(",");
+        int selectedID = Integer.parseInt(selectedString[0]);
+
+        if (username.getText().trim().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Username needed.");
+            alert.show();
+        } else if (password.getText().trim().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Password needed.");
+            alert.show();
+        } else {
+            try {
+                userProcessor.changeUsername(selectedID, username.getText());
+                userProcessor.changePassword(selectedID, password.getText());
+                userProcessor.changeType(selectedID, typesCombo.getSelectionModel().getSelectedItem());
+            } catch (Exception e) {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Change failed.");
+                alert.show();
+            }
+
+            usersCombo.getItems().clear();
+            List<User> users = userProcessor.getUsers();
+            for (int i = 1; i < users.size(); i++) {
+                User user = users.get(i);
+                usersCombo.getItems().add(user.getString());
+            }
+            usersCombo.getSelectionModel().select(0);
+
+            username.setText("");
+            password.setText("");
+
+            table.getItems().clear();
+        }
     }
 }

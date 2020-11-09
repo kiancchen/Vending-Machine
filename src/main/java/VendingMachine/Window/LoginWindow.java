@@ -1,6 +1,7 @@
 package VendingMachine.Window;
 
 import VendingMachine.Processor.MainProcessor;
+import VendingMachine.Processor.UserProcessor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
@@ -11,7 +12,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class LoginWindow {
-    private MainProcessor processor;
     private Stage stage;
     private Scene scene;
     private AnchorPane pane;
@@ -19,8 +19,7 @@ public class LoginWindow {
     private PasswordField inputPassword;
     private MainWindow mainWindow;
 
-    public LoginWindow(MainProcessor processor, MainWindow mainWindow) {
-        this.processor = processor;
+    public LoginWindow(MainWindow mainWindow) {
         this.mainWindow = mainWindow;
 
         stage = new Stage();
@@ -94,7 +93,7 @@ public class LoginWindow {
     public void signInAction() {
         String usernameInp = inputUsername.getText();
         String passwordInp = inputPassword.getText();
-        if (this.processor.verifyUser(usernameInp, passwordInp)) {
+        if (MainProcessor.getUserProcessor().verifyUser(usernameInp, passwordInp)) {
             Alert alert = new Alert(AlertType.INFORMATION, "Sign in successfully.");
             alert.show();
             this.mainWindow.changeAccountButtonText("Logout");
@@ -110,12 +109,13 @@ public class LoginWindow {
     public void signUpAction() {
         String usernameInp = inputUsername.getText();
         String passwordInp = inputPassword.getText();
+        UserProcessor userProcessor = MainProcessor.getUserProcessor();
         try {
-            if (this.processor.addUser(usernameInp, passwordInp)) {
+            if (userProcessor.addUser(usernameInp, passwordInp)) {
 
                 Alert alert = new Alert(AlertType.INFORMATION, "Sign up successfully.");
                 alert.show();
-                this.processor.verifyUser(usernameInp, passwordInp);
+                userProcessor.verifyUser(usernameInp, passwordInp);
                 this.mainWindow.changeAccountButtonText("Logout");
                 this.mainWindow.updateCurrencyUserInfo();
                 stage.close();
