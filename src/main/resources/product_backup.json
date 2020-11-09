@@ -1,0 +1,122 @@
+{
+ "CHOCOLATE": [
+  {
+   "category": "CHOCOLATE",
+   "name": "Mars",
+   "price": 1.5,
+   "code": 6,
+   "quantity": 7
+  },
+  {
+   "category": "CHOCOLATE",
+   "name": "M\u0026M",
+   "price": 2.5,
+   "code": 7,
+   "quantity": 7
+  },
+  {
+   "category": "CHOCOLATE",
+   "name": "Bounty",
+   "price": 3.5,
+   "code": 8,
+   "quantity": 7
+  },
+  {
+   "category": "CHOCOLATE",
+   "name": "Snickers",
+   "price": 2.5,
+   "code": 9,
+   "quantity": 7
+  }
+ ],
+ "DRINK": [
+  {
+   "category": "DRINK",
+   "name": "Mineral Water",
+   "price": 2.0,
+   "code": 1,
+   "quantity": 7
+  },
+  {
+   "category": "DRINK",
+   "name": "Sprite",
+   "price": 2.0,
+   "code": 2,
+   "quantity": 7
+  },
+  {
+   "category": "DRINK",
+   "name": "Coca cola",
+   "price": 3.5,
+   "code": 3,
+   "quantity": 7
+  },
+  {
+   "category": "DRINK",
+   "name": "Pepsi",
+   "price": 3.5,
+   "code": 4,
+   "quantity": 7
+  },
+  {
+   "category": "DRINK",
+   "name": "Juice",
+   "price": 2.5,
+   "code": 5,
+   "quantity": 7
+  }
+ ],
+ "CHIP": [
+  {
+   "category": "CHIP",
+   "name": "Smiths",
+   "price": 2.5,
+   "code": 10,
+   "quantity": 7
+  },
+  {
+   "category": "CHIP",
+   "name": "Pringles",
+   "price": 2.5,
+   "code": 11,
+   "quantity": 7
+  },
+  {
+   "category": "CHIP",
+   "name": "Kettle",
+   "price": 2.5,
+   "code": 12,
+   "quantity": 7
+  },
+  {
+   "category": "CHIP",
+   "name": "Thins",
+   "price": 2.5,
+   "code": 13,
+   "quantity": 7
+  }
+ ],
+ "CANDY": [
+  {
+   "category": "CANDY",
+   "name": "Mentos",
+   "price": 2.5,
+   "code": 14,
+   "quantity": 7
+  },
+  {
+   "category": "CANDY",
+   "name": "Sour Patch",
+   "price": 2.5,
+   "code": 15,
+   "quantity": 7
+  },
+  {
+   "category": "CANDY",
+   "name": "Skittles",
+   "price": 2.5,
+   "code": 16,
+   "quantity": 7
+  }
+ ]
+}
