@@ -1,4 +1,4 @@
-package VendingMachine;
+package VendingMachine.Data;
 
 import VendingMachine.Processor.PaymentProcessor;
 
@@ -31,7 +31,7 @@ public class Transaction {
         this.amount -= product.getPrice();
     }
 
-    public void payCash(Map<Double, Integer> cashes){
+    public void payCash(Map<Double, Integer> cashes) {
         PaymentProcessor.payCash(cashes);
     }
 }

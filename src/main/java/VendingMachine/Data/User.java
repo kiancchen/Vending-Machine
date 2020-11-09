@@ -1,4 +1,4 @@
-package VendingMachine;
+package VendingMachine.Data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,14 +24,6 @@ public class User {
         this.shoppingCart = new Transaction();
     }
 
-    public void addProduct(Product product){
-        this.shoppingCart.add(product);
-    }
-
-    public void removeProduct(Product product){
-        this.shoppingCart.remove(product);
-    }
-
     public void initPermissions() {
         this.permissions = new HashMap<>();
         permissions.put(Permission.MANAGE_ITEM, false);
@@ -43,12 +35,19 @@ public class User {
         this.permissions.put(permission, accessibility);
     }
 
-
     public User(String username, String password, UserType type) {
         this.username = username;
         this.password = password;
         this.setType(type);
         this.id = totalId++;
+    }
+
+    public void addProduct(Product product) {
+        this.shoppingCart.add(product);
+    }
+
+    public void removeProduct(Product product) {
+        this.shoppingCart.remove(product);
     }
 
     public boolean getPermission(Permission permission) {

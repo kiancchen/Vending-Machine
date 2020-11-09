@@ -1,8 +1,8 @@
 package VendingMachine.Window.UserManagement;
 
+import VendingMachine.Data.User;
 import VendingMachine.Processor.MainProcessor;
 import VendingMachine.Processor.UserProcessor;
-import VendingMachine.User;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;

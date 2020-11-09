@@ -1,5 +1,7 @@
 package VendingMachine;
 
+import VendingMachine.Data.Product;
+import VendingMachine.Data.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;

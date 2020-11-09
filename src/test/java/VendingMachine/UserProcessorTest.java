@@ -1,5 +1,6 @@
 package VendingMachine;
 
+import VendingMachine.Data.User;
 import VendingMachine.Processor.UserProcessor;
 import org.junit.After;
 import org.junit.Before;

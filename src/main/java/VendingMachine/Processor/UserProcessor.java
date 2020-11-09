@@ -1,7 +1,7 @@
 package VendingMachine.Processor;
 
+import VendingMachine.Data.User;
 import VendingMachine.DatabaseHandler;
-import VendingMachine.User;
 
 import java.io.IOException;
 import java.util.List;

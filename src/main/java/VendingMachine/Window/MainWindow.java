@@ -1,8 +1,8 @@
 package VendingMachine.Window;
 
+import VendingMachine.Data.User;
 import VendingMachine.Processor.MainProcessor;
 import VendingMachine.Processor.UserProcessor;
-import VendingMachine.User;
 import VendingMachine.Window.CashManagement.CashManagementWindow;
 import VendingMachine.Window.UserManagement.UserManagementWindow;
 import javafx.scene.Scene;

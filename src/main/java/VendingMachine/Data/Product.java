@@ -1,4 +1,4 @@
-package VendingMachine;
+package VendingMachine.Data;
 
 public class Product {
     private static int staticCode = 1;

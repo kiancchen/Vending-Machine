@@ -1,5 +1,6 @@
 package VendingMachine;
 
+import VendingMachine.Data.User;
 import org.junit.Test;
 
 import java.io.IOException;
