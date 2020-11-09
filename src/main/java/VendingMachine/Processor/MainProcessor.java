@@ -6,12 +6,14 @@ public class MainProcessor {
     private static UserProcessor userProcessor;
     private static CashProcessor cashProcessor;
     private static ProductProcessor productProcessor;
+    private static PaymentProcessor paymentProcessor;
 
     static {
         try {
             userProcessor = new UserProcessor();
             cashProcessor = new CashProcessor();
             productProcessor = new ProductProcessor();
+            paymentProcessor = new PaymentProcessor();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -27,5 +29,9 @@ public class MainProcessor {
 
     public static ProductProcessor getProductProcessor() {
         return productProcessor;
+    }
+
+    public static PaymentProcessor getPaymentProcessor() {
+        return paymentProcessor;
     }
 }

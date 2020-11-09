@@ -4,14 +4,10 @@ import java.io.IOException;
 import java.util.Map;
 
 public class PaymentProcessor {
-    private static CashProcessor cashProcessor;
+    private CashProcessor cashProcessor;
 
-    static {
-        try {
-            cashProcessor = new CashProcessor();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public PaymentProcessor() throws IOException {
+        cashProcessor = new CashProcessor();
     }
 
     public static boolean payCash(Map<Double, Integer> cashes){
