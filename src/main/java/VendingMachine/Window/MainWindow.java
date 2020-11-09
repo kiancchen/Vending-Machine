@@ -1,6 +1,7 @@
 package VendingMachine.Window;
 
 import VendingMachine.Processor.MainProcessor;
+import VendingMachine.Processor.UserProcessor;
 import VendingMachine.User;
 import VendingMachine.Window.CashManagement.CashManagementWindow;
 import VendingMachine.Window.UserManagement.UserManagementWindow;
@@ -11,7 +12,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
 public class MainWindow {
-    private MainProcessor processor;
     private Scene scene;
     private AnchorPane pane;
     private Button accountBtn;
@@ -19,8 +19,7 @@ public class MainWindow {
     private Button cashierManageBtn;
     private Text currentUserInfo;
 
-    public MainWindow(MainProcessor processor) {
-        this.processor = processor;
+    public MainWindow() {
         pane = new AnchorPane();
         scene = new Scene(pane, 600, 480);
         initButtons();
@@ -34,8 +33,8 @@ public class MainWindow {
         userManagementBtn = new Button();
         cashierManageBtn = new Button();
 
-        Button[] buttons = {accountBtn, userManagementBtn,cashierManageBtn};
-        String[] texts = {"Account", "Manage User","Manage Cash"};
+        Button[] buttons = {accountBtn, userManagementBtn, cashierManageBtn};
+        String[] texts = {"Account", "Manage User", "Manage Cash"};
 
         for (int i = 0; i < buttons.length; i++) {
             Button button = buttons[i];
@@ -49,19 +48,20 @@ public class MainWindow {
     }
 
     private void initBtnActions() {
+        UserProcessor userProcessor = MainProcessor.getUserProcessor();
         accountBtn.setOnAction((event -> {
-            if (processor.getCurrentUser().getType() == User.UserType.ANONYMOUS) {
+            if (userProcessor.getCurrentUser().getType() == User.UserType.ANONYMOUS) {
                 // If the currency user is the Anonymous
-                new LoginWindow(processor, this);
+                new LoginWindow(this);
             } else {
-                processor.logoutUser();
+                userProcessor.logoutUser();
                 accountBtn.setText("Account");
                 updateCurrencyUserInfo();
             }
         }));
         userManagementBtn.setOnAction(event -> {
-            if (processor.getCurrentUser().getPermission(User.Permission.MANAGE_USER)) {
-                new UserManagementWindow(processor);
+            if (userProcessor.getCurrentUser().getPermission(User.Permission.MANAGE_USER)) {
+                new UserManagementWindow();
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
                         "to do this action.");
@@ -69,8 +69,8 @@ public class MainWindow {
             }
         });
         cashierManageBtn.setOnAction(event -> {
-            if (processor.getCurrentUser().getPermission(User.Permission.MANAGE_CASH)){
-                new CashManagementWindow(processor);
+            if (userProcessor.getCurrentUser().getPermission(User.Permission.MANAGE_CASH)) {
+                new CashManagementWindow();
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
                         "to do this action.");
@@ -89,10 +89,11 @@ public class MainWindow {
     }
 
     public void updateCurrencyUserInfo() {
+        UserProcessor userProcessor = MainProcessor.getUserProcessor();
         currentUserInfo.setText(
-                this.processor.getCurrentUser().getUsername()
+                userProcessor.getCurrentUser().getUsername()
                         + "   "
-                        + this.processor.getCurrentUser().getType()
+                        + userProcessor.getCurrentUser().getType()
         );
     }
 

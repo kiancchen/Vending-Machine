@@ -21,15 +21,15 @@ public class ProductProcessor {
         return false;
     }
 
-    public boolean setProductName(int code, String newName){
+    public boolean setProductName(int code, String newName) {
         return false;
     }
 
-    public boolean setProductCategory(int code, String category){
+    public boolean setProductCategory(int code, String category) {
         return false;
     }
 
-    public boolean setProductPrice(int code, double price){
+    public boolean setProductPrice(int code, double price) {
         return false;
     }
 

@@ -8,8 +8,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class AddUserWindow {
-
-    private MainProcessor processor;
     private Stage stage;
     private Scene scene;
     private AnchorPane pane;
@@ -20,10 +18,8 @@ public class AddUserWindow {
     private ComboBox<String> typeCombo;
     private TableView<UserTableEntry> table;
 
-    public AddUserWindow(MainProcessor processor, TableView<UserTableEntry> table) {
+    public AddUserWindow(TableView<UserTableEntry> table) {
         this.table = table;
-        this.processor = processor;
-
         stage = new Stage();
         pane = new AnchorPane();
         scene = new Scene(pane, 440, 280);
@@ -82,7 +78,7 @@ public class AddUserWindow {
         typeCombo.setLayoutY(160);
 
         for (User.UserType s : User.UserType.values()) {
-            if(s != User.UserType.ANONYMOUS) {
+            if (s != User.UserType.ANONYMOUS) {
                 typeCombo.getItems().add(s.toString());
             }
         }
@@ -104,13 +100,13 @@ public class AddUserWindow {
             alert.show();
         } else {
             try {
-                if (processor.addUser(username.getText(), password.getText(), type)) {
+                if (MainProcessor.getUserProcessor().addUser(username.getText(), password.getText(), type)) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successfully add.");
                     alert.show();
 
                     table.getItems().clear();
 
-                    for (User user : processor.getUsers()) {
+                    for (User user : MainProcessor.getUserProcessor().getUsers()) {
                         table.getItems().add(new UserTableEntry(Integer.toString(user.getId()),
                                 user.getUsername(),
                                 user.getPassword(),

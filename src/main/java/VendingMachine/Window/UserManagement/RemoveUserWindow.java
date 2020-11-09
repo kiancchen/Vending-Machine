@@ -13,7 +13,6 @@ import javafx.stage.Stage;
 import java.util.List;
 
 public class RemoveUserWindow {
-    private MainProcessor processor;
     private Stage stage;
     private Scene scene;
     private AnchorPane pane;
@@ -21,8 +20,7 @@ public class RemoveUserWindow {
     private ComboBox<String> usersCombo;
     private TableView<UserTableEntry> table;
 
-    public RemoveUserWindow(MainProcessor processor, TableView<UserTableEntry> table) {
-        this.processor = processor;
+    public RemoveUserWindow(TableView<UserTableEntry> table) {
         this.table = table;
 
         stage = new Stage();
@@ -54,7 +52,7 @@ public class RemoveUserWindow {
         usersCombo.setLayoutX(200);
         usersCombo.setLayoutY(40);
 
-        List<User> users = processor.getUsers();
+        List<User> users = MainProcessor.getUserProcessor().getUsers();
         for (int i = 1; i < users.size(); i++) {
             User user = users.get(i);
             usersCombo.getItems().add(user.getString());
@@ -69,13 +67,13 @@ public class RemoveUserWindow {
         String[] selectedString = usersCombo.getSelectionModel().getSelectedItem().split(",");
         int selected = Integer.parseInt(selectedString[0]);
         try {
-            if (processor.removeUser(selected)) {
+            if (MainProcessor.getUserProcessor().removeUser(selected)) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successfully removed");
                 alert.show();
 
                 initCombox();
                 table.getItems().clear();
-                for (User user : processor.getUsers()) {
+                for (User user : MainProcessor.getUserProcessor().getUsers()) {
                     table.getItems().add(new UserTableEntry(Integer.toString(user.getId()),
                             user.getUsername(),
                             user.getPassword(),

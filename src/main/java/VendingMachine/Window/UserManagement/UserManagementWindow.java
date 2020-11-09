@@ -11,7 +11,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class UserManagementWindow {
-    private MainProcessor processor;
     private Stage stage;
     private Scene scene;
     private AnchorPane pane;
@@ -22,8 +21,7 @@ public class UserManagementWindow {
     private Button removeButton;
 
 
-    public UserManagementWindow(MainProcessor processor) {
-        this.processor = processor;
+    public UserManagementWindow() {
         stage = new Stage();
         pane = new AnchorPane();
         scene = new Scene(pane, 600, 480);
@@ -59,7 +57,7 @@ public class UserManagementWindow {
         }
 
         // set data to table
-        for (User user : processor.getUsers()) {
+        for (User user : MainProcessor.getUserProcessor().getUsers()) {
             table.getItems().add(new UserTableEntry(Integer.toString(user.getId()),
                     user.getUsername(),
                     user.getPassword(),
@@ -87,9 +85,9 @@ public class UserManagementWindow {
     }
 
     private void initButtonActions() {
-        addButton.setOnAction((event -> new AddUserWindow(processor, table)));
-        removeButton.setOnAction((event -> new RemoveUserWindow(processor, table)));
-        changeButton.setOnAction((event -> new ChangeUserWindow(processor, table)));
+        addButton.setOnAction((event -> new AddUserWindow(table)));
+        removeButton.setOnAction((event -> new RemoveUserWindow(table)));
+        changeButton.setOnAction((event -> new ChangeUserWindow(table)));
     }
 
 }
