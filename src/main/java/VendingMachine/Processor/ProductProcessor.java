@@ -13,11 +13,7 @@ public class ProductProcessor {
     private Map<Product.Category, List<Product>> productMap;
 
     public ProductProcessor() throws IOException {
-        productMap = new HashMap<>();
-        productMap.put(Product.Category.DRINK, new ArrayList<>());
-        productMap.put(Product.Category.CHOCOLATE, new ArrayList<>());
-        productMap.put(Product.Category.CHIP, new ArrayList<>());
-        productMap.put(Product.Category.CANDY, new ArrayList<>());
+        productMap = DatabaseHandler.loadProductData();
     }
 
     public boolean addProduct(String category, String name, double price, int quantity) throws IOException {
