@@ -1,5 +1,7 @@
 package VendingMachine.Data;
 
+import java.util.Objects;
+
 public class Product {
     private static int staticCode = 1;
     private Category category;
@@ -55,6 +57,7 @@ public class Product {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
 
     public enum Category {
         DRINK,
