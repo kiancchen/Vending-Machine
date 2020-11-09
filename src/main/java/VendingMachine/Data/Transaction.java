@@ -1,34 +1,44 @@
 package VendingMachine.Data;
 
+import VendingMachine.Processor.MainProcessor;
 import VendingMachine.Processor.PaymentProcessor;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Transaction {
-    private List<Product> products;
-    private Date date;
+    private Map<Product, Integer> shoppingList;
+    private LocalDateTime date;
     private boolean success;
     private double amount;
     private double receivedMoney;
 
-
     public Transaction() {
-        products = new ArrayList<>();
+        shoppingList = new HashMap<>();
         success = false;
         amount = 0;
     }
 
-    public void add(Product product) {
-        this.products.add(product);
-        this.amount += product.getPrice();
+    public void add(String category, int code, int quantity) {
+        Product product = MainProcessor.getProductProcessor().getProduct(category, code);
+        if (shoppingList.containsKey(product)) {
+            shoppingList.put(product, shoppingList.get(product) + quantity);
+        } else {
+            shoppingList.put(product, quantity);
+        }
+        this.amount += product.getPrice() * quantity;
     }
 
-    public void remove(Product product) {
-        this.products.remove(product);
-        this.amount -= product.getPrice();
+    public void set(String category, int code, int quantity) {
+        Product product = MainProcessor.getProductProcessor().getProduct(category, code);
+
+        shoppingList.put(product, quantity);
+        if (shoppingList.get(product) == 0) {
+            shoppingList.remove(product);
+        }
+
+        this.amount += product.getPrice() * quantity;
     }
 
     public void payCash(Map<Double, Integer> cashes) {
