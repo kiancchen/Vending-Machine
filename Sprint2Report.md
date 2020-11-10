@@ -45,8 +45,6 @@
   - [User Stories and Sprint Backlog](#user-stories-and-sprint-backlog)
   - [Burndown chart](#burndown-chart)
   - [Storyboard](#storyboard)
-    - [Main window](#main-window)
-    - [User management window](#user-management-window)
   - [Scrum Meetings](#scrum-meetings)
     - [Meeting 1 (Sprint Planning)](#meeting-1-sprint-planning)
     - [Meeting 2](#meeting-2)
@@ -81,38 +79,23 @@
 
 ## Individual Contribution
 
-==TODO==
-
 1. Cheng Chen (cche7436):
-   - Agile tools setup and their report
-   - Storyboard
-   - User data structure
-   - User database handler
-   - Cash database handler
-   - Calculating changes in cash functionality
    - Review pull requests
+   - <mark>TODD</mark>
 2. Yuanqun Wang (ywan3184):
-   - Add user GUI
-   - Change user GUI
-   - Remove user GUI
-   - Owner's user stories
+   - <mark>TODD</mark>
 3. Yufei Zuo (yzuo4982):
-   - Application demo report
-   - Main window GUI
-   - User management GUI
-   - Sprint goal, review, retrospective report
+   - Add product GUI
+   - Remove product GUI
+   - Change product GUI
+   - Product table
+   - <mark>TODD</mark>
 4. Zexuan Long (zlon4018):
-   - Logic of user processor
-   - Tests of user processor
+   - <mark>TODD</mark>
 5. Songyin Li (soli3733):
-   - A table shows the cash information
-   - Cash management GUI
-   - Customer's user stories
+   - <mark>TODD</mark>
 6. Zehui Lin (zlin3338):
-   - User and owner's user Story
-   - UML class diagram
-   - Sign out logic
-   - Login system GUI
+   - <mark>TODD</mark>
 
 # Agile Development Tools and Practices
 
@@ -491,13 +474,13 @@ We maintained two projects on Jenkins, one is for master branch only, and the ot
 
 # Application Development
 
-==TODO==
-
 ## UML Class Diagram
 
-<a href="https://sm.ms/image/VsNzxmUQOXbfdMg" target="_blank"><img src="https://i.loli.net/2020/11/05/VsNzxmUQOXbfdMg.png" ></a>
+<mark>TODD</mark>
 
 ## Demo
+
+<mark>TODD</mark>
 
 `blan` is an owner. Its password is `123`. Feel free to use this account to test functionalities.
 
@@ -571,6 +554,8 @@ The table can display all the amount of cash in the machine. after click on `Man
 
 The product backlog contains a set of all features and sub-features to build the vending machine, including functions, requirements, enhancements and fixes identified from previous sprints. The items in product backlog are ordered by priority and constantly changed. Any additional requirements from client should be directly added to product backlog instead of sprint backlog.
 
+<mark>TODD</mark>
+
 ![CleanShot 2020-11-06 at 12.58.43@2x](https://i.loli.net/2020/11/06/MJkeKuVYPNHUq19.png)
 
 If you can't see this table clearly, please refer to this [link](https://docs.google.com/spreadsheets/d/1bW-7sIUqPr8Pr3uHav8PKmb57BtOSc3_Uw_Vm2mQ-A8/edit?usp=sharing) (google sheet).
@@ -579,7 +564,7 @@ If you can't see this table clearly, please refer to this [link](https://docs.go
 
    - Implement the code structure for `Product` and `Transaction`
    - Implement the product management system
-   - Complete the cash management system 
+   - Complete the cash management system
    - The customer can select products they want to purchase, see the shopping cart and shopping history
    - Implement the cash payment system
 
@@ -587,21 +572,19 @@ If you can't see this table clearly, please refer to this [link](https://docs.go
 
 The sprint backlog contains a set of items selected for this sprint. It is considered as a plan for delivering the product increment and realize the sprint goal. It is visible to anyone and to be added or modified by the development team.
 
-==TODO==
+<mark>TODD</mark>
 
 ## Burndown chart
 
-==TODO==
+<mark>TODD</mark>
 
 ## Storyboard
 
-==TODO==
+<mark>TODD</mark>
 
 ## Scrum Meetings
 
 ### Meeting 1 (Sprint Planning)
-
-<img src='https://i.loli.net/2020/11/04/OBaT23sQecx9Cz4.png' alt='OBaT23sQecx9Cz4'/>
 
 - Date: 7th November
 - Attendance: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
@@ -614,9 +597,9 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
 
 ### Meeting 2
 
-==TODO==
+<mark>TODD</mark>
 
-- Date : 3rd November
+- Date : 10th November
 - Attendance: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
 - Content:
   - Online debug the obstacle in the code.
@@ -649,7 +632,7 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
 
 ### Meeting 3
 
-==TODO==
+<mark>TODD</mark>
 
 - Date : 5th November
 - Attendance: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
@@ -686,6 +669,8 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
 
 ### Client Feedback
 
+<mark>TODD</mark>
+
 Our client is satisfied with output of current sprint. However, client pointed out that the product backlog were not associated with corresponding user stories well. There should be more description and accepted criteria for each task.
 
 - What has been done?
@@ -701,6 +686,8 @@ Our client is satisfied with output of current sprint. However, client pointed o
 
 ### Revisited Product Backlog
 
+<mark>TODD</mark>
+
 The tasks have not created carefully and detailed at the Sprint Planning, thus it will cause much conflict later when a new feature should be added. To improve this, we should spend more time on user stories and create tasks for each user stories while planning next sprint.
 
 Besides, the tasks were not prioritized at the beginning, so that it will extend the duration of other tasks if one task that should have higher priority is not implemented yet in time. And the teammate have to wait for that task being completed. In the next sprint, all the tasks should be prioritized first, and teammates aim to finish tasks with higher priority first.
@@ -708,6 +695,8 @@ Besides, the tasks were not prioritized at the beginning, so that it will extend
 Also, we assigned some tasks to teammates that are not good at that. For example, some teammates are not familiar with `Javafx` but we asked them to complete an GUI task. In the next sprint, we should consider the ability of each teammate and ask them to do what they are good at to improve the efficiency.
 
 ## Sprint Retrospective
+
+<mark>TODD</mark>
 
 - Date: 5th November
 - What went well during the Sprint?
