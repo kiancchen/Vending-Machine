@@ -32,13 +32,6 @@
  "DRINK": [
   {
    "category": "DRINK",
-   "name": "Mineral Water",
-   "price": 2.0,
-   "code": 1,
-   "quantity": 7
-  },
-  {
-   "category": "DRINK",
    "name": "Sprite",
    "price": 2.0,
    "code": 2,
@@ -70,7 +63,7 @@
   {
    "category": "CHIP",
    "name": "Smiths",
-   "price": 2.5,
+   "price": 3.0,
    "code": 10,
    "quantity": 7
   },

@@ -38,6 +38,18 @@ public class ProductProcessor {
         return true;
     }
 
+    public boolean removeProduct(String category, int code) throws IOException {
+        List<Product> products = productMap.get(Product.Category.valueOf(category));
+        for (Product product : products) {
+            if (product.getCode() == code) {
+                products.remove(product);
+                DatabaseHandler.saveProductData(productMap);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean setProductQuantity(String category, int code, int quantity) throws IOException {
         if (quantity > 15){
             return false;
