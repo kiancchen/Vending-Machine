@@ -47,7 +47,6 @@ public class MainWindow {
         initBtnActions();
         initText();
         updateCurrencyUserInfo();
-//        initProductTable();
         initPurchaseNodes();
         initPurchaseTable();
 
@@ -253,10 +252,10 @@ public class MainWindow {
         }
 
         purchaseTable.getItems().clear();
-        for(int i = 0; i < purchaseList.size(); i++) {
-            purchaseTable.getItems().add(purchaseList.get(i));
+        for (ProductTableEntry productTableEntry : purchaseList) {
+            purchaseTable.getItems().add(productTableEntry);
         }
-
+        selectedQuantityCombo.getItems().clear();
         this.productTable.updateTableData();
     }
 
