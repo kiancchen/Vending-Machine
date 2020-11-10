@@ -164,6 +164,10 @@ public class UserManagementWindow {
     }
 
     private void removeAction() {
+        if (table.getSelectionModel().getSelectedItem() == null) {
+            alert(Alert.AlertType.WARNING, "You don't select any user.");
+            return;
+        }
         int id = Integer.parseInt(table.getSelectionModel().getSelectedItem().getId());
         try {
             if (MainProcessor.getUserProcessor().removeUser(id)) {
