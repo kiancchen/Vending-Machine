@@ -43,7 +43,7 @@
   - [Product Backlog](#product-backlog)
   - [Sprint Goal](#sprint-goal)
   - [User Stories and Sprint Backlog](#user-stories-and-sprint-backlog)
-  - [Burndown chart](#burndown-chart)
+  - [Burndown Chart](#burndown-chart)
   - [Storyboard](#storyboard)
   - [Scrum Meetings](#scrum-meetings)
     - [Meeting 1 (Sprint Planning)](#meeting-1-sprint-planning)
@@ -574,7 +574,7 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
 
 <mark>TODD</mark>
 
-## Burndown chart
+## Burndown Chart
 
 <mark>TODD</mark>
 
@@ -596,8 +596,6 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
   - Produce the Sprint Backlog
 
 ### Meeting 2
-
-<mark>TODD</mark>
 
 - Date : 10th November
 - Attendance: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
