@@ -4,8 +4,6 @@ import VendingMachine.Data.Product;
 import VendingMachine.DatabaseHandler;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +14,7 @@ public class ProductProcessor {
         productMap = DatabaseHandler.loadProductData();
     }
 
-    public Product getProduct(String category, int code){
+    public Product getProduct(String category, int code) {
         List<Product> products = productMap.get(Product.Category.valueOf(category));
         for (Product product : products) {
             if (product.getCode() == code) {
@@ -51,7 +49,7 @@ public class ProductProcessor {
     }
 
     public boolean setProductQuantity(String category, int code, int quantity) throws IOException {
-        if (quantity > 15){
+        if (quantity > 15) {
             return false;
         }
 

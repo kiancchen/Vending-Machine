@@ -1,4 +1,5 @@
 package VendingMachine.Window.ProductManagement;
+
 import VendingMachine.Data.Product;
 import VendingMachine.Processor.MainProcessor;
 import VendingMachine.Processor.ProductProcessor;
@@ -107,7 +108,7 @@ public class ProductManagementWindow {
         categoryCombo.setLayoutX(390);
         categoryCombo.setLayoutY(350);
 
-        for (Product.Category c: Product.Category.values()) {
+        for (Product.Category c : Product.Category.values()) {
             categoryCombo.getItems().add(c.toString());
         }
 
@@ -144,7 +145,7 @@ public class ProductManagementWindow {
         Map<Product.Category, List<Product>> productMap = MainProcessor.getProductProcessor().getProductMap();
         for (Map.Entry<Product.Category, List<Product>> entry : productMap.entrySet()) {
             String category = entry.getKey().toString();
-            for (Product product: entry.getValue()){
+            for (Product product : entry.getValue()) {
                 String code = Integer.toString(product.getCode());
                 String name = product.getName();
                 String price = Double.toString(product.getPrice());
