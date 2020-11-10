@@ -1,5 +1,6 @@
 package VendingMachine.Window.CashManagement;
 
+import VendingMachine.Data.Product;
 import VendingMachine.Processor.CashProcessor;
 import VendingMachine.Processor.MainProcessor;
 import javafx.scene.Scene;
@@ -18,6 +19,8 @@ public class CashManagementWindow {
     private Button changeButton;
     private double selectedCashType;
     private TextField amountField;
+    private ComboBox<String> typeCombo;
+    private String originCash;
 
     public CashManagementWindow() {
         stage = new Stage();
@@ -31,6 +34,7 @@ public class CashManagementWindow {
         initButton();
         initTextFields();
         initButtonActions();
+        initCombobox();
         selectedCashType = -1;
     }
 
@@ -60,6 +64,8 @@ public class CashManagementWindow {
             if (!table.getSelectionModel().isEmpty()) {
                 CashTableEntry selected = table.getSelectionModel().getSelectedItem();
                 selectedCashType = Double.parseDouble(selected.getCashType());
+                originCash = selected.getCashType();
+                typeCombo.getSelectionModel().select(originCash);
                 amountField.setText(selected.getAmount());
             }
         });
@@ -85,13 +91,26 @@ public class CashManagementWindow {
 
     private void initTextFields() {
         amountField = new TextField();
-        amountField.setLayoutX(240);
+        amountField.setLayoutX(300);
         amountField.setLayoutY(350);
         amountField.setPrefWidth(120);
         amountField.setPromptText("Number");
 
         pane.getChildren().add(amountField);
 
+    }
+
+    private void initCombobox() {
+        typeCombo = new ComboBox<>();
+        typeCombo.setLayoutX(150);
+        typeCombo.setLayoutY(350);
+        typeCombo.setPrefWidth(120);
+        typeCombo.setPromptText("Cash Type");
+
+
+
+
+        pane.getChildren().add(typeCombo);
     }
 
     private void setTableData() {
