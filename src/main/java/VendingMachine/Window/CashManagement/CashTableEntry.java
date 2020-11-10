@@ -1,21 +1,21 @@
 package VendingMachine.Window.CashManagement;
 
 public class CashTableEntry {
-    private double cashType;
-    private int amount;
+    private String cashType;
+    private String amount;
 
 
-    public CashTableEntry(double cashType, int amount) {
+    public CashTableEntry(String cashType, String amount) {
         this.cashType = cashType;
         this.amount = amount;
 
     }
 
-    public double getCashType() {
+    public String getCashType() {
         return cashType;
     }
 
-    public int getAmount() {
+    public String getAmount() {
         return amount;
     }
 
