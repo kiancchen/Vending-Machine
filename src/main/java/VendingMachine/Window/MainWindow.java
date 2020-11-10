@@ -3,7 +3,6 @@ package VendingMachine.Window;
 import VendingMachine.Data.Product;
 import VendingMachine.Data.User;
 import VendingMachine.Processor.MainProcessor;
-import VendingMachine.Processor.ProductProcessor;
 import VendingMachine.Processor.UserProcessor;
 import VendingMachine.Window.CashManagement.CashManagementWindow;
 import VendingMachine.Window.ProductManagement.ProductManagementWindow;
@@ -209,16 +208,16 @@ public class MainWindow {
     }
 
     private void addToCart() {
-        if(productTable.getSelectionModel().getSelectedItem() == null) {
+        if(this.productTable.getSelectedItem() == null) {
             return;
         }
 
-        int stock = Integer.parseInt(productTable.getSelectionModel().getSelectedItem().getQuantity());
+        int stock = Integer.parseInt(this.productTable.getSelectedItem().getQuantity());
 
-        String name = productTable.getSelectionModel().getSelectedItem().getName();
-        String category = productTable.getSelectionModel().getSelectedItem().getCategory();
-        String code = productTable.getSelectionModel().getSelectedItem().getCode();
-        String price = productTable.getSelectionModel().getSelectedItem().getPrice();
+        String name = this.productTable.getSelectedItem().getName();
+        String category = this.productTable.getSelectedItem().getCategory();
+        String code = this.productTable.getSelectedItem().getCode();
+        String price = this.productTable.getSelectedItem().getPrice();
 
         if(selectedQuantityCombo.getSelectionModel().getSelectedItem() == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Not enough quantity.");
@@ -230,7 +229,6 @@ public class MainWindow {
         int index = -1;
         for(int i = 0; i < purchaseList.size(); i++) {
             if(name.equals(purchaseList.get(i).getName())) {
-                System.out.println(name +" "+productTable.getSelectionModel().getSelectedItem().getName());
                 index = i;
                 purQuant = Integer.parseInt(purchaseList.get(i).getQuantity());
                 break;
@@ -259,23 +257,7 @@ public class MainWindow {
             purchaseTable.getItems().add(purchaseList.get(i));
         }
 
-        setProductTableData();
-    }
-
-    private void setProductTableData() {
-        //set data to table
-        productTable.getItems().clear();
-        Map<Product.Category, List<Product>> productMap = MainProcessor.getProductProcessor().getProductMap();
-        for (Map.Entry<Product.Category, List<Product>> entry : productMap.entrySet()) {
-            String category = entry.getKey().toString();
-            for (Product product : entry.getValue()) {
-                String code = Integer.toString(product.getCode());
-                String name = product.getName();
-                String price = Double.toString(product.getPrice());
-                String quantity = Integer.toString(product.getQuantity());
-                productTable.getItems().add(new ProductTableEntry(code, name, category, price, quantity));
-            }
-        }
+        this.productTable.updateTableData();
     }
 
     public Scene getScene() {
