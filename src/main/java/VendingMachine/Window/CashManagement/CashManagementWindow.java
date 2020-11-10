@@ -1,14 +1,17 @@
 package VendingMachine.Window.CashManagement;
 
+import VendingMachine.Processor.CashProcessor;
 import VendingMachine.Processor.MainProcessor;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 public class CashManagementWindow {
@@ -16,9 +19,10 @@ public class CashManagementWindow {
     private Scene scene;
     private AnchorPane pane;
     private TableView<CashTableEntry> table;
-
+//    private ComboBox<String> typeCombo;
     private Button changeButton;
-
+    private double selectedCashType;
+    private TextField amountField;
 
     public CashManagementWindow() {
         stage = new Stage();
@@ -27,9 +31,12 @@ public class CashManagementWindow {
         stage.setScene(scene);
         stage.setTitle("Cash Management");
         stage.show();
+
         initTable();
-//        initButton();
-//        initButtonActions();
+        initButton();
+        initTextFields();
+        initButtonActions();
+        selectedCashType = -1;
     }
 
     private void initTable() {
@@ -53,20 +60,23 @@ public class CashManagementWindow {
             column.setCellValueFactory(new PropertyValueFactory<>(properties[i]));
             table.getColumns().add(column);
         }
-        Map<Double, Integer> cashMap = MainProcessor.getCashProcessor().getCashMap();
-        cashMap.forEach((k, v) -> table.getItems().add(new CashTableEntry(k, v)));
 
+        table.setOnMouseClicked(event -> {
+            if (!table.getSelectionModel().isEmpty()) {
+                CashTableEntry selected = table.getSelectionModel().getSelectedItem();
+                selectedCashType = Double.parseDouble(selected.getCashType());
+                amountField.setText(selected.getAmount());
+            }
+        });
+
+        setTableData();
     }
 
 
     private void initButton() {
-
         changeButton = new Button();
-
-
         Button[] buttons = {changeButton};
         String[] texts = {"Change amount"};
-
         for (int i = 0; i < buttons.length; i++) {
             Button button = buttons[i];
             button.setLayoutX(200);
@@ -78,8 +88,66 @@ public class CashManagementWindow {
         }
     }
 
-    private void initButtonActions() {
+    private void initTextFields() {
+        amountField = new TextField();
+        amountField.setLayoutX(240);
+        amountField.setLayoutY(350);
+        amountField.setPrefWidth(120);
+        amountField.setPromptText("Amount");
 
-        changeButton.setOnAction((event -> new ChangeCashWindow(this.table)));
+        pane.getChildren().add(amountField);
+
+    }
+
+    private void setTableData() {
+        // set data to table
+        table.getItems().clear();
+        Map<Double, Integer> cashMap = MainProcessor.getCashProcessor().getCashMap();
+        Collection<Double> keySet = cashMap.keySet();
+        List<Double> list = new ArrayList<Double>(keySet);
+        Collections.sort(list);
+        for (int i = 0; i < list.size(); i++) {
+            String cashType = list.get(i).toString();
+            String amount = cashMap.get(list.get(i)).toString();
+            table.getItems().add(new CashTableEntry(cashType, amount));
+        }
+    }
+
+    private void initButtonActions() {
+        changeButton.setOnAction((event -> changeAction()));
+    }
+
+    private void changeAction() {
+        CashProcessor cashProcessor = MainProcessor.getCashProcessor();
+        if (selectedCashType < 0) {
+            alert(Alert.AlertType.WARNING, "You don't select any cash type.");
+            return;
+        } else if (!validateInput()) {
+            return;
+        }
+        try {
+            cashProcessor.setCashNumber(selectedCashType, Integer.parseInt(amountField.getText()));
+//            productProcessor.setProductCategory(category, selectedId, ??)
+            alert(Alert.AlertType.WARNING, "Change successfully.");
+        } catch (Exception e) {
+            alert(Alert.AlertType.WARNING, "Change failed.");
+        }
+
+        amountField.setText("");
+        setTableData();
+        selectedCashType = -1;
+    }
+
+    private boolean validateInput() {
+        if (amountField.getText().trim().isEmpty()) {
+            alert(Alert.AlertType.WARNING, "Amount needed");
+            return false;
+        }
+        return true;
+    }
+
+    private void alert(Alert.AlertType warning, String s) {
+        Alert alert = new Alert(warning, s);
+        alert.show();
     }
 }
