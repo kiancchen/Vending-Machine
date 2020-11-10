@@ -1,22 +1,20 @@
 package VendingMachine.Window;
 
-import VendingMachine.Data.Product;
 import VendingMachine.Data.User;
 import VendingMachine.Processor.MainProcessor;
 import VendingMachine.Processor.UserProcessor;
 import VendingMachine.Window.CashManagement.CashManagementWindow;
 import VendingMachine.Window.ProductManagement.ProductManagementWindow;
+import VendingMachine.Window.ProductManagement.ProductTable;
 import VendingMachine.Window.ProductManagement.ProductTableEntry;
 import VendingMachine.Window.UserManagement.UserManagementWindow;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-
-import java.util.List;
-import java.util.Map;
 
 public class MainWindow {
     private Scene scene;
@@ -26,7 +24,7 @@ public class MainWindow {
     private Button cashierManageBtn;
     private Button productManageBtn;
     private Text currentUserInfo;
-    private TableView<ProductTableEntry> productTable;
+    private ProductTable productTable;
     private Text selectedItemText;
     private ComboBox<Integer> selectedQuantityCombo;
 
@@ -37,8 +35,11 @@ public class MainWindow {
         initBtnActions();
         initText();
         updateCurrencyUserInfo();
-        initProductTable();
+//        initProductTable();
         initPurchaseNodes();
+        this.productTable = new ProductTable();
+        pane.getChildren().add(productTable.getTable());
+        setProductTableAction();
     }
 
     public void updateCurrencyUserInfo() {
@@ -106,7 +107,7 @@ public class MainWindow {
         });
         productManageBtn.setOnAction(event -> {
             if (userProcessor.getCurrentUser().getPermission(User.Permission.MANAGE_ITEM)) {
-                new ProductManagementWindow();
+                new ProductManagementWindow(this.productTable);
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
                         "to do this action.");
@@ -123,33 +124,11 @@ public class MainWindow {
         this.pane.getChildren().add(currentUserInfo);
     }
 
-    private void initProductTable() {
-        productTable = new TableView<>();
-        productTable.setLayoutX(10);
-        productTable.setLayoutY(40);
-        productTable.setPrefWidth(500);
-        productTable.setPrefHeight(340);
-        productTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        pane.getChildren().add(productTable);
-
-        //create table
-        String[] colNames = {"CATEGORY", "CODE", "NAME", "PRICE", "STOCK"};
-        String[] properties = {"category", "code", "name", "price", "quantity"};
-        for (int i = 0; i < colNames.length; i++) {
-            String colName = colNames[i];
-            TableColumn<ProductTableEntry, String> column = new TableColumn<>(colName);
-            column.setSortable(false);
-            column.setPrefWidth(118);
-            column.setStyle("-fx-alignment: CENTER;");
-            column.setCellValueFactory(new PropertyValueFactory<>(properties[i]));
-            productTable.getColumns().add(column);
-        }
-        setProductTableData();
-
-        productTable.setOnMouseClicked(event -> {
+    private void setProductTableAction() {
+        this.productTable.setTableAction(event -> {
             selectedQuantityCombo.getItems().clear();
-            if (!productTable.getSelectionModel().isEmpty()) {
-                ProductTableEntry selected = productTable.getSelectionModel().getSelectedItem();
+            if (!productTable.selectIsEmpty()) {
+                ProductTableEntry selected = productTable.getSelectedItem();
                 selectedItemText.setText(selected.getName());
                 for (int i = 1; i <= Integer.parseInt(selected.getQuantity()); i++) {
                     selectedQuantityCombo.getItems().add(i);
@@ -192,21 +171,6 @@ public class MainWindow {
         pane.getChildren().add(checkout);
     }
 
-    private void setProductTableData() {
-        //set data to table
-        productTable.getItems().clear();
-        Map<Product.Category, List<Product>> productMap = MainProcessor.getProductProcessor().getProductMap();
-        for (Map.Entry<Product.Category, List<Product>> entry : productMap.entrySet()) {
-            String category = entry.getKey().toString();
-            for (Product product : entry.getValue()) {
-                String code = Integer.toString(product.getCode());
-                String name = product.getName();
-                String price = Double.toString(product.getPrice());
-                String quantity = Integer.toString(product.getQuantity());
-                productTable.getItems().add(new ProductTableEntry(code, name, category, price, quantity));
-            }
-        }
-    }
 
     public Scene getScene() {
         return scene;

@@ -105,6 +105,18 @@ public class ProductProcessor {
         return false;
     }
 
+    public boolean setProductCode(String category, int oldCode, int newCode) throws IOException {
+        List<Product> products = productMap.get(Product.Category.valueOf(category));
+        for (Product product : products) {
+            if (product.getCode() == oldCode) {
+                product.setCode(newCode);
+                DatabaseHandler.saveProductData(productMap);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Map<Product.Category, List<Product>> getProductMap() {
         return productMap;
     }
