@@ -193,9 +193,9 @@ public class UserManagementWindow {
         }
 
         try {
-            userProcessor.changeUsername(selectedId, usernameField.getText());
-            userProcessor.changePassword(selectedId, passwordField.getText());
-            userProcessor.changeType(selectedId, typeCombo.getSelectionModel().getSelectedItem());
+            userProcessor.setUsername(selectedId, usernameField.getText());
+            userProcessor.setPassword(selectedId, passwordField.getText());
+            userProcessor.setUserType(selectedId, typeCombo.getSelectionModel().getSelectedItem());
             alert(Alert.AlertType.WARNING, "Change successfully.");
         } catch (Exception e) {
             alert(Alert.AlertType.WARNING, "Change failed.");

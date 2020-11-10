@@ -128,7 +128,7 @@ public class CashManagementWindow {
         try {
             cashProcessor.setCashNumber(selectedCashType, Integer.parseInt(amountField.getText()));
 //            productProcessor.setProductCategory(category, selectedId, ??)
-            alert(Alert.AlertType.WARNING, "Change successfully.");
+            alert(Alert.AlertType.INFORMATION, "Change successfully.");
         } catch (Exception e) {
             alert(Alert.AlertType.WARNING, "Change failed.");
         }

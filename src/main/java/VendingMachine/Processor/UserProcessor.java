@@ -64,7 +64,7 @@ public class UserProcessor {
         return false;
     }
 
-    public boolean changeUsername(int id, String newUsername) throws IOException {
+    public boolean setUsername(int id, String newUsername) throws IOException {
         for (User user : users) {
             if (user.getId() == id) {
                 user.setUsername(newUsername);
@@ -75,7 +75,7 @@ public class UserProcessor {
         return false;
     }
 
-    public boolean changePassword(int id, String newPassword) throws IOException {
+    public boolean setPassword(int id, String newPassword) throws IOException {
         for (User user : users) {
             if (user.getId() == id) {
                 user.setPassword(newPassword);
@@ -86,7 +86,7 @@ public class UserProcessor {
         return false;
     }
 
-    public boolean changeType(int id, String newType) throws IOException {
+    public boolean setUserType(int id, String newType) throws IOException {
         for (User user : users) {
             if (user.getId() == id) {
                 user.setType(User.UserType.valueOf(newType));

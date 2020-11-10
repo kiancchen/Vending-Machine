@@ -85,9 +85,9 @@ public class UserProcessorTest {
     @Test
     public void testChangeUsername() throws IOException {
         UserProcessor userProcessor = new UserProcessor();
-        assertTrue(userProcessor.changeUsername(2, "test1"));
+        assertTrue(userProcessor.setUsername(2, "test1"));
         assertTrue(userProcessor.verifyUser("test1", "123"));
-        assertFalse(userProcessor.changeUsername(10000, ""));
+        assertFalse(userProcessor.setUsername(10000, ""));
     }
 
     @Test
@@ -122,19 +122,19 @@ public class UserProcessorTest {
     @Test
     public void testChangePassword() throws IOException {
         UserProcessor userProcessor = new UserProcessor();
-        assertTrue(userProcessor.changePassword(2, "test1"));
+        assertTrue(userProcessor.setPassword(2, "test1"));
         assertTrue(userProcessor.verifyUser("blan", "test1"));
-        assertFalse(userProcessor.changePassword(10000, "123"));
+        assertFalse(userProcessor.setPassword(10000, "123"));
     }
 
     @Test
     public void testChangeType() throws IOException {
         UserProcessor userProcessor = new UserProcessor();
-        assertTrue(userProcessor.changeType(2, "CASHIER"));
+        assertTrue(userProcessor.setUserType(2, "CASHIER"));
         List<User> userList = DatabaseHandler.loadUserData();
         for (int i = 0; i < userList.size(); i++) {
             assertEquals(userList.get(i).getType(), userProcessor.getUsers().get(i).getType());
         }
-        assertFalse(userProcessor.changeType(10000, "CASHIER"));
+        assertFalse(userProcessor.setUserType(10000, "CASHIER"));
     }
 }

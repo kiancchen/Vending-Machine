@@ -196,19 +196,16 @@ public class MainWindow {
         //set data to table
         productTable.getItems().clear();
         Map<Product.Category, List<Product>> productMap = MainProcessor.getProductProcessor().getProductMap();
-
-        for (List<Product> products : productMap.values()) {
-            for (Product product : products) {
-                productTable.getItems().add(new ProductTableEntry(
-                        Integer.toString(product.getCode()),
-                        product.getCategory().name(), product.getName(),
-                        Double.toString(product.getPrice()),
-                        Integer.toString(product.getQuantity())));
-
+        for (Map.Entry<Product.Category, List<Product>> entry : productMap.entrySet()) {
+            String category = entry.getKey().toString();
+            for (Product product : entry.getValue()) {
+                String code = Integer.toString(product.getCode());
+                String name = product.getName();
+                String price = Double.toString(product.getPrice());
+                String quantity = Integer.toString(product.getQuantity());
+                productTable.getItems().add(new ProductTableEntry(code, name, category, price, quantity));
             }
         }
-
-
     }
 
     public Scene getScene() {
