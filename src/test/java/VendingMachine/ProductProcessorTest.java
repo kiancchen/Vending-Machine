@@ -11,6 +11,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -20,8 +22,8 @@ public class ProductProcessorTest {
     @After
     public void restoreResources() {
         try {
-            Files.copy(new File("src/main/resources/user_backup.json").toPath(),
-                    new File("src/main/resources/user.json").toPath(),
+            Files.copy(new File("src/main/resources/product_backup.json").toPath(),
+                    new File("src/main/resources/product.json").toPath(),
                     StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             e.printStackTrace();
@@ -69,6 +71,13 @@ public class ProductProcessorTest {
         ProductProcessor productProcessor = new ProductProcessor();
         assertFalse(productProcessor.setProductPrice("DRINK",10,10));
         assertTrue(productProcessor.setProductPrice("DRINK",2,10));
+    }
+
+    @Test
+    public void testGetProductMap() throws IOException{
+        ProductProcessor productProcessor = new ProductProcessor();
+        Map<Product.Category, List<Product>> test = DatabaseHandler.loadProductData();
+        assertEquals(test.size(),productProcessor.getProductMap().size());
     }
 
 
