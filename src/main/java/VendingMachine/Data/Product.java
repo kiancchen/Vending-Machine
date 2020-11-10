@@ -1,7 +1,5 @@
 package VendingMachine.Data;
 
-import java.util.Objects;
-
 public class Product {
     private static int staticCode = 1;
     private Category category;
