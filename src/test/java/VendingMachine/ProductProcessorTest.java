@@ -87,6 +87,13 @@ public class ProductProcessorTest {
         assertTrue(productProcessor.removeProduct("DRINK",1));
     }
 
+    @Test
+    public void testGetProduct() throws IOException{
+        ProductProcessor productProcessor = new ProductProcessor();
+        assertNull(productProcessor.getProduct("DRINK",10));
+        assertNotNull(productProcessor.getProduct("DRINK",1));
+    }
+
 
 
 }
