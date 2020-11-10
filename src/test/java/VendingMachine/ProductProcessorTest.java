@@ -80,6 +80,13 @@ public class ProductProcessorTest {
         assertEquals(test.size(),productProcessor.getProductMap().size());
     }
 
+    @Test
+    public void testRemoveProduct() throws IOException{
+        ProductProcessor productProcessor = new ProductProcessor();
+        assertFalse(productProcessor.removeProduct("DRINK",10));
+        assertTrue(productProcessor.removeProduct("DRINK",1));
+    }
+
 
 
 }

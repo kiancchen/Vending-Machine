@@ -5,9 +5,7 @@ import VendingMachine.Data.User;
 import VendingMachine.Processor.MainProcessor;
 import VendingMachine.Processor.UserProcessor;
 import VendingMachine.Window.CashManagement.CashManagementWindow;
-import VendingMachine.Window.CashManagement.CashTableEntry;
 import VendingMachine.Window.ProductManagement.ProductManagementWindow;
-
 import VendingMachine.Window.UserManagement.UserManagementWindow;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -18,8 +16,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -69,16 +65,9 @@ public class MainWindow {
     }
 
     private void setAllProductTableData() {
-
         //set data to table
         allProductTable.getItems().clear();
         Map<Product.Category, List<Product>> productMap = MainProcessor.getProductProcessor().getProductMap();
-
-//        List<String> categories = new ArrayList<>();
-//        List<String> names = new ArrayList<>();
-//        List<String> codes = new ArrayList<>();
-//        List<String> quantities = new ArrayList<>();
-//        List<String> prices = new ArrayList<>();
 
         for (List<Product> products: productMap.values()){
             for (Product product : products) {
@@ -88,17 +77,7 @@ public class MainWindow {
                         Double.toString(product.getPrice()),
                         Integer.toString(product.getQuantity())));
 
-//                categories.add(products.get(i).getCategory().name());
-//                names.add(products.get(i).getName());
-//                codes.add(Integer.toString(products.get(i).getCode()));
-//                quantities.add(Integer.toString(products.get(i).getQuantity()));
-//                prices.add(Double.toString(products.get(i).getPrice()));
             }
-//            for (int i = 0; i < products.size(); i++) {
-//                allProductTable.getItems().add(new ProductTableEntry(codes.get(i),
-//                        categories.get(i), names.get(i),
-//                        prices.get(i), quantities.get(i)));
-//            }
         }
 
 
