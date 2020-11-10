@@ -16,6 +16,16 @@ public class ProductProcessor {
         productMap = DatabaseHandler.loadProductData();
     }
 
+    public Product getProduct(String category, int code){
+        List<Product> products = productMap.get(Product.Category.valueOf(category));
+        for (Product product : products) {
+            if (product.getCode() == code) {
+                return product;
+            }
+        }
+        return null;
+    }
+
     public boolean addProduct(String category, String name, double price, int quantity) throws IOException {
         List<Product> products = productMap.get(Product.Category.valueOf(category));
         for (Product product : products) {
@@ -26,6 +36,18 @@ public class ProductProcessor {
         products.add(new Product(Product.Category.valueOf(category), name, price, quantity));
         DatabaseHandler.saveProductData(productMap);
         return true;
+    }
+
+    public boolean removeProduct(String category, int code) throws IOException {
+        List<Product> products = productMap.get(Product.Category.valueOf(category));
+        for (Product product : products) {
+            if (product.getCode() == code) {
+                products.remove(product);
+                DatabaseHandler.saveProductData(productMap);
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean setProductQuantity(String category, int code, int quantity) throws IOException {

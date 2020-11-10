@@ -41,7 +41,7 @@ public class UserManagementWindow {
 
     private void initTable() {
         table = new TableView<>();
-        table.setLayoutX(95);
+        table.setLayoutX(100);
         table.setLayoutY(15);
         table.setPrefWidth(400);
         table.setPrefHeight(300);
@@ -164,6 +164,10 @@ public class UserManagementWindow {
     }
 
     private void removeAction() {
+        if (table.getSelectionModel().getSelectedItem() == null) {
+            alert(Alert.AlertType.WARNING, "You don't select any user.");
+            return;
+        }
         int id = Integer.parseInt(table.getSelectionModel().getSelectedItem().getId());
         try {
             if (MainProcessor.getUserProcessor().removeUser(id)) {

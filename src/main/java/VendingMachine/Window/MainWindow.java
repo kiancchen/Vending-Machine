@@ -6,8 +6,9 @@ import VendingMachine.Processor.MainProcessor;
 import VendingMachine.Processor.UserProcessor;
 import VendingMachine.Window.CashManagement.CashManagementWindow;
 import VendingMachine.Window.CashManagement.CashTableEntry;
+import VendingMachine.Window.ProductManagement.ProductManagementWindow;
+
 import VendingMachine.Window.UserManagement.UserManagementWindow;
-import VendingMachine.Window.UserManagement.UserTableEntry;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -28,6 +29,7 @@ public class MainWindow {
     private Button accountBtn;
     private Button userManagementBtn;
     private Button cashierManageBtn;
+    private Button productManageBtn;
     private Text currentUserInfo;
     private TableView<ProductTableEntry> allProductTable;
 
@@ -106,15 +108,16 @@ public class MainWindow {
         accountBtn = new Button();
         userManagementBtn = new Button();
         cashierManageBtn = new Button();
+        productManageBtn = new Button();
 
-        Button[] buttons = {accountBtn, userManagementBtn, cashierManageBtn};
-        String[] texts = {"Account", "Manage User", "Manage Cash"};
+        Button[] buttons = {accountBtn, userManagementBtn, cashierManageBtn, productManageBtn};
+        String[] texts = {"Account", "Manage User", "Manage Cash", "Manage Product"};
 
         for (int i = 0; i < buttons.length; i++) {
             Button button = buttons[i];
-            button.setLayoutX(20 + 150 * i);
+            button.setLayoutX(40 + 130 * i);
             button.setLayoutY(400);
-            button.setPrefWidth(100);
+            button.setPrefWidth(120);
             button.setPrefHeight(30);
             button.setText(texts[i]);
             pane.getChildren().add(button);
@@ -151,7 +154,15 @@ public class MainWindow {
                 alert.show();
             }
         });
-
+        productManageBtn.setOnAction(event -> {
+            if (userProcessor.getCurrentUser().getPermission(User.Permission.MANAGE_ITEM)) {
+                new ProductManagementWindow();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
+                        "to do this action.");
+                alert.show();
+            }
+        });
 
     }
 

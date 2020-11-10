@@ -3,6 +3,7 @@ package VendingMachine.Window;
 import VendingMachine.Data.Product;
 
 public class ProductTableEntry {
+<<<<<<< HEAD
 
     private String category;
     private String name;
@@ -37,4 +38,11 @@ public class ProductTableEntry {
     public String getQuantity() {
         return qty;
     }
+=======
+    private Product.Category category;
+    private String name;
+    private double price;
+    private int code;
+    private int quantity;
+>>>>>>> bba068b21b5ee139148ad14cad2e2c8ae23870d1
 }

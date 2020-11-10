@@ -42,13 +42,6 @@ public class User {
         this.id = totalId++;
     }
 
-    public void addProduct(Product product) {
-        this.shoppingCart.add(product);
-    }
-
-    public void removeProduct(Product product) {
-        this.shoppingCart.remove(product);
-    }
 
     public boolean getPermission(Permission permission) {
         return this.permissions.get(permission);
