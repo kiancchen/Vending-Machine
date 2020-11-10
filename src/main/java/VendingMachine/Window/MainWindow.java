@@ -7,6 +7,7 @@ import VendingMachine.Processor.ProductProcessor;
 import VendingMachine.Processor.UserProcessor;
 import VendingMachine.Window.CashManagement.CashManagementWindow;
 import VendingMachine.Window.ProductManagement.ProductManagementWindow;
+import VendingMachine.Window.ProductManagement.ProductTable;
 import VendingMachine.Window.ProductManagement.ProductTableEntry;
 import VendingMachine.Window.UserManagement.UserManagementWindow;
 import javafx.scene.Scene;
@@ -28,7 +29,7 @@ public class MainWindow {
     private Button cashierManageBtn;
     private Button productManageBtn;
     private Text currentUserInfo;
-    private TableView<ProductTableEntry> productTable;
+    private ProductTable productTable;
     private Text selectedItemText;
     private ComboBox<Integer> selectedQuantityCombo;
 
@@ -47,9 +48,13 @@ public class MainWindow {
         initBtnActions();
         initText();
         updateCurrencyUserInfo();
-        initProductTable();
+//        initProductTable();
         initPurchaseNodes();
         initPurchaseTable();
+
+        this.productTable = new ProductTable();
+        pane.getChildren().add(productTable.getTable());
+        setProductTableAction();
     }
 
     public void updateCurrencyUserInfo() {
@@ -116,7 +121,7 @@ public class MainWindow {
         });
         productManageBtn.setOnAction(event -> {
             if (userProcessor.getCurrentUser().getPermission(User.Permission.MANAGE_ITEM)) {
-                new ProductManagementWindow();
+                new ProductManagementWindow(this.productTable);
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
                         "to do this action.");
@@ -132,33 +137,11 @@ public class MainWindow {
         this.pane.getChildren().add(currentUserInfo);
     }
 
-    private void initProductTable() {
-        productTable = new TableView<>();
-        productTable.setLayoutX(10);
-        productTable.setLayoutY(40);
-        productTable.setPrefWidth(500);
-        productTable.setPrefHeight(340);
-        productTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        pane.getChildren().add(productTable);
-
-        //create table
-        String[] colNames = {"CATEGORY", "CODE", "NAME", "PRICE", "STOCK"};
-        String[] properties = {"category", "code", "name", "price", "quantity"};
-        for (int i = 0; i < colNames.length; i++) {
-            String colName = colNames[i];
-            TableColumn<ProductTableEntry, String> column = new TableColumn<>(colName);
-            column.setSortable(false);
-            column.setPrefWidth(118);
-            column.setStyle("-fx-alignment: CENTER;");
-            column.setCellValueFactory(new PropertyValueFactory<>(properties[i]));
-            productTable.getColumns().add(column);
-        }
-        setProductTableData();
-
-        productTable.setOnMouseClicked(event -> {
+    private void setProductTableAction() {
+        this.productTable.setTableAction(event -> {
             selectedQuantityCombo.getItems().clear();
-            if (!productTable.getSelectionModel().isEmpty()) {
-                ProductTableEntry selected = productTable.getSelectionModel().getSelectedItem();
+            if (!productTable.selectIsEmpty()) {
+                ProductTableEntry selected = productTable.getSelectedItem();
                 selectedItemText.setText(selected.getName());
                 for (int i = 1; i <= Integer.parseInt(selected.getQuantity()); i++) {
                     selectedQuantityCombo.getItems().add(i);

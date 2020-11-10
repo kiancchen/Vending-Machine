@@ -8,6 +8,14 @@ public class Product {
     private int code;
     private int quantity;
 
+    public Product() {
+        this.category = null;
+        this.name = "";
+        this.price = -1;
+        this.quantity = -1;
+        this.code = staticCode++;
+    }
+
     public Product(Category category, String name, double price, int quantity) {
         this.category = category;
         this.name = name;

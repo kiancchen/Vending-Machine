@@ -43,7 +43,7 @@
   - [Product Backlog](#product-backlog)
   - [Sprint Goal](#sprint-goal)
   - [User Stories and Sprint Backlog](#user-stories-and-sprint-backlog)
-  - [Burndown chart](#burndown-chart)
+  - [Burndown Chart](#burndown-chart)
   - [Storyboard](#storyboard)
   - [Scrum Meetings](#scrum-meetings)
     - [Meeting 1 (Sprint Planning)](#meeting-1-sprint-planning)
@@ -81,21 +81,21 @@
 
 1. Cheng Chen (cche7436):
    - Review pull requests
-   - <mark>TODD</mark>
+   - Logic of `Product` and `Transaction`
 2. Yuanqun Wang (ywan3184):
-   - <mark>TODD</mark>
+   - Shopping cart GUI
+   - Change product in shopping cart
 3. Yufei Zuo (yzuo4982):
    - Add product GUI
    - Remove product GUI
    - Change product GUI
    - Product table
-   - <mark>TODD</mark>
 4. Zexuan Long (zlon4018):
-   - <mark>TODD</mark>
+   - Product options on main window
 5. Songyin Li (soli3733):
-   - <mark>TODD</mark>
+   - Change notes GUI
 6. Zehui Lin (zlin3338):
-   - <mark>TODD</mark>
+   - Cash payment GUI
 
 # Agile Development Tools and Practices
 
@@ -574,7 +574,7 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
 
 <mark>TODD</mark>
 
-## Burndown chart
+## Burndown Chart
 
 <mark>TODD</mark>
 
@@ -597,38 +597,36 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
 
 ### Meeting 2
 
-<mark>TODD</mark>
-
 - Date : 10th November
 - Attendance: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
 - Content:
-  - Online debug the obstacle in the code.
-  - Discussion about the progress of each tasks.
-  - Discussion about the code base of cash processor, and modified the map with enum to support double.
+  - Emphasize the naming conventions of methods.
+  - Discussion the GUI of transaction.
+  - Review the progress of project.
 - Cheng Chen:
-  - What did I do yesterday: Finished data handling of users and review pull request.
-  - What I will do today: Working on data handling of cash.
+  - What did I do yesterday: Finished write code for logic part of `Product` and `Transaction`.
+  - What I will do today: Working on finalize storyboard and fix bugs.
   - Do I see any obstacles: None at the moment.
 - Yuanqun Wang:
-  - What did I do yesterday: Finished part of user management GUI.
-  - What I will do today: Working on table on user management GUI.
+  - What did I do yesterday: Finished shopping cart GUI.
+  - What I will do today: Working on modifying feature of shopping cart.
   - Do I see any obstacles: None at the moment.
 - Yufei Zuo:
-  - What did I do yesterday: Finished GUI of main window.
-  - What I will do today: Working on GUI of user management.
+  - What did I do yesterday: Finished GUI of add and remove product.
+  - What I will do today: Working on GUI of change product.
   - Do I see any obstacles: None at the moment.
 - Zexuan Long:
-  - What did I do yesterday: Finished logic of login system and its tests.
-  - What I will do today: Continues fix the code and write more tests.
+  - What did I do yesterday: Finish product options on main window and write tests for logic part.
+  - What I will do today: Continues write more tests.
   - Do I see any obstacles: None at the moment.
 - Songyin Li:
-  - What did I do yesterday: Finished part of cash system.
-  - What I will do today: Working on the logic of cash system.
+  - What did I do yesterday: Finished GUI of changing amount of notes.
+  - What I will do today: Continues fixing bugs.
   - Do I see any obstacles: None at the moment.
 - Zehui Lin:
-  - What did I do yesterday: Finished GUI of login system.
-  - What I will do today: Working on the user stories and UML Class Diagram.
-  - Do I see any obstacles: The code written by teammates does not satisfy the functionality of my part of code, so I need to negotiate with him.
+  - What did I do yesterday: Working on GUI of cash payment.
+  - What I will do today: Continues working on cash payment GUI.
+  - Do I see any obstacles: None at the moment.
 
 ### Meeting 3
 
