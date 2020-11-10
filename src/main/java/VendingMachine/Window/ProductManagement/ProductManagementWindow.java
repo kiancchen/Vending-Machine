@@ -4,10 +4,7 @@ import VendingMachine.Data.Product;
 import VendingMachine.Processor.MainProcessor;
 import VendingMachine.Processor.ProductProcessor;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -19,6 +16,7 @@ public class ProductManagementWindow {
     private Button addButton;
     private Button changeButton;
     private Button removeButton;
+    private TextField codeField;
     private TextField nameField;
     private ComboBox<String> categoryCombo;
     private TextField priceField;
@@ -42,6 +40,7 @@ public class ProductManagementWindow {
         initButton();
         initButtonActions();
         initCombobox();
+        initLabels();
         initTextFields();
         selectedId = -1;
     }
@@ -51,6 +50,7 @@ public class ProductManagementWindow {
             if (!this.productTable.selectIsEmpty()) {
                 ProductTableEntry selected = this.productTable.getSelectedItem();
                 selectedId = Integer.parseInt(selected.getCode());
+                codeField.setText(selected.getCode());
                 nameField.setText(selected.getName());
                 originCategory = selected.getCategory();
                 categoryCombo.getSelectionModel().select(originCategory);
@@ -71,9 +71,9 @@ public class ProductManagementWindow {
 
         for (int i = 0; i < buttons.length; i++) {
             Button button = buttons[i];
-            button.setLayoutX(90 + 150 * i);
+            button.setLayoutX(60 + 160 * i);
             button.setLayoutY(450);
-            button.setPrefWidth(120);
+            button.setPrefWidth(130);
             button.setPrefHeight(30);
             button.setText(texts[i]);
             pane.getChildren().add(button);
@@ -88,8 +88,9 @@ public class ProductManagementWindow {
 
     private void initCombobox() {
         categoryCombo = new ComboBox<>();
-        categoryCombo.setLayoutX(390);
-        categoryCombo.setLayoutY(400);
+        categoryCombo.setLayoutX(400);
+        categoryCombo.setLayoutY(410);
+        categoryCombo.setPrefWidth(110);
 
         for (Product.Category c : Product.Category.values()) {
             categoryCombo.getItems().add(c.toString());
@@ -99,27 +100,51 @@ public class ProductManagementWindow {
     }
 
     private void initTextFields() {
+        codeField = new TextField();
+        codeField.setLayoutX(60);
+        codeField.setLayoutY(410);
+        codeField.setPrefWidth(60);
+
         nameField = new TextField();
-        nameField.setLayoutX(90);
-        nameField.setLayoutY(400);
+        nameField.setLayoutX(130);
+        nameField.setLayoutY(410);
         nameField.setPrefWidth(120);
-        nameField.setPromptText("Name");
 
         priceField = new TextField();
-        priceField.setLayoutX(240);
-        priceField.setLayoutY(400);
-        priceField.setPrefWidth(50);
-        priceField.setPromptText("Price");
+        priceField.setLayoutX(260);
+        priceField.setLayoutY(410);
+        priceField.setPrefWidth(60);
 
         quantityField = new TextField();
-        quantityField.setLayoutX(310);
-        quantityField.setLayoutY(400);
-        quantityField.setPrefWidth(50);
-        quantityField.setPromptText("Stock");
+        quantityField.setLayoutX(330);
+        quantityField.setLayoutY(410);
+        quantityField.setPrefWidth(60);
 
-        pane.getChildren().add(nameField);
-        pane.getChildren().add(priceField);
-        pane.getChildren().add(quantityField);
+        pane.getChildren().addAll(codeField, nameField, priceField, quantityField);
+    }
+
+    private void initLabels() {
+        Label codeLabel = new Label("Code");
+        codeLabel.setLayoutX(60);
+        codeLabel.setLayoutY(390);
+
+        Label nameLabel = new Label("Name");
+        nameLabel.setLayoutX(130);
+        nameLabel.setLayoutY(390);
+
+        Label priceLabel = new Label("Price");
+        priceLabel.setLayoutX(260);
+        priceLabel.setLayoutY(390);
+
+        Label quantityLabel = new Label("Quantity");
+        quantityLabel.setLayoutX(330);
+        quantityLabel.setLayoutY(390);
+
+        Label categoryLabel = new Label("Category");
+        categoryLabel.setLayoutX(400);
+        categoryLabel.setLayoutY(390);
+
+        pane.getChildren().addAll(codeLabel, nameLabel, priceLabel, quantityLabel, categoryLabel);
     }
 
 
@@ -127,6 +152,9 @@ public class ProductManagementWindow {
         String category = categoryCombo.getSelectionModel().getSelectedItem();
 
         if (!validateInput()) {
+            return;
+        } else if (Integer.parseInt(quantityField.getText()) > 15) {
+            alert(Alert.AlertType.WARNING, "Quantity exceed.");
             return;
         }
 
@@ -171,11 +199,15 @@ public class ProductManagementWindow {
             return;
         } else if (!validateInput()) {
             return;
+        } else if (Integer.parseInt(quantityField.getText()) > 15) {
+            alert(Alert.AlertType.WARNING, "Quantity exceed.");
+            return;
         }
 
         String category = categoryCombo.getSelectionModel().getSelectedItem();
 
         try {
+            productProcessor.setProductCode(category, selectedId, Integer.parseInt(codeField.getText()));
             productProcessor.setProductName(category, selectedId, nameField.getText());
             productProcessor.setProductCategory(originCategory, selectedId, category);
             productProcessor.setProductPrice(category, selectedId, Double.parseDouble(priceField.getText()));
@@ -185,6 +217,7 @@ public class ProductManagementWindow {
             alert(Alert.AlertType.WARNING, "Change failed.");
         }
 
+        codeField.setText("");
         nameField.setText("");
         priceField.setText("");
         quantityField.setText("");
