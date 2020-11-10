@@ -49,7 +49,7 @@ public class ProductProcessor {
     }
 
     public boolean setProductQuantity(String category, int code, int quantity) throws IOException {
-        if (quantity > 15) {
+        if (quantity < 0 || quantity > 15) {
             return false;
         }
 
