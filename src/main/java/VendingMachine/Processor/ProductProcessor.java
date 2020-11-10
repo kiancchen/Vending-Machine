@@ -67,6 +67,11 @@ public class ProductProcessor {
     public boolean setProductName(String category, int code, String newName) throws IOException {
         List<Product> products = productMap.get(Product.Category.valueOf(category));
         for (Product product : products) {
+            if (product.getName().equals(newName)) {
+                return false;
+            }
+        }
+        for (Product product : products) {
             if (product.getCode() == code) {
                 product.setName(newName);
                 DatabaseHandler.saveProductData(productMap);
