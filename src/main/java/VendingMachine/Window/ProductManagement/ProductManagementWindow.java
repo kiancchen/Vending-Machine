@@ -26,6 +26,7 @@ public class ProductManagementWindow {
     private TextField priceField;
     private TextField quantityField;
     private int selectedId;
+    private String originCategory;
 
     public ProductManagementWindow() {
         stage = new Stage();
@@ -69,7 +70,8 @@ public class ProductManagementWindow {
                 ProductTableEntry selected = table.getSelectionModel().getSelectedItem();
                 selectedId = Integer.parseInt(selected.getCode());
                 nameField.setText(selected.getName());
-                categoryCombo.getSelectionModel().select(selected.getCategory());
+                originCategory = selected.getCategory();
+                categoryCombo.getSelectionModel().select(originCategory);
                 priceField.setText(selected.getPrice());
                 quantityField.setText(selected.getQuantity());
             }
@@ -206,7 +208,7 @@ public class ProductManagementWindow {
 
         try {
             productProcessor.setProductName(category, selectedId, nameField.getText());
-//            productProcessor.setProductCategory(category, selectedId, ??)
+            productProcessor.setProductCategory(originCategory, selectedId, category);
             productProcessor.setProductPrice(category, selectedId, Double.parseDouble(priceField.getText()));
             productProcessor.setProductQuantity(category, selectedId, Integer.parseInt(quantityField.getText()));
             alert(Alert.AlertType.WARNING, "Change successfully.");
