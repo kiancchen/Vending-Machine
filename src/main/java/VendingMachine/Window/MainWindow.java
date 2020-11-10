@@ -6,6 +6,7 @@ import VendingMachine.Processor.MainProcessor;
 import VendingMachine.Processor.UserProcessor;
 import VendingMachine.Window.CashManagement.CashManagementWindow;
 import VendingMachine.Window.ProductManagement.ProductManagementWindow;
+import VendingMachine.Window.ProductManagement.ProductTableEntry;
 import VendingMachine.Window.UserManagement.UserManagementWindow;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
