@@ -35,7 +35,7 @@ public class User {
         this.shoppingCart.add(category, code, quantity);
     }
 
-    public void setItemInCart(String category, int code, int newQty){
+    public void setItemInCart(String category, int code, int newQty) {
         this.shoppingCart.set(category, code, newQty);
     }
 

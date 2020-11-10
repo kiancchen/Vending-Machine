@@ -8,18 +8,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CashManagementWindow {
     private Stage stage;
     private Scene scene;
     private AnchorPane pane;
     private TableView<CashTableEntry> table;
-//    private ComboBox<String> typeCombo;
     private Button changeButton;
     private double selectedCashType;
     private TextField amountField;
@@ -76,7 +71,7 @@ public class CashManagementWindow {
     private void initButton() {
         changeButton = new Button();
         Button[] buttons = {changeButton};
-        String[] texts = {"Change amount"};
+        String[] texts = {"Change number"};
         for (int i = 0; i < buttons.length; i++) {
             Button button = buttons[i];
             button.setLayoutX(200);
@@ -93,7 +88,7 @@ public class CashManagementWindow {
         amountField.setLayoutX(240);
         amountField.setLayoutY(350);
         amountField.setPrefWidth(120);
-        amountField.setPromptText("Amount");
+        amountField.setPromptText("Number");
 
         pane.getChildren().add(amountField);
 
@@ -104,12 +99,10 @@ public class CashManagementWindow {
         table.getItems().clear();
         Map<Double, Integer> cashMap = MainProcessor.getCashProcessor().getCashMap();
         Collection<Double> keySet = cashMap.keySet();
-        List<Double> list = new ArrayList<Double>(keySet);
+        List<Double> list = new ArrayList<>(keySet);
         Collections.sort(list);
-        for (int i = 0; i < list.size(); i++) {
-            String cashType = list.get(i).toString();
-            String amount = cashMap.get(list.get(i)).toString();
-            table.getItems().add(new CashTableEntry(cashType, amount));
+        for (Double value : list) {
+            table.getItems().add(new CashTableEntry(value.toString(), cashMap.get(value).toString()));
         }
     }
 
@@ -120,7 +113,7 @@ public class CashManagementWindow {
     private void changeAction() {
         CashProcessor cashProcessor = MainProcessor.getCashProcessor();
         if (selectedCashType < 0) {
-            alert(Alert.AlertType.WARNING, "You don't select any cash type.");
+            alert(Alert.AlertType.WARNING, "You don't select any cash.");
             return;
         } else if (!validateInput()) {
             return;
@@ -130,7 +123,7 @@ public class CashManagementWindow {
 //            productProcessor.setProductCategory(category, selectedId, ??)
             alert(Alert.AlertType.INFORMATION, "Change successfully.");
         } catch (Exception e) {
-            alert(Alert.AlertType.WARNING, "Change failed.");
+            alert(Alert.AlertType.WARNING, "Fail to change");
         }
 
         amountField.setText("");
@@ -140,7 +133,7 @@ public class CashManagementWindow {
 
     private boolean validateInput() {
         if (amountField.getText().trim().isEmpty()) {
-            alert(Alert.AlertType.WARNING, "Amount needed");
+            alert(Alert.AlertType.WARNING, "Number needed");
             return false;
         }
         return true;

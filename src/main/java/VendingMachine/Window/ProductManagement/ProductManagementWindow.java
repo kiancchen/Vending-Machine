@@ -4,20 +4,18 @@ import VendingMachine.Data.Product;
 import VendingMachine.Processor.MainProcessor;
 import VendingMachine.Processor.ProductProcessor;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
-import java.util.List;
-import java.util.Map;
 
 public class ProductManagementWindow {
 
     private Stage stage;
     private Scene scene;
     private AnchorPane pane;
-    private TableView<ProductTableEntry> table;
     private Button addButton;
     private Button changeButton;
     private Button removeButton;
@@ -27,16 +25,20 @@ public class ProductManagementWindow {
     private TextField quantityField;
     private int selectedId;
     private String originCategory;
+    private ProductTable productTable;
+    private ProductTable mainTable;
 
-    public ProductManagementWindow() {
+    public ProductManagementWindow(ProductTable mainTable) {
         stage = new Stage();
         pane = new AnchorPane();
-        scene = new Scene(pane, 600, 480);
+        scene = new Scene(pane, 600, 500);
         stage.setScene(scene);
         stage.setTitle("Product Management");
         stage.show();
-
-        initTable();
+        this.mainTable = mainTable;
+        this.productTable = new ProductTable();
+        pane.getChildren().add(productTable.getTable());
+        setTableAction();
         initButton();
         initButtonActions();
         initCombobox();
@@ -44,30 +46,10 @@ public class ProductManagementWindow {
         selectedId = -1;
     }
 
-    private void initTable() {
-        table = new TableView<>();
-        table.setLayoutX(50);
-        table.setLayoutY(15);
-        table.setPrefWidth(500);
-        table.setPrefHeight(300);
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        pane.getChildren().add(table);
-
-        // create table
-        String[] colNames = {"Code", "Name", "Category", "Price ($)", "Quantity"};
-        String[] properties = {"code", "name", "category", "price", "quantity"};
-        for (int i = 0; i < colNames.length; i++) {
-            String colName = colNames[i];
-            TableColumn<ProductTableEntry, String> column = new TableColumn<>(colName);
-            column.setSortable(false);
-            column.setPrefWidth(118);
-            column.setStyle("-fx-alignment: CENTER;");
-            column.setCellValueFactory(new PropertyValueFactory<>(properties[i]));
-            table.getColumns().add(column);
-        }
-        table.setOnMouseClicked(event -> {
-            if (!table.getSelectionModel().isEmpty()) {
-                ProductTableEntry selected = table.getSelectionModel().getSelectedItem();
+    private void setTableAction() {
+        this.productTable.setTableAction(event -> {
+            if (!this.productTable.selectIsEmpty()) {
+                ProductTableEntry selected = this.productTable.getSelectedItem();
                 selectedId = Integer.parseInt(selected.getCode());
                 nameField.setText(selected.getName());
                 originCategory = selected.getCategory();
@@ -76,9 +58,8 @@ public class ProductManagementWindow {
                 quantityField.setText(selected.getQuantity());
             }
         });
-
-        setTableData();
     }
+
 
     private void initButton() {
         addButton = new Button();
@@ -91,7 +72,7 @@ public class ProductManagementWindow {
         for (int i = 0; i < buttons.length; i++) {
             Button button = buttons[i];
             button.setLayoutX(90 + 150 * i);
-            button.setLayoutY(400);
+            button.setLayoutY(450);
             button.setPrefWidth(120);
             button.setPrefHeight(30);
             button.setText(texts[i]);
@@ -108,7 +89,7 @@ public class ProductManagementWindow {
     private void initCombobox() {
         categoryCombo = new ComboBox<>();
         categoryCombo.setLayoutX(390);
-        categoryCombo.setLayoutY(350);
+        categoryCombo.setLayoutY(400);
 
         for (Product.Category c : Product.Category.values()) {
             categoryCombo.getItems().add(c.toString());
@@ -120,42 +101,27 @@ public class ProductManagementWindow {
     private void initTextFields() {
         nameField = new TextField();
         nameField.setLayoutX(90);
-        nameField.setLayoutY(350);
+        nameField.setLayoutY(400);
         nameField.setPrefWidth(120);
         nameField.setPromptText("Name");
 
         priceField = new TextField();
         priceField.setLayoutX(240);
-        priceField.setLayoutY(350);
+        priceField.setLayoutY(400);
         priceField.setPrefWidth(50);
         priceField.setPromptText("Price");
 
         quantityField = new TextField();
         quantityField.setLayoutX(310);
-        quantityField.setLayoutY(350);
+        quantityField.setLayoutY(400);
         quantityField.setPrefWidth(50);
-        quantityField.setPromptText("Quantity");
+        quantityField.setPromptText("Stock");
 
         pane.getChildren().add(nameField);
         pane.getChildren().add(priceField);
         pane.getChildren().add(quantityField);
     }
 
-    private void setTableData() {
-        // set data to table
-        table.getItems().clear();
-        Map<Product.Category, List<Product>> productMap = MainProcessor.getProductProcessor().getProductMap();
-        for (Map.Entry<Product.Category, List<Product>> entry : productMap.entrySet()) {
-            String category = entry.getKey().toString();
-            for (Product product : entry.getValue()) {
-                String code = Integer.toString(product.getCode());
-                String name = product.getName();
-                String price = Double.toString(product.getPrice());
-                String quantity = Integer.toString(product.getQuantity());
-                table.getItems().add(new ProductTableEntry(code, name, category, price, quantity));
-            }
-        }
-    }
 
     private void addAction() {
         String category = categoryCombo.getSelectionModel().getSelectedItem();
@@ -167,31 +133,34 @@ public class ProductManagementWindow {
         try {
             if (MainProcessor.getProductProcessor().addProduct(category, nameField.getText(), Double.parseDouble(priceField.getText()), Integer.parseInt(quantityField.getText()))) {
                 alert(Alert.AlertType.INFORMATION, "Successfully add.");
-                setTableData();
+                this.productTable.updateTableData();
+                this.mainTable.updateTableData();
                 selectedId = -1;
             } else {
-                alert(Alert.AlertType.INFORMATION, "Product exists.");
+                alert(Alert.AlertType.WARNING, "Product exists.");
             }
         } catch (Exception e) {
-            alert(Alert.AlertType.WARNING, "Can not add product.");
+            alert(Alert.AlertType.WARNING, "Fail to add the product.");
         }
     }
 
     private void removeAction() {
-        if (table.getSelectionModel().getSelectedItem() == null) {
-            alert(Alert.AlertType.WARNING, "You don't select any user.");
+        ProductTableEntry selectedItem = productTable.getSelectedItem();
+        if (selectedItem == null) {
+            alert(Alert.AlertType.WARNING, "You don't select any product.");
             return;
         }
 
-        String category = table.getSelectionModel().getSelectedItem().getCategory();
-        int code = Integer.parseInt(table.getSelectionModel().getSelectedItem().getCode());
+        String category = selectedItem.getCategory();
+        int code = Integer.parseInt(selectedItem.getCode());
         try {
             if (MainProcessor.getProductProcessor().removeProduct(category, code)) {
                 alert(Alert.AlertType.INFORMATION, "Successfully removed");
-                setTableData();
+                this.productTable.updateTableData();
+                this.mainTable.updateTableData();
             }
         } catch (Exception e) {
-            alert(Alert.AlertType.WARNING, "Product selected is not existed");
+            alert(Alert.AlertType.WARNING, "Product selected does not exist");
         }
     }
 
@@ -211,7 +180,7 @@ public class ProductManagementWindow {
             productProcessor.setProductCategory(originCategory, selectedId, category);
             productProcessor.setProductPrice(category, selectedId, Double.parseDouble(priceField.getText()));
             productProcessor.setProductQuantity(category, selectedId, Integer.parseInt(quantityField.getText()));
-            alert(Alert.AlertType.WARNING, "Change successfully.");
+            alert(Alert.AlertType.INFORMATION, "Change successfully.");
         } catch (Exception e) {
             alert(Alert.AlertType.WARNING, "Change failed.");
         }
@@ -220,7 +189,8 @@ public class ProductManagementWindow {
         priceField.setText("");
         quantityField.setText("");
         categoryCombo.getSelectionModel().clearSelection();
-        setTableData();
+        this.productTable.updateTableData();
+        this.mainTable.updateTableData();
         selectedId = -1;
     }
 
