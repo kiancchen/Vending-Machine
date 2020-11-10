@@ -34,6 +34,45 @@ public class LoginWindow {
         initButtons();
     }
 
+    public void signInAction() {
+        String usernameInp = inputUsername.getText();
+        String passwordInp = inputPassword.getText();
+        if (MainProcessor.getUserProcessor().verifyUser(usernameInp, passwordInp)) {
+            Alert alert = new Alert(AlertType.INFORMATION, "Sign in successfully.");
+            alert.show();
+            this.mainWindow.changeAccountButtonText("Logout");
+            this.mainWindow.updateCurrencyUserInfo();
+            stage.close();
+        } else {
+            Alert alert = new Alert(AlertType.WARNING, "Fail to sign in. Wrong username or " +
+                    "password.");
+            alert.show();
+        }
+    }
+
+    public void signUpAction() {
+        String usernameInp = inputUsername.getText();
+        String passwordInp = inputPassword.getText();
+        UserProcessor userProcessor = MainProcessor.getUserProcessor();
+        try {
+            if (userProcessor.addUser(usernameInp, passwordInp)) {
+
+                Alert alert = new Alert(AlertType.INFORMATION, "Sign up successfully.");
+                alert.show();
+                userProcessor.verifyUser(usernameInp, passwordInp);
+                this.mainWindow.changeAccountButtonText("Logout");
+                this.mainWindow.updateCurrencyUserInfo();
+                stage.close();
+            } else {
+                Alert alert = new Alert(AlertType.WARNING, "User exists");
+                alert.show();
+            }
+        } catch (IOException e) {
+            Alert alert = new Alert(AlertType.WARNING, "Something went wrong.");
+            alert.show();
+        }
+    }
+
     private void initLabels() {
         Label username = new Label("Username");
         username.setLayoutX(50);
@@ -87,46 +126,6 @@ public class LoginWindow {
         signUpButton.requestFocus();
         pane.getChildren().add(signUpButton);
         signUpButton.setOnAction(event -> signUpAction());
-    }
-
-
-    public void signInAction() {
-        String usernameInp = inputUsername.getText();
-        String passwordInp = inputPassword.getText();
-        if (MainProcessor.getUserProcessor().verifyUser(usernameInp, passwordInp)) {
-            Alert alert = new Alert(AlertType.INFORMATION, "Sign in successfully.");
-            alert.show();
-            this.mainWindow.changeAccountButtonText("Logout");
-            this.mainWindow.updateCurrencyUserInfo();
-            stage.close();
-        } else {
-            Alert alert = new Alert(AlertType.WARNING, "Fail to sign in. Wrong username or " +
-                    "password.");
-            alert.show();
-        }
-    }
-
-    public void signUpAction() {
-        String usernameInp = inputUsername.getText();
-        String passwordInp = inputPassword.getText();
-        UserProcessor userProcessor = MainProcessor.getUserProcessor();
-        try {
-            if (userProcessor.addUser(usernameInp, passwordInp)) {
-
-                Alert alert = new Alert(AlertType.INFORMATION, "Sign up successfully.");
-                alert.show();
-                userProcessor.verifyUser(usernameInp, passwordInp);
-                this.mainWindow.changeAccountButtonText("Logout");
-                this.mainWindow.updateCurrencyUserInfo();
-                stage.close();
-            } else {
-                Alert alert = new Alert(AlertType.WARNING, "User exists");
-                alert.show();
-            }
-        } catch (IOException e) {
-            Alert alert = new Alert(AlertType.WARNING, "Something went wrong.");
-            alert.show();
-        }
     }
 
 }

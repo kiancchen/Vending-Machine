@@ -30,15 +30,14 @@ public class Transaction {
         this.amount += product.getPrice() * quantity;
     }
 
-    public void set(String category, int code, int quantity) {
+    public void set(String category, int code, int newQty) {
         Product product = MainProcessor.getProductProcessor().getProduct(category, code);
-
-        shoppingList.put(product, quantity);
-        if (shoppingList.get(product) == 0) {
+        int oldQty = shoppingList.get(product);
+        shoppingList.put(product, newQty);
+        if (newQty == 0) {
             shoppingList.remove(product);
         }
-
-        this.amount += product.getPrice() * quantity;
+        this.amount += product.getPrice() * (newQty - oldQty);
     }
 
     public void payCash(Map<Double, Integer> cashes) {

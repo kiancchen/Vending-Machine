@@ -40,6 +40,19 @@ public class MainWindow {
         initPurchaseNodes();
     }
 
+    public void updateCurrencyUserInfo() {
+        UserProcessor userProcessor = MainProcessor.getUserProcessor();
+        currentUserInfo.setText(
+                userProcessor.getCurrentUser().getUsername()
+                        + "   "
+                        + userProcessor.getCurrentUser().getType()
+        );
+    }
+
+    public void changeAccountButtonText(String text) {
+        this.accountBtn.setText(text);
+    }
+
     private void initButtons() {
         accountBtn = new Button();
         userManagementBtn = new Button();
@@ -107,15 +120,6 @@ public class MainWindow {
         currentUserInfo.setLayoutX(10);
         currentUserInfo.setLayoutY(20);
         this.pane.getChildren().add(currentUserInfo);
-    }
-
-    public void updateCurrencyUserInfo() {
-        UserProcessor userProcessor = MainProcessor.getUserProcessor();
-        currentUserInfo.setText(
-                userProcessor.getCurrentUser().getUsername()
-                        + "   "
-                        + userProcessor.getCurrentUser().getType()
-        );
     }
 
     private void initProductTable() {
@@ -204,10 +208,6 @@ public class MainWindow {
         }
 
 
-    }
-
-    public void changeAccountButtonText(String text) {
-        this.accountBtn.setText(text);
     }
 
     public Scene getScene() {

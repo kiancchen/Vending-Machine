@@ -24,6 +24,21 @@ public class User {
         this.shoppingCart = new Transaction();
     }
 
+    public User(String username, String password, UserType type) {
+        this.username = username;
+        this.password = password;
+        this.setType(type);
+        this.id = totalId++;
+    }
+
+    public void addToCart(String category, int code, int quantity) {
+        this.shoppingCart.add(category, code, quantity);
+    }
+
+    public void setItemInCart(String category, int code, int newQty){
+        this.shoppingCart.set(category, code, newQty);
+    }
+
     public void initPermissions() {
         this.permissions = new HashMap<>();
         permissions.put(Permission.MANAGE_ITEM, false);
@@ -33,13 +48,6 @@ public class User {
 
     public void setPermission(Permission permission, boolean accessibility) {
         this.permissions.put(permission, accessibility);
-    }
-
-    public User(String username, String password, UserType type) {
-        this.username = username;
-        this.password = password;
-        this.setType(type);
-        this.id = totalId++;
     }
 
 

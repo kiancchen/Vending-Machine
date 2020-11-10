@@ -76,8 +76,8 @@ public class ProductProcessor {
         return false;
     }
 
-    public boolean setProductCategory(String category, int code, String newCategory) throws IOException {
-        List<Product> products = productMap.get(Product.Category.valueOf(category));
+    public boolean setProductCategory(String oldCategory, int code, String newCategory) throws IOException {
+        List<Product> products = productMap.get(Product.Category.valueOf(oldCategory));
         for (Product product : products) {
             if (product.getCode() == code) {
                 // remove from the old category
