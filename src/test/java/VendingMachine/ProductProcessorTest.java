@@ -31,6 +31,24 @@ public class ProductProcessorTest {
     }
 
     @Test
+    public void testGetCategory() throws IOException{
+        ProductProcessor productProcessor = new ProductProcessor();
+        assertEquals(Product.Category.DRINK,productProcessor.getProduct("DRINK",1).getCategory());
+    }
+
+    @Test
+    public void testGetPrice() throws IOException{
+        ProductProcessor productProcessor = new ProductProcessor();
+        assertEquals(2,productProcessor.getProduct("DRINK",1).getPrice(),0);
+    }
+
+    @Test
+    public void testGetQuantity() throws IOException{
+        ProductProcessor productProcessor = new ProductProcessor();
+        assertEquals(7,productProcessor.getProduct("DRINK",1).getQuantity(),0);
+    }
+
+    @Test
     public void testProductProcessorConstructor() throws IOException{
         ProductProcessor productProcessor = new ProductProcessor();
         assertNotNull(productProcessor);

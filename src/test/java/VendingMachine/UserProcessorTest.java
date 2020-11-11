@@ -1,5 +1,6 @@
 package VendingMachine;
 
+import VendingMachine.Data.Transaction;
 import VendingMachine.Data.User;
 import VendingMachine.Processor.UserProcessor;
 import org.junit.After;
@@ -27,7 +28,6 @@ public class UserProcessorTest {
             e.printStackTrace();
         }
     }
-
     /**
      * Test UserProcessor Constructor
      */
