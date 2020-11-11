@@ -49,7 +49,7 @@ public class ProductProcessor {
     }
 
     public boolean setProductQuantity(String category, int code, int quantity) throws IOException {
-        if (quantity > 15) {
+        if (quantity < 0 || quantity > 15) {
             return false;
         }
 
@@ -66,6 +66,11 @@ public class ProductProcessor {
 
     public boolean setProductName(String category, int code, String newName) throws IOException {
         List<Product> products = productMap.get(Product.Category.valueOf(category));
+        for (Product product : products) {
+            if (product.getName().equals(newName)) {
+                return false;
+            }
+        }
         for (Product product : products) {
             if (product.getCode() == code) {
                 product.setName(newName);
@@ -98,6 +103,18 @@ public class ProductProcessor {
         for (Product product : products) {
             if (product.getCode() == code) {
                 product.setPrice(price);
+                DatabaseHandler.saveProductData(productMap);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean setProductCode(String category, int oldCode, int newCode) throws IOException {
+        List<Product> products = productMap.get(Product.Category.valueOf(category));
+        for (Product product : products) {
+            if (product.getCode() == oldCode) {
+                product.setCode(newCode);
                 DatabaseHandler.saveProductData(productMap);
                 return true;
             }

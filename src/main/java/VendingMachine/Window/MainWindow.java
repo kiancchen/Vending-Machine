@@ -1,11 +1,12 @@
 package VendingMachine.Window;
 
-import VendingMachine.Data.Product;
 import VendingMachine.Data.User;
 import VendingMachine.Processor.MainProcessor;
 import VendingMachine.Processor.UserProcessor;
 import VendingMachine.Window.CashManagement.CashManagementWindow;
+import VendingMachine.Window.CheckoutManagement.Checkout;
 import VendingMachine.Window.ProductManagement.ProductManagementWindow;
+import VendingMachine.Window.ProductManagement.ProductTable;
 import VendingMachine.Window.ProductManagement.ProductTableEntry;
 import VendingMachine.Window.UserManagement.UserManagementWindow;
 import javafx.scene.Scene;
@@ -15,8 +16,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class MainWindow {
     private Scene scene;
@@ -26,19 +27,33 @@ public class MainWindow {
     private Button cashierManageBtn;
     private Button productManageBtn;
     private Text currentUserInfo;
-    private TableView<ProductTableEntry> productTable;
+    private ProductTable productTable;
     private Text selectedItemText;
     private ComboBox<Integer> selectedQuantityCombo;
 
+    private Button addToCartBtn;
+    private Button checkout;
+    private TableView<ProductTableEntry> purchaseTable;
+    private UserProcessor userProcessor = MainProcessor.getUserProcessor();
+    private List<ProductTableEntry> purchaseList = new ArrayList<>();
+    private Button removePurchase;
+    private ComboBox<Integer> removeQuantityCombo;
+
+
+
     public MainWindow() {
         pane = new AnchorPane();
-        scene = new Scene(pane, 800, 500);
+        scene = new Scene(pane, 1150, 500);
         initButtons();
         initBtnActions();
         initText();
         updateCurrencyUserInfo();
-        initProductTable();
         initPurchaseNodes();
+        initPurchaseTable();
+
+        this.productTable = new ProductTable(50, 30, 500, 350);
+        pane.getChildren().add(productTable.getTable());
+        setProductTableAction();
     }
 
     public void updateCurrencyUserInfo() {
@@ -75,7 +90,6 @@ public class MainWindow {
     }
 
     private void initBtnActions() {
-        UserProcessor userProcessor = MainProcessor.getUserProcessor();
         accountBtn.setOnAction((event -> {
             if (userProcessor.getCurrentUser().getType() == User.UserType.ANONYMOUS) {
                 // If the currency user is the Anonymous
@@ -106,14 +120,13 @@ public class MainWindow {
         });
         productManageBtn.setOnAction(event -> {
             if (userProcessor.getCurrentUser().getPermission(User.Permission.MANAGE_ITEM)) {
-                new ProductManagementWindow();
+                new ProductManagementWindow(this.productTable);
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
                         "to do this action.");
                 alert.show();
             }
         });
-
     }
 
     private void initText() {
@@ -123,33 +136,11 @@ public class MainWindow {
         this.pane.getChildren().add(currentUserInfo);
     }
 
-    private void initProductTable() {
-        productTable = new TableView<>();
-        productTable.setLayoutX(10);
-        productTable.setLayoutY(40);
-        productTable.setPrefWidth(500);
-        productTable.setPrefHeight(340);
-        productTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        pane.getChildren().add(productTable);
-
-        //create table
-        String[] colNames = {"CATEGORY", "CODE", "NAME", "PRICE", "STOCK"};
-        String[] properties = {"category", "code", "name", "price", "quantity"};
-        for (int i = 0; i < colNames.length; i++) {
-            String colName = colNames[i];
-            TableColumn<ProductTableEntry, String> column = new TableColumn<>(colName);
-            column.setSortable(false);
-            column.setPrefWidth(118);
-            column.setStyle("-fx-alignment: CENTER;");
-            column.setCellValueFactory(new PropertyValueFactory<>(properties[i]));
-            productTable.getColumns().add(column);
-        }
-        setProductTableData();
-
-        productTable.setOnMouseClicked(event -> {
+    private void setProductTableAction() {
+        this.productTable.setTableAction(event -> {
             selectedQuantityCombo.getItems().clear();
-            if (!productTable.getSelectionModel().isEmpty()) {
-                ProductTableEntry selected = productTable.getSelectionModel().getSelectedItem();
+            if (!productTable.selectIsEmpty()) {
+                ProductTableEntry selected = productTable.getSelectedItem();
                 selectedItemText.setText(selected.getName());
                 for (int i = 1; i <= Integer.parseInt(selected.getQuantity()); i++) {
                     selectedQuantityCombo.getItems().add(i);
@@ -158,6 +149,42 @@ public class MainWindow {
             } else {
                 selectedItemText.setText("Selected Item");
                 selectedQuantityCombo.setPromptText("Quantity");
+            }
+        });
+    }
+
+    private void initPurchaseTable() {
+        purchaseTable = new TableView<>();
+        purchaseTable.setLayoutX(600);
+        purchaseTable.setLayoutY(30);
+        purchaseTable.setPrefWidth(500);
+        purchaseTable.setPrefHeight(350);
+        purchaseTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        pane.getChildren().add(purchaseTable);
+
+        //create table
+        String[] colNames = {"CATEGORY", "CODE", "NAME", "PRICE", "QUANTITY"};
+        String[] properties = {"category", "code", "name", "price", "quantity"};
+        for (int i = 0; i < colNames.length; i++) {
+            String colName = colNames[i];
+            TableColumn<ProductTableEntry, String> column = new TableColumn<>(colName);
+            column.setSortable(false);
+            column.setPrefWidth(118);
+            column.setStyle("-fx-alignment: CENTER;");
+            column.setCellValueFactory(new PropertyValueFactory<>(properties[i]));
+            purchaseTable.getColumns().add(column);
+        }
+
+        purchaseTable.setOnMouseClicked(event -> {
+            removeQuantityCombo.getItems().clear();
+            if(!purchaseTable.getSelectionModel().isEmpty()) {
+                ProductTableEntry selected = purchaseTable.getSelectionModel().getSelectedItem();
+                for (int i = 1; i <= Integer.parseInt(selected.getQuantity()); i++) {
+                    removeQuantityCombo.getItems().add(i);
+                }
+                removeQuantityCombo.getSelectionModel().select(0);
+            } else {
+                removeQuantityCombo.setPromptText("Quantity");
             }
         });
     }
@@ -177,35 +204,149 @@ public class MainWindow {
         selectedQuantityCombo.setPromptText("Quantity");
         pane.getChildren().add(selectedQuantityCombo);
 
-        Button addToCartBtn = new Button();
+        removeQuantityCombo = new ComboBox<>();
+        removeQuantityCombo.setLayoutX(730);
+        removeQuantityCombo.setLayoutY(400);
+        removeQuantityCombo.setPrefWidth(120);
+        removeQuantityCombo.setPromptText("Quantity");
+        pane.getChildren().add(removeQuantityCombo);
+
+        addToCartBtn = new Button();
         addToCartBtn.setLayoutX(300);
         addToCartBtn.setLayoutY(400);
         addToCartBtn.setPrefWidth(120);
         addToCartBtn.setText("Add to Cart");
+        addToCartBtn.setOnAction(event -> addToCart());
         pane.getChildren().add(addToCartBtn);
 
-        Button checkout = new Button();
+        checkout = new Button();
         checkout.setLayoutX(430);
         checkout.setLayoutY(400);
         checkout.setPrefWidth(120);
         checkout.setText("Checkout");
+        checkout.setOnAction(event -> new Checkout(purchaseList));
         pane.getChildren().add(checkout);
+
+        removePurchase = new Button();
+        removePurchase.setLayoutX(600);
+        removePurchase.setLayoutY(400);
+        removePurchase.setPrefWidth(120);
+        removePurchase.setText("Remove");
+        removePurchase.setOnAction(event -> removeFromCart());
+        pane.getChildren().add(removePurchase);
     }
 
-    private void setProductTableData() {
-        //set data to table
-        productTable.getItems().clear();
-        Map<Product.Category, List<Product>> productMap = MainProcessor.getProductProcessor().getProductMap();
-        for (Map.Entry<Product.Category, List<Product>> entry : productMap.entrySet()) {
-            String category = entry.getKey().toString();
-            for (Product product : entry.getValue()) {
-                String code = Integer.toString(product.getCode());
-                String name = product.getName();
-                String price = Double.toString(product.getPrice());
-                String quantity = Integer.toString(product.getQuantity());
-                productTable.getItems().add(new ProductTableEntry(code, name, category, price, quantity));
+    private void removeFromCart() {
+        if(purchaseTable.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Please select an item.");
+            alert.show();
+            return;
+        }
+
+        String name = purchaseTable.getSelectionModel().getSelectedItem().getName();
+        String category = purchaseTable.getSelectionModel().getSelectedItem().getCategory();
+        String code = purchaseTable.getSelectionModel().getSelectedItem().getCode();
+        String price = purchaseTable.getSelectionModel().getSelectedItem().getPrice();
+
+        if(removeQuantityCombo.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Not enough quantity.");
+            alert.show();
+            return;
+        }
+
+        int rmQuant = removeQuantityCombo.getSelectionModel().getSelectedItem();
+        int purQuant = 0;
+        int index = 0;
+        for(int i = 0; i < purchaseList.size(); i++) {
+            if(name.equals(purchaseList.get(i).getName())) {
+                index = i;
+                purQuant = Integer.parseInt(purchaseList.get(i).getQuantity());
+                break;
             }
         }
+
+        try {
+            int stock = MainProcessor.getProductProcessor().getProduct(category, Integer.parseInt(code)).getQuantity();
+            MainProcessor.getProductProcessor().setProductQuantity(category, Integer.parseInt(code), stock + rmQuant);
+        } catch (Exception e ) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Not a valid quantity.");
+            alert.show();
+        }
+
+        purQuant -= rmQuant;
+        String quantity = Integer.toString(purQuant);
+        ProductTableEntry n = new ProductTableEntry(code, name, category, price, quantity);
+
+        purchaseList.set(index, n);
+        userProcessor.getCurrentUser().setItemInCart(category, Integer.parseInt(code), purQuant);
+
+        for(int i = 0; i < purchaseList.size(); i++) {
+            if(Integer.parseInt(purchaseList.get(i).getQuantity()) < 1) {
+                purchaseList.remove(i);
+            }
+        }
+
+        purchaseTable.getItems().clear();
+        for (ProductTableEntry productTableEntry : purchaseList) {
+            purchaseTable.getItems().add(productTableEntry);
+        }
+        removeQuantityCombo.getItems().clear();
+        this.productTable.updateTableData();
+    }
+
+    private void addToCart() {
+        if(this.productTable.getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Please select an item.");
+            alert.show();
+            return;
+        }
+
+        int stock = Integer.parseInt(this.productTable.getSelectedItem().getQuantity());
+
+        String name = this.productTable.getSelectedItem().getName();
+        String category = this.productTable.getSelectedItem().getCategory();
+        String code = this.productTable.getSelectedItem().getCode();
+        String price = this.productTable.getSelectedItem().getPrice();
+
+        if(selectedQuantityCombo.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Not enough quantity.");
+            alert.show();
+            return;
+        }
+        int q = selectedQuantityCombo.getSelectionModel().getSelectedItem();
+        int purQuant = 0;
+        int index = -1;
+        for(int i = 0; i < purchaseList.size(); i++) {
+            if(name.equals(purchaseList.get(i).getName())) {
+                index = i;
+                purQuant = Integer.parseInt(purchaseList.get(i).getQuantity());
+                break;
+            }
+        }
+
+        try {
+            MainProcessor.getProductProcessor().setProductQuantity(category, Integer.parseInt(code), stock - q);
+        } catch (Exception e ) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Not a valid quantity.");
+            alert.show();
+        }
+        purQuant += q;
+        String quantity = Integer.toString(purQuant);
+        ProductTableEntry n = new ProductTableEntry(code, name, category, price, quantity);
+        if(index > -1) {
+            purchaseList.set(index, n);
+            userProcessor.getCurrentUser().setItemInCart(category, Integer.parseInt(code), purQuant);
+        } else {
+            purchaseList.add(n);
+            userProcessor.getCurrentUser().addToCart(category, Integer.parseInt(code), purQuant);
+        }
+
+        purchaseTable.getItems().clear();
+        for (ProductTableEntry productTableEntry : purchaseList) {
+            purchaseTable.getItems().add(productTableEntry);
+        }
+        selectedQuantityCombo.getItems().clear();
+        this.productTable.updateTableData();
     }
 
     public Scene getScene() {
