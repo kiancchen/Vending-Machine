@@ -57,6 +57,7 @@ public class ProductProcessorTest {
         ProductProcessor productProcessor = new ProductProcessor();
         assertFalse(productProcessor.setProductName("DRINK",10,"test"));
         assertTrue(productProcessor.setProductName("DRINK",2,"newName"));
+        assertFalse(productProcessor.setProductName("DRINK",1,"Mineral Water"));
     }
 
     @Test
@@ -92,6 +93,13 @@ public class ProductProcessorTest {
         ProductProcessor productProcessor = new ProductProcessor();
         assertNull(productProcessor.getProduct("DRINK",10));
         assertNotNull(productProcessor.getProduct("DRINK",1));
+    }
+
+    @Test
+    public void testSetProductCode() throws IOException{
+        ProductProcessor productProcessor = new ProductProcessor();
+        assertFalse(productProcessor.setProductCode("DRINK",10,11));
+        assertTrue(productProcessor.setProductCode("DRINK",1,100));
     }
 
 
