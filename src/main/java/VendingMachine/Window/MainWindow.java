@@ -4,6 +4,7 @@ import VendingMachine.Data.User;
 import VendingMachine.Processor.MainProcessor;
 import VendingMachine.Processor.UserProcessor;
 import VendingMachine.Window.CashManagement.CashManagementWindow;
+import VendingMachine.Window.CheckoutManagement.Checkout;
 import VendingMachine.Window.ProductManagement.ProductManagementWindow;
 import VendingMachine.Window.ProductManagement.ProductTable;
 import VendingMachine.Window.ProductManagement.ProductTableEntry;
@@ -223,6 +224,7 @@ public class MainWindow {
         checkout.setLayoutY(400);
         checkout.setPrefWidth(120);
         checkout.setText("Checkout");
+        checkout.setOnAction(event -> new Checkout(purchaseList));
         pane.getChildren().add(checkout);
 
         removePurchase = new Button();
@@ -291,15 +293,6 @@ public class MainWindow {
         removeQuantityCombo.getItems().clear();
         this.productTable.updateTableData();
     }
-
-
-
-
-
-
-
-
-
 
     private void addToCart() {
         if(this.productTable.getSelectedItem() == null) {
