@@ -14,8 +14,8 @@ import java.util.Map;
 public class ProductTable {
     private TableView<ProductTableEntry> table;
 
-    public ProductTable() {
-        initTable();
+    public ProductTable(int x, int y, int width, int height) {
+        initTable(x, y, width, height);
     }
 
     public void updateTableData() {
@@ -38,12 +38,12 @@ public class ProductTable {
         return this.table.getSelectionModel().isEmpty();
     }
 
-    private void initTable() {
+    private void initTable(int x, int y, int width, int height) {
         table = new TableView<>();
-        table.setLayoutX(50);
-        table.setLayoutY(30);
-        table.setPrefWidth(500);
-        table.setPrefHeight(350);
+        table.setLayoutX(x);
+        table.setLayoutY(y);
+        table.setPrefWidth(width);
+        table.setPrefHeight(height);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         // create table

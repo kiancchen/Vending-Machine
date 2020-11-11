@@ -1,6 +1,5 @@
 package VendingMachine.Window;
 
-import VendingMachine.Data.Product;
 import VendingMachine.Data.User;
 import VendingMachine.Processor.MainProcessor;
 import VendingMachine.Processor.UserProcessor;
@@ -18,7 +17,6 @@ import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class MainWindow {
     private Scene scene;
@@ -37,12 +35,14 @@ public class MainWindow {
     private TableView<ProductTableEntry> purchaseTable;
     private UserProcessor userProcessor = MainProcessor.getUserProcessor();
     private List<ProductTableEntry> purchaseList = new ArrayList<>();
+    private Button removePurchase;
+    private ComboBox<Integer> removeQuantityCombo;
 
 
 
     public MainWindow() {
         pane = new AnchorPane();
-        scene = new Scene(pane, 1130, 500);
+        scene = new Scene(pane, 1150, 500);
         initButtons();
         initBtnActions();
         initText();
@@ -50,7 +50,7 @@ public class MainWindow {
         initPurchaseNodes();
         initPurchaseTable();
 
-        this.productTable = new ProductTable();
+        this.productTable = new ProductTable(50, 30, 500, 350);
         pane.getChildren().add(productTable.getTable());
         setProductTableAction();
     }
@@ -155,9 +155,9 @@ public class MainWindow {
     private void initPurchaseTable() {
         purchaseTable = new TableView<>();
         purchaseTable.setLayoutX(600);
-        purchaseTable.setLayoutY(40);
+        purchaseTable.setLayoutY(30);
         purchaseTable.setPrefWidth(500);
-        purchaseTable.setPrefHeight(340);
+        purchaseTable.setPrefHeight(350);
         purchaseTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         pane.getChildren().add(purchaseTable);
 
@@ -173,6 +173,19 @@ public class MainWindow {
             column.setCellValueFactory(new PropertyValueFactory<>(properties[i]));
             purchaseTable.getColumns().add(column);
         }
+
+        purchaseTable.setOnMouseClicked(event -> {
+            removeQuantityCombo.getItems().clear();
+            if(!purchaseTable.getSelectionModel().isEmpty()) {
+                ProductTableEntry selected = purchaseTable.getSelectionModel().getSelectedItem();
+                for (int i = 1; i <= Integer.parseInt(selected.getQuantity()); i++) {
+                    removeQuantityCombo.getItems().add(i);
+                }
+                removeQuantityCombo.getSelectionModel().select(0);
+            } else {
+                removeQuantityCombo.setPromptText("Quantity");
+            }
+        });
     }
 
     private void initPurchaseNodes() {
@@ -190,6 +203,13 @@ public class MainWindow {
         selectedQuantityCombo.setPromptText("Quantity");
         pane.getChildren().add(selectedQuantityCombo);
 
+        removeQuantityCombo = new ComboBox<>();
+        removeQuantityCombo.setLayoutX(730);
+        removeQuantityCombo.setLayoutY(400);
+        removeQuantityCombo.setPrefWidth(120);
+        removeQuantityCombo.setPromptText("Quantity");
+        pane.getChildren().add(removeQuantityCombo);
+
         addToCartBtn = new Button();
         addToCartBtn.setLayoutX(300);
         addToCartBtn.setLayoutY(400);
@@ -204,10 +224,87 @@ public class MainWindow {
         checkout.setPrefWidth(120);
         checkout.setText("Checkout");
         pane.getChildren().add(checkout);
+
+        removePurchase = new Button();
+        removePurchase.setLayoutX(600);
+        removePurchase.setLayoutY(400);
+        removePurchase.setPrefWidth(120);
+        removePurchase.setText("Remove");
+        removePurchase.setOnAction(event -> removeFromCart());
+        pane.getChildren().add(removePurchase);
     }
+
+    private void removeFromCart() {
+        if(purchaseTable.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Please select an item.");
+            alert.show();
+            return;
+        }
+
+        String name = purchaseTable.getSelectionModel().getSelectedItem().getName();
+        String category = purchaseTable.getSelectionModel().getSelectedItem().getCategory();
+        String code = purchaseTable.getSelectionModel().getSelectedItem().getCode();
+        String price = purchaseTable.getSelectionModel().getSelectedItem().getPrice();
+
+        if(removeQuantityCombo.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Not enough quantity.");
+            alert.show();
+            return;
+        }
+
+        int rmQuant = removeQuantityCombo.getSelectionModel().getSelectedItem();
+        int purQuant = 0;
+        int index = 0;
+        for(int i = 0; i < purchaseList.size(); i++) {
+            if(name.equals(purchaseList.get(i).getName())) {
+                index = i;
+                purQuant = Integer.parseInt(purchaseList.get(i).getQuantity());
+                break;
+            }
+        }
+
+        try {
+            int stock = MainProcessor.getProductProcessor().getProduct(category, Integer.parseInt(code)).getQuantity();
+            MainProcessor.getProductProcessor().setProductQuantity(category, Integer.parseInt(code), stock + rmQuant);
+        } catch (Exception e ) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Not a valid quantity.");
+            alert.show();
+        }
+
+        purQuant -= rmQuant;
+        String quantity = Integer.toString(purQuant);
+        ProductTableEntry n = new ProductTableEntry(code, name, category, price, quantity);
+
+        purchaseList.set(index, n);
+        userProcessor.getCurrentUser().setItemInCart(category, Integer.parseInt(code), purQuant);
+
+        for(int i = 0; i < purchaseList.size(); i++) {
+            if(Integer.parseInt(purchaseList.get(i).getQuantity()) < 1) {
+                purchaseList.remove(i);
+            }
+        }
+
+        purchaseTable.getItems().clear();
+        for (ProductTableEntry productTableEntry : purchaseList) {
+            purchaseTable.getItems().add(productTableEntry);
+        }
+        removeQuantityCombo.getItems().clear();
+        this.productTable.updateTableData();
+    }
+
+
+
+
+
+
+
+
+
 
     private void addToCart() {
         if(this.productTable.getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Please select an item.");
+            alert.show();
             return;
         }
 
