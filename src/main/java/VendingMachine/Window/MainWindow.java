@@ -1,10 +1,10 @@
 package VendingMachine.Window;
 
-import VendingMachine.Data.Product;
 import VendingMachine.Data.User;
 import VendingMachine.Processor.MainProcessor;
 import VendingMachine.Processor.UserProcessor;
 import VendingMachine.Window.CashManagement.CashManagementWindow;
+import VendingMachine.Window.CheckoutManagement.CheckoutWindow;
 import VendingMachine.Window.ProductManagement.ProductManagementWindow;
 import VendingMachine.Window.ProductManagement.ProductTable;
 import VendingMachine.Window.ProductManagement.ProductTableEntry;
@@ -18,14 +18,13 @@ import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class MainWindow {
     private Scene scene;
     private AnchorPane pane;
     private Button accountBtn;
     private Button userManagementBtn;
-    private Button cashierManageBtn;
+    private Button cashManagementBtn;
     private Button productManageBtn;
     private Text currentUserInfo;
     private ProductTable productTable;
@@ -37,30 +36,31 @@ public class MainWindow {
     private TableView<ProductTableEntry> purchaseTable;
     private UserProcessor userProcessor = MainProcessor.getUserProcessor();
     private List<ProductTableEntry> purchaseList = new ArrayList<>();
-
-
+    private Button removePurchase;
+    private ComboBox<Integer> removeQuantityCombo;
 
     public MainWindow() {
         pane = new AnchorPane();
-        scene = new Scene(pane, 1130, 500);
+        scene = new Scene(pane, 1150, 500);
         initButtons();
         initBtnActions();
+        initLabels();
         initText();
         updateCurrencyUserInfo();
         initPurchaseNodes();
         initPurchaseTable();
 
-        this.productTable = new ProductTable();
+        this.productTable = new ProductTable(50, 50, 500, 350);
         pane.getChildren().add(productTable.getTable());
         setProductTableAction();
     }
 
     public void updateCurrencyUserInfo() {
         UserProcessor userProcessor = MainProcessor.getUserProcessor();
-        currentUserInfo.setText(
-                userProcessor.getCurrentUser().getUsername()
-                        + "   "
-                        + userProcessor.getCurrentUser().getType()
+        currentUserInfo.setText("Current User with type: "
+                + userProcessor.getCurrentUser().getUsername()
+                + "   "
+                + userProcessor.getCurrentUser().getType()
         );
     }
 
@@ -68,13 +68,25 @@ public class MainWindow {
         this.accountBtn.setText(text);
     }
 
+    private void initLabels() {
+        Label productTableLabel = new Label("Product Table");
+        productTableLabel.setLayoutX(250);
+        productTableLabel.setLayoutY(30);
+
+        Label shoppingCartLabel = new Label("Shopping Cart");
+        shoppingCartLabel.setLayoutX(810);
+        shoppingCartLabel.setLayoutY(30);
+
+        pane.getChildren().addAll(productTableLabel, shoppingCartLabel);
+    }
+
     private void initButtons() {
         accountBtn = new Button();
         userManagementBtn = new Button();
-        cashierManageBtn = new Button();
+        cashManagementBtn = new Button();
         productManageBtn = new Button();
 
-        Button[] buttons = {accountBtn, userManagementBtn, cashierManageBtn, productManageBtn};
+        Button[] buttons = {accountBtn, userManagementBtn, cashManagementBtn, productManageBtn};
         String[] texts = {"Account", "Manage User", "Manage Cash", "Manage Product"};
 
         for (int i = 0; i < buttons.length; i++) {
@@ -108,7 +120,7 @@ public class MainWindow {
                 alert.show();
             }
         });
-        cashierManageBtn.setOnAction(event -> {
+        cashManagementBtn.setOnAction(event -> {
             if (userProcessor.getCurrentUser().getPermission(User.Permission.MANAGE_CASH)) {
                 new CashManagementWindow();
             } else {
@@ -155,14 +167,14 @@ public class MainWindow {
     private void initPurchaseTable() {
         purchaseTable = new TableView<>();
         purchaseTable.setLayoutX(600);
-        purchaseTable.setLayoutY(40);
+        purchaseTable.setLayoutY(50);
         purchaseTable.setPrefWidth(500);
-        purchaseTable.setPrefHeight(340);
+        purchaseTable.setPrefHeight(350);
         purchaseTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         pane.getChildren().add(purchaseTable);
 
         //create table
-        String[] colNames = {"CATEGORY", "CODE", "NAME", "PRICE", "QUANTITY"};
+        String[] colNames = {"Ccategory", "Code", "Name", "Pice($)", "Quantity"};
         String[] properties = {"category", "code", "name", "price", "quantity"};
         for (int i = 0; i < colNames.length; i++) {
             String colName = colNames[i];
@@ -173,26 +185,46 @@ public class MainWindow {
             column.setCellValueFactory(new PropertyValueFactory<>(properties[i]));
             purchaseTable.getColumns().add(column);
         }
+
+        purchaseTable.setOnMouseClicked(event -> {
+            removeQuantityCombo.getItems().clear();
+            if(!purchaseTable.getSelectionModel().isEmpty()) {
+                ProductTableEntry selected = purchaseTable.getSelectionModel().getSelectedItem();
+                for (int i = 1; i <= Integer.parseInt(selected.getQuantity()); i++) {
+                    removeQuantityCombo.getItems().add(i);
+                }
+                removeQuantityCombo.getSelectionModel().select(0);
+            } else {
+                removeQuantityCombo.setPromptText("Quantity");
+            }
+        });
     }
 
     private void initPurchaseNodes() {
         selectedItemText = new Text();
         selectedItemText.setLayoutX(50);
-        selectedItemText.setLayoutY(420);
+        selectedItemText.setLayoutY(430);
         selectedItemText.setFont(Font.font(16));
         selectedItemText.setText("Selected Item");
         pane.getChildren().add(selectedItemText);
 
         selectedQuantityCombo = new ComboBox<>();
         selectedQuantityCombo.setLayoutX(170);
-        selectedQuantityCombo.setLayoutY(400);
+        selectedQuantityCombo.setLayoutY(410);
         selectedQuantityCombo.setPrefWidth(120);
         selectedQuantityCombo.setPromptText("Quantity");
         pane.getChildren().add(selectedQuantityCombo);
 
+        removeQuantityCombo = new ComboBox<>();
+        removeQuantityCombo.setLayoutX(730);
+        removeQuantityCombo.setLayoutY(410);
+        removeQuantityCombo.setPrefWidth(120);
+        removeQuantityCombo.setPromptText("Quantity");
+        pane.getChildren().add(removeQuantityCombo);
+
         addToCartBtn = new Button();
         addToCartBtn.setLayoutX(300);
-        addToCartBtn.setLayoutY(400);
+        addToCartBtn.setLayoutY(410);
         addToCartBtn.setPrefWidth(120);
         addToCartBtn.setText("Add to Cart");
         addToCartBtn.setOnAction(event -> addToCart());
@@ -200,14 +232,83 @@ public class MainWindow {
 
         checkout = new Button();
         checkout.setLayoutX(430);
-        checkout.setLayoutY(400);
+        checkout.setLayoutY(410);
         checkout.setPrefWidth(120);
         checkout.setText("Checkout");
+        checkout.setOnAction(event -> new CheckoutWindow(purchaseList));
         pane.getChildren().add(checkout);
+
+        removePurchase = new Button();
+        removePurchase.setLayoutX(600);
+        removePurchase.setLayoutY(410);
+        removePurchase.setPrefWidth(120);
+        removePurchase.setText("Remove");
+        removePurchase.setOnAction(event -> removeFromCart());
+        pane.getChildren().add(removePurchase);
+    }
+
+    private void removeFromCart() {
+        if(purchaseTable.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Please select an item.");
+            alert.show();
+            return;
+        }
+
+        String name = purchaseTable.getSelectionModel().getSelectedItem().getName();
+        String category = purchaseTable.getSelectionModel().getSelectedItem().getCategory();
+        String code = purchaseTable.getSelectionModel().getSelectedItem().getCode();
+        String price = purchaseTable.getSelectionModel().getSelectedItem().getPrice();
+
+        if(removeQuantityCombo.getSelectionModel().getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Not enough quantity.");
+            alert.show();
+            return;
+        }
+
+        int rmQuant = removeQuantityCombo.getSelectionModel().getSelectedItem();
+        int purQuant = 0;
+        int index = 0;
+        for(int i = 0; i < purchaseList.size(); i++) {
+            if(name.equals(purchaseList.get(i).getName())) {
+                index = i;
+                purQuant = Integer.parseInt(purchaseList.get(i).getQuantity());
+                break;
+            }
+        }
+
+        try {
+            int stock = MainProcessor.getProductProcessor().getProduct(category, Integer.parseInt(code)).getQuantity();
+            MainProcessor.getProductProcessor().setProductQuantity(category, Integer.parseInt(code), stock + rmQuant);
+        } catch (Exception e ) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Not a valid quantity.");
+            alert.show();
+        }
+
+        purQuant -= rmQuant;
+        String quantity = Integer.toString(purQuant);
+        ProductTableEntry n = new ProductTableEntry(code, name, category, price, quantity);
+
+        purchaseList.set(index, n);
+        userProcessor.getCurrentUser().setItemInCart(category, Integer.parseInt(code), purQuant);
+
+        for(int i = 0; i < purchaseList.size(); i++) {
+            if(Integer.parseInt(purchaseList.get(i).getQuantity()) < 1) {
+                purchaseList.remove(i);
+            }
+        }
+
+        purchaseTable.getItems().clear();
+        for (ProductTableEntry productTableEntry : purchaseList) {
+            purchaseTable.getItems().add(productTableEntry);
+        }
+        removeQuantityCombo.getItems().clear();
+        this.productTable.updateTableData();
     }
 
     private void addToCart() {
         if(this.productTable.getSelectedItem() == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Please select an item.");
+            alert.show();
             return;
         }
 

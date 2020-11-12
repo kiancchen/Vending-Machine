@@ -18,6 +18,8 @@ public class CashManagementWindow {
     private Button changeButton;
     private double selectedCashType;
     private TextField amountField;
+    private ComboBox<String> typeCombo;
+    private String originCash;
 
     public CashManagementWindow() {
         stage = new Stage();
@@ -31,12 +33,13 @@ public class CashManagementWindow {
         initButton();
         initTextFields();
         initButtonActions();
+        initCombobox();
         selectedCashType = -1;
     }
 
     private void initTable() {
         table = new TableView<>();
-        table.setLayoutX(95);
+        table.setLayoutX(100);
         table.setLayoutY(15);
         table.setPrefWidth(400);
         table.setPrefHeight(300);
@@ -60,6 +63,8 @@ public class CashManagementWindow {
             if (!table.getSelectionModel().isEmpty()) {
                 CashTableEntry selected = table.getSelectionModel().getSelectedItem();
                 selectedCashType = Double.parseDouble(selected.getCashType());
+                originCash = selected.getCashType();
+                typeCombo.getSelectionModel().select(originCash);
                 amountField.setText(selected.getAmount());
             }
         });
@@ -85,13 +90,23 @@ public class CashManagementWindow {
 
     private void initTextFields() {
         amountField = new TextField();
-        amountField.setLayoutX(240);
+        amountField.setLayoutX(300);
         amountField.setLayoutY(350);
         amountField.setPrefWidth(120);
         amountField.setPromptText("Number");
 
         pane.getChildren().add(amountField);
 
+    }
+
+    private void initCombobox() {
+        typeCombo = new ComboBox<>();
+        typeCombo.setLayoutX(150);
+        typeCombo.setLayoutY(350);
+        typeCombo.setPrefWidth(120);
+        typeCombo.setPromptText("Cash Type");
+
+        pane.getChildren().add(typeCombo);
     }
 
     private void setTableData() {
@@ -120,7 +135,6 @@ public class CashManagementWindow {
         }
         try {
             cashProcessor.setCashNumber(selectedCashType, Integer.parseInt(amountField.getText()));
-//            productProcessor.setProductCategory(category, selectedId, ??)
             alert(Alert.AlertType.INFORMATION, "Change successfully.");
         } catch (Exception e) {
             alert(Alert.AlertType.WARNING, "Fail to change");

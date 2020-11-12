@@ -1,4 +1,4 @@
-package VendingMachine.Window.CashManagement;
+package VendingMachine.Window.CheckoutManagement;
 
 public class CashTableEntry {
     private String cashType;
@@ -8,6 +8,7 @@ public class CashTableEntry {
     public CashTableEntry(String cashType, String amount) {
         this.cashType = cashType;
         this.amount = amount;
+
     }
 
     public String getCashType() {

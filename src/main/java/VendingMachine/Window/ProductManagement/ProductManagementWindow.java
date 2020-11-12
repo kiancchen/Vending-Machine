@@ -34,7 +34,7 @@ public class ProductManagementWindow {
         stage.setTitle("Product Management");
         stage.show();
         this.mainTable = mainTable;
-        this.productTable = new ProductTable();
+        this.productTable = new ProductTable(50, 30, 500, 350);
         pane.getChildren().add(productTable.getTable());
         setTableAction();
         initButton();
