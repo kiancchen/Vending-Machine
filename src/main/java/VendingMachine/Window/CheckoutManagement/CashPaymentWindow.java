@@ -10,6 +10,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class CashPaymentWindow {
     private Stage stage;
@@ -74,11 +75,13 @@ public class CashPaymentWindow {
         valueCombo.setLayoutX(80);
         valueCombo.setLayoutY(150);
         valueCombo.setPrefWidth(120);
-        valueCombo.setPromptText("Note Type");
+        valueCombo.setPromptText("Select value");
 
         Map<Double, Integer> cashMap = MainProcessor.getCashProcessor().getCashMap();
-        for (Double values : cashMap.keySet()) {
-            valueCombo.getItems().add(values.toString());
+
+        List<Double> values = cashMap.keySet().stream().sorted().collect(Collectors.toList());
+        for (double value : values) {
+            valueCombo.getItems().add(Double.toString(value));
         }
         pane.getChildren().add(valueCombo);
 
@@ -98,13 +101,13 @@ public class CashPaymentWindow {
         addButton.setOnAction((event -> addAction()));
         payButton.setOnAction((event -> {
             if (table.getItems().isEmpty()) {
-                alert(Alert.AlertType.WARNING, "You don't have input any money.");
+                alert(Alert.AlertType.WARNING, "You don't pay any cashes.");
                 return;
             } else if (calPayAmount() < calPurchaseAmount()) {
-                alert(Alert.AlertType.WARNING, "You have not input enough money.");
+                alert(Alert.AlertType.WARNING, "You don't have enough money.");
                 return;
             }
-            new PayWindow(this);
+            new ChangeWindow(this);
             stage.close();
         }));
     }
@@ -122,7 +125,7 @@ public class CashPaymentWindow {
             this.userCashMap.put(value, number);
             setTableData();
         } catch (Exception e) {
-            alert(Alert.AlertType.WARNING, "Can not add cash.");
+            alert(Alert.AlertType.WARNING, "Fail to add cash.");
         }
     }
 
@@ -138,7 +141,7 @@ public class CashPaymentWindow {
 
         // create table
         String[] colNames = {"Value", "Number"};
-        String[] properties = {"cashType", "amount"};
+        String[] properties = {"value", "number"};
         for (int i = 0; i < colNames.length; i++) {
             String colName = colNames[i];
             TableColumn<CashTableEntry, String> column = new TableColumn<>(colName);
@@ -158,14 +161,14 @@ public class CashPaymentWindow {
     }
 
     private boolean validateInput() {
-        if (numberField.getText().trim().isEmpty() && valueCombo.getSelectionModel().isEmpty()){
+        if (numberField.getText().trim().isEmpty() && valueCombo.getSelectionModel().isEmpty()) {
             alert(Alert.AlertType.WARNING, "Nothing to add");
             return false;
         } else if (numberField.getText().trim().isEmpty()) {
-            alert(Alert.AlertType.WARNING, "Amount of cash needed");
+            alert(Alert.AlertType.WARNING, "Number of cash needed");
             return false;
         } else if (valueCombo.getSelectionModel().isEmpty()) {
-            alert(Alert.AlertType.WARNING, "Cash type needed.");
+            alert(Alert.AlertType.WARNING, "Cash value needed.");
             return false;
         }
         return true;
@@ -184,14 +187,6 @@ public class CashPaymentWindow {
         }
     }
 
-    public Map<String, String> getUserCashMap() {
-        return this.userCashMap;
-    }
-
-    public CheckoutWindow getCheckout() {
-        return this.checkout;
-    }
-
     private double calPayAmount() {
         double payAmount = 0.0;
         for (String key : userCashMap.keySet()) {
@@ -202,10 +197,18 @@ public class CashPaymentWindow {
 
     private double calPurchaseAmount() {
         double purchaseAmount = 0.0;
-        List<ProductTableEntry> purchaseList = checkout.getPurchaseList();
-        for(int i = 0; i < purchaseList.size(); i++) {
-            purchaseAmount += Double.parseDouble(purchaseList.get(i).getPrice()) * Integer.parseInt(purchaseList.get(i).getQuantity());
+        List<ProductTableEntry> purchaseList = checkout.getShoppingCart();
+        for (ProductTableEntry productTableEntry : purchaseList) {
+            purchaseAmount += Double.parseDouble(productTableEntry.getPrice()) * Integer.parseInt(productTableEntry.getQuantity());
         }
         return purchaseAmount;
+    }
+
+    public Map<String, String> getUserCashMap() {
+        return this.userCashMap;
+    }
+
+    public CheckoutWindow getCheckout() {
+        return this.checkout;
     }
 }

@@ -16,9 +16,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class MainWindow {
     private Scene scene;
     private AnchorPane pane;
@@ -31,13 +28,9 @@ public class MainWindow {
     private Text selectedItemText;
     private ComboBox<Integer> selectedQuantityCombo;
 
-    private Button addToCartBtn;
-    private Button checkout;
-    private TableView<ProductTableEntry> purchaseTable;
+    private TableView<ProductTableEntry> shoppingCartTable;
     private UserProcessor userProcessor = MainProcessor.getUserProcessor();
-    private List<ProductTableEntry> purchaseList = new ArrayList<>();
-    private Button removePurchase;
-    private ComboBox<Integer> removeQuantityCombo;
+    private ComboBox<Integer> setCartQtyCombo;
 
     public MainWindow() {
         pane = new AnchorPane();
@@ -48,7 +41,7 @@ public class MainWindow {
         initText();
         updateCurrencyUserInfo();
         initPurchaseNodes();
-        initPurchaseTable();
+        initShoppingCart();
 
         this.productTable = new ProductTable(50, 50, 500, 350);
         pane.getChildren().add(productTable.getTable());
@@ -66,6 +59,14 @@ public class MainWindow {
 
     public void changeAccountButtonText(String text) {
         this.accountBtn.setText(text);
+    }
+
+    public void setShoppingCartData() {
+        this.shoppingCartTable.getItems().clear();
+        MainProcessor.getUserProcessor().getCurrentUser().getShoppingCart().getShoppingList().forEach((k, v) ->
+                this.shoppingCartTable.getItems().add(new ProductTableEntry(Integer.toString(k.getCode()), k.getName(),
+                k.getCategory().toString(), Double.toString(k.getPrice()),
+                Integer.toString(v))));
     }
 
     private void initLabels() {
@@ -164,14 +165,14 @@ public class MainWindow {
         });
     }
 
-    private void initPurchaseTable() {
-        purchaseTable = new TableView<>();
-        purchaseTable.setLayoutX(600);
-        purchaseTable.setLayoutY(50);
-        purchaseTable.setPrefWidth(500);
-        purchaseTable.setPrefHeight(350);
-        purchaseTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        pane.getChildren().add(purchaseTable);
+    private void initShoppingCart() {
+        shoppingCartTable = new TableView<>();
+        shoppingCartTable.setLayoutX(600);
+        shoppingCartTable.setLayoutY(50);
+        shoppingCartTable.setPrefWidth(500);
+        shoppingCartTable.setPrefHeight(350);
+        shoppingCartTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        pane.getChildren().add(shoppingCartTable);
 
         //create table
         String[] colNames = {"Ccategory", "Code", "Name", "Pice($)", "Quantity"};
@@ -183,19 +184,19 @@ public class MainWindow {
             column.setPrefWidth(118);
             column.setStyle("-fx-alignment: CENTER;");
             column.setCellValueFactory(new PropertyValueFactory<>(properties[i]));
-            purchaseTable.getColumns().add(column);
+            shoppingCartTable.getColumns().add(column);
         }
 
-        purchaseTable.setOnMouseClicked(event -> {
-            removeQuantityCombo.getItems().clear();
-            if(!purchaseTable.getSelectionModel().isEmpty()) {
-                ProductTableEntry selected = purchaseTable.getSelectionModel().getSelectedItem();
-                for (int i = 1; i <= Integer.parseInt(selected.getQuantity()); i++) {
-                    removeQuantityCombo.getItems().add(i);
+        shoppingCartTable.setOnMouseClicked(event -> {
+            setCartQtyCombo.getItems().clear();
+            if (!shoppingCartTable.getSelectionModel().isEmpty()) {
+                ProductTableEntry selected = shoppingCartTable.getSelectionModel().getSelectedItem();
+                for (int i = 0; i <= Integer.parseInt(selected.getQuantity()); i++) {
+                    setCartQtyCombo.getItems().add(i);
                 }
-                removeQuantityCombo.getSelectionModel().select(0);
+                setCartQtyCombo.getSelectionModel().select(Integer.parseInt(selected.getQuantity()));
             } else {
-                removeQuantityCombo.setPromptText("Quantity");
+                setCartQtyCombo.setPromptText("Quantity");
             }
         });
     }
@@ -215,14 +216,14 @@ public class MainWindow {
         selectedQuantityCombo.setPromptText("Quantity");
         pane.getChildren().add(selectedQuantityCombo);
 
-        removeQuantityCombo = new ComboBox<>();
-        removeQuantityCombo.setLayoutX(730);
-        removeQuantityCombo.setLayoutY(410);
-        removeQuantityCombo.setPrefWidth(120);
-        removeQuantityCombo.setPromptText("Quantity");
-        pane.getChildren().add(removeQuantityCombo);
+        setCartQtyCombo = new ComboBox<>();
+        setCartQtyCombo.setLayoutX(750);
+        setCartQtyCombo.setLayoutY(410);
+        setCartQtyCombo.setPrefWidth(120);
+        setCartQtyCombo.setPromptText("Quantity");
+        pane.getChildren().add(setCartQtyCombo);
 
-        addToCartBtn = new Button();
+        Button addToCartBtn = new Button();
         addToCartBtn.setLayoutX(300);
         addToCartBtn.setLayoutY(410);
         addToCartBtn.setPrefWidth(120);
@@ -230,132 +231,72 @@ public class MainWindow {
         addToCartBtn.setOnAction(event -> addToCart());
         pane.getChildren().add(addToCartBtn);
 
-        checkout = new Button();
-        checkout.setLayoutX(430);
+        Button checkout = new Button();
+        checkout.setLayoutX(920);
         checkout.setLayoutY(410);
         checkout.setPrefWidth(120);
         checkout.setText("Checkout");
-        checkout.setOnAction(event -> new CheckoutWindow(purchaseList));
+        checkout.setOnAction(event -> new CheckoutWindow());
         pane.getChildren().add(checkout);
 
-        removePurchase = new Button();
-        removePurchase.setLayoutX(600);
-        removePurchase.setLayoutY(410);
-        removePurchase.setPrefWidth(120);
-        removePurchase.setText("Remove");
-        removePurchase.setOnAction(event -> removeFromCart());
-        pane.getChildren().add(removePurchase);
+        Button setQtyInCartBtn = new Button();
+        setQtyInCartBtn.setLayoutX(620);
+        setQtyInCartBtn.setLayoutY(410);
+        setQtyInCartBtn.setPrefWidth(120);
+        setQtyInCartBtn.setText("Set Qty");
+        setQtyInCartBtn.setOnAction(event -> setQtyInCart());
+        pane.getChildren().add(setQtyInCartBtn);
     }
 
-    private void removeFromCart() {
-        if(purchaseTable.getSelectionModel().getSelectedItem() == null) {
+    private void setQtyInCart() {
+        ProductTableEntry selectedItem = shoppingCartTable.getSelectionModel().getSelectedItem();
+        if (selectedItem == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Please select an item.");
             alert.show();
             return;
         }
 
-        String name = purchaseTable.getSelectionModel().getSelectedItem().getName();
-        String category = purchaseTable.getSelectionModel().getSelectedItem().getCategory();
-        String code = purchaseTable.getSelectionModel().getSelectedItem().getCode();
-        String price = purchaseTable.getSelectionModel().getSelectedItem().getPrice();
+        String category = selectedItem.getCategory();
+        int code = Integer.parseInt(selectedItem.getCode());
 
-        if(removeQuantityCombo.getSelectionModel().getSelectedItem() == null) {
+        if (setCartQtyCombo.getSelectionModel().getSelectedItem() == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Not enough quantity.");
             alert.show();
             return;
         }
 
-        int rmQuant = removeQuantityCombo.getSelectionModel().getSelectedItem();
-        int purQuant = 0;
-        int index = 0;
-        for(int i = 0; i < purchaseList.size(); i++) {
-            if(name.equals(purchaseList.get(i).getName())) {
-                index = i;
-                purQuant = Integer.parseInt(purchaseList.get(i).getQuantity());
-                break;
-            }
-        }
+        MainProcessor.getUserProcessor().getCurrentUser().setItemInCart(category, code,
+                setCartQtyCombo.getSelectionModel().getSelectedItem());
 
-        try {
-            int stock = MainProcessor.getProductProcessor().getProduct(category, Integer.parseInt(code)).getQuantity();
-            MainProcessor.getProductProcessor().setProductQuantity(category, Integer.parseInt(code), stock + rmQuant);
-        } catch (Exception e ) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Not a valid quantity.");
-            alert.show();
-        }
-
-        purQuant -= rmQuant;
-        String quantity = Integer.toString(purQuant);
-        ProductTableEntry n = new ProductTableEntry(code, name, category, price, quantity);
-
-        purchaseList.set(index, n);
-        userProcessor.getCurrentUser().setItemInCart(category, Integer.parseInt(code), purQuant);
-
-        for(int i = 0; i < purchaseList.size(); i++) {
-            if(Integer.parseInt(purchaseList.get(i).getQuantity()) < 1) {
-                purchaseList.remove(i);
-            }
-        }
-
-        purchaseTable.getItems().clear();
-        for (ProductTableEntry productTableEntry : purchaseList) {
-            purchaseTable.getItems().add(productTableEntry);
-        }
-        removeQuantityCombo.getItems().clear();
+        setCartQtyCombo.getItems().clear();
+        this.setShoppingCartData();
         this.productTable.updateTableData();
     }
 
     private void addToCart() {
-        if(this.productTable.getSelectedItem() == null) {
+        ProductTableEntry selectedItem = this.productTable.getSelectedItem();
+        if (selectedItem == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Please select an item.");
             alert.show();
             return;
         }
 
-        int stock = Integer.parseInt(this.productTable.getSelectedItem().getQuantity());
+        String category = selectedItem.getCategory();
+        int code = Integer.parseInt(selectedItem.getCode());
 
-        String name = this.productTable.getSelectedItem().getName();
-        String category = this.productTable.getSelectedItem().getCategory();
-        String code = this.productTable.getSelectedItem().getCode();
-        String price = this.productTable.getSelectedItem().getPrice();
-
-        if(selectedQuantityCombo.getSelectionModel().getSelectedItem() == null) {
+        if (selectedQuantityCombo.getSelectionModel().getSelectedItem() == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Not enough quantity.");
             alert.show();
             return;
         }
-        int q = selectedQuantityCombo.getSelectionModel().getSelectedItem();
-        int purQuant = 0;
-        int index = -1;
-        for(int i = 0; i < purchaseList.size(); i++) {
-            if(name.equals(purchaseList.get(i).getName())) {
-                index = i;
-                purQuant = Integer.parseInt(purchaseList.get(i).getQuantity());
-                break;
-            }
-        }
 
-        try {
-            MainProcessor.getProductProcessor().setProductQuantity(category, Integer.parseInt(code), stock - q);
-        } catch (Exception e ) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Not a valid quantity.");
+        if (!MainProcessor.getUserProcessor().getCurrentUser().addToCart(category, code,
+                selectedQuantityCombo.getSelectionModel().getSelectedItem())) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Not enough quantity.");
             alert.show();
         }
-        purQuant += q;
-        String quantity = Integer.toString(purQuant);
-        ProductTableEntry n = new ProductTableEntry(code, name, category, price, quantity);
-        if(index > -1) {
-            purchaseList.set(index, n);
-            userProcessor.getCurrentUser().setItemInCart(category, Integer.parseInt(code), purQuant);
-        } else {
-            purchaseList.add(n);
-            userProcessor.getCurrentUser().addToCart(category, Integer.parseInt(code), purQuant);
-        }
 
-        purchaseTable.getItems().clear();
-        for (ProductTableEntry productTableEntry : purchaseList) {
-            purchaseTable.getItems().add(productTableEntry);
-        }
+        setShoppingCartData();
         selectedQuantityCombo.getItems().clear();
         this.productTable.updateTableData();
     }

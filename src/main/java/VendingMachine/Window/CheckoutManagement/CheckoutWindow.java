@@ -1,5 +1,6 @@
 package VendingMachine.Window.CheckoutManagement;
 
+import VendingMachine.Processor.MainProcessor;
 import VendingMachine.Window.ProductManagement.ProductTableEntry;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -12,20 +13,16 @@ import java.util.List;
 
 public class CheckoutWindow {
     private Stage stage;
-    private Scene scene;
     private AnchorPane pane;
 
-    private List<ProductTableEntry> purchaseList;
-    private Button card;
+    private List<ProductTableEntry> shoppingCart;
     private Button cash;
     private Button cancel;
+    private double amount;
 
-    private Text total;
-
-    public CheckoutWindow(List<ProductTableEntry> purchaseList ) {
-        this.purchaseList = purchaseList;
-
-        if(purchaseList.size() < 1) {
+    public CheckoutWindow() {
+        this.amount = MainProcessor.getUserProcessor().getCurrentUser().getShoppingCart().getAmount();
+        if (amount == 0) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Please purchase an item.");
             alert.show();
             return;
@@ -33,7 +30,7 @@ public class CheckoutWindow {
 
         stage = new Stage();
         pane = new AnchorPane();
-        scene = new Scene(pane, 250, 200);
+        Scene scene = new Scene(pane, 250, 200);
         stage.setScene(scene);
         stage.setTitle("Checkout");
         stage.show();
@@ -49,32 +46,24 @@ public class CheckoutWindow {
             new CashPaymentWindow(this);
             stage.close();
         }));
-
     }
 
     private void intiText() {
-        int purchaseNum = 0;
-
-        double money = 0;
-        for(int i = 0; i < purchaseList.size(); i++) {
-            purchaseNum += Integer.parseInt(purchaseList.get(i).getQuantity());
-            money += Double.parseDouble(purchaseList.get(i).getPrice()) * Integer.parseInt(purchaseList.get(i).getQuantity());
-        }
-        total = new Text();
+        Text total = new Text();
         total.setX(50);
         total.setY(50);
-        total.setText("Total items: " + purchaseNum + "\n" + "Total money: " + money);
+        total.setText("Total amount: " + this.amount);
         pane.getChildren().add(total);
     }
 
     private void initButtons() {
-        card = new Button();
+        Button card = new Button();
         cash = new Button();
         cancel = new Button();
 
         Button[] btns = {card, cancel, cash};
         String[] names = {"Card", "Cancel", "Cash"};
-        for(int i = 0; i < btns.length; i++) {
+        for (int i = 0; i < btns.length; i++) {
             btns[i].setLayoutY(150);
             btns[i].setLayoutX(15 + i * 80);
             btns[i].setPrefWidth(60);
@@ -83,7 +72,7 @@ public class CheckoutWindow {
         }
     }
 
-    public List<ProductTableEntry> getPurchaseList() {
-        return this.purchaseList;
+    public List<ProductTableEntry> getShoppingCart() {
+        return this.shoppingCart;
     }
 }

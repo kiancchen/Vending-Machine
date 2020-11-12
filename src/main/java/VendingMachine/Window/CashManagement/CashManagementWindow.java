@@ -94,9 +94,7 @@ public class CashManagementWindow {
         amountField.setLayoutY(350);
         amountField.setPrefWidth(120);
         amountField.setPromptText("Number");
-
         pane.getChildren().add(amountField);
-
     }
 
     private void initCombobox() {

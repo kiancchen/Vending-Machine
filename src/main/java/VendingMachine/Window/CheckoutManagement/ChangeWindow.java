@@ -1,21 +1,21 @@
 package VendingMachine.Window.CheckoutManagement;
 
-import VendingMachine.DatabaseHandler;
-import VendingMachine.Data.User;
 import VendingMachine.Processor.MainProcessor;
-import VendingMachine.Processor.CashProcessor;
 import VendingMachine.Window.ProductManagement.ProductTableEntry;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import java.io.IOException;
 
+import java.io.IOException;
 import java.util.*;
 
-public class PayWindow {
+public class ChangeWindow {
     private Stage stage;
     private Scene scene;
     private AnchorPane pane;
@@ -24,7 +24,7 @@ public class PayWindow {
     private Map<String, String> userCashMap;
     private Button okeyButton;
 
-    public PayWindow(CashPaymentWindow cashPaymentWindow) {
+    public ChangeWindow(CashPaymentWindow cashPaymentWindow) {
         stage = new Stage();
         pane = new AnchorPane();
         scene = new Scene(pane, 480, 600);
@@ -42,7 +42,7 @@ public class PayWindow {
     }
 
     private void initLabel() {
-        Label youReceiveLabel = new Label("You're received change.");
+        Label youReceiveLabel = new Label("Your changes");
         youReceiveLabel.setLayoutX(130);
         youReceiveLabel.setLayoutY(50);
         youReceiveLabel.setFont(Font.font(20));
@@ -52,10 +52,10 @@ public class PayWindow {
     private void initButton() {
         okeyButton = new Button();
         okeyButton.setLayoutX(180);
-        okeyButton.setLayoutY(60 + 470 );
+        okeyButton.setLayoutY(60 + 470);
         okeyButton.setPrefWidth(120);
         okeyButton.setPrefHeight(30);
-        okeyButton.setText("OKEY");
+        okeyButton.setText("Okay");
         pane.getChildren().add(okeyButton);
 
     }
@@ -75,7 +75,7 @@ public class PayWindow {
 
         // create table
         String[] colNames = {"Value", "Number"};
-        String[] properties = {"cashType", "amount"};
+        String[] properties = {"value", "number"};
         for (int i = 0; i < colNames.length; i++) {
             String colName = colNames[i];
             TableColumn<CashTableEntry, String> column = new TableColumn<>(colName);
@@ -98,9 +98,9 @@ public class PayWindow {
         }
 
         double purchaseAmount = 0.0;
-        List<ProductTableEntry> purchaseList = cashPaymentWindow.getCheckout().getPurchaseList();
-        for(int i = 0; i < purchaseList.size(); i++) {
-            purchaseAmount += Double.parseDouble(purchaseList.get(i).getPrice()) * Integer.parseInt(purchaseList.get(i).getQuantity());
+        List<ProductTableEntry> purchaseList = cashPaymentWindow.getCheckout().getShoppingCart();
+        for (ProductTableEntry productTableEntry : purchaseList) {
+            purchaseAmount += Double.parseDouble(productTableEntry.getPrice()) * Integer.parseInt(productTableEntry.getQuantity());
         }
 
         double changes = payAmount - purchaseAmount;
@@ -114,8 +114,8 @@ public class PayWindow {
             for (Double value : list) {
                 table.getItems().add(new CashTableEntry(value.toString(), changesMap.get(value).toString()));
             }
-        } catch (IOException e){
-            System.out.println(e);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
