@@ -1,5 +1,6 @@
 package VendingMachine.Window.CheckoutManagement;
 
+import VendingMachine.Data.Transaction;
 import VendingMachine.Processor.MainProcessor;
 import VendingMachine.Window.ProductManagement.ProductTableEntry;
 import javafx.scene.Scene;
@@ -19,21 +20,16 @@ public class ChangeWindow {
     private Stage stage;
     private Scene scene;
     private AnchorPane pane;
-    private CashPaymentWindow cashPaymentWindow;
     private TableView<CashTableEntry> table;
-    private Map<String, String> userCashMap;
     private Button okeyButton;
 
-    public ChangeWindow(CashPaymentWindow cashPaymentWindow) {
+    public ChangeWindow() {
         stage = new Stage();
         pane = new AnchorPane();
         scene = new Scene(pane, 480, 600);
         stage.setScene(scene);
         stage.setTitle("Cash Changes");
         stage.show();
-
-        this.cashPaymentWindow = cashPaymentWindow;
-        this.userCashMap = cashPaymentWindow.getUserCashMap();
 
         initLabel();
         initTable();
@@ -92,16 +88,10 @@ public class ChangeWindow {
 
     private void setTableData() {
         // set data to table
-        double payAmount = 0.0;
-        for (String key : this.userCashMap.keySet()) {
-            payAmount += Double.parseDouble(key) * Double.parseDouble(this.userCashMap.get(key));
-        }
+        double payAmount = MainProcessor.getUserProcessor().getCurrentUser().getShoppingCart().getReceivedMoney();
 
-        double purchaseAmount = 0.0;
-        List<ProductTableEntry> purchaseList = cashPaymentWindow.getCheckout().getShoppingCart();
-        for (ProductTableEntry productTableEntry : purchaseList) {
-            purchaseAmount += Double.parseDouble(productTableEntry.getPrice()) * Integer.parseInt(productTableEntry.getQuantity());
-        }
+        double purchaseAmount =
+                MainProcessor.getUserProcessor().getCurrentUser().getShoppingCart().getAmount();
 
         double changes = payAmount - purchaseAmount;
 
@@ -117,6 +107,4 @@ public class ChangeWindow {
             e.printStackTrace();
         }
     }
-
-
 }

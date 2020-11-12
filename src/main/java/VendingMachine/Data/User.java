@@ -82,15 +82,6 @@ public class User {
         return this.id;
     }
 
-    public String getString() {
-        String s = "";
-        s += id + ", ";
-        s += username + ", ";
-        s += password + ", ";
-        s += getType();
-        return s;
-    }
-
     public UserType getType() {
         return type;
     }
