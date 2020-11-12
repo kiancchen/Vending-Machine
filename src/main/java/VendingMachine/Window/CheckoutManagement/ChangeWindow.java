@@ -107,7 +107,6 @@ public class ChangeWindow {
 
         try {
             Map<Double, Integer> changesMap = MainProcessor.getCashProcessor().getChange(changes);
-            System.out.println(changesMap);
             Collection<Double> keySet = changesMap.keySet();
             List<Double> list = new ArrayList<>(keySet);
             Collections.sort(list);
