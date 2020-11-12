@@ -24,6 +24,14 @@ public class Product {
         this.code = staticCode++;
     }
 
+    public Product(int code, Category category, String name, double price, int quantity) {
+        this.category = category;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.code = code;
+    }
+
     public Category getCategory() {
         return category;
     }

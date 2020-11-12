@@ -36,6 +36,21 @@ public class ProductProcessor {
         return true;
     }
 
+    public boolean addProduct(int code, String category, String name, double price, int quantity) throws IOException {
+        for (List<Product> products : productMap.values()) {
+            for (Product product : products) {
+                if (product.getCode() == code || (product.getCategory().equals(Product.Category.valueOf(category)) && product.getName().equals(name))) {
+                    return false;
+                }
+            }
+        }
+
+        List<Product> products = productMap.get(Product.Category.valueOf(category));
+        products.add(new Product(Product.Category.valueOf(category), name, price, quantity));
+        DatabaseHandler.saveProductData(productMap);
+        return true;
+    }
+
     public boolean removeProduct(String category, int code) throws IOException {
         List<Product> products = productMap.get(Product.Category.valueOf(category));
         for (Product product : products) {
@@ -111,6 +126,14 @@ public class ProductProcessor {
     }
 
     public boolean setProductCode(String category, int oldCode, int newCode) throws IOException {
+        for (List<Product> products : productMap.values()) {
+            for (Product product : products) {
+                if (product.getCode() == newCode) {
+                    return false;
+                }
+            }
+        }
+
         List<Product> products = productMap.get(Product.Category.valueOf(category));
         for (Product product : products) {
             if (product.getCode() == oldCode) {
