@@ -6,7 +6,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import javax.print.attribute.standard.PrinterMessageFromOperator;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -33,19 +32,19 @@ public class ProductProcessorTest {
     @Test
     public void testGetCategory() throws IOException{
         ProductProcessor productProcessor = new ProductProcessor();
-        assertEquals(Product.Category.DRINK,productProcessor.getProduct("DRINK",1).getCategory());
+        assertEquals(Product.Category.DRINK,productProcessor.getProduct(1).getCategory());
     }
 
     @Test
     public void testGetPrice() throws IOException{
         ProductProcessor productProcessor = new ProductProcessor();
-        assertEquals(2,productProcessor.getProduct("DRINK",1).getPrice(),0);
+        assertEquals(1.0,productProcessor.getProduct(1).getPrice(),0);
     }
 
     @Test
     public void testGetQuantity() throws IOException{
         ProductProcessor productProcessor = new ProductProcessor();
-        assertEquals(7,productProcessor.getProduct("DRINK",1).getQuantity(),0);
+        assertEquals(7,productProcessor.getProduct(1).getStock(),0);
     }
 
     @Test
@@ -57,70 +56,64 @@ public class ProductProcessorTest {
     @Test
     public void testAddProduct() throws IOException{
         ProductProcessor productProcessor = new ProductProcessor();
-        assertFalse(productProcessor.addProduct("CHOCOLATE","M\u0026M",2.5,7));
-        assertTrue(productProcessor.addProduct("DRINK","test",3,1));
-
+        assertFalse(productProcessor.addProduct("1","DRINK","Mineral Water",1,7));
+        assertFalse(productProcessor.addProduct("20","DRINK","Test",1,20));
+        assertTrue(productProcessor.addProduct("20","DRINK","Test",1,7));
     }
 
     @Test
     public void testSetProductQuantity() throws IOException{
         ProductProcessor productProcessor = new ProductProcessor();
-        assertFalse(productProcessor.setProductQuantity("DRINK",1,16));
-        assertTrue(productProcessor.setProductQuantity("DRINK",1,10));
-        assertFalse(productProcessor.setProductQuantity("DRINK",10,10));
+        assertFalse(productProcessor.setProductStock(1,16));
+        assertTrue(productProcessor.setProductStock(1,10));
     }
 
     @Test
     public void testSetProductName() throws IOException{
         ProductProcessor productProcessor = new ProductProcessor();
-        assertFalse(productProcessor.setProductName("DRINK",10,"test"));
-        assertTrue(productProcessor.setProductName("DRINK",2,"newName"));
-        assertFalse(productProcessor.setProductName("DRINK",1,"Mineral Water"));
+        assertFalse(productProcessor.setProductName(1,"Sprite"));
+        assertTrue(productProcessor.setProductName(1, "test"));
     }
 
     @Test
     public void testSetProductCategory() throws IOException{
         ProductProcessor productProcessor = new ProductProcessor();
-        assertFalse(productProcessor.setProductCategory("DRINK", 10, "test"));
-        assertTrue(productProcessor.setProductCategory("DRINK",1,"CHIP"));
+        assertTrue(productProcessor.setProductCategory(1, "CHIP"));
     }
 
     @Test
     public void testSetProductPrice() throws IOException{
         ProductProcessor productProcessor = new ProductProcessor();
-        assertFalse(productProcessor.setProductPrice("DRINK",10,10));
-        assertTrue(productProcessor.setProductPrice("DRINK",2,10));
+        assertTrue(productProcessor.setProductPrice(1, 10));
     }
 
     @Test
     public void testGetProductMap() throws IOException{
         ProductProcessor productProcessor = new ProductProcessor();
-        Map<Product.Category, List<Product>> test = DatabaseHandler.loadProductData();
+        Map<Integer, Product> test = DatabaseHandler.loadProductData();
         assertEquals(test.size(),productProcessor.getProductMap().size());
     }
 
     @Test
     public void testRemoveProduct() throws IOException{
         ProductProcessor productProcessor = new ProductProcessor();
-        assertFalse(productProcessor.removeProduct("DRINK",10));
-        assertTrue(productProcessor.removeProduct("DRINK",1));
+        assertFalse(productProcessor.removeProduct(20));
+        assertTrue(productProcessor.removeProduct(1));
     }
 
     @Test
     public void testGetProduct() throws IOException{
         ProductProcessor productProcessor = new ProductProcessor();
-        assertNull(productProcessor.getProduct("DRINK",10));
-        assertNotNull(productProcessor.getProduct("DRINK",1));
+        assertNull(productProcessor.getProduct(20));
+        assertNotNull(productProcessor.getProduct(1));
     }
 
     @Test
     public void testSetProductCode() throws IOException{
         ProductProcessor productProcessor = new ProductProcessor();
-        assertFalse(productProcessor.setProductCode("DRINK",10,11));
-        assertTrue(productProcessor.setProductCode("DRINK",1,100));
+        assertFalse(productProcessor.setProductCode(1, "5"));
+        assertTrue(productProcessor.setProductCode(1,"20"));
     }
-
-
 
 }
 

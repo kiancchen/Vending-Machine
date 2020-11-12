@@ -1,7 +1,6 @@
 package VendingMachine.Window.CheckoutManagement;
 
 import VendingMachine.Processor.MainProcessor;
-import VendingMachine.Window.ProductManagement.ProductTableEntry;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -103,14 +102,13 @@ public class CashPaymentWindow {
             if (table.getItems().isEmpty()) {
                 alert(Alert.AlertType.WARNING, "You don't pay any cashes.");
                 return;
-            } else if (calPayAmount() < MainProcessor.getUserProcessor().getCurrentUser().getShoppingCart().getAmount()) {
+            }
+            double payAmount = getPayAmount();
+            if (payAmount < MainProcessor.getUserProcessor().getCurrentUser().getShoppingCart().getAmount()) {
                 alert(Alert.AlertType.WARNING, "You don't have enough money.");
                 return;
             }
-            double payAmount = 0.0;
-            for (Map.Entry<String, String> entry : this.userCashMap.entrySet()) {
-                payAmount += Double.parseDouble(entry.getKey()) + Double.parseDouble(entry.getValue());
-            }
+
             MainProcessor.getUserProcessor().getCurrentUser().getShoppingCart().pay(payAmount);
             new ChangeWindow();
             stage.close();
@@ -192,10 +190,10 @@ public class CashPaymentWindow {
         }
     }
 
-    private double calPayAmount() {
+    private double getPayAmount() {
         double payAmount = 0.0;
-        for (String key : userCashMap.keySet()) {
-            payAmount += Double.parseDouble(key) * Double.parseDouble(userCashMap.get(key));
+        for (Map.Entry<String, String> entry : this.userCashMap.entrySet()) {
+            payAmount += Double.parseDouble(entry.getKey()) * Double.parseDouble(entry.getValue());
         }
         return payAmount;
     }

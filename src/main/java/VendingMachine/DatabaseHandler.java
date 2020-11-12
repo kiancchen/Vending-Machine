@@ -53,20 +53,20 @@ public class DatabaseHandler {
         return cashes;
     }
 
-    public static void saveProductData(Map<Product.Category, List<Product>> productMap) throws IOException {
+    public static void saveProductData(Map<Integer, Product> productMap) throws IOException {
         FileWriter fileWriter = new FileWriter(productFile);
         JsonWriter jsonWriter = new JsonWriter(fileWriter);
         jsonWriter.setIndent(" ");
-        gson.toJson(productMap, new TypeToken<Map<Product.Category, List<Product>>>() {}.getType(), jsonWriter);
+        gson.toJson(productMap, new TypeToken<Map<Integer, Product>>() {}.getType(), jsonWriter);
         jsonWriter.flush();
         jsonWriter.close();
     }
 
-    public static Map<Product.Category, List<Product>> loadProductData() throws IOException {
+    public static Map<Integer, Product> loadProductData() throws IOException {
         InputStream input = new FileInputStream(productFile);
         JsonReader reader = new JsonReader(new InputStreamReader(input));
-        Map<Product.Category, List<Product>> products = gson.fromJson(reader,
-                new TypeToken<Map<Product.Category, List<Product>>>() {}.getType());
+        Map<Integer, Product> products = gson.fromJson(reader,
+                new TypeToken<Map<Integer, Product>>() {}.getType());
         reader.close();
         return products;
     }

@@ -150,7 +150,7 @@ public class UserManagementWindow {
 
         try {
             if (MainProcessor.getUserProcessor().addUser(usernameField.getText(), passwordField.getText(), type)) {
-                alert(Alert.AlertType.INFORMATION, "Successfully add.");
+//                alert(Alert.AlertType.INFORMATION, "Successfully add.");
 
                 setTableData();
                 selectedId = -1;
@@ -171,7 +171,7 @@ public class UserManagementWindow {
         int id = Integer.parseInt(table.getSelectionModel().getSelectedItem().getId());
         try {
             if (MainProcessor.getUserProcessor().removeUser(id)) {
-                alert(Alert.AlertType.INFORMATION, "Successfully removed");
+//                alert(Alert.AlertType.INFORMATION, "Successfully removed");
                 setTableData();
             }
         } catch (Exception e) {
@@ -196,7 +196,7 @@ public class UserManagementWindow {
             userProcessor.setUsername(selectedId, usernameField.getText());
             userProcessor.setPassword(selectedId, passwordField.getText());
             userProcessor.setUserType(selectedId, typeCombo.getSelectionModel().getSelectedItem());
-            alert(Alert.AlertType.WARNING, "Change successfully.");
+//            alert(Alert.AlertType.WARNING, "Change successfully.");
         } catch (Exception e) {
             alert(Alert.AlertType.WARNING, "Change failed.");
         }

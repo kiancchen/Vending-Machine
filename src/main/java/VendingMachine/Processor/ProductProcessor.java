@@ -4,125 +4,93 @@ import VendingMachine.Data.Product;
 import VendingMachine.DatabaseHandler;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
 public class ProductProcessor {
-    private Map<Product.Category, List<Product>> productMap;
+    private Map<Integer, Product> productMap;
 
     public ProductProcessor() throws IOException {
         productMap = DatabaseHandler.loadProductData();
     }
 
-    public Product getProduct(String category, int code) {
-        List<Product> products = productMap.get(Product.Category.valueOf(category));
-        for (Product product : products) {
-            if (product.getCode() == code) {
-                return product;
-            }
-        }
-        return null;
+    public Product getProduct(int id) {
+        return this.productMap.get(id);
     }
 
-    public boolean addProduct(String category, String name, double price, int quantity) throws IOException {
-        List<Product> products = productMap.get(Product.Category.valueOf(category));
-        for (Product product : products) {
-            if (product.getName().equals(name)) {
+    public boolean addProduct(String code, String category, String name, double price,
+                              int stock) throws IOException {
+        if (stock > 15 || stock < 0) {
+            return false;
+        }
+        for (Product product : this.productMap.values()) {
+            if (product.getCode().equals(code) || product.getName().equals(name)) {
                 return false;
             }
         }
-        products.add(new Product(Product.Category.valueOf(category), name, price, quantity));
-        DatabaseHandler.saveProductData(productMap);
+
+        Product product = new Product(code, Product.Category.valueOf(category), name, price, stock);
+        productMap.put(product.getId(), product);
+        save();
         return true;
     }
 
-    public boolean removeProduct(String category, int code) throws IOException {
-        List<Product> products = productMap.get(Product.Category.valueOf(category));
-        for (Product product : products) {
-            if (product.getCode() == code) {
-                products.remove(product);
-                DatabaseHandler.saveProductData(productMap);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean setProductQuantity(String category, int code, int quantity) throws IOException {
-        if (quantity < 0 || quantity > 15) {
+    public boolean removeProduct(int id) throws IOException {
+        if (!this.productMap.containsKey(id)) {
             return false;
         }
-
-        List<Product> products = productMap.get(Product.Category.valueOf(category));
-        for (Product product : products) {
-            if (product.getCode() == code) {
-                product.setQuantity(quantity);
-                DatabaseHandler.saveProductData(productMap);
-                return true;
-            }
-        }
-        return false;
+        this.productMap.remove(id);
+        save();
+        return true;
     }
 
-    public boolean setProductName(String category, int code, String newName) throws IOException {
-        List<Product> products = productMap.get(Product.Category.valueOf(category));
-        for (Product product : products) {
-            if (product.getName().equals(newName)) {
+    public boolean setProductStock(int id, int stock) throws IOException {
+        if (stock < 0 || stock > 15) {
+            return false;
+        }
+        this.productMap.get(id).setStock(stock);
+        save();
+        return true;
+    }
+
+    public boolean setProductName(int id, String newName) throws IOException {
+        for (Product product : this.productMap.values()) {
+            if (product.getId() != id && product.getName().equals(newName)) {
                 return false;
             }
         }
-        for (Product product : products) {
-            if (product.getCode() == code) {
-                product.setName(newName);
-                DatabaseHandler.saveProductData(productMap);
-                return true;
-            }
-        }
-        return false;
+        this.productMap.get(id).setName(newName);
+        save();
+        return true;
     }
 
-    public boolean setProductCategory(String oldCategory, int code, String newCategory) throws IOException {
-        List<Product> products = productMap.get(Product.Category.valueOf(oldCategory));
-        for (Product product : products) {
-            if (product.getCode() == code) {
-                // remove from the old category
-                products.remove(product);
-                product.setCategory(Product.Category.valueOf(newCategory));
-                // add to the new category
-                products = productMap.get(Product.Category.valueOf(newCategory));
-                products.add(product);
-                DatabaseHandler.saveProductData(productMap);
-                return true;
-            }
-        }
-        return false;
+    public boolean setProductCategory(int id, String newCategory) throws IOException {
+        this.productMap.get(id).setCategory(Product.Category.valueOf(newCategory));
+        save();
+        return true;
     }
 
-    public boolean setProductPrice(String category, int code, double price) throws IOException {
-        List<Product> products = productMap.get(Product.Category.valueOf(category));
-        for (Product product : products) {
-            if (product.getCode() == code) {
-                product.setPrice(price);
-                DatabaseHandler.saveProductData(productMap);
-                return true;
-            }
-        }
-        return false;
+    public boolean setProductPrice(int id, double price) throws IOException {
+        this.productMap.get(id).setPrice(price);
+        save();
+        return true;
     }
 
-    public boolean setProductCode(String category, int oldCode, int newCode) throws IOException {
-        List<Product> products = productMap.get(Product.Category.valueOf(category));
-        for (Product product : products) {
-            if (product.getCode() == oldCode) {
-                product.setCode(newCode);
-                DatabaseHandler.saveProductData(productMap);
-                return true;
+    public boolean setProductCode(int id, String newCode) throws IOException {
+        for (Product product : this.productMap.values()) {
+            if (product.getId() != id && product.getCode().equals(newCode)) {
+                return false;
             }
         }
-        return false;
+        this.productMap.get(id).setCode(newCode);
+        save();
+        return true;
     }
 
-    public Map<Product.Category, List<Product>> getProductMap() {
+    public void save() throws IOException {
+        DatabaseHandler.saveProductData(productMap);
+    }
+
+    public Map<Integer, Product> getProductMap() {
         return productMap;
     }
 }

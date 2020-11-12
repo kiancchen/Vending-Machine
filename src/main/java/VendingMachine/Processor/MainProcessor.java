@@ -9,14 +9,7 @@ public class MainProcessor {
     private static PaymentProcessor paymentProcessor;
 
     static {
-        try {
-            userProcessor = new UserProcessor();
-            cashProcessor = new CashProcessor();
-            productProcessor = new ProductProcessor();
-            paymentProcessor = new PaymentProcessor();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        reload();
     }
 
 
@@ -34,5 +27,16 @@ public class MainProcessor {
 
     public static PaymentProcessor getPaymentProcessor() {
         return paymentProcessor;
+    }
+
+    public static void reload() {
+        try {
+            userProcessor = new UserProcessor();
+            cashProcessor = new CashProcessor();
+            productProcessor = new ProductProcessor();
+            paymentProcessor = new PaymentProcessor();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
