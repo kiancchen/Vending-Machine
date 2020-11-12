@@ -279,7 +279,13 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
 
 ## Burndown Chart
 
-<mark>TODD</mark>
+### Sprint 2 Burndown Chart
+
+![CleanShot 2020-11-12 at 18.55.02@2x](https://i.loli.net/2020/11/12/tNHWPCqIZyX1FUQ.png)
+
+### Product Burndown Chart
+
+![CleanShot 2020-11-12 at 19.02.59@2x](https://i.loli.net/2020/11/12/LRFwM1vn9g2lyzI.png)
 
 ## Storyboard
 
