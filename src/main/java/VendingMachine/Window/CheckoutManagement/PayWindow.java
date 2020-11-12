@@ -22,7 +22,6 @@ public class PayWindow {
     private TableView<CashTableEntry> table;
     private Map<String, String> userCashMap;
     private Button okeyButton;
-    //private int selectedId;
 
     public PayWindow(CashPaymentWindow cashPaymentWindow) {
         stage = new Stage();
@@ -38,7 +37,6 @@ public class PayWindow {
         initTable();
         initButton();
         initButtonAction();
-
     }
 
     private void initButton() {
@@ -53,9 +51,7 @@ public class PayWindow {
     }
 
     private void initButtonAction() {
-      okeyButton.setOnAction((event -> stage.close()));
-
-
+        okeyButton.setOnAction((event -> stage.close()));
     }
 
     private void initTable() {
@@ -88,7 +84,7 @@ public class PayWindow {
         // set data to table
         double pay_amount = 0.0;
         for (String key : this.userCashMap.keySet()) {
-          pay_amount += Double.parseDouble(key) * Double.parseDouble(this.userCashMap.get(key));
+            pay_amount += Double.parseDouble(key) * Double.parseDouble(this.userCashMap.get(key));
         }
 
         double purchase_amount = 0.0;
@@ -99,19 +95,17 @@ public class PayWindow {
 
         double changes = pay_amount - purchase_amount;
 
-
-
         try {
-          Map<Double, Integer> changesMap = MainProcessor.getCashProcessor().getChange(changes);
-          System.out.println(changesMap);
-          Collection<Double> keySet = changesMap.keySet();
-          List<Double> list = new ArrayList<>(keySet);
-          Collections.sort(list);
-          for (Double value : list) {
-              table.getItems().add(new CashTableEntry(value.toString(), changesMap.get(value).toString()));
-          }
+            Map<Double, Integer> changesMap = MainProcessor.getCashProcessor().getChange(changes);
+            System.out.println(changesMap);
+            Collection<Double> keySet = changesMap.keySet();
+            List<Double> list = new ArrayList<>(keySet);
+            Collections.sort(list);
+            for (Double value : list) {
+                table.getItems().add(new CashTableEntry(value.toString(), changesMap.get(value).toString()));
+            }
         } catch (IOException e){
-          System.out.println(e);
+            System.out.println(e);
         }
     }
 

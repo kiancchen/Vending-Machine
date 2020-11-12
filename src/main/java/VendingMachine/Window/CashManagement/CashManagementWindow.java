@@ -1,6 +1,5 @@
 package VendingMachine.Window.CashManagement;
 
-import VendingMachine.Data.Product;
 import VendingMachine.Processor.CashProcessor;
 import VendingMachine.Processor.MainProcessor;
 import javafx.scene.Scene;
@@ -40,7 +39,7 @@ public class CashManagementWindow {
 
     private void initTable() {
         table = new TableView<>();
-        table.setLayoutX(95);
+        table.setLayoutX(100);
         table.setLayoutY(15);
         table.setPrefWidth(400);
         table.setPrefHeight(300);
@@ -107,9 +106,6 @@ public class CashManagementWindow {
         typeCombo.setPrefWidth(120);
         typeCombo.setPromptText("Cash Type");
 
-
-
-
         pane.getChildren().add(typeCombo);
     }
 
@@ -139,7 +135,6 @@ public class CashManagementWindow {
         }
         try {
             cashProcessor.setCashNumber(selectedCashType, Integer.parseInt(amountField.getText()));
-//            productProcessor.setProductCategory(category, selectedId, ??)
             alert(Alert.AlertType.INFORMATION, "Change successfully.");
         } catch (Exception e) {
             alert(Alert.AlertType.WARNING, "Fail to change");

@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 
 import java.util.List;
 
-public class Checkout {
+public class CheckoutWindow {
     private Stage stage;
     private Scene scene;
     private AnchorPane pane;
@@ -22,7 +22,7 @@ public class Checkout {
 
     private Text total;
 
-    public Checkout(List<ProductTableEntry> purchaseList ) {
+    public CheckoutWindow(List<ProductTableEntry> purchaseList ) {
         this.purchaseList = purchaseList;
 
         if(purchaseList.size() < 1) {
@@ -83,8 +83,6 @@ public class Checkout {
     }
 
     public List<ProductTableEntry> getPurchaseList() {
-      return this.purchaseList;
+        return this.purchaseList;
     }
-
-
 }

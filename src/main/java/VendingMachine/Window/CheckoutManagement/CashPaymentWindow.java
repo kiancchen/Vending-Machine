@@ -1,15 +1,12 @@
 package VendingMachine.Window.CheckoutManagement;
 
-import VendingMachine.DatabaseHandler;
-import VendingMachine.Data.User;
 import VendingMachine.Processor.MainProcessor;
-import VendingMachine.Processor.CashProcessor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.collections.*;
 
 import java.util.*;
 
@@ -19,14 +16,14 @@ public class CashPaymentWindow {
     private AnchorPane pane;
     private TableView<CashTableEntry> table;
     private Map<String, String> userCashMap;
-    private Checkout checkout;
+    private CheckoutWindow checkout;
     private ComboBox<String> valueCombo;
     private Button addButton;
     private Button payButton;
     private TextField numberField;
     //private int selectedId;
 
-    public CashPaymentWindow(Checkout checkout) {
+    public CashPaymentWindow(CheckoutWindow checkout) {
         stage = new Stage();
         pane = new AnchorPane();
         scene = new Scene(pane, 480, 600);
@@ -37,15 +34,22 @@ public class CashPaymentWindow {
         this.userCashMap = new HashMap<String, String>();
         this.checkout = checkout;
 
+        initLabel();
         initTable();
         initButtons();
         initButtonActions();
         initCombobox();
         initTextFields();
 
-        //selectedId = -1;
     }
 
+    private void initLabel() {
+        Label inputNoteLabel = new Label("Please enter amount you pay");
+        inputNoteLabel.setLayoutX(130);
+        inputNoteLabel.setLayoutY(50);
+        inputNoteLabel.setFont(Font.font(20));
+        pane.getChildren().add(inputNoteLabel);
+    }
 
     private void initButtons() {
         addButton = new Button();
@@ -57,7 +61,7 @@ public class CashPaymentWindow {
         for (int i = 0; i < buttons.length; i++) {
             Button button = buttons[i];
             button.setLayoutX(180);
-            button.setLayoutY(60 + 470 * i);
+            button.setLayoutY(100 + 420 * i);
             button.setPrefWidth(120);
             button.setPrefHeight(30);
             button.setText(texts[i]);
@@ -67,12 +71,14 @@ public class CashPaymentWindow {
 
     private void initCombobox() {
         valueCombo = new ComboBox<>();
-        valueCombo.setLayoutX(70);
-        valueCombo.setLayoutY(20);
+        valueCombo.setLayoutX(80);
+        valueCombo.setLayoutY(150);
+        valueCombo.setPrefWidth(120);
+        valueCombo.setPromptText("Note Type");
 
         Map<Double, Integer> cashMap = MainProcessor.getCashProcessor().getCashMap();
         for (Double values : cashMap.keySet()) {
-          valueCombo.getItems().add(values.toString());
+            valueCombo.getItems().add(values.toString());
         }
         pane.getChildren().add(valueCombo);
 
@@ -80,8 +86,8 @@ public class CashPaymentWindow {
 
     private void initTextFields() {
         numberField = new TextField();
-        numberField.setLayoutX(250);
-        numberField.setLayoutY(20);
+        numberField.setLayoutX(280);
+        numberField.setLayoutY(150);
         numberField.setPrefWidth(120);
         numberField.setPromptText("Number");
 
@@ -105,23 +111,21 @@ public class CashPaymentWindow {
         }
 
         try {
-          this.userCashMap.put(value, number);
-          alert(Alert.AlertType.INFORMATION, "Successfully add.");
-          setTableData();
-          //selectedId = -1;
+            this.userCashMap.put(value, number);
+            alert(Alert.AlertType.INFORMATION, "Successfully add.");
+            setTableData();
         } catch (Exception e) {
             alert(Alert.AlertType.WARNING, "Can not add cash.");
         }
-
     }
 
 
     private void initTable() {
         table = new TableView<>();
         table.setLayoutX(40);
-        table.setLayoutY(110);
+        table.setLayoutY(200);
         table.setPrefWidth(400);
-        table.setPrefHeight(400);
+        table.setPrefHeight(300);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         pane.getChildren().add(table);
 
@@ -137,17 +141,6 @@ public class CashPaymentWindow {
             column.setCellValueFactory(new PropertyValueFactory<>(properties[i]));
             table.getColumns().add(column);
         }
-        /*
-        table.setOnMouseClicked(event -> {
-            if (!table.getSelectionModel().isEmpty()) {
-                CashTableEntry selected = table.getSelectionModel().getSelectedItem();
-                selectedCashType = Double.parseDouble(selected.getCashType());
-                originCash = selected.getCashType();
-                typeCombo.getSelectionModel().select(originCash);
-                amountField.setText(selected.getAmount());
-            }
-        });
-        */
 
         setTableData();
     }
@@ -185,11 +178,11 @@ public class CashPaymentWindow {
     }
 
     public Map<String, String> getUserCashMap() {
-      return this.userCashMap;
+        return this.userCashMap;
     }
 
-    public Checkout getCheckout() {
-      return this.checkout;
+    public CheckoutWindow getCheckout() {
+        return this.checkout;
     }
 
 
