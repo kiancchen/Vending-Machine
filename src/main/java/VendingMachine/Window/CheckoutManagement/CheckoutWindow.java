@@ -47,6 +47,7 @@ public class CheckoutWindow {
         // create actions here(New Window)
         cash.setOnAction((event -> {
             new CashPaymentWindow(this);
+            stage.close();
         }));
 
     }
