@@ -25,7 +25,6 @@ public class Transaction {
         if (quantity > product.getQuantity()) {
             return false;
         }
-
         if (shoppingList.containsKey(product)) {
             shoppingList.put(product, shoppingList.get(product) + quantity);
         } else {

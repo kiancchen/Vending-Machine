@@ -131,14 +131,13 @@ public class MainWindow {
             }
         });
         productManageBtn.setOnAction(event -> {
-            new ProductManagementWindow(this.productTable);
-//            if (userProcessor.getCurrentUser().getPermission(User.Permission.MANAGE_ITEM)) {
-//                new ProductManagementWindow(this.productTable);
-//            } else {
-//                Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
-//                        "to do this action.");
-//                alert.show();
-//            }
+            if (userProcessor.getCurrentUser().getPermission(User.Permission.MANAGE_ITEM)) {
+                new ProductManagementWindow(this.productTable);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
+                        "to do this action.");
+                alert.show();
+            }
         });
     }
 
