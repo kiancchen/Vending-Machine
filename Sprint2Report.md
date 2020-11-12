@@ -6,8 +6,8 @@
   - [UML Class Diagram](#uml-class-diagram)
   - [Demo](#demo)
     - [Sign In or Sign Up](#sign-in-or-sign-up)
-    - [Display Product](#Display-Product)
-    - [Display Cart](#display-cart)
+    - [Display Product](#display-product)
+    - [Display cart](#display-cart)
     - [Add to Cart](#add-to-cart)
     - [Remove Cart](#remove-cart)
     - [Display Users](#display-users)
@@ -74,6 +74,7 @@
    - Remove product GUI
    - Change product GUI
    - Product table
+   - Fix bug of cash payment GUI
 4. Zexuan Long (zlon4018):
    - Product options on main window
    - <mark>TODO</mark>
@@ -92,7 +93,7 @@ Same content in Sprint 1 Report, can be accessed at this [link](https://github.s
 
 ## UML Class Diagram
 
-<mark>TODD</mark>
+<img src='https://i.loli.net/2020/11/12/c5gv1rzwEIO32mP.png' alt='c5gv1rzwEIO32mP'/>
 
 ## Demo
 
@@ -124,19 +125,15 @@ When it sign up with different username not exists in the database, it will disp
 
 ### Display Product
 
-The Product table on default page is available for every user include all the products that the machine has. 
+The Product table on default page is available for every user include all the products that the machine has.
 
 ![截屏2020-11-12 下午12.30.47.png](https://i.loli.net/2020/11/12/2mPqnVceNYBgrXE.png)
-
-
 
 ### Display cart
 
 The cart table on default page is available for every user include all the products were selected by current user.
 
 ![截屏2020-11-12 下午12.35.51.png](https://i.loli.net/2020/11/12/UBeFaMXjd9QuJtV.png)
-
-
 
 ### Add to Cart
 
@@ -145,8 +142,6 @@ The cart table on default page is available for every user include all the produ
 The user can select which product he want to add to cart, then click the row which the product is, after that this product's name will be automatically filled in the item name field, then choose the quantity he want. After that click on `Add to Cart` button. The cart table will update accordingly.
 
 ![截屏2020-11-12 下午12.42.05.png](https://i.loli.net/2020/11/12/9IizV1c7QWA4xwU.png)
-
-
 
 ### Remove Cart
 
