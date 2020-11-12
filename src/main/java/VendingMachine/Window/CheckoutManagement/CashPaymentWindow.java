@@ -103,7 +103,7 @@ public class CashPaymentWindow {
             if (table.getItems().isEmpty()) {
                 alert(Alert.AlertType.WARNING, "You don't pay any cashes.");
                 return;
-            } else if (calPayAmount() < calPurchaseAmount()) {
+            } else if (calPayAmount() < MainProcessor.getUserProcessor().getCurrentUser().getShoppingCart().getAmount()) {
                 alert(Alert.AlertType.WARNING, "You don't have enough money.");
                 return;
             }
@@ -193,15 +193,6 @@ public class CashPaymentWindow {
             payAmount += Double.parseDouble(key) * Double.parseDouble(userCashMap.get(key));
         }
         return payAmount;
-    }
-
-    private double calPurchaseAmount() {
-        double purchaseAmount = 0.0;
-        List<ProductTableEntry> purchaseList = checkout.getShoppingCart();
-        for (ProductTableEntry productTableEntry : purchaseList) {
-            purchaseAmount += Double.parseDouble(productTableEntry.getPrice()) * Integer.parseInt(productTableEntry.getQuantity());
-        }
-        return purchaseAmount;
     }
 
     public Map<String, String> getUserCashMap() {
