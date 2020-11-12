@@ -1,6 +1,7 @@
 package VendingMachine.Window.CheckoutManagement;
 
 import VendingMachine.Processor.MainProcessor;
+import VendingMachine.Window.ProductManagement.ProductTableEntry;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -21,7 +22,6 @@ public class CashPaymentWindow {
     private Button addButton;
     private Button payButton;
     private TextField numberField;
-    //private int selectedId;
 
     public CashPaymentWindow(CheckoutWindow checkout) {
         stage = new Stage();
@@ -31,7 +31,7 @@ public class CashPaymentWindow {
         stage.setTitle("Cash Payment");
         stage.show();
 
-        this.userCashMap = new HashMap<String, String>();
+        this.userCashMap = new HashMap<>();
         this.checkout = checkout;
 
         initLabel();
@@ -97,7 +97,15 @@ public class CashPaymentWindow {
     private void initButtonActions() {
         addButton.setOnAction((event -> addAction()));
         payButton.setOnAction((event -> {
+            if (table.getItems().isEmpty()) {
+                alert(Alert.AlertType.WARNING, "You don't have input any money.");
+                return;
+            } else if (calPayAmount() < calPurchaseAmount()) {
+                alert(Alert.AlertType.WARNING, "You have not input enough money.");
+                return;
+            }
             new PayWindow(this);
+            stage.close();
         }));
     }
 
@@ -112,7 +120,6 @@ public class CashPaymentWindow {
 
         try {
             this.userCashMap.put(value, number);
-            alert(Alert.AlertType.INFORMATION, "Successfully add.");
             setTableData();
         } catch (Exception e) {
             alert(Alert.AlertType.WARNING, "Can not add cash.");
@@ -185,7 +192,20 @@ public class CashPaymentWindow {
         return this.checkout;
     }
 
+    private double calPayAmount() {
+        double payAmount = 0.0;
+        for (String key : userCashMap.keySet()) {
+            payAmount += Double.parseDouble(key) * Double.parseDouble(userCashMap.get(key));
+        }
+        return payAmount;
+    }
 
-
-
+    private double calPurchaseAmount() {
+        double purchaseAmount = 0.0;
+        List<ProductTableEntry> purchaseList = checkout.getPurchaseList();
+        for(int i = 0; i < purchaseList.size(); i++) {
+            purchaseAmount += Double.parseDouble(purchaseList.get(i).getPrice()) * Integer.parseInt(purchaseList.get(i).getQuantity());
+        }
+        return purchaseAmount;
+    }
 }

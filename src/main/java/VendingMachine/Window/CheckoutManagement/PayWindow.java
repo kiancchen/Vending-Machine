@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import java.io.IOException;
 
@@ -34,9 +35,18 @@ public class PayWindow {
         this.cashPaymentWindow = cashPaymentWindow;
         this.userCashMap = cashPaymentWindow.getUserCashMap();
 
+        initLabel();
         initTable();
         initButton();
         initButtonAction();
+    }
+
+    private void initLabel() {
+        Label youReceiveLabel = new Label("You're received change.");
+        youReceiveLabel.setLayoutX(130);
+        youReceiveLabel.setLayoutY(50);
+        youReceiveLabel.setFont(Font.font(20));
+        pane.getChildren().add(youReceiveLabel);
     }
 
     private void initButton() {
@@ -82,18 +92,18 @@ public class PayWindow {
 
     private void setTableData() {
         // set data to table
-        double pay_amount = 0.0;
+        double payAmount = 0.0;
         for (String key : this.userCashMap.keySet()) {
-            pay_amount += Double.parseDouble(key) * Double.parseDouble(this.userCashMap.get(key));
+            payAmount += Double.parseDouble(key) * Double.parseDouble(this.userCashMap.get(key));
         }
 
-        double purchase_amount = 0.0;
+        double purchaseAmount = 0.0;
         List<ProductTableEntry> purchaseList = cashPaymentWindow.getCheckout().getPurchaseList();
         for(int i = 0; i < purchaseList.size(); i++) {
-            purchase_amount += Double.parseDouble(purchaseList.get(i).getPrice()) * Integer.parseInt(purchaseList.get(i).getQuantity());
+            purchaseAmount += Double.parseDouble(purchaseList.get(i).getPrice()) * Integer.parseInt(purchaseList.get(i).getQuantity());
         }
 
-        double changes = pay_amount - purchase_amount;
+        double changes = payAmount - purchaseAmount;
 
         try {
             Map<Double, Integer> changesMap = MainProcessor.getCashProcessor().getChange(changes);
