@@ -133,7 +133,7 @@ public class CashManagementWindow {
         }
         try {
             cashProcessor.setCashNumber(selectedCashType, Integer.parseInt(amountField.getText()));
-            alert(Alert.AlertType.INFORMATION, "Change successfully.");
+//            alert(Alert.AlertType.INFORMATION, "Change successfully.");
         } catch (Exception e) {
             alert(Alert.AlertType.WARNING, "Fail to change");
         }
