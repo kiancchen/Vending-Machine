@@ -1,11 +1,8 @@
 package VendingMachine;
 
-import VendingMachine.Processor.ProductProcessor;
 import VendingMachine.Window.MainWindow;
 import javafx.application.Application;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 public class App extends Application {
     public static void main(String[] args) {
@@ -13,7 +10,7 @@ public class App extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage){
+    public void start(Stage primaryStage) {
         MainWindow mainWindow = new MainWindow();
         primaryStage.setScene(mainWindow.getScene());
         primaryStage.setTitle("Vending Machine");

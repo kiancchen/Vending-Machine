@@ -39,10 +39,6 @@ public class User {
         return this.shoppingCart.set(id, newQty);
     }
 
-    public Transaction getShoppingCart() {
-        return shoppingCart;
-    }
-
     public void initPermissions() {
         this.permissions = new HashMap<>();
         permissions.put(Permission.MANAGE_ITEM, false);
@@ -54,9 +50,12 @@ public class User {
         this.permissions.put(permission, accessibility);
     }
 
-
     public boolean getPermission(Permission permission) {
         return this.permissions.get(permission);
+    }
+
+    public Transaction getShoppingCart() {
+        return shoppingCart;
     }
 
     public String getUsername() {

@@ -1,8 +1,6 @@
 package VendingMachine.Window.CheckoutManagement;
 
-import VendingMachine.Data.Transaction;
 import VendingMachine.Processor.MainProcessor;
-import VendingMachine.Window.ProductManagement.ProductTableEntry;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

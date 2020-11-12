@@ -4,7 +4,6 @@ import VendingMachine.Data.Product;
 import VendingMachine.DatabaseHandler;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 public class ProductProcessor {
@@ -87,11 +86,11 @@ public class ProductProcessor {
         return true;
     }
 
-    public Map<Integer, Product> getProductMap() {
-        return productMap;
-    }
-
     public void save() throws IOException {
         DatabaseHandler.saveProductData(productMap);
+    }
+
+    public Map<Integer, Product> getProductMap() {
+        return productMap;
     }
 }

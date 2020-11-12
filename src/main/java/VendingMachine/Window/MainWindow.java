@@ -65,8 +65,8 @@ public class MainWindow {
         this.shoppingCartTable.getItems().clear();
         MainProcessor.getUserProcessor().getCurrentUser().getShoppingCart().getShoppingList().forEach((k, v) ->
                 this.shoppingCartTable.getItems().add(new ProductTableEntry(k.getCode(), k.getName(),
-                k.getCategory().toString(), Double.toString(k.getPrice()),
-                Integer.toString(v), k.getId())));
+                        k.getCategory().toString(), Double.toString(k.getPrice()),
+                        Integer.toString(v), k.getId())));
     }
 
     private void initLabels() {

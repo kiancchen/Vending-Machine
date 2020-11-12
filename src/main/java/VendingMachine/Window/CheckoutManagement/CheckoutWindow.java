@@ -1,15 +1,12 @@
 package VendingMachine.Window.CheckoutManagement;
 
 import VendingMachine.Processor.MainProcessor;
-import VendingMachine.Window.ProductManagement.ProductTableEntry;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import java.util.List;
 
 public class CheckoutWindow {
     private Stage stage;

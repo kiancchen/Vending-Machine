@@ -37,7 +37,8 @@ public class Transaction {
 
     public boolean set(int id, int newQty) {
         Product product = MainProcessor.getProductProcessor().getProduct(id);
-        if (newQty > product.getStock()) {
+        if (newQty > product.getStock() + shoppingList.get(product)) {
+            System.out.println(false);
             return false;
         }
         int oldQty = shoppingList.get(product);
@@ -50,13 +51,13 @@ public class Transaction {
         return true;
     }
 
-    public double getAmount() {
-        return amount;
-    }
-
     public boolean pay(double amount) {
         this.receivedMoney = amount;
         return true;
+    }
+
+    public double getAmount() {
+        return amount;
     }
 
     public double getReceivedMoney() {
