@@ -63,7 +63,9 @@
 1. Cheng Chen (cche7436):
    - Review pull requests
    - Logic of `Product` and `Transaction`
-   - <mark>TODO</mark>
+   - Refactor the initial data structure of `Product`
+   - Refactore codes written by teammates that's not well designed
+   - Fix bugs during the development
 2. Yuanqun Wang (ywan3184):
    - Shopping cart GUI
    - Add product in shoooping cart
@@ -77,13 +79,13 @@
    - Fix bug of cash payment GUI
 4. Zexuan Long (zlon4018):
    - Product options on main window
-   - Write test for product management
+   - Write tests for the logic part.
 5. Songyin Li (soli3733):
-   - Change notes GUI
+   - Change cashes GUI
    - Demo report
 6. Zehui Lin (zlin3338):
-   - A table display input notes
-   - A table display change notes
+   - Receive the cashes paid by customers.
+   - Return cash changes to the customer
 
 # Agile Development Tools and Practices
 
@@ -93,7 +95,7 @@ Same content in Sprint 1 Report, can be accessed at this [link](https://github.s
 
 ## UML Class Diagram
 
-<img src='https://i.loli.net/2020/11/12/c5gv1rzwEIO32mP.png' alt='c5gv1rzwEIO32mP'/>
+![image-20201112181604497](https://i.loli.net/2020/11/12/xTf2EzJ5pQZgjVn.png)
 
 ## Demo
 
@@ -264,10 +266,10 @@ If you can't see this table clearly, please refer to this [link](https://docs.go
 ## Sprint Goal
 
    - Implement the code structure for `Product` and `Transaction`
-   - Implement the product management system
+   - Complete the product management system
    - Complete the cash management system
    - The customer can select products they want to purchase, see the shopping cart and shopping history
-   - Implement the cash payment system
+   - Complete the cash payment system
 
 ## User Stories and Sprint Backlog
 
@@ -305,28 +307,28 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
   - Discussion the GUI of transaction.
   - Review the progress of project.
 - Cheng Chen:
-  - What did I do yesterday: Finished write code for logic part of `Product` and `Transaction`.
-  - What I will do today: Working on finalize storyboard and fix bugs.
+  - What did I do yesterday: Write code for logic part of `Product` and `Transaction`.
+  - What I will do today: Add more methods and fix bugs.
   - Do I see any obstacles: None at the moment.
 - Yuanqun Wang:
   - What did I do yesterday: Finished shopping cart GUI.
-  - What I will do today: Working on modifying feature of shopping cart.
+  - What I will do today: Modify feature of shopping cart.
   - Do I see any obstacles: None at the moment.
 - Yufei Zuo:
-  - What did I do yesterday: Finished GUI of add and remove product.
-  - What I will do today: Working on GUI of change product.
+  - What did I do yesterday: Finished GUI of adding and removing products.
+  - What I will do today: Working on GUI of changing product.
   - Do I see any obstacles: None at the moment.
 - Zexuan Long:
-  - What did I do yesterday: Finish product options on main window and write tests for logic part.
-  - What I will do today: Continues write more tests.
+  - What did I do yesterday: Finished product option list on main window and write tests for logic part.
+  - What I will do today: Write more tests and increase the coverage.
   - Do I see any obstacles: None at the moment.
 - Songyin Li:
-  - What did I do yesterday: Finished GUI of changing amount of notes.
-  - What I will do today: Continues fixing bugs.
+  - What did I do yesterday: Finished GUI of changing number of cashes.
+  - What I will do today: Fix bugs.
   - Do I see any obstacles: None at the moment.
 - Zehui Lin:
   - What did I do yesterday: Working on GUI of cash payment.
-  - What I will do today: Continues working on cash payment GUI.
+  - What I will do today: Continue working on cash payment GUI.
   - Do I see any obstacles: None at the moment.
 
 ### Meeting 3
@@ -338,62 +340,65 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
   - Report any bugs of current application
   - Determine the content during demo with client
 - Cheng Chen:
-  - What did I do yesterday: refactor the code
-  - What I will do today: continuos to debug
+  - What did I do yesterday: Refactor the code and fix bugs
+  - What I will do today: Continue refactoring and fixing
   - Do I see any obstacles: None at the moment.
 - Yuanqun Wang:
-  - What did I do yesterday: Finished remove product in shopping cart.
-  - What I will do today: Working on changing product quantity in shopping cart.
+  - What did I do yesterday: Finished removing product in shopping cart.
+  - What I will do today: Working on changing the product quantity in shopping cart.
   - Do I see any obstacles: None at the moment.
 - Yufei Zuo:
   - What did I do yesterday: Proofreading the report.
   - What I will do today: Fix bugs in application.
-  - Do I see any obstacles: None at the moment.
+  - Do I see any obstacles: Some features is impossible to implement in current data structure.
 - Zexuan Long:
-  - What did I do yesterday: Finished test for logic.
-  - What I will do today: Continuous to add tests.
+  - What did I do yesterday: Wrote tests for the logic part.
+  - What I will do today: Add more tests.
   - Do I see any obstacles: None at the moment.
 - Songyin Li:
   - What did I do yesterday: Working on demo report
   - What I will do today: Continue working on demo report.
   - Do I see any obstacles: None at the moment.
 - Zehui Lin:
-  - What did I do yesterday: Finished table display of input notes.
-  - What I will do today: Working on table display of changes notes.
+  - What did I do yesterday: A table displaying of received cashes.
+  - What I will do today: A table displaying of cash changes returned to the user.
   - Do I see any obstacles: The table is not display correctly.
 
 ## Sprint Review
 
 ### Client Feedback
 
-Our client is satisfied with output of current sprint, and do not have any comments for current progression. The client just asks to continue finishing requirement.
+Our client is satisfied with output of current sprint, and does not have any comments for current progression. The client just asks to continue finishing requirements.
 
 - What has been done?
   - The database that stores products.
-  - The owner and seller can modified amount of cash in machine.
-  - The user can add, change or remove product from shopping cart.
-  - The user can purchases the products by cash.
-  - The machine can display correct change back to user.
+  - The owner and seller can modified number of cashes in machine.
+  - The user can add, change or remove product from the shopping cart.
+  - The user can purchase the products by cash.
+  - The machine can display correct cash changes back to the user.
   - A table of products can display.
-  - A table of shopping cart can display.
+  - A table of the shopping cart can display.
 - What has not been done?
-  - Have not implemented the code structure for `transaction`.
+  - Have not implemented the database for `transaction`.
   - Cannot display shopping history.
 
 ### Revisited Sprint Backlog
 
-The tasks have not assigned according to priority, some features cannot be implemented while other task have not completed. For example, one of our sprint backlog is to display a table of shopping history, however the backlog of payment by cash has just finished by due day, which makes impossible to finish displaying a table of shopping history.
+The tasks were not assigned according to priority, some features cannot be implemented while some underlying tasks have not been completed. For example, one of our sprint backlog is to display a table of shopping history, however the user can't make transactions now, which makes it impossible to display the shopping history.
 
-In the next sprint, we need to focus on the order to implement features and aims to finish all the required feature by the due day.
+Because of the same reason above, some teammates wrote low-quality code such as duplicated code, code in wrong places, which takes us much time to refactor.
+
+In the next sprint, we need to focus on the order to implement features and aims to finish all the required features by the due day.
 
 ## Sprint Retrospective
 
 - Date: 12th November
 - What went well during the Sprint?
-  - Completed most of tasks on time.
+  - Completed almost all tasks on time.
   - Worked on different features on different branches by different teammate well.
-  - All agile tools and practices were utilized.
-  - The communication among teammate was efficient so that we can adjust our tasks in time during the progress of the development.
+  - All agile tools and practices were utilized well.
+  - The communication among teammates was efficient so that we can adjust our tasks in time during the progress of the development if problems encountered.
 - What can be improved in the future?
   - Prioritize all the tasks at the beginning.
-  - Do not write logic code in GUI window
+  - Complete tasks according the priority strictly.
+  - Avoid low-quality code and improve the readability and maintainability.
