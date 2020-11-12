@@ -54,12 +54,17 @@ public class UserProcessorTest {
         UserProcessor userProcessor = new UserProcessor();
         assertFalse(userProcessor.getCurrentUser().addToCart("DRINK",1,10));
         assertTrue(userProcessor.getCurrentUser().addToCart("DRINK",1,1));
+        assertTrue(userProcessor.getCurrentUser().addToCart("DRINK",1,2));
+        assertFalse(userProcessor.getCurrentUser().setItemInCart("DRINK",1,10));
+        assertTrue(userProcessor.getCurrentUser().setItemInCart("DRINK",1,2));
+        assertTrue(userProcessor.getCurrentUser().setItemInCart("DRINK",1,0));
     }
 
     @Test
-    public void testSetItemInCart() throws IOException{
+    public void testPay() throws IOException{
         UserProcessor userProcessor = new UserProcessor();
-        assertFalse(userProcessor.getCurrentUser().setItemInCart("DRINK",1,10));
+        assertTrue(userProcessor.getCurrentUser().getShoppingCart().pay(1.5));
+        assertEquals(1.5,userProcessor.getCurrentUser().getShoppingCart().getReceivedMoney(),0);
     }
 
     @Test
