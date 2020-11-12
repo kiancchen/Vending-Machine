@@ -8,6 +8,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class ProductManagementWindow {
 
     private Stage stage;
@@ -159,8 +161,10 @@ public class ProductManagementWindow {
         }
 
         try {
-            if (MainProcessor.getProductProcessor().addProduct(category, nameField.getText(), Double.parseDouble(priceField.getText()), Integer.parseInt(quantityField.getText()))) {
-//                alert(Alert.AlertType.INFORMATION, "Successfully add.");
+            if (MainProcessor.getProductProcessor().addProduct(Integer.parseInt(codeField.getText()),
+                    category, nameField.getText(),
+                    Double.parseDouble(priceField.getText()), Integer.parseInt(quantityField.getText()))) {
+                alert(Alert.AlertType.INFORMATION, "Successfully add.");
                 this.productTable.updateTableData();
                 this.mainTable.updateTableData();
                 selectedId = -1;
@@ -183,7 +187,7 @@ public class ProductManagementWindow {
         int code = Integer.parseInt(selectedItem.getCode());
         try {
             if (MainProcessor.getProductProcessor().removeProduct(category, code)) {
-//                alert(Alert.AlertType.INFORMATION, "Successfully removed");
+                alert(Alert.AlertType.INFORMATION, "Successfully removed");
                 this.productTable.updateTableData();
                 this.mainTable.updateTableData();
             }
@@ -207,14 +211,22 @@ public class ProductManagementWindow {
         String category = categoryCombo.getSelectionModel().getSelectedItem();
 
         try {
-            productProcessor.setProductCode(category, selectedId, Integer.parseInt(codeField.getText()));
-            productProcessor.setProductName(category, selectedId, nameField.getText());
-            productProcessor.setProductCategory(originCategory, selectedId, category);
-            productProcessor.setProductPrice(category, selectedId, Double.parseDouble(priceField.getText()));
-            productProcessor.setProductQuantity(category, selectedId, Integer.parseInt(quantityField.getText()));
-//            alert(Alert.AlertType.INFORMATION, "Change successfully.");
-        } catch (Exception e) {
-            alert(Alert.AlertType.WARNING, "Change failed.");
+
+            if (
+                    productProcessor.setProductCode(category, selectedId, Integer.parseInt(codeField.getText())) &&
+                            productProcessor.setProductName(category, selectedId, nameField.getText()) &&
+                            productProcessor.setProductCategory(originCategory, selectedId, category) &&
+                            productProcessor.setProductPrice(category, selectedId,
+                                    Double.parseDouble(priceField.getText())) &&
+                            productProcessor.setProductQuantity(category, selectedId,
+                                    Integer.parseInt(quantityField.getText()))) {
+                alert(Alert.AlertType.INFORMATION, "Change successfully");
+            } else {
+                alert(Alert.AlertType.WARNING, "Fail to change");
+            }
+
+        } catch (IOException e) {
+            alert(Alert.AlertType.WARNING, "Fail to change");
         }
 
         codeField.setText("");
