@@ -46,7 +46,7 @@ public class ProductProcessor {
         }
 
         List<Product> products = productMap.get(Product.Category.valueOf(category));
-        products.add(new Product(Product.Category.valueOf(category), name, price, quantity));
+        products.add(new Product(code, Product.Category.valueOf(category), name, price, quantity));
         DatabaseHandler.saveProductData(productMap);
         return true;
     }
