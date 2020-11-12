@@ -32,7 +32,13 @@ public class ProductProcessorTest {
     @Test
     public void testGetCategory() throws IOException{
         ProductProcessor productProcessor = new ProductProcessor();
-        assertEquals(Product.Category.DRINK,productProcessor.getProduct(1).getCategory());
+        assertEquals(Product.Category.DRINK,productProcessor.getProduct(2).getCategory());
+    }
+
+    @Test
+    public void testGetName() throws IOException{
+        ProductProcessor productProcessor = new ProductProcessor();
+        assertEquals("Mineral Water",productProcessor.getProduct(1).getName());
     }
 
     @Test
@@ -53,11 +59,13 @@ public class ProductProcessorTest {
         assertNotNull(productProcessor);
     }
 
+
     @Test
     public void testAddProduct() throws IOException{
         ProductProcessor productProcessor = new ProductProcessor();
         assertFalse(productProcessor.addProduct("1","DRINK","Mineral Water",1,7));
         assertFalse(productProcessor.addProduct("20","DRINK","Test",1,20));
+        assertFalse(productProcessor.addProduct("20","DRINK","Test",1,-1));
         assertTrue(productProcessor.addProduct("20","DRINK","Test",1,7));
     }
 
@@ -109,11 +117,12 @@ public class ProductProcessorTest {
     }
 
     @Test
-    public void testSetProductCode() throws IOException{
+    public void testSetProductCode() throws IOException {
         ProductProcessor productProcessor = new ProductProcessor();
         assertFalse(productProcessor.setProductCode(1, "5"));
-        assertTrue(productProcessor.setProductCode(1,"20"));
+        assertTrue(productProcessor.setProductCode(1, "20"));
     }
+
 
 }
 
