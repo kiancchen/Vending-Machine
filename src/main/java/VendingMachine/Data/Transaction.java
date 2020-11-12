@@ -1,7 +1,6 @@
 package VendingMachine.Data;
 
 import VendingMachine.Processor.MainProcessor;
-import VendingMachine.Processor.PaymentProcessor;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -20,9 +19,9 @@ public class Transaction {
         amount = 0;
     }
 
-    public boolean add(String category, int code, int quantity) {
-        Product product = MainProcessor.getProductProcessor().getProduct(category, code);
-        if (quantity > product.getQuantity()) {
+    public boolean add(int id, int quantity) {
+        Product product = MainProcessor.getProductProcessor().getProduct(id);
+        if (quantity > product.getStock()) {
             return false;
         }
         if (shoppingList.containsKey(product)) {
@@ -30,14 +29,15 @@ public class Transaction {
         } else {
             shoppingList.put(product, quantity);
         }
-        product.setQuantity(product.getQuantity() - quantity);
+        product.setStock(product.getStock() - quantity);
         this.amount += product.getPrice() * quantity;
+        System.out.println(this.amount);
         return true;
     }
 
-    public boolean set(String category, int code, int newQty) {
-        Product product = MainProcessor.getProductProcessor().getProduct(category, code);
-        if (newQty > product.getQuantity()) {
+    public boolean set(int id, int newQty) {
+        Product product = MainProcessor.getProductProcessor().getProduct(id);
+        if (newQty > product.getStock()) {
             return false;
         }
         int oldQty = shoppingList.get(product);
@@ -45,7 +45,7 @@ public class Transaction {
         if (newQty == 0) {
             shoppingList.remove(product);
         }
-        product.setQuantity(product.getQuantity() + (oldQty - newQty));
+        product.setStock(product.getStock() + (oldQty - newQty));
         this.amount += product.getPrice() * (newQty - oldQty);
         return true;
     }

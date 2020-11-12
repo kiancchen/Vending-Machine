@@ -64,9 +64,9 @@ public class MainWindow {
     public void setShoppingCartData() {
         this.shoppingCartTable.getItems().clear();
         MainProcessor.getUserProcessor().getCurrentUser().getShoppingCart().getShoppingList().forEach((k, v) ->
-                this.shoppingCartTable.getItems().add(new ProductTableEntry(Integer.toString(k.getCode()), k.getName(),
+                this.shoppingCartTable.getItems().add(new ProductTableEntry(k.getCode(), k.getName(),
                 k.getCategory().toString(), Double.toString(k.getPrice()),
-                Integer.toString(v))));
+                Integer.toString(v), k.getId())));
     }
 
     private void initLabels() {
@@ -175,7 +175,7 @@ public class MainWindow {
         pane.getChildren().add(shoppingCartTable);
 
         //create table
-        String[] colNames = {"Ccategory", "Code", "Name", "Pice($)", "Quantity"};
+        String[] colNames = {"Category", "Code", "Name", "Pice($)", "Quantity"};
         String[] properties = {"category", "code", "name", "price", "quantity"};
         for (int i = 0; i < colNames.length; i++) {
             String colName = colNames[i];
@@ -256,16 +256,13 @@ public class MainWindow {
             return;
         }
 
-        String category = selectedItem.getCategory();
-        int code = Integer.parseInt(selectedItem.getCode());
-
         if (setCartQtyCombo.getSelectionModel().getSelectedItem() == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Not enough quantity.");
             alert.show();
             return;
         }
 
-        MainProcessor.getUserProcessor().getCurrentUser().setItemInCart(category, code,
+        MainProcessor.getUserProcessor().getCurrentUser().setItemInCart(selectedItem.getId(),
                 setCartQtyCombo.getSelectionModel().getSelectedItem());
 
         setCartQtyCombo.getItems().clear();
@@ -281,16 +278,13 @@ public class MainWindow {
             return;
         }
 
-        String category = selectedItem.getCategory();
-        int code = Integer.parseInt(selectedItem.getCode());
-
         if (selectedQuantityCombo.getSelectionModel().getSelectedItem() == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Not enough quantity.");
             alert.show();
             return;
         }
 
-        if (!MainProcessor.getUserProcessor().getCurrentUser().addToCart(category, code,
+        if (!MainProcessor.getUserProcessor().getCurrentUser().addToCart(selectedItem.getId(),
                 selectedQuantityCombo.getSelectionModel().getSelectedItem())) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Not enough quantity.");
             alert.show();

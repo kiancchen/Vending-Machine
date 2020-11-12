@@ -31,12 +31,12 @@ public class User {
         this.id = totalId++;
     }
 
-    public boolean addToCart(String category, int code, int quantity) {
-        return this.shoppingCart.add(category, code, quantity);
+    public boolean addToCart(int id, int quantity) {
+        return this.shoppingCart.add(id, quantity);
     }
 
-    public boolean setItemInCart(String category, int code, int newQty) {
-        return this.shoppingCart.set(category, code, newQty);
+    public boolean setItemInCart(int id, int newQty) {
+        return this.shoppingCart.set(id, newQty);
     }
 
     public Transaction getShoppingCart() {

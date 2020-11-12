@@ -22,7 +22,7 @@ public class ProductManagementWindow {
     private TextField nameField;
     private ComboBox<String> categoryCombo;
     private TextField priceField;
-    private TextField quantityField;
+    private TextField stockField;
     private int selectedId;
     private String originCategory;
     private ProductTable productTable;
@@ -51,13 +51,13 @@ public class ProductManagementWindow {
         this.productTable.setTableAction(event -> {
             if (!this.productTable.selectIsEmpty()) {
                 ProductTableEntry selected = this.productTable.getSelectedItem();
-                selectedId = Integer.parseInt(selected.getCode());
+                selectedId = selected.getId();
                 codeField.setText(selected.getCode());
                 nameField.setText(selected.getName());
                 originCategory = selected.getCategory();
                 categoryCombo.getSelectionModel().select(originCategory);
                 priceField.setText(selected.getPrice());
-                quantityField.setText(selected.getQuantity());
+                stockField.setText(selected.getQuantity());
             }
         });
     }
@@ -117,12 +117,12 @@ public class ProductManagementWindow {
         priceField.setLayoutY(410);
         priceField.setPrefWidth(60);
 
-        quantityField = new TextField();
-        quantityField.setLayoutX(330);
-        quantityField.setLayoutY(410);
-        quantityField.setPrefWidth(60);
+        stockField = new TextField();
+        stockField.setLayoutX(330);
+        stockField.setLayoutY(410);
+        stockField.setPrefWidth(60);
 
-        pane.getChildren().addAll(codeField, nameField, priceField, quantityField);
+        pane.getChildren().addAll(codeField, nameField, priceField, stockField);
     }
 
     private void initLabels() {
@@ -151,19 +151,18 @@ public class ProductManagementWindow {
 
 
     private void addAction() {
-        String category = categoryCombo.getSelectionModel().getSelectedItem();
-
         if (!validateInput()) {
             return;
-        } else if (Integer.parseInt(quantityField.getText()) > 15) {
+        } else if (Integer.parseInt(stockField.getText()) > 15) {
             alert(Alert.AlertType.WARNING, "Quantity exceed.");
             return;
         }
+        String category = categoryCombo.getSelectionModel().getSelectedItem();
+        String code = codeField.getText();
 
         try {
-            if (MainProcessor.getProductProcessor().addProduct(Integer.parseInt(codeField.getText()),
-                    category, nameField.getText(),
-                    Double.parseDouble(priceField.getText()), Integer.parseInt(quantityField.getText()))) {
+            if (MainProcessor.getProductProcessor().addProduct(code, category, nameField.getText(),
+                    Double.parseDouble(priceField.getText()), Integer.parseInt(stockField.getText()))) {
                 alert(Alert.AlertType.INFORMATION, "Successfully add.");
                 this.productTable.updateTableData();
                 this.mainTable.updateTableData();
@@ -183,10 +182,8 @@ public class ProductManagementWindow {
             return;
         }
 
-        String category = selectedItem.getCategory();
-        int code = Integer.parseInt(selectedItem.getCode());
         try {
-            if (MainProcessor.getProductProcessor().removeProduct(category, code)) {
+            if (MainProcessor.getProductProcessor().removeProduct(selectedId)) {
                 alert(Alert.AlertType.INFORMATION, "Successfully removed");
                 this.productTable.updateTableData();
                 this.mainTable.updateTableData();
@@ -203,25 +200,26 @@ public class ProductManagementWindow {
             return;
         } else if (!validateInput()) {
             return;
-        } else if (Integer.parseInt(quantityField.getText()) > 15) {
+        } else if (Integer.parseInt(stockField.getText()) > 15) {
             alert(Alert.AlertType.WARNING, "Quantity exceed.");
             return;
         }
 
-        String category = categoryCombo.getSelectionModel().getSelectedItem();
-
+        String newCategory = categoryCombo.getSelectionModel().getSelectedItem();
+        String newCode = codeField.getText();
+        double newPrice = Double.parseDouble(priceField.getText());
+        int newStock = Integer.parseInt(stockField.getText());
+        String newName = nameField.getText();
+        String oldCode = productProcessor.getProduct(selectedId).getCode();
         try {
-
-            if (
-                    productProcessor.setProductCode(category, selectedId, Integer.parseInt(codeField.getText())) &&
-                            productProcessor.setProductName(category, selectedId, nameField.getText()) &&
-                            productProcessor.setProductCategory(originCategory, selectedId, category) &&
-                            productProcessor.setProductPrice(category, selectedId,
-                                    Double.parseDouble(priceField.getText())) &&
-                            productProcessor.setProductQuantity(category, selectedId,
-                                    Integer.parseInt(quantityField.getText()))) {
+            if (productProcessor.setProductCode(selectedId, newCode) &&
+                    productProcessor.setProductName(selectedId, newName) &&
+                    productProcessor.setProductCategory(selectedId, newCategory) &&
+                    productProcessor.setProductPrice(selectedId, newPrice) &&
+                    productProcessor.setProductStock(selectedId, newStock)) {
                 alert(Alert.AlertType.INFORMATION, "Change successfully");
             } else {
+                productProcessor.setProductCode(selectedId, oldCode);
                 alert(Alert.AlertType.WARNING, "Fail to change");
             }
 
@@ -232,7 +230,7 @@ public class ProductManagementWindow {
         codeField.setText("");
         nameField.setText("");
         priceField.setText("");
-        quantityField.setText("");
+        stockField.setText("");
         categoryCombo.getSelectionModel().clearSelection();
         this.productTable.updateTableData();
         this.mainTable.updateTableData();
@@ -246,7 +244,7 @@ public class ProductManagementWindow {
         } else if (priceField.getText().trim().isEmpty()) {
             alert(Alert.AlertType.WARNING, "Product price needed");
             return false;
-        } else if (quantityField.getText().trim().isEmpty()) {
+        } else if (stockField.getText().trim().isEmpty()) {
             alert(Alert.AlertType.WARNING, "Product quantity needed");
             return false;
         } else if (categoryCombo.getSelectionModel().isEmpty()) {

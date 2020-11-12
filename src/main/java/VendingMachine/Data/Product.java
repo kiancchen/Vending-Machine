@@ -5,30 +5,26 @@ public class Product {
     private Category category;
     private String name;
     private double price;
-    private int code;
-    private int quantity;
+    private String code;
+    private int stock;
+    private int id;
+    private int sold;
 
     public Product() {
         this.category = null;
         this.name = "";
         this.price = -1;
-        this.quantity = -1;
-        this.code = staticCode++;
+        this.stock = -1;
+        this.code = "";
+        this.id = staticCode++;
     }
 
-    public Product(Category category, String name, double price, int quantity) {
+    public Product(String code, Category category, String name, double price, int stock) {
         this.category = category;
         this.name = name;
         this.price = price;
-        this.quantity = quantity;
-        this.code = staticCode++;
-    }
-
-    public Product(int code, Category category, String name, double price, int quantity) {
-        this.category = category;
-        this.name = name;
-        this.price = price;
-        this.quantity = quantity;
+        this.stock = stock;
+        this.id = staticCode++;
         this.code = code;
     }
 
@@ -56,20 +52,24 @@ public class Product {
         this.price = price;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getId() {
+        return id;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public int getStock() {
+        return stock;
+    }
+
+    public void setStock(int stock) {
+        this.stock = stock;
     }
 
 

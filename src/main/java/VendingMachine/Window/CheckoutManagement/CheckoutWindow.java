@@ -14,8 +14,6 @@ import java.util.List;
 public class CheckoutWindow {
     private Stage stage;
     private AnchorPane pane;
-
-    private List<ProductTableEntry> shoppingCart;
     private Button cash;
     private Button cancel;
     private double amount;
@@ -70,9 +68,5 @@ public class CheckoutWindow {
             btns[i].setText(names[i]);
             pane.getChildren().add(btns[i]);
         }
-    }
-
-    public List<ProductTableEntry> getShoppingCart() {
-        return this.shoppingCart;
     }
 }

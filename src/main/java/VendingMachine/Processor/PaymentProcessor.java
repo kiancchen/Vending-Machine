@@ -10,9 +10,5 @@ public class PaymentProcessor {
         cashProcessor = new CashProcessor();
     }
 
-    public static boolean payCash(Map<Double, Integer> cashes) {
-        return false;
-    }
-
 
 }

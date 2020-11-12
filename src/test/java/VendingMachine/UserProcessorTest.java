@@ -1,7 +1,7 @@
 package VendingMachine;
 
-import VendingMachine.Data.Transaction;
 import VendingMachine.Data.User;
+import VendingMachine.Processor.MainProcessor;
 import VendingMachine.Processor.UserProcessor;
 import org.junit.After;
 import org.junit.Before;
@@ -27,7 +27,9 @@ public class UserProcessorTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        MainProcessor.reload();
     }
+
     /**
      * Test UserProcessor Constructor
      */
@@ -50,26 +52,28 @@ public class UserProcessorTest {
     }
 
     @Test
-    public void testAddToCart() throws IOException{
+    public void testAddToCart() throws IOException {
         UserProcessor userProcessor = new UserProcessor();
-        assertFalse(userProcessor.getCurrentUser().addToCart("DRINK",1,10));
-        assertTrue(userProcessor.getCurrentUser().addToCart("DRINK",1,1));
+        assertFalse(userProcessor.getCurrentUser().addToCart(1, 10));
+        assertTrue(userProcessor.getCurrentUser().addToCart(1, 1));
     }
 
     @Test
-    public void testSetItemInCart() throws IOException{
+    public void testSetItemInCart() throws IOException {
         UserProcessor userProcessor = new UserProcessor();
-        assertFalse(userProcessor.getCurrentUser().setItemInCart("DRINK",1,10));
+        assertTrue(userProcessor.getCurrentUser().addToCart(1, 5));
+        assertFalse(userProcessor.getCurrentUser().setItemInCart(1, 10));
+        assertFalse(userProcessor.getCurrentUser().setItemInCart(1, 3));
     }
 
     @Test
-    public void testGetAmount() throws IOException{
+    public void testGetAmount() throws IOException {
         UserProcessor userProcessor = new UserProcessor();
-        assertEquals(0,userProcessor.getCurrentUser().getShoppingCart().getAmount(),0);
+        assertEquals(0, userProcessor.getCurrentUser().getShoppingCart().getAmount(), 0);
     }
 
     @Test
-    public void testGetShoppingList() throws IOException{
+    public void testGetShoppingList() throws IOException {
         UserProcessor userProcessor = new UserProcessor();
         assertNotNull(userProcessor.getCurrentUser().getShoppingCart().getShoppingList());
     }
@@ -155,7 +159,7 @@ public class UserProcessorTest {
     @Test
     public void testChangeType() throws IOException {
         UserProcessor userProcessor = new UserProcessor();
-        assertTrue(userProcessor.setUserType(2, "CASHIER"));
+        assertTrue(userProcessor.setUserType(2, "SELLER"));
         List<User> userList = DatabaseHandler.loadUserData();
         for (int i = 0; i < userList.size(); i++) {
             assertEquals(userList.get(i).getType(), userProcessor.getUsers().get(i).getType());
