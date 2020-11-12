@@ -45,6 +45,10 @@ public class Checkout {
 
     private void initButtonActions() {
         // create actions here(New Window)
+        cash.setOnAction((event -> {
+            new CashPaymentWindow(this);
+        }));
+
     }
 
     private void intiText() {
@@ -76,6 +80,10 @@ public class Checkout {
             btns[i].setText(names[i]);
             pane.getChildren().add(btns[i]);
         }
+    }
+
+    public List<ProductTableEntry> getPurchaseList() {
+      return this.purchaseList;
     }
 
 
