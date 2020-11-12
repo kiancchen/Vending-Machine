@@ -48,7 +48,7 @@
    "category": "DRINK",
    "name": "Coca cola",
    "price": 3.5,
-   "code": 3,
+   "code": 130,
    "quantity": 7
   },
   {
@@ -85,7 +85,7 @@
    "category": "CHIP",
    "name": "Kettle",
    "price": 2.5,
-   "code": 12,
+   "code": 13,
    "quantity": 7
   },
   {
@@ -93,6 +93,13 @@
    "name": "Thins",
    "price": 2.5,
    "code": 13,
+   "quantity": 7
+  },
+  {
+   "category": "CHIP",
+   "name": "Pringoooles",
+   "price": 2.5,
+   "code": 17,
    "quantity": 7
   }
  ],

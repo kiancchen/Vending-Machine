@@ -54,9 +54,12 @@
 1. Cheng Chen (cche7436):
    - Review pull requests
    - Logic of `Product` and `Transaction`
+   - <mark>TODO</mark>
 2. Yuanqun Wang (ywan3184):
    - Shopping cart GUI
+   - Add product in shoooping cart
    - Change product in shopping cart
+   - Remove product in shopping cart
 3. Yufei Zuo (yzuo4982):
    - Add product GUI
    - Remove product GUI
@@ -64,10 +67,13 @@
    - Product table
 4. Zexuan Long (zlon4018):
    - Product options on main window
+   - <mark>TODO</mark>
 5. Songyin Li (soli3733):
    - Change notes GUI
+   - Demo report
 6. Zehui Lin (zlin3338):
-   - Cash payment GUI
+   - A table display input notes
+   - A table display change notes <mark>TODO</mark>
 
 # Agile Development Tools and Practices
 
@@ -231,38 +237,36 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
 
 ### Meeting 3
 
-<mark>TODD</mark>
-
-- Date : 5th November
+- Date : 12th November
 - Attendance: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
 - Content:
-  - Emphasize that if you meets the situation when a specific method is required, but has not been implemented, you should write yourself, and then notify the teammates who is responsible for that part, to add more test cases.
-  - Discussion about the progression of each tasks.
-  - Emphasize the important of burndown chart and change the status of each task as soon as possible.
+  - Discussion about the progress of the sprint
+  - Report any bugs of current application
+  - Determine the content during demo with client
 - Cheng Chen:
-  - What did I do yesterday: Review codes written by other teammates. Beatify the code structure and remove unnecessary codes.
-  - What I will do today: Continue working on refactoring the code.
+  - What did I do yesterday: <mark>todo</mark>
+  - What I will do today: <mark>todo</mark>
   - Do I see any obstacles: None at the moment.
 - Yuanqun Wang:
-  - What did I do yesterday: Finished adding or removing user GUI
-  - What I will do today: Working on changing user information GUI.
+  - What did I do yesterday: Finished remove product in shopping cart.
+  - What I will do today: Working on changing product quantity in shopping cart.
   - Do I see any obstacles: None at the moment.
 - Yufei Zuo:
   - What did I do yesterday: Proofreading the report.
-  - What I will do today: Continue proofreading the report.
+  - What I will do today: Fix bugs in application.
   - Do I see any obstacles: None at the moment.
 - Zexuan Long:
-  - What did I do yesterday: Finished adding more test cases.
-  - What I will do today: Writing report about class document.
+  - What did I do yesterday: <mark>todo</mark>.
+  - What I will do today: <mark>todo</mark>.
   - Do I see any obstacles: None at the moment.
 - Songyin Li:
-  - What did I do yesterday: GUI of cash system
-  - What I will do today: Continue working on GUI of cash system.
+  - What did I do yesterday: Working on demo report
+  - What I will do today: Continue working on demo report.
   - Do I see any obstacles: None at the moment.
 - Zehui Lin:
-  - What did I do yesterday: Finished UML class diagram.
-  - What I will do today: Working on the user stories.
-  - Do I see any obstacles: None at the moment.
+  - What did I do yesterday: Finished table display of input notes.
+  - What I will do today: Working on table display of changes notes.
+  - Do I see any obstacles: The table is not display correctly.
 
 ## Sprint Review
 
