@@ -22,16 +22,14 @@ public class ChangeWindow {
     private AnchorPane pane;
     private TableView<CashTableEntry> table;
     private Button okeyButton;
-    private CashPaymentWindow cashPaymentWindow;
 
-    public ChangeWindow(CashPaymentWindow cashPaymentWindow) {
+    public ChangeWindow() {
         stage = new Stage();
         pane = new AnchorPane();
         scene = new Scene(pane, 480, 600);
         stage.setScene(scene);
         stage.setTitle("Cash Changes");
         stage.show();
-        this.cashPaymentWindow = cashPaymentWindow;
 
         initLabel();
         initTable();
@@ -90,10 +88,7 @@ public class ChangeWindow {
 
     private void setTableData() {
         // set data to table
-        double payAmount = 0.0;
-        for (Map.Entry<String, String> entry : cashPaymentWindow.getUserCashMap().entrySet()) {
-            payAmount += Double.parseDouble(entry.getKey()) + Double.parseDouble(entry.getValue());
-        }
+        double payAmount = MainProcessor.getUserProcessor().getCurrentUser().getShoppingCart().getReceivedMoney();
 
         double purchaseAmount =
                 MainProcessor.getUserProcessor().getCurrentUser().getShoppingCart().getAmount();

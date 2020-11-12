@@ -50,6 +50,31 @@ public class UserProcessorTest {
     }
 
     @Test
+    public void testAddToCart() throws IOException{
+        UserProcessor userProcessor = new UserProcessor();
+        assertFalse(userProcessor.getCurrentUser().addToCart("DRINK",1,10));
+        assertTrue(userProcessor.getCurrentUser().addToCart("DRINK",1,1));
+    }
+
+    @Test
+    public void testSetItemInCart() throws IOException{
+        UserProcessor userProcessor = new UserProcessor();
+        assertFalse(userProcessor.getCurrentUser().setItemInCart("DRINK",1,10));
+    }
+
+    @Test
+    public void testGetAmount() throws IOException{
+        UserProcessor userProcessor = new UserProcessor();
+        assertEquals(0,userProcessor.getCurrentUser().getShoppingCart().getAmount(),0);
+    }
+
+    @Test
+    public void testGetShoppingList() throws IOException{
+        UserProcessor userProcessor = new UserProcessor();
+        assertNotNull(userProcessor.getCurrentUser().getShoppingCart().getShoppingList());
+    }
+
+    @Test
     public void testAddUser() throws IOException {
         UserProcessor userProcessor = new UserProcessor();
         userProcessor.addUser("test", "test");

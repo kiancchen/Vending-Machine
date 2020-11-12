@@ -25,7 +25,6 @@ public class Transaction {
         if (quantity > product.getQuantity()) {
             return false;
         }
-
         if (shoppingList.containsKey(product)) {
             shoppingList.put(product, shoppingList.get(product) + quantity);
         } else {
@@ -53,6 +52,15 @@ public class Transaction {
 
     public double getAmount() {
         return amount;
+    }
+
+    public boolean pay(double amount) {
+        this.receivedMoney = amount;
+        return true;
+    }
+
+    public double getReceivedMoney() {
+        return receivedMoney;
     }
 
     public Map<Product, Integer> getShoppingList() {
