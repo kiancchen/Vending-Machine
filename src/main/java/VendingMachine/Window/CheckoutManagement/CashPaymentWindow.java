@@ -107,7 +107,12 @@ public class CashPaymentWindow {
                 alert(Alert.AlertType.WARNING, "You don't have enough money.");
                 return;
             }
-            new ChangeWindow(this);
+            double payAmount = 0.0;
+            for (Map.Entry<String, String> entry : this.userCashMap.entrySet()) {
+                payAmount += Double.parseDouble(entry.getKey()) + Double.parseDouble(entry.getValue());
+            }
+            MainProcessor.getUserProcessor().getCurrentUser().getShoppingCart().pay(payAmount);
+            new ChangeWindow();
             stage.close();
         }));
     }
@@ -193,13 +198,5 @@ public class CashPaymentWindow {
             payAmount += Double.parseDouble(key) * Double.parseDouble(userCashMap.get(key));
         }
         return payAmount;
-    }
-
-    public Map<String, String> getUserCashMap() {
-        return this.userCashMap;
-    }
-
-    public CheckoutWindow getCheckout() {
-        return this.checkout;
     }
 }

@@ -55,6 +55,15 @@ public class Transaction {
         return amount;
     }
 
+    public boolean pay(double amount) {
+        this.receivedMoney = amount;
+        return true;
+    }
+
+    public double getReceivedMoney() {
+        return receivedMoney;
+    }
+
     public Map<Product, Integer> getShoppingList() {
         return shoppingList;
     }
