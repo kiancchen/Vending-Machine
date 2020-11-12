@@ -6,11 +6,20 @@
   - [UML Class Diagram](#uml-class-diagram)
   - [Demo](#demo)
     - [Sign In or Sign Up](#sign-in-or-sign-up)
+    - [Display Product](#Display-Product)
+    - [Display Cart](#display-cart)
+    - [Add to Cart](#add-to-cart)
+    - [Remove Cart](#remove-cart)
     - [Display Users](#display-users)
     - [Add Users](#add-users)
     - [Change Users](#change-users)
     - [Remove Users](#remove-users)
     - [Display Cash](#display-cash)
+    - [Change Cash](#change-cash)
+    - [Manage Product](#manage-product)
+    - [Add Product](#add-product)
+    - [Change Product](#change-product)
+    - [Remove Product](#remove-product)
 - [Sprint Artifacts](#sprint-artifacts)
   - [Product Backlog](#product-backlog)
   - [Sprint Goal](#sprint-goal)
@@ -54,9 +63,12 @@
 1. Cheng Chen (cche7436):
    - Review pull requests
    - Logic of `Product` and `Transaction`
+   - <mark>TODO</mark>
 2. Yuanqun Wang (ywan3184):
    - Shopping cart GUI
+   - Add product in shoooping cart
    - Change product in shopping cart
+   - Remove product in shopping cart
 3. Yufei Zuo (yzuo4982):
    - Add product GUI
    - Remove product GUI
@@ -64,10 +76,13 @@
    - Product table
 4. Zexuan Long (zlon4018):
    - Product options on main window
+   - <mark>TODO</mark>
 5. Songyin Li (soli3733):
    - Change notes GUI
+   - Demo report
 6. Zehui Lin (zlin3338):
-   - Cash payment GUI
+   - A table display input notes
+   - A table display change notes <mark>TODO</mark>
 
 # Agile Development Tools and Practices
 
@@ -81,17 +96,15 @@ Same content in Sprint 1 Report, can be accessed at this [link](https://github.s
 
 ## Demo
 
-<mark>TODD</mark>
-
 `blan` is an owner. Its password is `123`. Feel free to use this account to test functionalities.
 
-Here we are using the code with tag `1.0` for demonstration which you can see on Release page on Github.
+Here we are using the code with tag `1.1` for demonstration which you can see on Release page on Github.
 
 ### Sign In or Sign Up
 
 At first the window will display the current user is `anonymous` by default.
 
-<img src='https://i.loli.net/2020/11/05/esZRBvgfGN9tKVx.png' alt='esZRBvgfGN9tKVx'/>
+<a href="https://sm.ms/image/cTMeioqlbsUXady" target="_blank"><img src="https://i.loli.net/2020/11/12/cTMeioqlbsUXady.png" ></a>
 
 After click on `Account` button, it display a window to sign in or sign up.
 
@@ -99,7 +112,7 @@ After click on `Account` button, it display a window to sign in or sign up.
 
 When it sign in with correct username and password, it will display an alert to show sign in successfully, and the main window will display corresponding username and its type on the top right corner, as well as the text on button will change to `Logout` instead of `Account`.
 
-<img src='https://i.loli.net/2020/11/05/EAfrc6dzkVbGWaT.png' alt='EAfrc6dzkVbGWaT'/>
+<a href="https://sm.ms/image/2sxucgF4jB6W1OY" target="_blank"><img src="https://i.loli.net/2020/11/12/2sxucgF4jB6W1OY.png" ></a>
 
 When it sign in with wrong username or password, it will display an alert to notify user it has wrong username or password.
 
@@ -109,45 +122,139 @@ When it sign up with different username not exists in the database, it will disp
 
 <img src='https://i.loli.net/2020/11/05/FMrwN2eBJaX9EC5.png' alt='FMrwN2eBJaX9EC5'/>
 
+### Display Product
+
+The Product table on default page is available for every user include all the products that the machine has. 
+
+![截屏2020-11-12 下午12.30.47.png](https://i.loli.net/2020/11/12/2mPqnVceNYBgrXE.png)
+
+
+
+### Display cart
+
+The cart table on default page is available for every user include all the products were selected by current user.
+
+![截屏2020-11-12 下午12.35.51.png](https://i.loli.net/2020/11/12/UBeFaMXjd9QuJtV.png)
+
+
+
+### Add to Cart
+
+![截屏2020-11-12 下午12.39.10.png](https://i.loli.net/2020/11/12/yQRHEwqA2tUZg4I.png)
+
+The user can select which product he want to add to cart, then click the row which the product is, after that this product's name will be automatically filled in the item name field, then choose the quantity he want. After that click on `Add to Cart` button. The cart table will update accordingly.
+
+![截屏2020-11-12 下午12.42.05.png](https://i.loli.net/2020/11/12/9IizV1c7QWA4xwU.png)
+
+
+
+### Remove Cart
+
+![截屏2020-11-12 下午12.45.48.png](https://i.loli.net/2020/11/12/3BSJws2Ln7ZkU9l.png)
+
+The user can select which product he want to remove, then click the row which the product is,  then choose the quantity he want to remove. After that click on `Remove` button. The cart table will update accordingly.
+
+![截屏2020-11-12 下午12.50.42.png](https://i.loli.net/2020/11/12/sY5j2ZRJ67zieot.png)
+
 ### Display Users
 
 The user management window is only available for owner users. If current user is not owner, it will display an alert to notify current user have no access to this feature.
 
-<img src='https://i.loli.net/2020/11/05/y7VEQN8AOe9Fkgd.png' alt='y7VEQN8AOe9Fkgd'/>
+<a href="https://sm.ms/image/u7wckC8IEB5vW3s" target="_blank"><img src="https://i.loli.net/2020/11/12/u7wckC8IEB5vW3s.png" ></a>
 
-There is a table of all the users that have been registered in the system. Besides, there are three more operations, add or change or remove users, that owner have access.
+After click the `Manage User` button. There is a table of all the users that have been registered in the system. Besides, there are three more operations, add or change or remove users, that owner have access.
 
-<img src='https://i.loli.net/2020/11/05/bY89vVtRzAmnKUP.png' alt='bY89vVtRzAmnKUP'/>
+<a href="https://sm.ms/image/uVJlwexs8d5XNrR" target="_blank"><img src="https://i.loli.net/2020/11/12/uVJlwexs8d5XNrR.png" ></a>
 
 ### Add Users
 
-<img src='https://i.loli.net/2020/11/05/7lRXZSmgdse4fCx.png' alt='7lRXZSmgdse4fCx'/>
+<a href="https://sm.ms/image/fr5Uy8JKEpTtXAS" target="_blank"><img src="https://i.loli.net/2020/11/12/fr5Uy8JKEpTtXAS.png" ></a>
 
 The owner can input new username, password and user type, then click on `Add` button. An alert box will notify it is successfully added and the table will update accordingly.
 
-<img src='https://i.loli.net/2020/11/05/hnmqVSKLUQRz8DW.png' alt='hnmqVSKLUQRz8DW'/>
+<a href="https://sm.ms/image/nLSW9KEQj6tfUgT" target="_blank"><img src="https://i.loli.net/2020/11/12/nLSW9KEQj6tfUgT.png" ></a>
+
+If owner does not input full relevant information then click on `Add` button, it will display an alert to notify current owner to fill in the missing information.
+
+<a href="https://sm.ms/image/5BsG8jE3i1mCcgo" target="_blank"><img src="https://i.loli.net/2020/11/12/5BsG8jE3i1mCcgo.png" ></a>
 
 ### Change Users
 
-<img src='https://i.loli.net/2020/11/05/81KnGjpJzLxq3Ce.png' alt='81KnGjpJzLxq3Ce'/>
+<a href="https://sm.ms/image/hELAuvcTClirbmQ" target="_blank"><img src="https://i.loli.net/2020/11/12/hELAuvcTClirbmQ.png" ></a>
 
-The owner first need to select which users he want to change, then write the corresponding username, password and user type again, then click on `Change` button. The table will automatically change the data inside.
+The owner first need to select which users he want to change, then click on the row where the user is, then the relevant information of this user will be automatically filled in the information field, then edit the username, password or user which users want to be change, then click on `Change` button. An alert box will notify it is successfully changed and the table will update accordingly.
 
-<img src='https://i.loli.net/2020/11/05/sCvueUbHEmjFIVp.png' alt='sCvueUbHEmjFIVp'/>
+<a href="https://sm.ms/image/y9IWzVFAqHKR8iT" target="_blank"><img src="https://i.loli.net/2020/11/12/y9IWzVFAqHKR8iT.png" ></a>
 
 ### Remove Users
 
-<img src='https://i.loli.net/2020/11/05/KjzosDu1Y8rxHPa.png' alt='KjzosDu1Y8rxHPa'/>
+<img src="https://i.loli.net/2020/11/12/hELAuvcTClirbmQ.png" >
 
-The owner can select which users he want to remove, then click on `Remove` button. Then table will automatically remove the row with the user that have just removed.
+The owner can select which users he want to remove, then click the row which the user is, after that this user's relevant information will be automatically filled in the information field, then click on `Remove` button. An alert box will notify it is successfully removed and the table will update accordingly.
 
-<img src='https://i.loli.net/2020/11/05/6EnXNj3FIrbADdT.png' alt='6EnXNj3FIrbADdT'/>
+<a href="https://sm.ms/image/gfIKHoJwp9RWA1N" target="_blank"><img src="https://i.loli.net/2020/11/12/gfIKHoJwp9RWA1N.png" ></a>
 
 ### Display Cash
 
-<img src='https://i.loli.net/2020/11/05/12kCufNReFHyr8o.png' alt='12kCufNReFHyr8o'/>
+The cash management window is only available for owner and cashier users. If current user is not them, it will display an alert to notify current user have no access to this feature.
 
-The table can display all the amount of cash in the machine. after click on `Manage Cash` Button.
+<img src="https://i.loli.net/2020/11/12/u7wckC8IEB5vW3s.png" >
+
+After click the `Manage Cash` button, there is a table has all types of cash exist in Australia. Besides, there are one more operation change the number of the  value.
+
+<a href="https://sm.ms/image/uWpcfbNvVwKgyFC" target="_blank"><img src="https://i.loli.net/2020/11/12/uWpcfbNvVwKgyFC.png" ></a>
+
+### Change Cash
+
+<a href="https://sm.ms/image/5GQh6q7bvIAKiSo" target="_blank"><img src="https://i.loli.net/2020/11/12/5GQh6q7bvIAKiSo.png" ></a>
+
+The user can select which value he wants to change, then click the row which the value is, after that the relevant information of this value will be automatically filled in the information field. Input the new number which the user want, then click the `Change number` button. An alert box will notify it is successfully changed and table will update accordingly.
+
+<img src="https://i.loli.net/2020/11/12/lD7WjZQUm5qeYiO.png" >
+
+### Manage Product
+
+The product management window is only available for owner and seller users. If current user is not them, it will display an alert to notify current user have no access to this feature.
+
+<img src="https://i.loli.net/2020/11/12/u7wckC8IEB5vW3s.png" >
+
+After click the `Manage Product` button, there is a table of all the products that the machine has. Besides, there are three more operations, add or change or remove products.
+
+<a href="https://sm.ms/image/eKgdJUSvxuiNYj9" target="_blank"><img src="https://i.loli.net/2020/11/12/eKgdJUSvxuiNYj9.png" ></a>
+
+
+
+### Add Product
+
+<a href="https://sm.ms/image/3a4CNjrhck5Et8q" target="_blank"><img src="https://i.loli.net/2020/11/12/3a4CNjrhck5Et8q.png" ></a>
+
+The user can input new code, Name, Price and Quantity, then click on `Add` button. An alert box will notify it is successfully added and the table will update accordingly.
+
+<a href="https://sm.ms/image/vupwcxQBHdSKPyj" target="_blank"><img src="https://i.loli.net/2020/11/12/vupwcxQBHdSKPyj.png" ></a>
+
+If users input the repeated code or name then click on `Add` button, it will display an alert to notify current user the product exists in the system.![截屏2020-11-12 上午11.57.31.png](https://i.loli.net/2020/11/12/4ahVqQWKJLjndN6.png)
+
+### Change Product
+
+<a href="https://sm.ms/image/Cl2ULbuFWf8KHx6" target="_blank"><img src="https://i.loli.net/2020/11/12/Cl2ULbuFWf8KHx6.png" ></a>
+
+The user first need to select which product he want to change, then click on the row where the product is, then the relevant information of this product will be automatically filled in the information field, then edit the code,name,price,quantity and category. then click on `Change` button. An alert box will notify it is successfully changed and the table will update accordingly.
+
+![截屏2020-11-12 下午12.11.33.png](https://i.loli.net/2020/11/12/lSA7WcqazLxE8bn.png)
+
+If user input invalid price like lettes or symbols. An alert box will notify it is failed changed.
+
+![截屏2020-11-12 下午12.14.09.png](https://i.loli.net/2020/11/12/cnVwloX4rN9UEZ8.png)
+
+![截屏2020-11-12 下午12.14.30.png](https://i.loli.net/2020/11/12/KGLdY3AJOqH1Qlj.png)
+
+### Remove Product
+
+![截屏2020-11-12 下午12.17.26.png](https://i.loli.net/2020/11/12/OFZ1TarV2HNbJ4d.png)
+
+The user can select which product he want to remove, then click the row which the product is, after that this product's relevant information will be automatically filled in the information field, then click on `Remove` button. An alert box will notify it is successfully removed and the table will update accordingly.
+
+![截屏2020-11-12 下午12.19.20.png](https://i.loli.net/2020/11/12/rH82p3FjC7PJzDM.png)
 
 # Sprint Artifacts
 
@@ -231,38 +338,36 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
 
 ### Meeting 3
 
-<mark>TODD</mark>
-
-- Date : 5th November
+- Date : 12th November
 - Attendance: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
 - Content:
-  - Emphasize that if you meets the situation when a specific method is required, but has not been implemented, you should write yourself, and then notify the teammates who is responsible for that part, to add more test cases.
-  - Discussion about the progression of each tasks.
-  - Emphasize the important of burndown chart and change the status of each task as soon as possible.
+  - Discussion about the progress of the sprint
+  - Report any bugs of current application
+  - Determine the content during demo with client
 - Cheng Chen:
-  - What did I do yesterday: Review codes written by other teammates. Beatify the code structure and remove unnecessary codes.
-  - What I will do today: Continue working on refactoring the code.
+  - What did I do yesterday: <mark>todo</mark>
+  - What I will do today: <mark>todo</mark>
   - Do I see any obstacles: None at the moment.
 - Yuanqun Wang:
-  - What did I do yesterday: Finished adding or removing user GUI
-  - What I will do today: Working on changing user information GUI.
+  - What did I do yesterday: Finished remove product in shopping cart.
+  - What I will do today: Working on changing product quantity in shopping cart.
   - Do I see any obstacles: None at the moment.
 - Yufei Zuo:
   - What did I do yesterday: Proofreading the report.
-  - What I will do today: Continue proofreading the report.
+  - What I will do today: Fix bugs in application.
   - Do I see any obstacles: None at the moment.
 - Zexuan Long:
-  - What did I do yesterday: Finished adding more test cases.
-  - What I will do today: Writing report about class document.
+  - What did I do yesterday: <mark>todo</mark>.
+  - What I will do today: <mark>todo</mark>.
   - Do I see any obstacles: None at the moment.
 - Songyin Li:
-  - What did I do yesterday: GUI of cash system
-  - What I will do today: Continue working on GUI of cash system.
+  - What did I do yesterday: Working on demo report
+  - What I will do today: Continue working on demo report.
   - Do I see any obstacles: None at the moment.
 - Zehui Lin:
-  - What did I do yesterday: Finished UML class diagram.
-  - What I will do today: Working on the user stories.
-  - Do I see any obstacles: None at the moment.
+  - What did I do yesterday: Finished table display of input notes.
+  - What I will do today: Working on table display of changes notes.
+  - Do I see any obstacles: The table is not display correctly.
 
 ## Sprint Review
 
