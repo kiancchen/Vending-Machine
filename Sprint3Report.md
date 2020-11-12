@@ -59,10 +59,8 @@
 6. Developer4: Zehui Lin
 
 ## Individual Contribution
-
+<mark>TODO</mark>
 1. Cheng Chen (cche7436):
-   - Review pull requests
-   - Logic of `Product` and `Transaction`
    - <mark>TODO</mark>
 2. Yuanqun Wang (ywan3184):
    - Shopping cart GUI
@@ -93,9 +91,11 @@ Same content in Sprint 1 Report, can be accessed at this [link](https://github.s
 
 ## UML Class Diagram
 
-<img src='https://i.loli.net/2020/11/12/c5gv1rzwEIO32mP.png' alt='c5gv1rzwEIO32mP'/>
+<mark>TODO</mark>
 
 ## Demo
+
+<mark>TODO</mark>
 
 `blan` is an owner. Its password is `123`. Feel free to use this account to test functionalities.
 
@@ -255,6 +255,8 @@ The user can select which product he want to remove, then click the row which th
 
 ## Product Backlog
 
+<mark>TODO</mark>
+
 The product backlog contains a set of all features and sub-features to build the vending machine, including functions, requirements, enhancements and fixes identified from previous sprints. The items in product backlog are ordered by priority and constantly changed. Any additional requirements from client should be directly added to product backlog instead of sprint backlog.
 
 <img src='https://i.loli.net/2020/11/12/rM2aNhyep1wzvGH.png' alt='rM2aNhyep1wzvGH'/>
@@ -263,15 +265,19 @@ If you can't see this table clearly, please refer to this [link](https://docs.go
 
 ## Sprint Goal
 
-   - Implement the code structure for `Product` and `Transaction`
-   - Implement the product management system
-   - Complete the cash management system
-   - The customer can select products they want to purchase, see the shopping cart and shopping history
-   - Implement the cash payment system
+   - Implement the code structure for `Transaction`
+   - Able to display transaction history
+   - Able to display cancelled transaction history
+   - Able to display sold product history
+   - Able to Pay by credit card
+   - Save the credit card details if user want to save and it will automatically filled in.
+   - A shopping of last 5 products purchased at main window.
 
 ## User Stories and Sprint Backlog
 
 The sprint backlog contains a set of items selected for this sprint. It is considered as a plan for delivering the product increment and realize the sprint goal. It is visible to anyone and to be added or modified by the development team.
+
+<mark>TODO</mark>
 
 <img src='https://i.loli.net/2020/11/12/NpFoXwTc7dAWZf9.png' alt='NpFoXwTc7dAWZf9'/>
 
@@ -287,16 +293,18 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
 
 ### Meeting 1 (Sprint Planning)
 
-- Date: 7th November
+- Date: 12th November
 - Attendance: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
 - Content:
   - Identify the Sprint Goal
-  - Discuss the data structure of product and transaction
-  - Implement the codebase together
+  - Discuss the data structure of transaction
+  - Implement the codebase of `transaction` together
   - Refine, prioritize and assign tasks to team members
   - Produce the Sprint Backlog
 
 ### Meeting 2
+
+<mark>TODO</mark>
 
 - Date : 10th November
 - Attendance: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
@@ -330,6 +338,8 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
   - Do I see any obstacles: None at the moment.
 
 ### Meeting 3
+
+<mark>TODO</mark>
 
 - Date : 12th November
 - Attendance: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
@@ -366,6 +376,8 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
 
 ### Client Feedback
 
+<mark>TODO</mark>
+
 Our client is satisfied with output of current sprint, and do not have any comments for current progression. The client just asks to continue finishing requirement.
 
 - What has been done?
@@ -382,11 +394,15 @@ Our client is satisfied with output of current sprint, and do not have any comme
 
 ### Revisited Sprint Backlog
 
+<mark>TODO</mark>
+
 The tasks have not assigned according to priority, some features cannot be implemented while other task have not completed. For example, one of our sprint backlog is to display a table of shopping history, however the backlog of payment by cash has just finished by due day, which makes impossible to finish displaying a table of shopping history.
 
 In the next sprint, we need to focus on the order to implement features and aims to finish all the required feature by the due day.
 
 ## Sprint Retrospective
+
+<mark>TODO</mark>
 
 - Date: 12th November
 - What went well during the Sprint?
