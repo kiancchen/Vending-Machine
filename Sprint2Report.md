@@ -32,7 +32,7 @@
     - [Meeting 3](#meeting-3)
   - [Sprint Review](#sprint-review)
     - [Client Feedback](#client-feedback)
-    - [Revisited Product Backlog](#revisited-product-backlog)
+    - [Revisited Sprint Backlog](#revisited-sprint-backlog)
   - [Sprint Retrospective](#sprint-retrospective)
 
 # Scrum Teams
@@ -77,13 +77,13 @@
    - Fix bug of cash payment GUI
 4. Zexuan Long (zlon4018):
    - Product options on main window
-   - <mark>TODO</mark>
+   - Write test for product management
 5. Songyin Li (soli3733):
    - Change notes GUI
    - Demo report
 6. Zehui Lin (zlin3338):
    - A table display input notes
-   - A table display change notes <mark>TODO</mark>
+   - A table display change notes
 
 # Agile Development Tools and Practices
 
@@ -370,41 +370,34 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
 
 <mark>TODD</mark>
 
-Our client is satisfied with output of current sprint. However, client pointed out that the product backlog were not associated with corresponding user stories well. There should be more description and accepted criteria for each task.
+Our client is satisfied with output of current sprint, and do not have any comments for current progression. The client just asks to continue finishing requirement.
 
 - What has been done?
-  - The database that stores users and cashes.
-  - The user is able to log in and log out.
-  - The user can log in automatically after sign up.
-  - The owner can add, change or remove users.
-  - A table of users can be displayed.
-  - A table of numbers of cashes can be displayed.
+  - The database that stores products.
+  - The owner and seller can modified amount of cash in machine.
+  - The user can add, change or remove product from shopping cart.
+  - The user can purchases the products by cash.
+  - The machine can display correct change back to user.
+  - A table of products can display.
+  - A table of shopping cart can display.
 - What has not been done?
-  - The cashier and owner being able to set the cash is not yet implemented.
-  - The feature that calculates the specific changes is not yet implemented.
+  - Have not implemented the code structure for `transaction`.
+  - Cannot display shopping history.
 
-### Revisited Product Backlog
+### Revisited Sprint Backlog
 
-<mark>TODD</mark>
+The tasks have not assigned according to priority, some features cannot be implemented while other task have not completed. For example, one of our sprint backlog is to display a table of shopping history, however the backlog of payment by cash has just finished by due day, which makes impossible to finish displaying a table of shopping history.
 
-The tasks have not created carefully and detailed at the Sprint Planning, thus it will cause much conflict later when a new feature should be added. To improve this, we should spend more time on user stories and create tasks for each user stories while planning next sprint.
-
-Besides, the tasks were not prioritized at the beginning, so that it will extend the duration of other tasks if one task that should have higher priority is not implemented yet in time. And the teammate have to wait for that task being completed. In the next sprint, all the tasks should be prioritized first, and teammates aim to finish tasks with higher priority first.
-
-Also, we assigned some tasks to teammates that are not good at that. For example, some teammates are not familiar with `Javafx` but we asked them to complete an GUI task. In the next sprint, we should consider the ability of each teammate and ask them to do what they are good at to improve the efficiency.
+In the next sprint, we need to focus on the order to implement features and aims to finish all the required feature by the due day.
 
 ## Sprint Retrospective
 
-<mark>TODD</mark>
-
-- Date: 5th November
+- Date: 12th November
 - What went well during the Sprint?
-  - Completed all the tasks on time.
+  - Completed most of tasks on time.
   - Worked on different features on different branches by different teammate well.
   - All agile tools and practices were utilized.
   - The communication among teammate was efficient so that we can adjust our tasks in time during the progress of the development.
 - What can be improved in the future?
-  - More description and acceptance criteria of each task.
-  - Associate tasks with corresponding user stories.
   - Prioritize all the tasks at the beginning.
-  - Assign tasks to the right teammates.
+  - Do not write logic code in GUI window
