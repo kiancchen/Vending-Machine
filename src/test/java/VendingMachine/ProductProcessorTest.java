@@ -31,6 +31,24 @@ public class ProductProcessorTest {
     }
 
     @Test
+    public void testGetCategory() throws IOException{
+        ProductProcessor productProcessor = new ProductProcessor();
+        assertEquals(Product.Category.DRINK,productProcessor.getProduct("DRINK",1).getCategory());
+    }
+
+    @Test
+    public void testGetPrice() throws IOException{
+        ProductProcessor productProcessor = new ProductProcessor();
+        assertEquals(2,productProcessor.getProduct("DRINK",1).getPrice(),0);
+    }
+
+    @Test
+    public void testGetQuantity() throws IOException{
+        ProductProcessor productProcessor = new ProductProcessor();
+        assertEquals(7,productProcessor.getProduct("DRINK",1).getQuantity(),0);
+    }
+
+    @Test
     public void testProductProcessorConstructor() throws IOException{
         ProductProcessor productProcessor = new ProductProcessor();
         assertNotNull(productProcessor);
@@ -57,6 +75,7 @@ public class ProductProcessorTest {
         ProductProcessor productProcessor = new ProductProcessor();
         assertFalse(productProcessor.setProductName("DRINK",10,"test"));
         assertTrue(productProcessor.setProductName("DRINK",2,"newName"));
+        assertFalse(productProcessor.setProductName("DRINK",1,"Mineral Water"));
     }
 
     @Test
@@ -85,6 +104,20 @@ public class ProductProcessorTest {
         ProductProcessor productProcessor = new ProductProcessor();
         assertFalse(productProcessor.removeProduct("DRINK",10));
         assertTrue(productProcessor.removeProduct("DRINK",1));
+    }
+
+    @Test
+    public void testGetProduct() throws IOException{
+        ProductProcessor productProcessor = new ProductProcessor();
+        assertNull(productProcessor.getProduct("DRINK",10));
+        assertNotNull(productProcessor.getProduct("DRINK",1));
+    }
+
+    @Test
+    public void testSetProductCode() throws IOException{
+        ProductProcessor productProcessor = new ProductProcessor();
+        assertFalse(productProcessor.setProductCode("DRINK",10,11));
+        assertTrue(productProcessor.setProductCode("DRINK",1,100));
     }
 
 
