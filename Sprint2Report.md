@@ -7,9 +7,13 @@
   - [Demo](#demo)
     - [Sign In or Sign Up](#sign-in-or-sign-up)
     - [Display Product](#display-product)
-    - [Display cart](#display-cart)
+    - [Display Shopping Cart](#display-shopping-cart)
     - [Add to Cart](#add-to-cart)
     - [Remove Cart](#remove-cart)
+    - [Checkout Window](#checkout-window)
+    - [Cash Payment](#cash-payment)
+    - [Add Cash to Pay](#add-cash-to-pay)
+    - [Pay](#pay)
     - [Display Users](#display-users)
     - [Add Users](#add-users)
     - [Change Users](#change-users)
@@ -25,6 +29,8 @@
   - [Sprint Goal](#sprint-goal)
   - [User Stories and Sprint Backlog](#user-stories-and-sprint-backlog)
   - [Burndown Chart](#burndown-chart)
+    - [Sprint 2 Burndown Chart](#sprint-2-burndown-chart)
+    - [Product Burndown Chart](#product-burndown-chart)
   - [Storyboard](#storyboard)
   - [Scrum Meetings](#scrum-meetings)
     - [Meeting 1 (Sprint Planning)](#meeting-1-sprint-planning)
@@ -83,6 +89,7 @@
 5. Songyin Li (soli3733):
    - Change cashes GUI
    - Demo report
+   - Storyboard
 6. Zehui Lin (zlin3338):
    - Receive the cashes paid by customers.
    - Return cash changes to the customer
@@ -183,7 +190,7 @@ The user can input cashtype and amount. Then click the`Add` button, after that t
 
 ![Screen Shot 2020-11-12 at 7.26.34 PM.png](https://i.loli.net/2020/11/12/pzdYyDW5aq2NmnJ.png)
 
-### Pay 
+### Pay
 
  If user didn't add any cash. It will display an alert to notify current user doesn't pay any cashes.
 
@@ -334,7 +341,7 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
 
 ## Storyboard
 
-<mark>TODD</mark>
+<img src='https://i.loli.net/2020/11/13/3a1hMmCWlHKgFdi.png' alt='3a1hMmCWlHKgFdi'/>
 
 ## Scrum Meetings
 
