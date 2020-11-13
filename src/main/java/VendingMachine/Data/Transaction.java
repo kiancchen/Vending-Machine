@@ -31,14 +31,12 @@ public class Transaction {
         }
         product.setStock(product.getStock() - quantity);
         this.amount += product.getPrice() * quantity;
-        System.out.println(this.amount);
         return true;
     }
 
     public boolean set(int id, int newQty) {
         Product product = MainProcessor.getProductProcessor().getProduct(id);
         if (newQty > product.getStock() + shoppingList.get(product)) {
-            System.out.println(false);
             return false;
         }
         int oldQty = shoppingList.get(product);
