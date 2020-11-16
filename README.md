@@ -6,5 +6,5 @@ R18B Group 5
 
 [Sprint 2 Report](https://github.sydney.edu.au/SOFT2412-2020S2/R18B-Group5-VendingMachine/blob/master/Sprint2Report.md)
 
-[Sprint 3 Report]()
+[Sprint 3 Report](https://github.sydney.edu.au/SOFT2412-2020S2/R18B-Group5-VendingMachine/blob/master/Sprint3Report.md)
 
