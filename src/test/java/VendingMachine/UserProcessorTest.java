@@ -36,6 +36,7 @@ public class UserProcessorTest {
     public void init() throws IOException {
         userProcessor = UserProcessor.load();
         ProductProcessor.load();
+        Transaction.load();
     }
 
     /**

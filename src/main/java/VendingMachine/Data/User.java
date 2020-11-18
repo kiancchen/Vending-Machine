@@ -54,7 +54,7 @@ public class User {
     }
 
     public boolean pay(double amount, Transaction.Payment payment) {
-        if (shoppingCart.pay(amount, payment, this)) {
+        if (shoppingCart.pay(amount, payment, this.id)) {
             shoppingHistory.add(shoppingCart);
             shoppingCart = new Transaction();
             return true;

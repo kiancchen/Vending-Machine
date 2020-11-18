@@ -15,7 +15,8 @@
       "status": "UNPAID",
       "totalPrice": 0.0,
       "paidAmount": 0.0,
-      "change": 0.0
+      "change": 0.0,
+      "payeeId": 0
     }
   },
   {
@@ -34,7 +35,8 @@
       "status": "UNPAID",
       "totalPrice": 0.0,
       "paidAmount": 0.0,
-      "change": 0.0
+      "change": 0.0,
+      "payeeId": 0
     }
   },
   {
@@ -53,7 +55,8 @@
       "status": "UNPAID",
       "totalPrice": 0.0,
       "paidAmount": 0.0,
-      "change": 0.0
+      "change": 0.0,
+      "payeeId": 0
     }
   }
 ]

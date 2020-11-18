@@ -1,5 +1,6 @@
 package VendingMachine;
 
+import VendingMachine.Data.Transaction;
 import VendingMachine.Processor.CardProcessor;
 import VendingMachine.Processor.CashProcessor;
 import VendingMachine.Processor.ProductProcessor;
@@ -23,6 +24,7 @@ public class App extends Application {
             CashProcessor.load();
             ProductProcessor.load();
             UserProcessor.load();
+            Transaction.load();
         } catch (IOException e) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Can't load processors.");
             alert.show();
@@ -39,5 +41,6 @@ public class App extends Application {
         DatabaseHandler.saveCashData(CashProcessor.getInstance().getCashMap());
         DatabaseHandler.saveProductData(ProductProcessor.getInstance().getProductMap());
         DatabaseHandler.saveUserData(UserProcessor.getInstance().getUsers());
+        DatabaseHandler.saveTransactionData(Transaction.getTransactionList());
     }
 }

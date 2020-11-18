@@ -1,9 +1,12 @@
 package VendingMachine.Data;
 
 
+import VendingMachine.DatabaseHandler;
 import VendingMachine.Processor.CashProcessor;
 import VendingMachine.Processor.ProductProcessor;
+import VendingMachine.Processor.UserProcessor;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Transaction {
-    private static final List<Transaction> transactionList;
+    private static List<Transaction> transactionList;
     private final Map<Integer, Integer> shoppingList;
     private final transient ProductProcessor productProcessor;
     private LocalDate date;
@@ -22,10 +25,10 @@ public class Transaction {
     private Payment payment;
     private String reason;
     private double change;
-    private User payee;
+    private int payeeId;
 
-    static {
-        transactionList = new ArrayList<>();
+    public static void load() throws IOException {
+        transactionList = DatabaseHandler.loadTransactionData();
     }
 
     public Transaction() {
@@ -58,11 +61,11 @@ public class Transaction {
         return true;
     }
 
-    public boolean pay(double amount, Payment payment, User user) {
+    public boolean pay(double amount, Payment payment, int userId) {
         if (amount < this.totalPrice) {
             return false;
         }
-        this.payee = user;
+        this.payeeId = userId;
         this.payment = payment;
         this.paidAmount = amount;
         this.status = Status.PAID;
@@ -92,7 +95,12 @@ public class Transaction {
     }
 
     public User getPayee() {
-        return payee;
+        for (User user : UserProcessor.getInstance().getUsers()) {
+            if (user.getId() == payeeId) {
+                return user;
+            }
+        }
+        return null;
     }
 
     public Map<Double, Integer> getReturnedChangeMap() {
