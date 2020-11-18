@@ -8,6 +8,7 @@ import VendingMachine.Window.ProductManagement.ProductManagementWindow;
 import VendingMachine.Window.ProductManagement.ProductTable;
 import VendingMachine.Window.ProductManagement.ProductTableEntry;
 import VendingMachine.Window.SoldHistory.SoldHistoryWindow;
+import VendingMachine.Window.TransactionHistory.TransactionHistoryWindow;
 import VendingMachine.Window.UserManagement.UserManagementWindow;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -27,6 +28,8 @@ public class MainWindow {
     private Button cashManagementBtn;
     private Button productManageBtn;
     private Button soldHistoryBtn;
+    private Button transactionHistory;
+  
     private Text currentUserInfo;
     private ProductTable productTable;
     private Text selectedItemText;
@@ -103,6 +106,7 @@ public class MainWindow {
         productManageBtn = new Button();
         soldHistoryBtn = new Button();
 
+
         Button[] buttons = {accountBtn, userManagementBtn, cashManagementBtn, productManageBtn};
         String[] texts = {"Account", "Manage User", "Manage Cash", "Manage Product"};
 
@@ -121,13 +125,24 @@ public class MainWindow {
         soldHistoryBtn .setPrefHeight(30);
         soldHistoryBtn .setText("Sold History");
         pane.getChildren().add(soldHistoryBtn );
+        initTransactionHistoryButton();
+    }
+
+    private void initTransactionHistoryButton() {
+        transactionHistory = new Button();
+        transactionHistory.setLayoutX(600);
+        transactionHistory.setLayoutY(450);
+        transactionHistory.setPrefWidth(180);
+        transactionHistory.setPrefHeight(30);
+        transactionHistory.setText("Transaction History");
+        pane.getChildren().add(transactionHistory);
     }
 
     private void initBtnActions() {
         accountBtn.setOnAction((event -> {
             if (userProcessor.getCurrentUser().getType() == User.UserType.ANONYMOUS) {
                 // If the currency user is the Anonymous
-                new LoginWindow(this);
+                new LoginWindow();
             } else {
                 userProcessor.logoutUser();
                 accountBtn.setText("Account");
@@ -154,7 +169,16 @@ public class MainWindow {
         });
         productManageBtn.setOnAction(event -> {
             if (userProcessor.getCurrentUser().getPermission(User.Permission.MANAGE_ITEM)) {
-                new ProductManagementWindow(this.productTable);
+                new ProductManagementWindow();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
+                        "to do this action.");
+                alert.show();
+            }
+        });
+        transactionHistory.setOnAction(event -> {
+            if(userProcessor.getCurrentUser().getPermission(User.Permission.MANAGE_CASH)) {
+                new TransactionHistoryWindow();
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
                         "to do this action.");
@@ -288,7 +312,7 @@ public class MainWindow {
         }
 
         if (setCartQtyCombo.getSelectionModel().getSelectedItem() == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Not enough quantity.");
+            Alert alert = new Alert(Alert.AlertType.WARNING, "No enough stock.");
             alert.show();
             return;
         }
@@ -298,7 +322,7 @@ public class MainWindow {
 
         setCartQtyCombo.getItems().clear();
         this.setShoppingCartData();
-        this.productTable.updateTableData();
+        updateProductTable();
     }
 
     private void addToCart() {
@@ -310,19 +334,23 @@ public class MainWindow {
         }
 
         if (selectedQuantityCombo.getSelectionModel().getSelectedItem() == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Not enough quantity.");
+            Alert alert = new Alert(Alert.AlertType.WARNING, "No enough stock.");
             alert.show();
             return;
         }
 
         if (!userProcessor.getCurrentUser().addToCart(selectedItem.getId(),
                 selectedQuantityCombo.getSelectionModel().getSelectedItem())) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Not enough quantity.");
+            Alert alert = new Alert(Alert.AlertType.WARNING, "No enough stock.");
             alert.show();
         }
 
         setShoppingCartData();
         selectedQuantityCombo.getItems().clear();
+        updateProductTable();
+    }
+
+    public void updateProductTable() {
         this.productTable.updateTableData();
     }
 

@@ -115,6 +115,12 @@ public class ProductProcessorTest {
         assertTrue(productProcessor.setProductCode(1, "20"));
     }
 
+    @Test
+    public void testSold() {
+        productProcessor.getProduct(1).sold(1);
+        assertEquals(1,productProcessor.getProduct(1).getSold(),0);
+    }
+
 
 }
 
