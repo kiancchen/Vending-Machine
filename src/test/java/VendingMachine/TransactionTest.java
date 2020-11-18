@@ -43,7 +43,7 @@ public class TransactionTest {
     public void testPay() {
         transaction.pay(10, Transaction.Payment.CASH);
         assertEquals(10, transaction.getPaidAmount(), 0);
-        assertFalse(transaction.pay(-1));
+        assertFalse(transaction.pay(-1, Transaction.Payment.CASH));
         assertNotNull(transaction.getDate());
     }
 
