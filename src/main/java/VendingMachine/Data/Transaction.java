@@ -15,7 +15,6 @@ import java.util.Map;
 
 public class Transaction {
     private static List<Transaction> transactionList;
-
     private LocalDateTime date;
     private final Map<Integer, Integer> shoppingList;
     private Status status;
@@ -26,6 +25,7 @@ public class Transaction {
     private String reason;
     private double change;
     private int payeeId;
+    private final ProductProcessor productProcessor;
 
     public static void load() throws IOException {
         transactionList = DatabaseHandler.loadTransactionData();

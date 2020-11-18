@@ -239,7 +239,7 @@ public class ReportWindow {
                 String date = t.getDate().format(formatter);
                 String paidAmount = Double.toString(t.getPaidAmount());
                 String returnChange = Double.toString(t.getPaidAmount() - t.getTotalPrice());
-                String paidMethod = "TODO";
+                String paidMethod = t.getPayment().toString();
                 Map<Product, Integer> shoppingList = t.getShoppingList();
                 shoppingList.forEach((k, v) -> {
                     String name = k.getName();
@@ -296,7 +296,7 @@ public class ReportWindow {
                 if (t.getStatus() == Transaction.Status.CANCELLED) {
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
                     String date = t.getDate().format(formatter);
-                    String user = "TODO";
+                    String user = t.getPayee().getUsername();
                     String reason = t.getReason();
                     List<String> texts = Arrays.asList(date, user, reason);
                     try {
