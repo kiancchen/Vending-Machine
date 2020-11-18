@@ -1,6 +1,7 @@
 package VendingMachine.Window;
 
 import VendingMachine.Data.Product;
+import VendingMachine.Data.Transaction;
 import VendingMachine.Data.User;
 import VendingMachine.Processor.CashProcessor;
 import VendingMachine.Processor.ProductProcessor;
@@ -15,6 +16,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class ReportWindow {
@@ -108,17 +110,18 @@ public class ReportWindow {
         });
 
         transactionReportBtn.setOnAction(event -> {
-            try {
-                if (UserProcessor.getInstance().getCurrentUser().getPermission(User.Permission.MANAGE_CASH)) {
-                    generateTransactionReport();
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
-                            "to do this action.");
-                    alert.show();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            generateTransactionReport();
+//            try {
+//                if (UserProcessor.getInstance().getCurrentUser().getPermission(User.Permission.MANAGE_CASH)) {
+//                    generateTransactionReport();
+//                } else {
+//                    Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
+//                            "to do this action.");
+//                    alert.show();
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         });
 
         userReportBtn.setOnAction(event -> {
@@ -235,7 +238,39 @@ public class ReportWindow {
     }
 
     private void generateTransactionReport() {
+        try {
+            FileWriter csvWriter = new FileWriter("Report/TransactionReport.csv");
 
+            List<String> title = Arrays.asList("Date", "Paid Amount", "Return Change", "Paid Method", "Product", "Quantity");
+            csvWriter.append(String.join(",", title));
+            csvWriter.append("\n");
+
+            List<Transaction> transactionList = Transaction.getTransactionList();
+            for (Transaction t: transactionList) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+                String date = t.getDate().format(formatter);
+                String paidAmount = Double.toString(t.getPaidAmount());
+                String returnChange = Double.toString(t.getPaidAmount() - t.getTotalPrice());
+                String paidMethod = "TODO";
+                Map<Product, Integer> shoppingList = t.getShoppingList();
+                shoppingList.forEach((k, v) -> {
+                    String name = k.getName();
+                    String quantity = v.toString();
+                    List<String> texts = Arrays.asList(date, paidAmount, returnChange, paidMethod, name, quantity);
+                    try {
+                        csvWriter.append(String.join(",", texts));
+                        csvWriter.append("\n");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+
+            csvWriter.flush();
+            csvWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void generateUserReport() {
@@ -261,6 +296,34 @@ public class ReportWindow {
     }
 
     private void generateCancelReport() {
+        try {
+            FileWriter csvWriter = new FileWriter("Report/CancelledReport.csv");
 
+            List<String> title = Arrays.asList("Date", "User", "Reason");
+            csvWriter.append(String.join(",", title));
+            csvWriter.append("\n");
+
+            List<Transaction> transactionList = Transaction.getTransactionList();
+            for (Transaction t: transactionList) {
+                if (t.getStatus() == Transaction.Status.CANCELLED) {
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
+                    String date = t.getDate().format(formatter);
+                    String user = "TODO";
+                    String reason = t.getReason();
+                    List<String> texts = Arrays.asList(date, user, reason);
+                    try {
+                        csvWriter.append(String.join(",", texts));
+                        csvWriter.append("\n");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            csvWriter.flush();
+            csvWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

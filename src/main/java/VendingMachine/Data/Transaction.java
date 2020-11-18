@@ -114,7 +114,7 @@ public class Transaction {
         return reason;
     }
 
-    enum Status {
+    public enum Status {
         PAID,
         UNPAID,
         CANCELLED
