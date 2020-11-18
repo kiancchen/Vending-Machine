@@ -14,6 +14,7 @@ public class CardProcessor {
         cards = DatabaseHandler.loadCreditCards();
     }
 
+
     public static CardProcessor getInstance() {
         return cardProcessor;
     }

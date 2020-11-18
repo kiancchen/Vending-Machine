@@ -142,6 +142,7 @@ public class User {
         this.card = card;
     }
 
+
     public Map<Double, Integer> getReturnChangeMap() {
         return shoppingHistory.get(shoppingHistory.size() - 1).getReturnedChangeMap();
     }

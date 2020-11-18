@@ -22,6 +22,7 @@ public class DatabaseHandler {
     private static final File cardFile = new File("src/main/resources/credit_cards.json");
     private static final File tranFile = new File("src/main/resources/transactions.json");
 
+
     public static void saveUserData(List<User> users) throws IOException {
         FileWriter fileWriter = new FileWriter(userFile);
         JsonWriter jsonWriter = new JsonWriter(fileWriter);

@@ -7,6 +7,7 @@ import VendingMachine.Processor.ProductProcessor;
 import VendingMachine.Processor.UserProcessor;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -14,9 +15,9 @@ import java.util.Map;
 
 public class Transaction {
     private static List<Transaction> transactionList;
+
     private LocalDateTime date;
     private final Map<Integer, Integer> shoppingList;
-    private final transient ProductProcessor productProcessor;
     private Status status;
     private double totalPrice;
     private double paidAmount;
@@ -35,10 +36,6 @@ public class Transaction {
         shoppingList = new HashMap<>();
         status = Status.UNPAID;
         totalPrice = 0;
-    }
-
-    public static List<Transaction> getTransactionList() {
-        return transactionList;
     }
 
     public boolean set(int id, int newQty) {
@@ -131,7 +128,12 @@ public class Transaction {
         return list;
     }
 
+    public static List<Transaction> getTransactionList() {
+        return transactionList;
+    }
+
     public LocalDateTime getDate() {
+
         return date;
     }
 

@@ -95,10 +95,7 @@ public class CardPaymentWindow {
     private void checkAction() {
         String name = nameField.getText();
         String number = numberField.getText();
-        CardProcessor cardProcessor;
-
-        cardProcessor = CardProcessor.getInstance();
-
+        CardProcessor cardProcessor = CardProcessor.getInstance();
         CreditCard card = cardProcessor.validateCard(name, number);
         if (card != null) {
                 if (currentUser.pay(currentUser.getTotalPrice(), Transaction.Payment.CARD)) {
