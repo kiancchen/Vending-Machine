@@ -8,7 +8,16 @@
       "MANAGE_ITEM": false,
       "MANAGE_CASH": false
     },
-    "type": "ANONYMOUS"
+    "type": "ANONYMOUS",
+    "shoppingHistory": [],
+    "shoppingCart": {
+      "shoppingList": {},
+      "status": "UNPAID",
+      "totalPrice": 0.0,
+      "paidAmount": 0.0,
+      "change": 0.0,
+      "payeeId": 0
+    }
   },
   {
     "id": 1,
@@ -19,7 +28,16 @@
       "MANAGE_ITEM": false,
       "MANAGE_CASH": false
     },
-    "type": "CUSTOMER"
+    "type": "CUSTOMER",
+    "shoppingHistory": [],
+    "shoppingCart": {
+      "shoppingList": {},
+      "status": "UNPAID",
+      "totalPrice": 0.0,
+      "paidAmount": 0.0,
+      "change": 0.0,
+      "payeeId": 0
+    }
   },
   {
     "id": 2,
@@ -30,6 +48,15 @@
       "MANAGE_ITEM": true,
       "MANAGE_CASH": true
     },
-    "type": "OWNER"
+    "type": "OWNER",
+    "shoppingHistory": [],
+    "shoppingCart": {
+      "shoppingList": {},
+      "status": "UNPAID",
+      "totalPrice": 0.0,
+      "paidAmount": 0.0,
+      "change": 0.0,
+      "payeeId": 0
+    }
   }
 ]

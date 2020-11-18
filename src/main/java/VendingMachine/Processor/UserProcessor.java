@@ -8,7 +8,7 @@ import java.util.List;
 
 public class UserProcessor {
     private static UserProcessor userProcessor;
-    private List<User> users;
+    private final List<User> users;
     private User currentUser;
 
     private UserProcessor() throws IOException {
@@ -16,14 +16,11 @@ public class UserProcessor {
         this.currentUser = this.users.get(0);
     }
 
-    public static UserProcessor getInstance() throws IOException {
-        if (userProcessor == null) {
-            userProcessor = new UserProcessor();
-        }
+    public static UserProcessor getInstance() {
         return userProcessor;
     }
 
-    public static UserProcessor reload() throws IOException {
+    public static UserProcessor load() throws IOException {
         userProcessor = new UserProcessor();
         return userProcessor;
     }
@@ -39,17 +36,16 @@ public class UserProcessor {
         return false;
     }
 
-    public boolean addUser(String username, String password) throws IOException {
+    public boolean addUser(String username, String password) {
         // check the username is used or not
         return this.addUser(username, password, "CUSTOMER");
     }
 
-    public boolean addUser(String username, String password, String type) throws IOException {
+    public boolean addUser(String username, String password, String type) {
         // check the username is used or not
         if (!hasUser(username)) {
             User newUser = new User(username, password, User.UserType.valueOf(type));
             users.add(newUser);
-            DatabaseHandler.saveUserData(users);
             return true;
         } else {
             return false;
@@ -66,44 +62,40 @@ public class UserProcessor {
         return false;
     }
 
-    public boolean removeUser(int id) throws IOException {
+    public boolean removeUser(int id) {
         for (User user : users) {
             if (user.getId() == id) {
                 users.remove(user);
-                DatabaseHandler.saveUserData(users);
                 return true;
             }
         }
         return false;
     }
 
-    public boolean setUsername(int id, String newUsername) throws IOException {
+    public boolean setUsername(int id, String newUsername) {
         for (User user : users) {
             if (user.getId() == id) {
                 user.setUsername(newUsername);
-                DatabaseHandler.saveUserData(users);
                 return true;
             }
         }
         return false;
     }
 
-    public boolean setPassword(int id, String newPassword) throws IOException {
+    public boolean setPassword(int id, String newPassword) {
         for (User user : users) {
             if (user.getId() == id) {
                 user.setPassword(newPassword);
-                DatabaseHandler.saveUserData(users);
                 return true;
             }
         }
         return false;
     }
 
-    public boolean setUserType(int id, String newType) throws IOException {
+    public boolean setUserType(int id, String newType) {
         for (User user : users) {
             if (user.getId() == id) {
                 user.setType(User.UserType.valueOf(newType));
-                DatabaseHandler.saveUserData(users);
                 return true;
             }
         }

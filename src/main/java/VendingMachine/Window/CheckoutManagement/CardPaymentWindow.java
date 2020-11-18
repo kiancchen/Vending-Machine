@@ -1,9 +1,11 @@
 package VendingMachine.Window.CheckoutManagement;
 
 import VendingMachine.Data.CreditCard;
+import VendingMachine.Data.Transaction;
 import VendingMachine.Data.User;
 import VendingMachine.Processor.CardProcessor;
 import VendingMachine.Processor.UserProcessor;
+import VendingMachine.Window.MainWindow;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -16,29 +18,21 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class CardPaymentWindow {
+    private final Stage stage;
+    private final AnchorPane pane;
+    private final User currentUser;
     private TextField nameField;
     private TextField numberField;
-    private Stage stage;
-    private Scene scene;
-    private AnchorPane pane;
     private CheckBox checkBox;
-    private User currentUser;
 
     public CardPaymentWindow() {
         pane = new AnchorPane();
-        scene = new Scene(pane, 370, 100);
+        Scene scene = new Scene(pane, 370, 100);
         stage = new Stage();
         stage.setScene(scene);
         stage.setTitle("Card Payment");
         stage.show();
-
-        try {
-            currentUser = UserProcessor.getInstance().getCurrentUser();
-        } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't get the user processor.");
-            alert.show();
-        }
-
+        currentUser = UserProcessor.getInstance().getCurrentUser();
         initTextField();
         initBtn();
         initCheckBox();
@@ -101,22 +95,22 @@ public class CardPaymentWindow {
     private void checkAction() {
         String name = nameField.getText();
         String number = numberField.getText();
-        CardProcessor cardProcessor;
-        try {
-            cardProcessor = CardProcessor.getInstance();
-        } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't get the card processor.");
-            alert.show();
-            return;
-        }
+        CardProcessor cardProcessor = CardProcessor.getInstance();
         CreditCard card = cardProcessor.validateCard(name, number);
         if (card != null) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successful!");
-            alert.show();
-            if (checkBox.isSelected()) {
-                currentUser.setCard(card);
-            }
-            stage.close();
+                if (currentUser.pay(currentUser.getTotalPrice(), Transaction.Payment.CARD)) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successful!");
+                    alert.show();
+                    if (checkBox.isSelected()) {
+                        currentUser.setCard(card);
+                    }
+                    UserProcessor.getInstance().logoutUser();
+                    MainWindow.getInstance().update();
+                    stage.close();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.WARNING, "Fail to pay.");
+                    alert.show();
+                }
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Card does not exist.");
             alert.show();

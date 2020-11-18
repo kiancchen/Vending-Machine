@@ -7,36 +7,32 @@ import java.util.*;
 
 public class CashProcessor {
     private static CashProcessor cashProcessor;
-    private Map<Double, Integer> cashMap;
+    private final Map<Double, Integer> cashMap;
 
     private CashProcessor() throws IOException {
         this.cashMap = DatabaseHandler.loadCashData();
     }
 
-    public static CashProcessor getInstance() throws IOException {
-        if (cashProcessor == null) {
-            cashProcessor = new CashProcessor();
-        }
+    public static CashProcessor getInstance() {
         return cashProcessor;
     }
 
-    public static CashProcessor reload() throws IOException {
+    public static CashProcessor load() throws IOException {
         cashProcessor = new CashProcessor();
         return cashProcessor;
     }
 
-    public void setCashNumber(double value, int number) throws IOException {
+    public boolean setCashNumber(double value, int number) {
         if (number >= 0) {
             cashMap.put(value, number);
-            DatabaseHandler.saveCashData(this.cashMap);
-        } else {
-            throw new IllegalArgumentException("Number can't be less than zero.");
+            return true;
         }
+        return false;
     }
 
-    public Map<Double, Integer> getChange(double amount) throws IOException {
+    public Map<Double, Integer> getChange(double amount) {
         if (amount < 0) {
-            throw new IllegalArgumentException("Amount can't be less than zero.");
+            return null;
         }
 
         List<Double> cashes = new ArrayList<>();
@@ -71,7 +67,6 @@ public class CashProcessor {
             for (Map.Entry<Double, Integer> entry : changes.entrySet()) {
                 this.cashMap.put(entry.getKey(), this.cashMap.get(entry.getKey()) - entry.getValue());
             }
-            DatabaseHandler.saveCashData(this.cashMap);
             return changes;
         }
         return null;
@@ -80,6 +75,4 @@ public class CashProcessor {
     public Map<Double, Integer> getCashMap() {
         return cashMap;
     }
-
-
 }

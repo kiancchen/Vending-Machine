@@ -7,37 +7,26 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.*;
 
 public class CashManagementWindow {
-    private Stage stage;
-    private Scene scene;
-    private AnchorPane pane;
+    private final AnchorPane pane;
+    private final CashProcessor cashProcessor;
     private TableView<CashTableEntry> table;
     private Button changeButton;
     private double selectedCashType;
     private TextField amountField;
     private ComboBox<String> typeCombo;
     private String originCash;
-    private CashProcessor cashProcessor;
 
     public CashManagementWindow() {
-        stage = new Stage();
+        Stage stage = new Stage();
         pane = new AnchorPane();
-        scene = new Scene(pane, 600, 480);
+        Scene scene = new Scene(pane, 600, 480);
         stage.setScene(scene);
         stage.setTitle("Cash Management");
         stage.show();
-
-        try {
-            cashProcessor = CashProcessor.getInstance();
-        } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't get the cash processor.");
-            alert.show();
-        }
-
-
+        cashProcessor = CashProcessor.getInstance();
         initTable();
         initButton();
         initTextFields();
@@ -134,7 +123,7 @@ public class CashManagementWindow {
 
     private void changeAction() {
         if (selectedCashType < 0) {
-            alert(Alert.AlertType.WARNING, "You don't select any cash.");
+            warn("You don't select any cash.");
             return;
         } else if (!validateInput()) {
             return;
@@ -143,7 +132,7 @@ public class CashManagementWindow {
             cashProcessor.setCashNumber(selectedCashType, Integer.parseInt(amountField.getText()));
 //            alert(Alert.AlertType.INFORMATION, "Change successfully.");
         } catch (Exception e) {
-            alert(Alert.AlertType.WARNING, "Fail to change");
+            warn("Fail to change");
         }
 
         amountField.setText("");
@@ -153,14 +142,14 @@ public class CashManagementWindow {
 
     private boolean validateInput() {
         if (amountField.getText().trim().isEmpty()) {
-            alert(Alert.AlertType.WARNING, "Number needed");
+            warn("Number needed");
             return false;
         }
         return true;
     }
 
-    private void alert(Alert.AlertType warning, String s) {
-        Alert alert = new Alert(warning, s);
+    private void warn(String msg) {
+        Alert alert = new Alert(Alert.AlertType.WARNING, msg);
         alert.show();
     }
 }

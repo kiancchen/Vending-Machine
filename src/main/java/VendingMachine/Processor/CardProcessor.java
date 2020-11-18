@@ -7,17 +7,20 @@ import java.io.IOException;
 import java.util.List;
 
 public class CardProcessor {
-    private List<CreditCard> cards;
     private static CardProcessor cardProcessor;
+    private final List<CreditCard> cards;
 
     private CardProcessor() throws IOException {
         cards = DatabaseHandler.loadCreditCards();
     }
 
-    public static CardProcessor getInstance() throws IOException {
-        if (cardProcessor == null) {
-            cardProcessor = new CardProcessor();
-        }
+
+    public static CardProcessor getInstance() {
+        return cardProcessor;
+    }
+
+    public static CardProcessor load() throws IOException {
+        cardProcessor = new CardProcessor();
         return cardProcessor;
     }
 

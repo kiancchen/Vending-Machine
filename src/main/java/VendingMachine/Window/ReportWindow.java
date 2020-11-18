@@ -21,9 +21,7 @@ import java.util.*;
 
 public class ReportWindow {
 
-    private Stage stage;
-    private Scene scene;
-    private AnchorPane pane;
+    private final AnchorPane pane;
     private Button userReportBtn;
     private Button cancelReportBtn;
     private Button transactionReportBtn;
@@ -32,15 +30,14 @@ public class ReportWindow {
     private Button changeReportBtn;
 
     public ReportWindow() throws IOException {
-        stage = new Stage();
+        Stage stage = new Stage();
         pane = new AnchorPane();
-        scene = new Scene(pane, 400, 400);
+        Scene scene = new Scene(pane, 400, 400);
         stage.setScene(scene);
         stage.setTitle("Report");
         stage.show();
 
         Files.createDirectories(Paths.get("Report/"));
-
         initButtons();
         initBtnActions();
     }
@@ -68,45 +65,39 @@ public class ReportWindow {
 
     private void initBtnActions() {
         currentItemReportBtn.setOnAction(event -> {
-            try {
-                if (UserProcessor.getInstance().getCurrentUser().getPermission(User.Permission.MANAGE_ITEM)) {
-                    generateCurrentItemReport();
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
-                            "to do this action.");
-                    alert.show();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+
+            if (UserProcessor.getInstance().getCurrentUser().getPermission(User.Permission.MANAGE_ITEM)) {
+                generateCurrentItemReport();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
+                        "to do this action.");
+                alert.show();
             }
+
         });
 
         soldItemReportBtn.setOnAction(event -> {
-            try {
-                if (UserProcessor.getInstance().getCurrentUser().getPermission(User.Permission.MANAGE_ITEM)) {
-                    generateSoldItemReport();
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
-                            "to do this action.");
-                    alert.show();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+
+            if (UserProcessor.getInstance().getCurrentUser().getPermission(User.Permission.MANAGE_ITEM)) {
+                generateSoldItemReport();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
+                        "to do this action.");
+                alert.show();
             }
+
         });
 
         changeReportBtn.setOnAction(event -> {
-            try {
-                if (UserProcessor.getInstance().getCurrentUser().getPermission(User.Permission.MANAGE_CASH)) {
-                    generateChangeReport();
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
-                            "to do this action.");
-                    alert.show();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+
+            if (UserProcessor.getInstance().getCurrentUser().getPermission(User.Permission.MANAGE_CASH)) {
+                generateChangeReport();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
+                        "to do this action.");
+                alert.show();
             }
+
         });
 
         transactionReportBtn.setOnAction(event -> {
@@ -122,34 +113,31 @@ public class ReportWindow {
 //            } catch (IOException e) {
 //                e.printStackTrace();
 //            }
+
         });
 
         userReportBtn.setOnAction(event -> {
-            try {
-                if (UserProcessor.getInstance().getCurrentUser().getPermission(User.Permission.MANAGE_USER)) {
-                    generateUserReport();
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
-                            "to do this action.");
-                    alert.show();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+
+            if (UserProcessor.getInstance().getCurrentUser().getPermission(User.Permission.MANAGE_USER)) {
+                generateUserReport();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
+                        "to do this action.");
+                alert.show();
             }
+
         });
 
         cancelReportBtn.setOnAction(event -> {
-            try {
-                if (UserProcessor.getInstance().getCurrentUser().getPermission(User.Permission.MANAGE_USER)) {
-                    generateCancelReport();
-                } else {
-                    Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
-                            "to do this action.");
-                    alert.show();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+
+            if (UserProcessor.getInstance().getCurrentUser().getPermission(User.Permission.MANAGE_USER)) {
+                generateCancelReport();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
+                        "to do this action.");
+                alert.show();
             }
+
         });
     }
 
@@ -224,7 +212,7 @@ public class ReportWindow {
             Map<Double, Integer> cashMap = CashProcessor.getInstance().getCashMap();
             List<Double> list = new ArrayList<>(cashMap.keySet());
             Collections.sort(list);
-            for (Double value: list) {
+            for (Double value : list) {
                 List<String> texts = Arrays.asList(value.toString(), cashMap.get(value).toString());
                 csvWriter.append(String.join(",", texts));
                 csvWriter.append("\n");
@@ -281,7 +269,7 @@ public class ReportWindow {
             csvWriter.append(String.join(",", title));
             csvWriter.append("\n");
 
-            for (User user: UserProcessor.getInstance().getUsers()) {
+            for (User user : UserProcessor.getInstance().getUsers()) {
                 List<String> texts = Arrays.asList(Integer.toString(user.getId()),
                         user.getUsername(), user.getPassword(), user.getType().toString());
                 csvWriter.append(String.join(",", texts));
