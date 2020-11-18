@@ -68,7 +68,6 @@ public class LoginWindow {
 
         try {
             if (userProcessor.addUser(usernameInp, passwordInp)) {
-
                 Alert alert = new Alert(AlertType.INFORMATION, "Sign up successfully.");
                 alert.show();
                 userProcessor.verifyUser(usernameInp, passwordInp);

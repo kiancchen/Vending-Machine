@@ -1,5 +1,6 @@
 package VendingMachine;
 
+import VendingMachine.Data.CreditCard;
 import VendingMachine.Data.Product;
 import VendingMachine.Data.User;
 import com.google.gson.Gson;
@@ -17,6 +18,7 @@ public class DatabaseHandler {
     private static final File userFile = new File("src/main/resources/user.json");
     private static final File cashFile = new File("src/main/resources/cash.json");
     private static final File productFile = new File("src/main/resources/product.json");
+    private static final File cardFile = new File("src/main/resources/credit_cards.json");
 
     public static void saveUserData(List<User> users) throws IOException {
         FileWriter fileWriter = new FileWriter(userFile);
@@ -69,5 +71,23 @@ public class DatabaseHandler {
                 new TypeToken<Map<Integer, Product>>() {}.getType());
         reader.close();
         return products;
+    }
+
+    public static List<CreditCard> loadCreditCards() throws IOException {
+        InputStream input = new FileInputStream(cardFile);
+        JsonReader reader = new JsonReader(new InputStreamReader(input));
+        List<CreditCard> products = gson.fromJson(reader,
+                new TypeToken<List<CreditCard>>() {}.getType());
+        reader.close();
+        return products;
+    }
+
+    public static void saveCreditCards(List<CreditCard> creditCards) throws IOException {
+        FileWriter fileWriter = new FileWriter(cardFile);
+        JsonWriter jsonWriter = new JsonWriter(fileWriter);
+        jsonWriter.setIndent(" ");
+        gson.toJson(creditCards, new TypeToken<List<CreditCard>>() {}.getType(), jsonWriter);
+        jsonWriter.flush();
+        jsonWriter.close();
     }
 }
