@@ -19,13 +19,12 @@ public class CashPaymentWindow {
     private AnchorPane pane;
     private TableView<CashTableEntry> table;
     private Map<String, String> paidCashes;
-    private CheckoutWindow checkout;
     private ComboBox<String> valueCombo;
     private Button addButton;
     private Button payButton;
     private TextField numberField;
 
-    public CashPaymentWindow(CheckoutWindow checkout) {
+    public CashPaymentWindow() {
         stage = new Stage();
         pane = new AnchorPane();
         scene = new Scene(pane, 480, 600);
@@ -34,7 +33,6 @@ public class CashPaymentWindow {
         stage.show();
 
         this.paidCashes = new HashMap<>();
-        this.checkout = checkout;
 
         initLabel();
         initTable();

@@ -13,7 +13,8 @@ import java.io.IOException;
 public class CheckoutWindow {
     private Stage stage;
     private AnchorPane pane;
-    private Button cash;
+    private Button cashBtn;
+    private Button cardBtn;
     private Button cancel;
     private double amount;
 
@@ -44,10 +45,15 @@ public class CheckoutWindow {
 
     private void initButtonActions() {
         // create actions here(New Window)
-        cash.setOnAction((event -> {
-            new CashPaymentWindow(this);
+        cashBtn.setOnAction((event -> {
+            new CashPaymentWindow();
             stage.close();
         }));
+
+        cardBtn.setOnAction(event -> {
+            new CardPaymentWindow();
+            stage.close();
+        });
     }
 
     private void intiText() {
@@ -59,11 +65,11 @@ public class CheckoutWindow {
     }
 
     private void initButtons() {
-        Button card = new Button();
-        cash = new Button();
+        cardBtn = new Button();
+        cashBtn = new Button();
         cancel = new Button();
 
-        Button[] btns = {card, cancel, cash};
+        Button[] btns = {cardBtn, cancel, cashBtn};
         String[] names = {"Card", "Cancel", "Cash"};
         for (int i = 0; i < btns.length; i++) {
             btns[i].setLayoutY(150);
