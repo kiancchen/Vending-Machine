@@ -7,6 +7,7 @@ import VendingMachine.Window.CheckoutManagement.CheckoutWindow;
 import VendingMachine.Window.ProductManagement.ProductManagementWindow;
 import VendingMachine.Window.ProductManagement.ProductTable;
 import VendingMachine.Window.ProductManagement.ProductTableEntry;
+import VendingMachine.Window.SoldHistory.SoldHistoryWindow;
 import VendingMachine.Window.TransactionHistory.TransactionHistoryWindow;
 import VendingMachine.Window.UserManagement.UserManagementWindow;
 import javafx.scene.Scene;
@@ -26,7 +27,9 @@ public class MainWindow {
     private Button userManagementBtn;
     private Button cashManagementBtn;
     private Button productManageBtn;
+    private Button soldHistoryBtn;
     private Button transactionHistory;
+  
     private Text currentUserInfo;
     private ProductTable productTable;
     private Text selectedItemText;
@@ -37,7 +40,7 @@ public class MainWindow {
 
     private MainWindow() {
         pane = new AnchorPane();
-        scene = new Scene(pane, 1150, 500);
+        scene = new Scene(pane, 1150, 550);
         try {
             userProcessor = UserProcessor.getInstance();
         } catch (IOException e) {
@@ -101,6 +104,7 @@ public class MainWindow {
         userManagementBtn = new Button();
         cashManagementBtn = new Button();
         productManageBtn = new Button();
+        soldHistoryBtn = new Button();
 
 
         Button[] buttons = {accountBtn, userManagementBtn, cashManagementBtn, productManageBtn};
@@ -115,21 +119,23 @@ public class MainWindow {
             button.setText(texts[i]);
             pane.getChildren().add(button);
         }
-
+        soldHistoryBtn .setLayoutX(40 + 130 * 3);
+        soldHistoryBtn .setLayoutY(490);
+        soldHistoryBtn .setPrefWidth(120);
+        soldHistoryBtn .setPrefHeight(30);
+        soldHistoryBtn .setText("Sold History");
+        pane.getChildren().add(soldHistoryBtn );
         initTransactionHistoryButton();
     }
 
     private void initTransactionHistoryButton() {
         transactionHistory = new Button();
-        String string = "Transaction History";
-
         transactionHistory.setLayoutX(600);
         transactionHistory.setLayoutY(450);
         transactionHistory.setPrefWidth(180);
         transactionHistory.setPrefHeight(30);
-        transactionHistory.setText(string);
+        transactionHistory.setText("Transaction History");
         pane.getChildren().add(transactionHistory);
-
     }
 
     private void initBtnActions() {
@@ -173,6 +179,15 @@ public class MainWindow {
         transactionHistory.setOnAction(event -> {
             if(userProcessor.getCurrentUser().getPermission(User.Permission.MANAGE_CASH)) {
                 new TransactionHistoryWindow();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
+                        "to do this action.");
+                alert.show();
+            }
+        });
+        soldHistoryBtn.setOnAction(event -> {
+            if (userProcessor.getCurrentUser().getPermission(User.Permission.MANAGE_ITEM)) {
+                new SoldHistoryWindow();
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
                         "to do this action.");
