@@ -161,7 +161,13 @@ public class MainWindow {
                 alert.show();
             }
         });
-        reportBtn.setOnAction(event -> new ReportWindow());
+        reportBtn.setOnAction(event -> {
+            try {
+                new ReportWindow();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     private void initText() {
