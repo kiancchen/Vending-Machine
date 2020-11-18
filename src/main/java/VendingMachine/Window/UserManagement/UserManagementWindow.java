@@ -8,12 +8,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class UserManagementWindow {
-    private Stage stage;
-    private Scene scene;
-    private AnchorPane pane;
+    private final AnchorPane pane;
+    private final UserProcessor userProcessor;
     private TableView<UserTableEntry> table;
     private ComboBox<String> typeCombo;
     private Button addButton;
@@ -22,13 +19,12 @@ public class UserManagementWindow {
     private TextField usernameField;
     private TextField passwordField;
     private int selectedId;
-    private UserProcessor userProcessor;
 
 
     public UserManagementWindow() {
-        stage = new Stage();
+        Stage stage = new Stage();
         pane = new AnchorPane();
-        scene = new Scene(pane, 600, 480);
+        Scene scene = new Scene(pane, 600, 480);
         stage.setScene(scene);
         stage.setTitle("User Management");
         stage.show();
@@ -142,21 +138,14 @@ public class UserManagementWindow {
 
     private void addAction() {
         String type = typeCombo.getSelectionModel().getSelectedItem();
-
         if (!validateInput()) {
             return;
         }
-
-        try {
-            if (userProcessor.addUser(usernameField.getText(), passwordField.getText(), type)) {
-                setTableData();
-                selectedId = -1;
-            } else {
-                alert(Alert.AlertType.INFORMATION, "User exists.");
-            }
-        } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't save the user to the database");
-            alert.show();
+        if (userProcessor.addUser(usernameField.getText(), passwordField.getText(), type)) {
+            setTableData();
+            selectedId = -1;
+        } else {
+            alert(Alert.AlertType.INFORMATION, "User exists.");
         }
     }
 
@@ -166,15 +155,8 @@ public class UserManagementWindow {
             return;
         }
         int id = Integer.parseInt(table.getSelectionModel().getSelectedItem().getId());
-        try {
-            if (userProcessor.removeUser(id)) {
-//                alert(Alert.AlertType.INFORMATION, "Successfully removed");
-                setTableData();
-            }
-        } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't remove the user from the " +
-                    "database.");
-            alert.show();
+        if (userProcessor.removeUser(id)) {
+            setTableData();
         }
     }
 
@@ -189,15 +171,9 @@ public class UserManagementWindow {
         } else if (!validateInput()) {
             return;
         }
-
-        try {
-            userProcessor.setUsername(selectedId, usernameField.getText());
-            userProcessor.setPassword(selectedId, passwordField.getText());
-            userProcessor.setUserType(selectedId, typeCombo.getSelectionModel().getSelectedItem());
-        } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't change the user.");
-            alert.show();
-        }
+        userProcessor.setUsername(selectedId, usernameField.getText());
+        userProcessor.setPassword(selectedId, passwordField.getText());
+        userProcessor.setUserType(selectedId, typeCombo.getSelectionModel().getSelectedItem());
 
         usernameField.setText("");
         passwordField.setText("");

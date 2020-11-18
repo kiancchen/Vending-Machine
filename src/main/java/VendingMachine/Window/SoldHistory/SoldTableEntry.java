@@ -1,12 +1,12 @@
 package VendingMachine.Window.SoldHistory;
 
 public class SoldTableEntry {
-    private String code;
-    private String name;
-    private String category;
-    private String price;
-    private String sold;
-    private int id;
+    private final String code;
+    private final String name;
+    private final String category;
+    private final String price;
+    private final String sold;
+    private final int id;
 
     public SoldTableEntry(String code, String name, String category, String price,
                           String sold, int id) {

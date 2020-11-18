@@ -5,6 +5,7 @@ import VendingMachine.Data.Transaction;
 import VendingMachine.Data.User;
 import VendingMachine.Processor.CardProcessor;
 import VendingMachine.Processor.UserProcessor;
+import VendingMachine.Window.MainWindow;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -17,17 +18,16 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class CardPaymentWindow {
+    private final Stage stage;
+    private final AnchorPane pane;
+    private final User currentUser;
     private TextField nameField;
     private TextField numberField;
-    private Stage stage;
-    private Scene scene;
-    private AnchorPane pane;
     private CheckBox checkBox;
-    private User currentUser;
 
     public CardPaymentWindow() {
         pane = new AnchorPane();
-        scene = new Scene(pane, 370, 100);
+        Scene scene = new Scene(pane, 370, 100);
         stage = new Stage();
         stage.setScene(scene);
         stage.setTitle("Card Payment");
@@ -101,22 +101,19 @@ public class CardPaymentWindow {
 
         CreditCard card = cardProcessor.validateCard(name, number);
         if (card != null) {
-            try {
                 if (currentUser.pay(currentUser.getTotalPrice(), Transaction.Payment.CARD)) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successful!");
                     alert.show();
                     if (checkBox.isSelected()) {
                         currentUser.setCard(card);
                     }
+                    UserProcessor.getInstance().logoutUser();
+                    MainWindow.getInstance().update();
                     stage.close();
                 } else {
                     Alert alert = new Alert(Alert.AlertType.WARNING, "Fail to pay.");
                     alert.show();
                 }
-            } catch (IOException e) {
-                Alert alert = new Alert(Alert.AlertType.WARNING, "Can't save to the database.");
-                alert.show();
-            }
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Card does not exist.");
             alert.show();

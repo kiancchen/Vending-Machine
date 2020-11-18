@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class User {
     private static int totalId = 0;
-    private int id;
+    private final int id;
     private String username;
     private String password;
     private Map<Permission, Boolean> permissions;
@@ -33,9 +33,6 @@ public class User {
         this.id = totalId++;
     }
 
-    public boolean addToCart(int id, int quantity) {
-        return this.shoppingCart.add(id, quantity);
-    }
 
     public boolean setItemInCart(int id, int newQty) {
         return this.shoppingCart.set(id, newQty);
@@ -56,8 +53,8 @@ public class User {
         return this.permissions.get(permission);
     }
 
-    public boolean pay(double amount, Transaction.Payment payment) throws IOException {
-        if (shoppingCart.pay(amount, payment)) {
+    public boolean pay(double amount, Transaction.Payment payment) {
+        if (shoppingCart.pay(amount, payment, this)) {
             shoppingHistory.add(shoppingCart);
             shoppingCart = new Transaction();
             return true;
@@ -72,8 +69,15 @@ public class User {
         return true;
     }
 
+    public boolean hasSelected(int id) {
+        return shoppingCart.hasProduct(id);
+    }
+
     public double getChange() {
-        return shoppingHistory.get(shoppingHistory.size() - 1).getPaidAmount() - shoppingHistory.get(shoppingHistory.size() - 1).getTotalPrice();
+        if (shoppingHistory.size() > 0) {
+            return shoppingHistory.get(shoppingHistory.size() - 1).getPaidAmount() - shoppingHistory.get(shoppingHistory.size() - 1).getTotalPrice();
+        }
+        return -1;
     }
 
     public double getPaidAmount() {

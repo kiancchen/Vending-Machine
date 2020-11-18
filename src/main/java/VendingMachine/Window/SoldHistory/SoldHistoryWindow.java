@@ -10,41 +10,41 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class SoldHistoryWindow {
-    private Stage stage;
-    private Scene scene;
-    private AnchorPane pane;
+    private final AnchorPane pane;
     private TableView<SoldTableEntry> table;
-    private ProductProcessor productProcessor;
 
     public SoldHistoryWindow() {
-        stage = new Stage();
+        Stage stage = new Stage();
         pane = new AnchorPane();
-        scene = new Scene(pane, 600, 480);
+        Scene scene = new Scene(pane, 600, 480);
         stage.setScene(scene);
         stage.setTitle("Sold History");
         stage.show();
-        productProcessor = ProductProcessor.getInstance();
         initTable();
     }
 
     public void updateTableData() {
         // set data to table
         table.getItems().clear();
-        Map<Integer, Product> productMap =
-                null;
+        Map<Integer, Product> productMap = ProductProcessor.getInstance().getProductMap();
+        List<Product> products =
+                productMap.values()
+                        .stream().sorted(Comparator.comparing(Product::getCategory))
+                        .collect(Collectors.toList());
 
-        productMap = ProductProcessor.getInstance().getProductMap();
-
-        productMap.forEach((k, v) -> {
-            String code = v.getCode();
-            String name = v.getName();
-            String price = Double.toString(v.getPrice());
-            String sold = Integer.toString(v.getSold());
-            String category = v.getCategory().toString();
-            table.getItems().add(new SoldTableEntry(code, name, category, price, sold, v.getId()));
+        products.forEach(product -> {
+            String code = product.getCode();
+            String name = product.getName();
+            String price = Double.toString(product.getPrice());
+            String sold = Integer.toString(product.getSold());
+            String category = product.getCategory().toString();
+            table.getItems().add(new SoldTableEntry(code, name, category, price, sold, product.getId()));
         });
     }
 

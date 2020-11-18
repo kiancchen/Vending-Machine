@@ -1,69 +1,59 @@
 [
- {
-  "id": 0,
-  "username": "",
-  "password": "",
-  "permissions": {
-   "MANAGE_USER": false,
-   "MANAGE_ITEM": false,
-   "MANAGE_CASH": false
+  {
+    "id": 0,
+    "username": "",
+    "password": "",
+    "permissions": {
+      "MANAGE_USER": false,
+      "MANAGE_ITEM": false,
+      "MANAGE_CASH": false
+    },
+    "type": "ANONYMOUS",
+    "shoppingHistory": [],
+    "shoppingCart": {
+      "shoppingList": {},
+      "status": "UNPAID",
+      "totalPrice": 0.0,
+      "paidAmount": 0.0,
+      "change": 0.0
+    }
   },
-  "type": "ANONYMOUS",
-  "transactions": [],
-  "shoppingCart": {
-   "shoppingList": {
-    "VendingMachine.Data.Product@74a1b928": 1
-   },
-   "success": false,
-   "amount": 1.5,
-   "receivedMoney": 6.0
+  {
+    "id": 1,
+    "username": "alan",
+    "password": "123",
+    "permissions": {
+      "MANAGE_USER": false,
+      "MANAGE_ITEM": false,
+      "MANAGE_CASH": false
+    },
+    "type": "CUSTOMER",
+    "shoppingHistory": [],
+    "shoppingCart": {
+      "shoppingList": {},
+      "status": "UNPAID",
+      "totalPrice": 0.0,
+      "paidAmount": 0.0,
+      "change": 0.0
+    }
+  },
+  {
+    "id": 2,
+    "username": "blan",
+    "password": "123",
+    "permissions": {
+      "MANAGE_USER": true,
+      "MANAGE_ITEM": true,
+      "MANAGE_CASH": true
+    },
+    "type": "OWNER",
+    "shoppingHistory": [],
+    "shoppingCart": {
+      "shoppingList": {},
+      "status": "UNPAID",
+      "totalPrice": 0.0,
+      "paidAmount": 0.0,
+      "change": 0.0
+    }
   }
- },
- {
-  "id": 1,
-  "username": "alan",
-  "password": "123",
-  "permissions": {
-   "MANAGE_USER": false,
-   "MANAGE_ITEM": false,
-   "MANAGE_CASH": false
-  },
-  "type": "CUSTOMER",
-  "transactions": [],
-  "shoppingCart": {
-   "shoppingList": {},
-   "success": false,
-   "amount": 0.0,
-   "receivedMoney": 0.0
-  }
- },
- {
-  "id": 2,
-  "username": "blan",
-  "password": "123",
-  "permissions": {
-   "MANAGE_USER": true,
-   "MANAGE_ITEM": true,
-   "MANAGE_CASH": true
-  },
-  "type": "OWNER",
-  "transactions": [],
-  "shoppingCart": {
-   "shoppingList": {},
-   "success": false,
-   "amount": 0.0,
-   "receivedMoney": 0.0
-  }
- },
- {
-  "id": 4,
-  "username": "zzz",
-  "password": "admin",
-  "permissions": {
-   "MANAGE_ITEM": false,
-   "MANAGE_CASH": false,
-   "MANAGE_USER": false
-  },
-  "type": "CUSTOMER"
- }
 ]

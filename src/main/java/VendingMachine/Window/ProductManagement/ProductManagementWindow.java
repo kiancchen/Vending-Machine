@@ -5,18 +5,18 @@ import VendingMachine.Processor.ProductProcessor;
 import VendingMachine.Window.MainWindow;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ProductManagementWindow {
-
-    private final ProductTable productTable;
     private final ProductProcessor productProcessor;
-    private Stage stage;
-    private Scene scene;
-    private AnchorPane pane;
+    private final AnchorPane pane;
     private Button addButton;
     private Button changeButton;
     private Button removeButton;
@@ -27,17 +27,17 @@ public class ProductManagementWindow {
     private TextField stockField;
     private int selectedId;
     private String originCategory;
+    private TableView<ProductTableEntry> productTable;
 
     public ProductManagementWindow() {
-        stage = new Stage();
+        Stage stage = new Stage();
         pane = new AnchorPane();
-        scene = new Scene(pane, 600, 500);
+        Scene scene = new Scene(pane, 600, 500);
         stage.setScene(scene);
         stage.setTitle("Product Management");
         stage.show();
         productProcessor = ProductProcessor.getInstance();
-        this.productTable = new ProductTable(50, 30, 500, 350);
-        pane.getChildren().add(productTable.getTable());
+        initTable();
         setTableAction();
         initButton();
         initButtonActions();
@@ -47,10 +47,30 @@ public class ProductManagementWindow {
         selectedId = -1;
     }
 
+    public void updateTableData() {
+        // set data to table
+        productTable.getItems().clear();
+        Map<Integer, Product> productMap = ProductProcessor.getInstance().getProductMap();
+        List<Product> products =
+                productMap.values()
+                        .stream().sorted(Comparator.comparing(Product::getCategory))
+                        .collect(Collectors.toList());
+
+        products.forEach(product -> {
+            String code = product.getCode();
+            String name = product.getName();
+            String price = Double.toString(product.getPrice());
+            String quantity = Integer.toString(product.getStock());
+            String category = product.getCategory().toString();
+            productTable.getItems().add(new ProductTableEntry(code, name, category, price, quantity,
+                    product.getId()));
+        });
+    }
+
     private void setTableAction() {
-        this.productTable.setTableAction(event -> {
-            if (!this.productTable.selectIsEmpty()) {
-                ProductTableEntry selected = this.productTable.getSelectedItem();
+        this.productTable.setOnMouseClicked(event -> {
+            if (!this.productTable.getSelectionModel().isEmpty()) {
+                ProductTableEntry selected = this.productTable.getSelectionModel().getSelectedItem();
                 selectedId = selected.getId();
                 codeField.setText(selected.getCode());
                 nameField.setText(selected.getName());
@@ -61,7 +81,6 @@ public class ProductManagementWindow {
             }
         });
     }
-
 
     private void initButton() {
         addButton = new Button();
@@ -149,7 +168,6 @@ public class ProductManagementWindow {
         pane.getChildren().addAll(codeLabel, nameLabel, priceLabel, quantityLabel, categoryLabel);
     }
 
-
     private void addAction() {
         if (!validateInput()) {
             return;
@@ -164,7 +182,7 @@ public class ProductManagementWindow {
             if (productProcessor.addProduct(code, category, nameField.getText(),
                     Double.parseDouble(priceField.getText()), Integer.parseInt(stockField.getText()))) {
                 alert(Alert.AlertType.INFORMATION, "Successfully add.");
-                this.productTable.updateTableData();
+                updateTableData();
                 MainWindow.getInstance().updateProductTable();
                 selectedId = -1;
             } else {
@@ -176,7 +194,7 @@ public class ProductManagementWindow {
     }
 
     private void removeAction() {
-        ProductTableEntry selectedItem = productTable.getSelectedItem();
+        ProductTableEntry selectedItem = productTable.getSelectionModel().getSelectedItem();
         if (selectedItem == null) {
             alert(Alert.AlertType.WARNING, "You don't select any product.");
             return;
@@ -185,7 +203,7 @@ public class ProductManagementWindow {
         try {
             if (productProcessor.removeProduct(selectedId)) {
                 alert(Alert.AlertType.INFORMATION, "Successfully removed");
-                this.productTable.updateTableData();
+                updateTableData();
                 MainWindow.getInstance().updateProductTable();
             }
         } catch (Exception e) {
@@ -210,28 +228,23 @@ public class ProductManagementWindow {
         int newStock = Integer.parseInt(stockField.getText());
         String newName = nameField.getText();
         String oldCode = productProcessor.getProduct(selectedId).getCode();
-        try {
-            if (productProcessor.setProductCode(selectedId, newCode) &&
-                    productProcessor.setProductName(selectedId, newName) &&
-                    productProcessor.setProductCategory(selectedId, newCategory) &&
-                    productProcessor.setProductPrice(selectedId, newPrice) &&
-                    productProcessor.setProductStock(selectedId, newStock)) {
-                alert(Alert.AlertType.INFORMATION, "Change successfully");
-            } else {
-                productProcessor.setProductCode(selectedId, oldCode);
-                alert(Alert.AlertType.WARNING, "Fail to change");
-            }
 
-        } catch (IOException e) {
+        if (productProcessor.setProductCode(selectedId, newCode) &&
+                productProcessor.setProductName(selectedId, newName) &&
+                productProcessor.setProductCategory(selectedId, newCategory) &&
+                productProcessor.setProductPrice(selectedId, newPrice) &&
+                productProcessor.setProductStock(selectedId, newStock)) {
+            alert(Alert.AlertType.INFORMATION, "Change successfully");
+        } else {
+            productProcessor.setProductCode(selectedId, oldCode);
             alert(Alert.AlertType.WARNING, "Fail to change");
         }
-
         codeField.setText("");
         nameField.setText("");
         priceField.setText("");
         stockField.setText("");
         categoryCombo.getSelectionModel().clearSelection();
-        this.productTable.updateTableData();
+        updateTableData();
         MainWindow.getInstance().updateProductTable();
         selectedId = -1;
     }
@@ -256,5 +269,29 @@ public class ProductManagementWindow {
     private void alert(Alert.AlertType warning, String s) {
         Alert alert = new Alert(warning, s);
         alert.show();
+    }
+
+    private void initTable() {
+        productTable = new TableView<>();
+        productTable.setLayoutX(50);
+        productTable.setLayoutY(30);
+        productTable.setPrefWidth(500);
+        productTable.setPrefHeight(350);
+        productTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        // create table
+        String[] colNames = {"Category", "Name", "Code", "Price ($)", "Quantity"};
+        String[] properties = {"category", "name", "code", "price", "quantity"};
+        for (int i = 0; i < colNames.length; i++) {
+            String colName = colNames[i];
+            TableColumn<ProductTableEntry, String> column = new TableColumn<>(colName);
+            column.setSortable(false);
+            column.setPrefWidth(118);
+            column.setStyle("-fx-alignment: CENTER;");
+            column.setCellValueFactory(new PropertyValueFactory<>(properties[i]));
+            productTable.getColumns().add(column);
+        }
+        updateTableData();
+        pane.getChildren().add(productTable);
     }
 }

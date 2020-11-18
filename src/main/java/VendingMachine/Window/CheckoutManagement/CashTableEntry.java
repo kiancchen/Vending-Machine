@@ -1,8 +1,8 @@
 package VendingMachine.Window.CheckoutManagement;
 
 public class CashTableEntry {
-    private String value;
-    private String number;
+    private final String value;
+    private final String number;
 
 
     public CashTableEntry(String value, String number) {

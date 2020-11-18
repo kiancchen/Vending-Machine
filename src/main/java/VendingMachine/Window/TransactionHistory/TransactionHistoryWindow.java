@@ -13,16 +13,14 @@ import java.time.format.DateTimeFormatter;
 
 public class TransactionHistoryWindow {
 
-    private Stage stage;
-    private Scene scene;
-    private AnchorPane pane;
+    private final AnchorPane pane;
+    private final UserProcessor userProcessor;
     private TableView<TransactionHistoryTableEntry> table;
-    private UserProcessor userProcessor;
 
     public TransactionHistoryWindow() {
-        stage = new Stage();
+        Stage stage = new Stage();
         pane = new AnchorPane();
-        scene = new Scene(pane, 600, 480);
+        Scene scene = new Scene(pane, 600, 480);
         stage.setScene(scene);
         stage.setTitle("Transaction History");
         stage.show();

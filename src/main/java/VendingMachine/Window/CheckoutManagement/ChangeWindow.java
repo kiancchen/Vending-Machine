@@ -15,16 +15,15 @@ import javafx.stage.Stage;
 import java.util.*;
 
 public class ChangeWindow {
-    private Stage stage;
-    private Scene scene;
-    private AnchorPane pane;
+    private final Stage stage;
+    private final AnchorPane pane;
     private TableView<CashTableEntry> table;
-    private Button okeyButton;
+    private Button okBtn;
 
     public ChangeWindow() {
         stage = new Stage();
         pane = new AnchorPane();
-        scene = new Scene(pane, 480, 600);
+        Scene scene = new Scene(pane, 480, 600);
         stage.setScene(scene);
         stage.setTitle("Cash Changes");
         stage.show();
@@ -44,19 +43,19 @@ public class ChangeWindow {
     }
 
     private void initButton() {
-        okeyButton = new Button();
-        okeyButton.setLayoutX(180);
-        okeyButton.setLayoutY(60 + 470);
-        okeyButton.setPrefWidth(120);
-        okeyButton.setPrefHeight(30);
-        okeyButton.setText("Okay");
-        pane.getChildren().add(okeyButton);
+        okBtn = new Button();
+        okBtn.setLayoutX(180);
+        okBtn.setLayoutY(60 + 470);
+        okBtn.setPrefWidth(120);
+        okBtn.setPrefHeight(30);
+        okBtn.setText("Okay");
+        pane.getChildren().add(okBtn);
     }
 
     private void initButtonAction() {
-        okeyButton.setOnAction((event -> {
-            MainWindow.getInstance().setShoppingCartData();
-            MainWindow.getInstance().updateProductTable();
+        okBtn.setOnAction((event -> {
+            UserProcessor.getInstance().logoutUser();
+            MainWindow.getInstance().update();
             stage.close();
         }));
     }

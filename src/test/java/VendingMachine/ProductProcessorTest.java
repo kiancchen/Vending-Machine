@@ -31,27 +31,27 @@ public class ProductProcessorTest {
 
     @Before
     public void init() throws IOException {
-            productProcessor = ProductProcessor.load();
+        productProcessor = ProductProcessor.load();
     }
 
     @Test
-    public void testGetCategory(){
-        assertEquals(Product.Category.DRINK,productProcessor.getProduct(2).getCategory());
+    public void testGetCategory() {
+        assertEquals(Product.Category.DRINK, productProcessor.getProduct(2).getCategory());
     }
 
     @Test
     public void testGetName() {
-        assertEquals("Mineral Water",productProcessor.getProduct(1).getName());
+        assertEquals("Mineral Water", productProcessor.getProduct(1).getName());
     }
 
     @Test
     public void testGetPrice() {
-        assertEquals(1.0,productProcessor.getProduct(1).getPrice(),0);
+        assertEquals(1.0, productProcessor.getProduct(1).getPrice(), 0);
     }
 
     @Test
     public void testGetQuantity() {
-        assertEquals(7,productProcessor.getProduct(1).getStock(),0);
+        assertEquals(7, productProcessor.getProduct(1).getStock(), 0);
     }
 
     @Test
@@ -61,43 +61,43 @@ public class ProductProcessorTest {
 
 
     @Test
-    public void testAddProduct() throws IOException{
-        assertFalse(productProcessor.addProduct("1","DRINK","Mineral Water",1,7));
-        assertFalse(productProcessor.addProduct("20","DRINK","Test",1,20));
-        assertFalse(productProcessor.addProduct("20","DRINK","Test",1,-1));
-        assertTrue(productProcessor.addProduct("20","DRINK","Test",1,7));
+    public void testAddProduct()  {
+        assertFalse(productProcessor.addProduct("1", "DRINK", "Mineral Water", 1, 7));
+        assertFalse(productProcessor.addProduct("20", "DRINK", "Test", 1, 20));
+        assertFalse(productProcessor.addProduct("20", "DRINK", "Test", 1, -1));
+        assertTrue(productProcessor.addProduct("20", "DRINK", "Test", 1, 7));
     }
 
     @Test
-    public void testSetProductQuantity() throws IOException{
-        assertFalse(productProcessor.setProductStock(1,16));
-        assertTrue(productProcessor.setProductStock(1,10));
+    public void testSetProductQuantity() {
+        assertFalse(productProcessor.setProductStock(1, 16));
+        assertTrue(productProcessor.setProductStock(1, 10));
     }
 
     @Test
-    public void testSetProductName() throws IOException{
-        assertFalse(productProcessor.setProductName(1,"Sprite"));
+    public void testSetProductName() {
+        assertFalse(productProcessor.setProductName(1, "Sprite"));
         assertTrue(productProcessor.setProductName(1, "test"));
     }
 
     @Test
-    public void testSetProductCategory() throws IOException{
+    public void testSetProductCategory() {
         assertTrue(productProcessor.setProductCategory(1, "CHIP"));
     }
 
     @Test
-    public void testSetProductPrice() throws IOException{
+    public void testSetProductPrice() {
         assertTrue(productProcessor.setProductPrice(1, 10));
     }
 
     @Test
-    public void testGetProductMap() throws IOException{
+    public void testGetProductMap() throws IOException {
         Map<Integer, Product> test = DatabaseHandler.loadProductData();
-        assertEquals(test.size(),productProcessor.getProductMap().size());
+        assertEquals(test.size(), productProcessor.getProductMap().size());
     }
 
     @Test
-    public void testRemoveProduct() throws IOException{
+    public void testRemoveProduct() {
         assertFalse(productProcessor.removeProduct(20));
         assertTrue(productProcessor.removeProduct(1));
     }
@@ -109,7 +109,7 @@ public class ProductProcessorTest {
     }
 
     @Test
-    public void testSetProductCode() throws IOException {
+    public void testSetProductCode() {
         assertFalse(productProcessor.setProductCode(1, "5"));
         assertTrue(productProcessor.setProductCode(1, "20"));
     }
@@ -117,7 +117,7 @@ public class ProductProcessorTest {
     @Test
     public void testSold() {
         productProcessor.getProduct(1).sold(1);
-        assertEquals(1,productProcessor.getProduct(1).getSold(),0);
+        assertEquals(1, productProcessor.getProduct(1).getSold(), 0);
     }
 
 

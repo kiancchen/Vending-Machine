@@ -9,12 +9,12 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class CheckoutWindow {
+    private final double amount;
     private Stage stage;
     private AnchorPane pane;
     private Button cashBtn;
     private Button cardBtn;
     private Button cancel;
-    private double amount;
 
     public CheckoutWindow() {
         this.amount = UserProcessor.getInstance().getCurrentUser().getTotalPrice();
