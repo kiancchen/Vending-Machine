@@ -1,6 +1,8 @@
 package VendingMachine;
 
+import VendingMachine.Data.CreditCard;
 import VendingMachine.Data.User;
+import VendingMachine.Processor.CardProcessor;
 import VendingMachine.Processor.ProductProcessor;
 import VendingMachine.Processor.UserProcessor;
 import org.junit.After;
@@ -168,7 +170,7 @@ public class UserProcessorTest {
 
     @Test
     public void testCancel() {
-        assertTrue(userProcessor.getCurrentUser().cancelShopping());
+        assertTrue(userProcessor.getCurrentUser().cancelShopping("test"));
     }
 
     @Test
@@ -185,5 +187,12 @@ public class UserProcessorTest {
     @Test
     public void testGetShoppingHistory() {
         assertNotNull(userProcessor.getCurrentUser().getShoppingHistory());
+    }
+
+    @Test
+    public void testCard(){
+        CreditCard creditCard = new CreditCard();
+        userProcessor.getCurrentUser().setCard(creditCard);
+        assertEquals(creditCard,userProcessor.getCurrentUser().getCard());
     }
 }
