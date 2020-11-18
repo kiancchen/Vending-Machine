@@ -1,13 +1,13 @@
 package VendingMachine.Window.CashManagement;
 
 import VendingMachine.Processor.CashProcessor;
-import VendingMachine.Processor.MainProcessor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.*;
 
 public class CashManagementWindow {
@@ -20,6 +20,7 @@ public class CashManagementWindow {
     private TextField amountField;
     private ComboBox<String> typeCombo;
     private String originCash;
+    private CashProcessor cashProcessor;
 
     public CashManagementWindow() {
         stage = new Stage();
@@ -28,6 +29,14 @@ public class CashManagementWindow {
         stage.setScene(scene);
         stage.setTitle("Cash Management");
         stage.show();
+
+        try {
+            cashProcessor = CashProcessor.getInstance();
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't get the cash processor.");
+            alert.show();
+        }
+
 
         initTable();
         initButton();
@@ -110,7 +119,7 @@ public class CashManagementWindow {
     private void setTableData() {
         // set data to table
         table.getItems().clear();
-        Map<Double, Integer> cashMap = MainProcessor.getCashProcessor().getCashMap();
+        Map<Double, Integer> cashMap = cashProcessor.getCashMap();
         Collection<Double> keySet = cashMap.keySet();
         List<Double> list = new ArrayList<>(keySet);
         Collections.sort(list);
@@ -124,7 +133,6 @@ public class CashManagementWindow {
     }
 
     private void changeAction() {
-        CashProcessor cashProcessor = MainProcessor.getCashProcessor();
         if (selectedCashType < 0) {
             alert(Alert.AlertType.WARNING, "You don't select any cash.");
             return;

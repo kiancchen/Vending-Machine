@@ -7,10 +7,23 @@ import java.io.IOException;
 import java.util.Map;
 
 public class ProductProcessor {
+    private static ProductProcessor productProcessor;
     private Map<Integer, Product> productMap;
 
-    public ProductProcessor() throws IOException {
+    private ProductProcessor() throws IOException {
         productMap = DatabaseHandler.loadProductData();
+    }
+
+    public static ProductProcessor getInstance() throws IOException {
+        if (productProcessor == null) {
+            productProcessor = new ProductProcessor();
+        }
+        return productProcessor;
+    }
+
+    public static ProductProcessor reload() throws IOException {
+        productProcessor = new ProductProcessor();
+        return productProcessor;
     }
 
     public Product getProduct(int id) {

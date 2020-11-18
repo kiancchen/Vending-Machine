@@ -1,7 +1,6 @@
 package VendingMachine.Window;
 
 import VendingMachine.Data.User;
-import VendingMachine.Processor.MainProcessor;
 import VendingMachine.Processor.UserProcessor;
 import VendingMachine.Window.CashManagement.CashManagementWindow;
 import VendingMachine.Window.CheckoutManagement.CheckoutWindow;
@@ -16,7 +15,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
+
 public class MainWindow {
+    private static MainWindow mainWindow;
     private Scene scene;
     private AnchorPane pane;
     private Button accountBtn;
@@ -27,14 +29,19 @@ public class MainWindow {
     private ProductTable productTable;
     private Text selectedItemText;
     private ComboBox<Integer> selectedQuantityCombo;
-
     private TableView<ProductTableEntry> shoppingCartTable;
-    private UserProcessor userProcessor = MainProcessor.getUserProcessor();
+    private UserProcessor userProcessor;
     private ComboBox<Integer> setCartQtyCombo;
 
-    public MainWindow() {
+    private MainWindow() {
         pane = new AnchorPane();
         scene = new Scene(pane, 1150, 500);
+        try {
+            userProcessor = UserProcessor.getInstance();
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't get the user processor.");
+            alert.show();
+        }
         initButtons();
         initBtnActions();
         initLabels();
@@ -48,8 +55,14 @@ public class MainWindow {
         setProductTableAction();
     }
 
+    public static MainWindow getInstance() {
+        if (mainWindow == null) {
+            mainWindow = new MainWindow();
+        }
+        return mainWindow;
+    }
+
     public void updateCurrencyUserInfo() {
-        UserProcessor userProcessor = MainProcessor.getUserProcessor();
         currentUserInfo.setText("Current User with type: "
                 + userProcessor.getCurrentUser().getUsername()
                 + "   "
@@ -63,7 +76,7 @@ public class MainWindow {
 
     public void setShoppingCartData() {
         this.shoppingCartTable.getItems().clear();
-        MainProcessor.getUserProcessor().getCurrentUser().getShoppingCart().getShoppingList().forEach((k, v) ->
+        userProcessor.getCurrentUser().getShoppingList().forEach((k, v) ->
                 this.shoppingCartTable.getItems().add(new ProductTableEntry(k.getCode(), k.getName(),
                         k.getCategory().toString(), Double.toString(k.getPrice()),
                         Integer.toString(v), k.getId())));
@@ -262,7 +275,7 @@ public class MainWindow {
             return;
         }
 
-        MainProcessor.getUserProcessor().getCurrentUser().setItemInCart(selectedItem.getId(),
+        userProcessor.getCurrentUser().setItemInCart(selectedItem.getId(),
                 setCartQtyCombo.getSelectionModel().getSelectedItem());
 
         setCartQtyCombo.getItems().clear();
@@ -284,7 +297,7 @@ public class MainWindow {
             return;
         }
 
-        if (!MainProcessor.getUserProcessor().getCurrentUser().addToCart(selectedItem.getId(),
+        if (!userProcessor.getCurrentUser().addToCart(selectedItem.getId(),
                 selectedQuantityCombo.getSelectionModel().getSelectedItem())) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Not enough quantity.");
             alert.show();

@@ -11,7 +11,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        MainWindow mainWindow = new MainWindow();
+        MainWindow mainWindow = MainWindow.getInstance();
         primaryStage.setScene(mainWindow.getScene());
         primaryStage.setTitle("Vending Machine");
         primaryStage.show();

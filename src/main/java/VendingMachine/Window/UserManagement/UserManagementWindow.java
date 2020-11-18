@@ -1,13 +1,14 @@
 package VendingMachine.Window.UserManagement;
 
 import VendingMachine.Data.User;
-import VendingMachine.Processor.MainProcessor;
 import VendingMachine.Processor.UserProcessor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class UserManagementWindow {
     private Stage stage;
@@ -21,6 +22,7 @@ public class UserManagementWindow {
     private TextField usernameField;
     private TextField passwordField;
     private int selectedId;
+    private UserProcessor userProcessor;
 
 
     public UserManagementWindow() {
@@ -30,6 +32,14 @@ public class UserManagementWindow {
         stage.setScene(scene);
         stage.setTitle("User Management");
         stage.show();
+
+        try {
+            userProcessor = UserProcessor.getInstance();
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't get the user processor.");
+            alert.show();
+        }
+
 
         initTable();
         initButton();
@@ -133,7 +143,7 @@ public class UserManagementWindow {
     private void setTableData() {
         // set data to table
         table.getItems().clear();
-        for (User user : MainProcessor.getUserProcessor().getUsers()) {
+        for (User user : userProcessor.getUsers()) {
             table.getItems().add(new UserTableEntry(Integer.toString(user.getId()),
                     user.getUsername(),
                     user.getPassword(),
@@ -149,17 +159,17 @@ public class UserManagementWindow {
         }
 
         try {
-            if (MainProcessor.getUserProcessor().addUser(usernameField.getText(), passwordField.getText(), type)) {
-//                alert(Alert.AlertType.INFORMATION, "Successfully add.");
-
+            if (userProcessor.addUser(usernameField.getText(), passwordField.getText(), type)) {
                 setTableData();
                 selectedId = -1;
             } else {
                 alert(Alert.AlertType.INFORMATION, "User exists.");
             }
-        } catch (Exception e) {
-            alert(Alert.AlertType.WARNING, "Can not add user.");
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't save the user to the database");
+            alert.show();
         }
+
 
     }
 
@@ -170,17 +180,18 @@ public class UserManagementWindow {
         }
         int id = Integer.parseInt(table.getSelectionModel().getSelectedItem().getId());
         try {
-            if (MainProcessor.getUserProcessor().removeUser(id)) {
+            if (userProcessor.removeUser(id)) {
 //                alert(Alert.AlertType.INFORMATION, "Successfully removed");
                 setTableData();
             }
-        } catch (Exception e) {
-            alert(Alert.AlertType.WARNING, "User selected is not existed");
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't remove the user from the " +
+                    "database.");
+            alert.show();
         }
     }
 
     private void changeAction() {
-        UserProcessor userProcessor = MainProcessor.getUserProcessor();
         if (selectedId < 0) {
             alert(Alert.AlertType.WARNING, "You don't select any user.");
             return;
@@ -192,14 +203,16 @@ public class UserManagementWindow {
             return;
         }
 
+
         try {
             userProcessor.setUsername(selectedId, usernameField.getText());
             userProcessor.setPassword(selectedId, passwordField.getText());
             userProcessor.setUserType(selectedId, typeCombo.getSelectionModel().getSelectedItem());
-//            alert(Alert.AlertType.WARNING, "Change successfully.");
-        } catch (Exception e) {
-            alert(Alert.AlertType.WARNING, "Change failed.");
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't change the user.");
+            alert.show();
         }
+
         usernameField.setText("");
         passwordField.setText("");
         typeCombo.getSelectionModel().clearSelection();

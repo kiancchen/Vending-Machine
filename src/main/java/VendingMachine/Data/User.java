@@ -12,7 +12,7 @@ public class User {
     private String password;
     private Map<Permission, Boolean> permissions;
     private UserType type;
-    private List<Transaction> transactions;
+    private List<Transaction> shoppingHistory;
     private Transaction shoppingCart;
 
     public User() {
@@ -20,7 +20,7 @@ public class User {
         this.password = "";
         this.setType(UserType.ANONYMOUS);
         this.id = totalId++;
-        this.transactions = new ArrayList<>();
+        this.shoppingHistory = new ArrayList<>();
         this.shoppingCart = new Transaction();
     }
 
@@ -54,24 +54,53 @@ public class User {
         return this.permissions.get(permission);
     }
 
-    public Transaction getShoppingCart() {
-        return shoppingCart;
+    public boolean pay(double amount) {
+        if (shoppingCart.pay(amount)) {
+            shoppingHistory.add(shoppingCart);
+            shoppingCart = new Transaction();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean cancelShopping() {
+        shoppingCart.cancel();
+        shoppingHistory.add(shoppingCart);
+        shoppingCart = new Transaction();
+        return true;
+    }
+
+    public double getChange() {
+        return shoppingHistory.get(shoppingHistory.size() - 1).getPaidAmount() - shoppingHistory.get(shoppingHistory.size() - 1).getTotalPrice();
+    }
+
+    public double getPaidAmount() {
+        return shoppingCart.getPaidAmount();
+    }
+
+    public double getTotalPrice() {
+        return shoppingCart.getTotalPrice();
+    }
+
+    public Map<Product, Integer> getShoppingList() {
+        return shoppingCart.getShoppingList();
+    }
+
+    public List<Transaction> getShoppingHistory() {
+        return shoppingHistory;
     }
 
     public String getUsername() {
         return username;
     }
 
-
     public void setUsername(String username) {
         this.username = username;
     }
 
-
     public String getPassword() {
         return password;
     }
-
 
     public void setPassword(String password) {
         this.password = password;

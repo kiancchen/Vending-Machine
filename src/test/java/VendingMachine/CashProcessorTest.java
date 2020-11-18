@@ -16,6 +16,7 @@ import static org.junit.Assert.assertNull;
 
 
 public class CashProcessorTest {
+    CashProcessor cashProcessor;
 
     @Before
     @After
@@ -29,9 +30,13 @@ public class CashProcessorTest {
         }
     }
 
+    @Before
+    public void init() throws IOException {
+        cashProcessor = CashProcessor.reload();
+    }
+
     @Test
-    public void testConstructor() throws IOException {
-        CashProcessor cashProcessor = new CashProcessor();
+    public void testConstructor() {
         Map<Double, Integer> cashes = cashProcessor.getCashMap();
         double[] values = {100.0, 50.0, 20.0, 10.0, 5.0, 2.0, 1.0, 0.5, 0.2, 0.1, 0.05};
         for (double value : values) {
@@ -41,7 +46,6 @@ public class CashProcessorTest {
 
     @Test
     public void testSetCashNumber() throws IOException {
-        CashProcessor cashProcessor = new CashProcessor();
         Map<Double, Integer> cashes = cashProcessor.getCashMap();
         cashProcessor.setCashNumber(100.0, 10);
         assertEquals(10, (int) cashes.get(100.0));
@@ -55,14 +59,12 @@ public class CashProcessorTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testSetNegativeCashNumber() throws IOException {
-        CashProcessor cashProcessor = new CashProcessor();
         Map<Double, Integer> cashes = cashProcessor.getCashMap();
         cashProcessor.setCashNumber(100.0, -1);
     }
 
     @Test
     public void testGetChange1() throws IOException {
-        CashProcessor cashProcessor = new CashProcessor();
         Map<Double, Integer> changes = cashProcessor.getChange(45);
         assertEquals(2, (int) changes.get(20.0));
         assertEquals(1, (int) changes.get(5.0));
@@ -72,21 +74,18 @@ public class CashProcessorTest {
 
     @Test
     public void testGetChange2() throws IOException {
-        CashProcessor cashProcessor = new CashProcessor();
         Map<Double, Integer> changes = cashProcessor.getChange(10000.0);
         assertNull(changes);
     }
 
     @Test
     public void testGetChange3() throws IOException {
-        CashProcessor cashProcessor = new CashProcessor();
         Map<Double, Integer> changes = cashProcessor.getChange(0.01);
         assertNull(changes);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetNegativeChange1() throws IOException {
-        CashProcessor cashProcessor = new CashProcessor();
         Map<Double, Integer> changes = cashProcessor.getChange(-10);
     }
 

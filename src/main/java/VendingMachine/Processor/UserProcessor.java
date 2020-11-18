@@ -7,12 +7,25 @@ import java.io.IOException;
 import java.util.List;
 
 public class UserProcessor {
+    private static UserProcessor userProcessor;
     private List<User> users;
     private User currentUser;
 
-    public UserProcessor() throws IOException {
+    private UserProcessor() throws IOException {
         users = DatabaseHandler.loadUserData();
         this.currentUser = this.users.get(0);
+    }
+
+    public static UserProcessor getInstance() throws IOException {
+        if (userProcessor == null) {
+            userProcessor = new UserProcessor();
+        }
+        return userProcessor;
+    }
+
+    public static UserProcessor reload() throws IOException {
+        userProcessor = new UserProcessor();
+        return userProcessor;
     }
 
     public boolean verifyUser(String username, String password) {

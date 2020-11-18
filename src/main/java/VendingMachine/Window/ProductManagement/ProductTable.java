@@ -1,13 +1,15 @@
 package VendingMachine.Window.ProductManagement;
 
 import VendingMachine.Data.Product;
-import VendingMachine.Processor.MainProcessor;
+import VendingMachine.Processor.ProductProcessor;
 import javafx.event.EventHandler;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
+import java.io.IOException;
 import java.util.Map;
 
 public class ProductTable {
@@ -20,7 +22,15 @@ public class ProductTable {
     public void updateTableData() {
         // set data to table
         table.getItems().clear();
-        Map<Integer, Product> productMap = MainProcessor.getProductProcessor().getProductMap();
+        Map<Integer, Product> productMap =
+                null;
+        try {
+            productMap = ProductProcessor.getInstance().getProductMap();
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't get the product processor.");
+            alert.show();
+            return;
+        }
         productMap.forEach((k, v) -> {
             String code = v.getCode();
             String name = v.getName();

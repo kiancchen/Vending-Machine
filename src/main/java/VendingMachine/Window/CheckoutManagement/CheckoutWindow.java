@@ -1,12 +1,14 @@
 package VendingMachine.Window.CheckoutManagement;
 
-import VendingMachine.Processor.MainProcessor;
+import VendingMachine.Processor.UserProcessor;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class CheckoutWindow {
     private Stage stage;
@@ -16,7 +18,12 @@ public class CheckoutWindow {
     private double amount;
 
     public CheckoutWindow() {
-        this.amount = MainProcessor.getUserProcessor().getCurrentUser().getShoppingCart().getAmount();
+        try {
+            this.amount = UserProcessor.getInstance().getCurrentUser().getTotalPrice();
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't get the user processor.");
+            alert.show();
+        }
         if (amount == 0) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Please purchase an item.");
             alert.show();

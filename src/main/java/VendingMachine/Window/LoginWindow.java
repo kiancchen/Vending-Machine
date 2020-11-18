@@ -1,6 +1,5 @@
 package VendingMachine.Window;
 
-import VendingMachine.Processor.MainProcessor;
 import VendingMachine.Processor.UserProcessor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -37,15 +36,20 @@ public class LoginWindow {
     public void signInAction() {
         String usernameInp = inputUsername.getText();
         String passwordInp = inputPassword.getText();
-        if (MainProcessor.getUserProcessor().verifyUser(usernameInp, passwordInp)) {
-            Alert alert = new Alert(AlertType.INFORMATION, "Sign in successfully.");
-            alert.show();
-            this.mainWindow.changeAccountButtonText("Logout");
-            this.mainWindow.updateCurrencyUserInfo();
-            stage.close();
-        } else {
-            Alert alert = new Alert(AlertType.WARNING, "Fail to sign in. Wrong username or " +
-                    "password.");
+        try {
+            if (UserProcessor.getInstance().verifyUser(usernameInp, passwordInp)) {
+                Alert alert = new Alert(AlertType.INFORMATION, "Sign in successfully.");
+                alert.show();
+                this.mainWindow.changeAccountButtonText("Logout");
+                this.mainWindow.updateCurrencyUserInfo();
+                stage.close();
+            } else {
+                Alert alert = new Alert(AlertType.WARNING, "Fail to sign in. Wrong username or " +
+                        "password.");
+                alert.show();
+            }
+        } catch (IOException e) {
+            Alert alert = new Alert(AlertType.WARNING, "Can't get the user processor");
             alert.show();
         }
     }
@@ -53,7 +57,15 @@ public class LoginWindow {
     public void signUpAction() {
         String usernameInp = inputUsername.getText();
         String passwordInp = inputPassword.getText();
-        UserProcessor userProcessor = MainProcessor.getUserProcessor();
+        UserProcessor userProcessor = null;
+        try {
+            userProcessor = UserProcessor.getInstance();
+        } catch (IOException e) {
+            Alert alert = new Alert(AlertType.WARNING, "Can't get the user processor");
+            alert.show();
+            return;
+        }
+
         try {
             if (userProcessor.addUser(usernameInp, passwordInp)) {
 
@@ -68,9 +80,10 @@ public class LoginWindow {
                 alert.show();
             }
         } catch (IOException e) {
-            Alert alert = new Alert(AlertType.WARNING, "Something went wrong.");
+            Alert alert = new Alert(AlertType.WARNING, "Can't save the user to the database");
             alert.show();
         }
+
     }
 
     private void initLabels() {

@@ -6,10 +6,23 @@ import java.io.IOException;
 import java.util.*;
 
 public class CashProcessor {
+    private static CashProcessor cashProcessor;
     private Map<Double, Integer> cashMap;
 
-    public CashProcessor() throws IOException {
+    private CashProcessor() throws IOException {
         this.cashMap = DatabaseHandler.loadCashData();
+    }
+
+    public static CashProcessor getInstance() throws IOException {
+        if (cashProcessor == null) {
+            cashProcessor = new CashProcessor();
+        }
+        return cashProcessor;
+    }
+
+    public static CashProcessor reload() throws IOException {
+        cashProcessor = new CashProcessor();
+        return cashProcessor;
     }
 
     public void setCashNumber(double value, int number) throws IOException {

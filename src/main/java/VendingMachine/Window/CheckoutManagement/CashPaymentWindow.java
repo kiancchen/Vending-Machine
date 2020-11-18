@@ -1,6 +1,7 @@
 package VendingMachine.Window.CheckoutManagement;
 
-import VendingMachine.Processor.MainProcessor;
+import VendingMachine.Processor.CashProcessor;
+import VendingMachine.Processor.UserProcessor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -8,6 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -16,7 +18,7 @@ public class CashPaymentWindow {
     private Scene scene;
     private AnchorPane pane;
     private TableView<CashTableEntry> table;
-    private Map<String, String> userCashMap;
+    private Map<String, String> paidCashes;
     private CheckoutWindow checkout;
     private ComboBox<String> valueCombo;
     private Button addButton;
@@ -31,7 +33,7 @@ public class CashPaymentWindow {
         stage.setTitle("Cash Payment");
         stage.show();
 
-        this.userCashMap = new HashMap<>();
+        this.paidCashes = new HashMap<>();
         this.checkout = checkout;
 
         initLabel();
@@ -76,7 +78,13 @@ public class CashPaymentWindow {
         valueCombo.setPrefWidth(120);
         valueCombo.setPromptText("Select value");
 
-        Map<Double, Integer> cashMap = MainProcessor.getCashProcessor().getCashMap();
+        Map<Double, Integer> cashMap = null;
+        try {
+            cashMap = CashProcessor.getInstance().getCashMap();
+        } catch (IOException e) {
+            alert(Alert.AlertType.WARNING, "Can't get the cash processor");
+            return;
+        }
 
         List<Double> values = cashMap.keySet().stream().sorted().collect(Collectors.toList());
         for (double value : values) {
@@ -98,21 +106,26 @@ public class CashPaymentWindow {
 
     private void initButtonActions() {
         addButton.setOnAction((event -> addAction()));
-        payButton.setOnAction((event -> {
-            if (table.getItems().isEmpty()) {
-                alert(Alert.AlertType.WARNING, "You don't pay any cashes.");
-                return;
-            }
-            double payAmount = getPayAmount();
-            if (payAmount < MainProcessor.getUserProcessor().getCurrentUser().getShoppingCart().getAmount()) {
-                alert(Alert.AlertType.WARNING, "You don't have enough money.");
-                return;
-            }
+        payButton.setOnAction((event -> payAction()));
+    }
 
-            MainProcessor.getUserProcessor().getCurrentUser().getShoppingCart().pay(payAmount);
-            new ChangeWindow();
-            stage.close();
-        }));
+    private void payAction() {
+        if (table.getItems().isEmpty()) {
+            alert(Alert.AlertType.WARNING, "You don't pay any cashes.");
+            return;
+        }
+
+        double payAmount = getPayAmount();
+        try {
+            if (UserProcessor.getInstance().getCurrentUser().pay(payAmount)) {
+                new ChangeWindow();
+                stage.close();
+            } else {
+                alert(Alert.AlertType.WARNING, "You don't have enough money.");
+            }
+        } catch (IOException e) {
+            alert(Alert.AlertType.WARNING, "Can't get the user processor");
+        }
     }
 
 
@@ -125,7 +138,7 @@ public class CashPaymentWindow {
         }
 
         try {
-            this.userCashMap.put(value, number);
+            this.paidCashes.put(value, number);
             setTableData();
         } catch (Exception e) {
             alert(Alert.AlertType.WARNING, "Fail to add cash.");
@@ -182,17 +195,17 @@ public class CashPaymentWindow {
         // set data to table
         table.getItems().clear();
 
-        Collection<String> keySet = userCashMap.keySet();
+        Collection<String> keySet = paidCashes.keySet();
         List<String> list = new ArrayList<>(keySet);
         Collections.sort(list);
         for (String value : list) {
-            table.getItems().add(new CashTableEntry(value, userCashMap.get(value)));
+            table.getItems().add(new CashTableEntry(value, paidCashes.get(value)));
         }
     }
 
     private double getPayAmount() {
         double payAmount = 0.0;
-        for (Map.Entry<String, String> entry : this.userCashMap.entrySet()) {
+        for (Map.Entry<String, String> entry : this.paidCashes.entrySet()) {
             payAmount += Double.parseDouble(entry.getKey()) * Double.parseDouble(entry.getValue());
         }
         return payAmount;

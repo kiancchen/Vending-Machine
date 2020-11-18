@@ -1,7 +1,6 @@
 package VendingMachine.Window.ProductManagement;
 
 import VendingMachine.Data.Product;
-import VendingMachine.Processor.MainProcessor;
 import VendingMachine.Processor.ProductProcessor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -27,6 +26,7 @@ public class ProductManagementWindow {
     private String originCategory;
     private ProductTable productTable;
     private ProductTable mainTable;
+    private ProductProcessor productProcessor;
 
     public ProductManagementWindow(ProductTable mainTable) {
         stage = new Stage();
@@ -35,6 +35,14 @@ public class ProductManagementWindow {
         stage.setScene(scene);
         stage.setTitle("Product Management");
         stage.show();
+        try {
+            productProcessor = ProductProcessor.getInstance();
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't get the user processor.");
+            alert.show();
+        }
+
+
         this.mainTable = mainTable;
         this.productTable = new ProductTable(50, 30, 500, 350);
         pane.getChildren().add(productTable.getTable());
@@ -161,7 +169,7 @@ public class ProductManagementWindow {
         String code = codeField.getText();
 
         try {
-            if (MainProcessor.getProductProcessor().addProduct(code, category, nameField.getText(),
+            if (productProcessor.addProduct(code, category, nameField.getText(),
                     Double.parseDouble(priceField.getText()), Integer.parseInt(stockField.getText()))) {
                 alert(Alert.AlertType.INFORMATION, "Successfully add.");
                 this.productTable.updateTableData();
@@ -183,7 +191,7 @@ public class ProductManagementWindow {
         }
 
         try {
-            if (MainProcessor.getProductProcessor().removeProduct(selectedId)) {
+            if (productProcessor.removeProduct(selectedId)) {
                 alert(Alert.AlertType.INFORMATION, "Successfully removed");
                 this.productTable.updateTableData();
                 this.mainTable.updateTableData();
@@ -194,7 +202,6 @@ public class ProductManagementWindow {
     }
 
     private void changeAction() {
-        ProductProcessor productProcessor = MainProcessor.getProductProcessor();
         if (selectedId < 0) {
             alert(Alert.AlertType.WARNING, "You don't select any product.");
             return;

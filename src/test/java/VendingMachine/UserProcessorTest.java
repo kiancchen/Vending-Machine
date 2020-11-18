@@ -1,7 +1,7 @@
 package VendingMachine;
 
 import VendingMachine.Data.User;
-import VendingMachine.Processor.MainProcessor;
+import VendingMachine.Processor.ProductProcessor;
 import VendingMachine.Processor.UserProcessor;
 import org.junit.After;
 import org.junit.Before;
@@ -16,7 +16,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class UserProcessorTest {
-
+    UserProcessor userProcessor;
     @Before
     @After
     public void restoreResources() {
@@ -27,60 +27,57 @@ public class UserProcessorTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        MainProcessor.reload();
+    }
+
+    @Before
+    public void init() throws IOException {
+        userProcessor = UserProcessor.reload();
+        ProductProcessor.reload();
     }
 
     /**
      * Test UserProcessor Constructor
      */
     @Test
-    public void UserProcessorConstructor() throws IOException {
-        UserProcessor userProcessor = new UserProcessor();
+    public void UserProcessorConstructor() {
         assertNotNull(userProcessor);
         assertEquals(User.UserType.ANONYMOUS, userProcessor.getCurrentUser().getType());
     }
 
     /**
-     * @throws IOException Test the verifyUser method in two situations true/false
      */
     @Test
-    public void testVerifyUser() throws IOException {
-        UserProcessor userProcessor = new UserProcessor();
+    public void testVerifyUser() {
         assertTrue(userProcessor.verifyUser("alan", "123"));
         assertFalse(userProcessor.verifyUser("blan", "1234"));
 
     }
 
     @Test
-    public void testAddToCart() throws IOException {
-        UserProcessor userProcessor = new UserProcessor();
+    public void testAddToCart() {
         assertFalse(userProcessor.getCurrentUser().addToCart(1, 10));
         assertTrue(userProcessor.getCurrentUser().addToCart(1, 1));
     }
 
     @Test
-    public void testSetItemInCart() throws IOException {
-        UserProcessor userProcessor = new UserProcessor();
+    public void testSetItemInCart() {
         assertTrue(userProcessor.getCurrentUser().addToCart(1, 5));
         assertFalse(userProcessor.getCurrentUser().setItemInCart(1, 10));
         assertTrue(userProcessor.getCurrentUser().setItemInCart(1, 3));
     }
 
     @Test
-    public void testGetAmount() throws IOException {
-        UserProcessor userProcessor = new UserProcessor();
-        assertEquals(0, userProcessor.getCurrentUser().getShoppingCart().getAmount(), 0);
+    public void testGetAmount() {
+        assertEquals(0, userProcessor.getCurrentUser().getTotalPrice(), 0);
     }
 
     @Test
-    public void testGetShoppingList() throws IOException {
-        UserProcessor userProcessor = new UserProcessor();
-        assertNotNull(userProcessor.getCurrentUser().getShoppingCart().getShoppingList());
+    public void testGetShoppingList() {
+        assertNotNull(userProcessor.getCurrentUser().getShoppingList());
     }
 
     @Test
     public void testAddUser() throws IOException {
-        UserProcessor userProcessor = new UserProcessor();
         userProcessor.addUser("test", "test");
         assertTrue(userProcessor.verifyUser("test", "test"));
         assertFalse(userProcessor.addUser("test", "test"));
@@ -89,7 +86,6 @@ public class UserProcessorTest {
 
     @Test
     public void testAddUserWithType() throws IOException {
-        UserProcessor userProcessor = new UserProcessor();
         userProcessor.addUser("test", "test", "CASHIER");
         assertTrue(userProcessor.verifyUser("test", "test"));
         assertFalse(userProcessor.addUser("test", "test"));
@@ -97,15 +93,13 @@ public class UserProcessorTest {
     }
 
     @Test
-    public void testHasUser() throws IOException {
-        UserProcessor userProcessor = new UserProcessor();
+    public void testHasUser() {
         assertTrue(userProcessor.hasUser("alan"));
         assertFalse(userProcessor.hasUser("anyone"));
     }
 
     @Test
     public void testRemoveUser() throws IOException {
-        UserProcessor userProcessor = new UserProcessor();
         assertTrue(userProcessor.removeUser(2));
         assertFalse(userProcessor.removeUser(10000));
         assertFalse(userProcessor.verifyUser("blan", "123"));
@@ -113,7 +107,6 @@ public class UserProcessorTest {
 
     @Test
     public void testChangeUsername() throws IOException {
-        UserProcessor userProcessor = new UserProcessor();
         assertTrue(userProcessor.setUsername(2, "test1"));
         assertTrue(userProcessor.verifyUser("test1", "123"));
         assertFalse(userProcessor.setUsername(10000, ""));
@@ -121,7 +114,6 @@ public class UserProcessorTest {
 
     @Test
     public void testGetUsers() throws IOException {
-        UserProcessor userProcessor = new UserProcessor();
         List<User> userList = DatabaseHandler.loadUserData();
         for (int i = 0; i < userList.size(); i++) {
             assertEquals(userList.get(i).getId(), userProcessor.getUsers().get(i).getId());
@@ -132,8 +124,7 @@ public class UserProcessorTest {
     }
 
     @Test
-    public void testGetCurrentUser() throws IOException {
-        UserProcessor userProcessor = new UserProcessor();
+    public void testGetCurrentUser() {
         userProcessor.verifyUser("alan", "123");
         assertEquals("alan", userProcessor.getCurrentUser().getUsername());
         assertEquals("123", userProcessor.getCurrentUser().getPassword());
@@ -141,8 +132,7 @@ public class UserProcessorTest {
     }
 
     @Test
-    public void testLogoutUser() throws IOException {
-        UserProcessor userProcessor = new UserProcessor();
+    public void testLogoutUser() {
         userProcessor.verifyUser("alan", "123");
         userProcessor.logoutUser();
         assertEquals(User.UserType.ANONYMOUS, userProcessor.getCurrentUser().getType());
@@ -150,7 +140,6 @@ public class UserProcessorTest {
 
     @Test
     public void testChangePassword() throws IOException {
-        UserProcessor userProcessor = new UserProcessor();
         assertTrue(userProcessor.setPassword(2, "test1"));
         assertTrue(userProcessor.verifyUser("blan", "test1"));
         assertFalse(userProcessor.setPassword(10000, "123"));
@@ -158,7 +147,6 @@ public class UserProcessorTest {
 
     @Test
     public void testChangeType() throws IOException {
-        UserProcessor userProcessor = new UserProcessor();
         assertTrue(userProcessor.setUserType(2, "SELLER"));
         List<User> userList = DatabaseHandler.loadUserData();
         for (int i = 0; i < userList.size(); i++) {

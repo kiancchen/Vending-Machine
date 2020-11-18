@@ -1,11 +1,10 @@
 package VendingMachine.Window.CheckoutManagement;
 
-import VendingMachine.Processor.MainProcessor;
+import VendingMachine.Processor.CashProcessor;
+import VendingMachine.Processor.UserProcessor;
+import VendingMachine.Window.MainWindow;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
@@ -55,7 +54,10 @@ public class ChangeWindow {
     }
 
     private void initButtonAction() {
-        okeyButton.setOnAction((event -> stage.close()));
+        okeyButton.setOnAction((event -> {
+            MainWindow.getInstance().setShoppingCartData();
+            stage.close();
+        }));
     }
 
     private void initTable() {
@@ -79,30 +81,25 @@ public class ChangeWindow {
             column.setCellValueFactory(new PropertyValueFactory<>(properties[i]));
             table.getColumns().add(column);
         }
-        setTableData();
-
-
+        try {
+            setTableData();
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't load changes.");
+            alert.show();
+        }
     }
 
-    private void setTableData() {
+    private void setTableData() throws IOException {
         // set data to table
-        double payAmount = MainProcessor.getUserProcessor().getCurrentUser().getShoppingCart().getReceivedMoney();
+        double changes = UserProcessor.getInstance().getCurrentUser().getChange();
 
-        double purchaseAmount =
-                MainProcessor.getUserProcessor().getCurrentUser().getShoppingCart().getAmount();
-
-        double changes = payAmount - purchaseAmount;
-
-        try {
-            Map<Double, Integer> changesMap = MainProcessor.getCashProcessor().getChange(changes);
-            Collection<Double> keySet = changesMap.keySet();
-            List<Double> list = new ArrayList<>(keySet);
-            Collections.sort(list);
-            for (Double value : list) {
-                table.getItems().add(new CashTableEntry(value.toString(), changesMap.get(value).toString()));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        Map<Double, Integer> changesMap = CashProcessor.getInstance().getChange(changes);
+        Collection<Double> keySet = changesMap.keySet();
+        List<Double> list = new ArrayList<>(keySet);
+        Collections.sort(list);
+        for (Double value : list) {
+            table.getItems().add(new CashTableEntry(value.toString(), changesMap.get(value).toString()));
         }
+
     }
 }

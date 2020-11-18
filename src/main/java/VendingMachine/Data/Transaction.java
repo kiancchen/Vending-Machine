@@ -1,26 +1,43 @@
 package VendingMachine.Data;
 
-import VendingMachine.Processor.MainProcessor;
 
+import VendingMachine.Processor.ProductProcessor;
+import javafx.scene.control.Alert;
+
+import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Transaction {
+    private static List<Transaction> transactionList;
     private Map<Product, Integer> shoppingList;
     private LocalDateTime date;
-    private boolean success;
-    private double amount;
-    private double receivedMoney;
+    private Status status;
+    private double totalPrice;
+    private double paidAmount;
+    private ProductProcessor productProcessor;
+
+    static {
+        transactionList = new ArrayList<>();
+    }
 
     public Transaction() {
+        try {
+            productProcessor = ProductProcessor.getInstance();
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't get the product processor.");
+            alert.show();
+        }
         shoppingList = new HashMap<>();
-        success = false;
-        amount = 0;
+        status = Status.UNPAID;
+        totalPrice = 0;
     }
 
     public boolean add(int id, int quantity) {
-        Product product = MainProcessor.getProductProcessor().getProduct(id);
+        Product product = productProcessor.getProduct(id);
         if (quantity > product.getStock()) {
             return false;
         }
@@ -30,12 +47,12 @@ public class Transaction {
             shoppingList.put(product, quantity);
         }
         product.setStock(product.getStock() - quantity);
-        this.amount += product.getPrice() * quantity;
+        this.totalPrice += product.getPrice() * quantity;
         return true;
     }
 
     public boolean set(int id, int newQty) {
-        Product product = MainProcessor.getProductProcessor().getProduct(id);
+        Product product = productProcessor.getProduct(id);
         if (newQty > product.getStock() + shoppingList.get(product)) {
             return false;
         }
@@ -45,24 +62,40 @@ public class Transaction {
             shoppingList.remove(product);
         }
         product.setStock(product.getStock() + (oldQty - newQty));
-        this.amount += product.getPrice() * (newQty - oldQty);
+        this.totalPrice += product.getPrice() * (newQty - oldQty);
         return true;
     }
 
     public boolean pay(double amount) {
-        this.receivedMoney = amount;
+        if (amount < this.totalPrice) {
+            return false;
+        }
+        this.paidAmount = amount;
+        status = Status.PAID;
+        transactionList.add(this);
         return true;
     }
 
-    public double getAmount() {
-        return amount;
+    public boolean cancel() {
+        status = Status.CANCELLED;
+        return true;
     }
 
-    public double getReceivedMoney() {
-        return receivedMoney;
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public double getPaidAmount() {
+        return paidAmount;
     }
 
     public Map<Product, Integer> getShoppingList() {
         return shoppingList;
+    }
+
+    enum Status {
+        PAID,
+        UNPAID,
+        CANCELLED
     }
 }
