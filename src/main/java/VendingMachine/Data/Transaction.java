@@ -1,8 +1,8 @@
 package VendingMachine.Data;
 
 
+import VendingMachine.Processor.CashProcessor;
 import VendingMachine.Processor.ProductProcessor;
-import javafx.scene.control.Alert;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -23,18 +23,16 @@ public class Transaction {
     private Payment payment;
     private ProductProcessor productProcessor;
     private String reason;
+    private double change;
 
     static {
         transactionList = new ArrayList<>();
     }
 
     public Transaction() {
-        try {
-            productProcessor = ProductProcessor.getInstance();
-        } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't get the product processor.");
-            alert.show();
-        }
+
+        productProcessor = ProductProcessor.getInstance();
+
         shoppingList = new HashMap<>();
         status = Status.UNPAID;
         totalPrice = 0;
@@ -76,7 +74,7 @@ public class Transaction {
         return true;
     }
 
-    public boolean pay(double amount, Payment payment) {
+    public boolean pay(double amount, Payment payment) throws IOException {
         if (amount < this.totalPrice) {
             return false;
         }
@@ -85,13 +83,20 @@ public class Transaction {
         this.status = Status.PAID;
         transactionList.add(this);
         this.shoppingList.forEach((product, soldNum) -> product.sold(soldNum));
+<<<<<<< HEAD
         this.date = LocalDateTime.now();
 
+=======
+        this.date = LocalDate.now();
+        this.change = amount - totalPrice;
+        this.returnedChangeMap = CashProcessor.getInstance().getChange(change);
+>>>>>>> 5e9f74c007f6217da4c657a27d6bceb44513bd5a
         shoppingList.forEach((product, qty) -> {
             product.setStock(product.getStock() - qty);
         });
         return true;
     }
+
 
     public boolean cancel(String reason) {
         status = Status.CANCELLED;

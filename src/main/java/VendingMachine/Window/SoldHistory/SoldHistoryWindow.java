@@ -3,15 +3,13 @@ package VendingMachine.Window.SoldHistory;
 
 import VendingMachine.Data.Product;
 import VendingMachine.Processor.ProductProcessor;
-import VendingMachine.Window.SoldHistory.SoldTableEntry;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import java.io.IOException;
+
 import java.util.Map;
 
 public class SoldHistoryWindow {
@@ -20,6 +18,7 @@ public class SoldHistoryWindow {
     private AnchorPane pane;
     private TableView<SoldTableEntry> table;
     private ProductProcessor productProcessor;
+
     public SoldHistoryWindow() {
         stage = new Stage();
         pane = new AnchorPane();
@@ -27,13 +26,26 @@ public class SoldHistoryWindow {
         stage.setScene(scene);
         stage.setTitle("Sold History");
         stage.show();
-        try {
-            productProcessor = ProductProcessor.getInstance();
-        } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't get the cash processor.");
-            alert.show();
-        }
+        productProcessor = ProductProcessor.getInstance();
         initTable();
+    }
+
+    public void updateTableData() {
+        // set data to table
+        table.getItems().clear();
+        Map<Integer, Product> productMap =
+                null;
+
+        productMap = ProductProcessor.getInstance().getProductMap();
+
+        productMap.forEach((k, v) -> {
+            String code = v.getCode();
+            String name = v.getName();
+            String price = Double.toString(v.getPrice());
+            String sold = Integer.toString(v.getSold());
+            String category = v.getCategory().toString();
+            table.getItems().add(new SoldTableEntry(code, name, category, price, sold, v.getId()));
+        });
     }
 
     private void initTable() {
@@ -58,28 +70,6 @@ public class SoldHistoryWindow {
             table.getColumns().add(column);
         }
         updateTableData();
-    }
-
-    public void updateTableData() {
-        // set data to table
-        table.getItems().clear();
-        Map<Integer, Product> productMap =
-                null;
-        try {
-            productMap = ProductProcessor.getInstance().getProductMap();
-        } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't get the product processor.");
-            alert.show();
-            return;
-        }
-        productMap.forEach((k, v) -> {
-            String code = v.getCode();
-            String name = v.getName();
-            String price = Double.toString(v.getPrice());
-            String sold = Integer.toString(v.getSold());
-            String category = v.getCategory().toString();
-            table.getItems().add(new SoldTableEntry(code, name, category, price, sold, v.getId()));
-        });
     }
 }
 

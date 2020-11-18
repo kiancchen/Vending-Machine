@@ -14,14 +14,11 @@ public class ProductProcessor {
         productMap = DatabaseHandler.loadProductData();
     }
 
-    public static ProductProcessor getInstance() throws IOException {
-        if (productProcessor == null) {
-            productProcessor = new ProductProcessor();
-        }
+    public static ProductProcessor getInstance() {
         return productProcessor;
     }
 
-    public static ProductProcessor reload() throws IOException {
+    public static ProductProcessor load() throws IOException {
         productProcessor = new ProductProcessor();
         return productProcessor;
     }

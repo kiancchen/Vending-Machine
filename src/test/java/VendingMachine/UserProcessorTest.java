@@ -3,7 +3,6 @@ package VendingMachine;
 import VendingMachine.Data.CreditCard;
 import VendingMachine.Data.Transaction;
 import VendingMachine.Data.User;
-import VendingMachine.Processor.CardProcessor;
 import VendingMachine.Processor.ProductProcessor;
 import VendingMachine.Processor.UserProcessor;
 import org.junit.After;
@@ -34,8 +33,8 @@ public class UserProcessorTest {
 
     @Before
     public void init() throws IOException {
-        userProcessor = UserProcessor.reload();
-        ProductProcessor.reload();
+        userProcessor = UserProcessor.load();
+        ProductProcessor.load();
     }
 
     /**
@@ -163,7 +162,7 @@ public class UserProcessorTest {
     }
 
     @Test
-    public void testPay(){
+    public void testPay() throws IOException {
         assertTrue(userProcessor.getCurrentUser().pay(10, Transaction.Payment.CASH));
         assertFalse(userProcessor.getCurrentUser().pay(-1, Transaction.Payment.CASH));
     }
@@ -174,7 +173,7 @@ public class UserProcessorTest {
     }
 
     @Test
-    public void testGetChange() {
+    public void testGetChange() throws IOException {
         userProcessor.getCurrentUser().pay(10, Transaction.Payment.CASH);
         assertEquals(10,userProcessor.getCurrentUser().getChange(),0);
     }

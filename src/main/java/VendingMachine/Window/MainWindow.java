@@ -1,6 +1,8 @@
 package VendingMachine.Window;
 
 import VendingMachine.Data.User;
+import VendingMachine.Data.Product;
+import VendingMachine.Data.Transaction;
 import VendingMachine.Processor.UserProcessor;
 import VendingMachine.Window.CashManagement.CashManagementWindow;
 import VendingMachine.Window.CheckoutManagement.CheckoutWindow;
@@ -10,8 +12,6 @@ import VendingMachine.Window.ProductManagement.ProductTableEntry;
 import VendingMachine.Window.SoldHistory.SoldHistoryWindow;
 import VendingMachine.Window.TransactionHistory.TransactionHistoryWindow;
 import VendingMachine.Window.UserManagement.UserManagementWindow;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -20,6 +20,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
+import java.util.*;
 
 public class MainWindow {
     private static MainWindow mainWindow;
@@ -37,18 +38,14 @@ public class MainWindow {
     private Text selectedItemText;
     private ComboBox<Integer> selectedQuantityCombo;
     private TableView<ProductTableEntry> shoppingCartTable;
+    private TableView<ProductTableEntry> shoppingHistoryTable;
     private UserProcessor userProcessor;
     private ComboBox<Integer> setCartQtyCombo;
 
     private MainWindow() {
         pane = new AnchorPane();
-        scene = new Scene(pane, 1150, 550);
-        try {
-            userProcessor = UserProcessor.getInstance();
-        } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't get the user processor.");
-            alert.show();
-        }
+        scene = new Scene(pane, 1700, 500);
+        userProcessor = UserProcessor.getInstance();
         initButtons();
         initBtnActions();
         initLabels();
@@ -56,6 +53,7 @@ public class MainWindow {
         updateCurrencyUserInfo();
         initPurchaseNodes();
         initShoppingCart();
+        initShoppingHistory();
 
         this.productTable = new ProductTable(50, 50, 500, 350);
         pane.getChildren().add(productTable.getTable());
@@ -89,6 +87,10 @@ public class MainWindow {
                         Integer.toString(v), k.getId())));
     }
 
+    public void updateProductTable() {
+        this.productTable.updateTableData();
+    }
+
     private void initLabels() {
         Label productTableLabel = new Label("Product Table");
         productTableLabel.setLayoutX(250);
@@ -98,7 +100,11 @@ public class MainWindow {
         shoppingCartLabel.setLayoutX(810);
         shoppingCartLabel.setLayoutY(30);
 
-        pane.getChildren().addAll(productTableLabel, shoppingCartLabel);
+        Label shoppingHistoryLabel = new Label("Shopping History");
+        shoppingHistoryLabel.setLayoutX(1370);
+        shoppingHistoryLabel.setLayoutY(30);
+
+        pane.getChildren().addAll(productTableLabel, shoppingCartLabel, shoppingHistoryLabel);
     }
 
     private void initButtons() {
@@ -107,7 +113,6 @@ public class MainWindow {
         cashManagementBtn = new Button();
         productManageBtn = new Button();
         soldHistoryBtn = new Button();
-
 
         Button[] buttons = {accountBtn, userManagementBtn, cashManagementBtn, productManageBtn};
         String[] texts = {"Account", "Manage User", "Manage Cash", "Manage Product"};
@@ -126,12 +131,12 @@ public class MainWindow {
         reportBtn.setLayoutY(10);
         reportBtn.setPrefWidth(140);
         pane.getChildren().add(reportBtn);
-        soldHistoryBtn .setLayoutX(40 + 130 * 3);
-        soldHistoryBtn .setLayoutY(490);
-        soldHistoryBtn .setPrefWidth(120);
-        soldHistoryBtn .setPrefHeight(30);
-        soldHistoryBtn .setText("Sold History");
-        pane.getChildren().add(soldHistoryBtn );
+        soldHistoryBtn.setLayoutX(40 + 130 * 3);
+        soldHistoryBtn.setLayoutY(490);
+        soldHistoryBtn.setPrefWidth(120);
+        soldHistoryBtn.setPrefHeight(30);
+        soldHistoryBtn.setText("Sold History");
+        pane.getChildren().add(soldHistoryBtn);
         initTransactionHistoryButton();
     }
 
@@ -184,7 +189,7 @@ public class MainWindow {
             }
         });
         transactionHistory.setOnAction(event -> {
-            if(userProcessor.getCurrentUser().getPermission(User.Permission.MANAGE_CASH)) {
+            if (userProcessor.getCurrentUser().getPermission(User.Permission.MANAGE_CASH)) {
                 new TransactionHistoryWindow();
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
@@ -268,6 +273,76 @@ public class MainWindow {
                 setCartQtyCombo.setPromptText("Quantity");
             }
         });
+    }
+
+    private void initShoppingHistory() {
+        shoppingHistoryTable = new TableView<>();
+        shoppingHistoryTable.setLayoutX(1150);
+        shoppingHistoryTable.setLayoutY(50);
+        shoppingHistoryTable.setPrefWidth(500);
+        shoppingHistoryTable.setPrefHeight(350);
+        shoppingHistoryTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        pane.getChildren().add(shoppingHistoryTable);
+
+        //create table
+        String[] colNames = {"Category", "Code", "Name", "Pice($)", "Quantity"};
+        String[] properties = {"category", "code", "name", "price", "quantity"};
+        for (int i = 0; i < colNames.length; i++) {
+            String colName = colNames[i];
+            TableColumn<ProductTableEntry, String> column = new TableColumn<>(colName);
+            column.setSortable(false);
+            column.setPrefWidth(118);
+            column.setStyle("-fx-alignment: CENTER;");
+            column.setCellValueFactory(new PropertyValueFactory<>(properties[i]));
+            shoppingHistoryTable.getColumns().add(column);
+        }
+        this.setShoppingHistoryData();
+        /*
+        shoppingCartTable.setOnMouseClicked(event -> {
+            setCartQtyCombo.getItems().clear();
+            if (!shoppingCartTable.getSelectionModel().isEmpty()) {
+                ProductTableEntry selected = shoppingCartTable.getSelectionModel().getSelectedItem();
+                for (int i = 0; i <= Integer.parseInt(selected.getQuantity()); i++) {
+                    setCartQtyCombo.getItems().add(i);
+                }
+                setCartQtyCombo.getSelectionModel().select(Integer.parseInt(selected.getQuantity()));
+            } else {
+                setCartQtyCombo.setPromptText("Quantity");
+            }
+        });
+        */
+    }
+
+    public void setShoppingHistoryData() {
+        this.shoppingHistoryTable.getItems().clear();
+        List<Transaction> shoppingHistory = userProcessor.getCurrentUser().getShoppingHistory();
+        if (shoppingHistory.size() > 0) {
+          Transaction lastShoppingHistory = shoppingHistory.get(shoppingHistory.size()-1);
+          Map<Product, Integer> shoppingList = lastShoppingHistory.getShoppingList();
+          if (shoppingList.size() > 5) {
+            Set<Product> set = shoppingList.keySet();
+            Iterator<Product> iter = set.iterator();
+            for (int i = 0; i < shoppingList.size() - 5; i++) {
+              iter.next();
+            }
+            while (iter.hasNext()) {
+              Product key = iter.next();
+              Integer value = shoppingList.get(key);
+              this.shoppingHistoryTable.getItems().add(new ProductTableEntry(key.getCode(), key.getName(),
+              key.getCategory().toString(), Double.toString(key.getPrice()),
+              Integer.toString(value), key.getId()));
+            }
+          }
+          Set<Product> set = shoppingList.keySet();
+          Iterator<Product> iter = set.iterator();
+          while (iter.hasNext()) {
+            Product key = iter.next();
+            Integer value = shoppingList.get(key);
+            this.shoppingHistoryTable.getItems().add(new ProductTableEntry(key.getCode(), key.getName(),
+            key.getCategory().toString(), Double.toString(key.getPrice()),
+            Integer.toString(value), key.getId()));
+          }
+        }
     }
 
     private void initPurchaseNodes() {
@@ -362,10 +437,6 @@ public class MainWindow {
         setShoppingCartData();
         selectedQuantityCombo.getItems().clear();
         updateProductTable();
-    }
-
-    public void updateProductTable() {
-        this.productTable.updateTableData();
     }
 
     public Scene getScene() {

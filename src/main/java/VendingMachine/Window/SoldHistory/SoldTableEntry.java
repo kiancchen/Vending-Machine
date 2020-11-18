@@ -8,9 +8,8 @@ public class SoldTableEntry {
     private String sold;
     private int id;
 
-
     public SoldTableEntry(String code, String name, String category, String price,
-                             String sold, int id) {
+                          String sold, int id) {
         this.code = code;
         this.name = name;
         this.category = category;

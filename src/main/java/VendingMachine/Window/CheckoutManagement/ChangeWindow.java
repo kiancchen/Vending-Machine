@@ -1,16 +1,17 @@
 package VendingMachine.Window.CheckoutManagement;
 
-import VendingMachine.Processor.CashProcessor;
 import VendingMachine.Processor.UserProcessor;
 import VendingMachine.Window.MainWindow;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.*;
 
 public class ChangeWindow {
@@ -81,19 +82,12 @@ public class ChangeWindow {
             column.setCellValueFactory(new PropertyValueFactory<>(properties[i]));
             table.getColumns().add(column);
         }
-        try {
-            setTableData();
-        } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't load changes.");
-            alert.show();
-        }
+        setTableData();
     }
 
-    private void setTableData() throws IOException {
+    private void setTableData() {
         // set data to table
-        double changes = UserProcessor.getInstance().getCurrentUser().getChange();
-
-        Map<Double, Integer> changesMap = CashProcessor.getInstance().getChange(changes);
+        Map<Double, Integer> changesMap = UserProcessor.getInstance().getCurrentUser().getReturnChangeMap();
         Collection<Double> keySet = changesMap.keySet();
         List<Double> list = new ArrayList<>(keySet);
         Collections.sort(list);

@@ -1,13 +1,12 @@
 package VendingMachine;
 
 import VendingMachine.Data.Transaction;
+import VendingMachine.Processor.CashProcessor;
 import VendingMachine.Processor.ProductProcessor;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 import static org.junit.Assert.*;
 
@@ -16,8 +15,9 @@ public class TransactionTest {
 
     @Before
     public void init() throws IOException {
+        ProductProcessor.load();
+        CashProcessor.load();
         transaction = new Transaction();
-        ProductProcessor.reload();
     }
 
     @Test
@@ -42,7 +42,7 @@ public class TransactionTest {
     }
 
     @Test
-    public void testPay() {
+    public void testPay() throws IOException {
         transaction.pay(10, Transaction.Payment.CASH);
         assertEquals(10, transaction.getPaidAmount(), 0);
         assertFalse(transaction.pay(-1, Transaction.Payment.CASH));
@@ -62,7 +62,7 @@ public class TransactionTest {
     }
 
     @Test
-    public void testGetPayment() {
+    public void testGetPayment() throws IOException{
         transaction.pay(10, Transaction.Payment.CASH);
         assertEquals(Transaction.Payment.CASH,transaction.getPayment());
     }
@@ -71,5 +71,6 @@ public class TransactionTest {
     public void testGetReturnedChangeMap() {
         assertNull(transaction.getReturnedChangeMap());
     }
+
 
 }

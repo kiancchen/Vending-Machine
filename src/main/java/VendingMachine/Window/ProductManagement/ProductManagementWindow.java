@@ -12,6 +12,8 @@ import java.io.IOException;
 
 public class ProductManagementWindow {
 
+    private final ProductTable productTable;
+    private final ProductProcessor productProcessor;
     private Stage stage;
     private Scene scene;
     private AnchorPane pane;
@@ -25,8 +27,6 @@ public class ProductManagementWindow {
     private TextField stockField;
     private int selectedId;
     private String originCategory;
-    private ProductTable productTable;
-    private ProductProcessor productProcessor;
 
     public ProductManagementWindow() {
         stage = new Stage();
@@ -35,13 +35,7 @@ public class ProductManagementWindow {
         stage.setScene(scene);
         stage.setTitle("Product Management");
         stage.show();
-        try {
-            productProcessor = ProductProcessor.getInstance();
-        } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't get the user processor.");
-            alert.show();
-        }
-
+        productProcessor = ProductProcessor.getInstance();
         this.productTable = new ProductTable(50, 30, 500, 350);
         pane.getChildren().add(productTable.getTable());
         setTableAction();
