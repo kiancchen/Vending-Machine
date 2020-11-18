@@ -18,6 +18,7 @@ public class CardProcessorTest {
 
     @Before
     public void init() throws IOException{
+        CardProcessor.load();
         cardProcessor = CardProcessor.getInstance();
     }
 

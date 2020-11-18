@@ -2,7 +2,6 @@ package VendingMachine;
 
 import VendingMachine.Data.Product;
 import VendingMachine.Processor.ProductProcessor;
-import javafx.scene.control.Alert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,7 +31,7 @@ public class ProductProcessorTest {
 
     @Before
     public void init() throws IOException {
-            productProcessor = ProductProcessor.reload();
+            productProcessor = ProductProcessor.load();
     }
 
     @Test

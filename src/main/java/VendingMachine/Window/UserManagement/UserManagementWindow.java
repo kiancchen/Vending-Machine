@@ -32,15 +32,7 @@ public class UserManagementWindow {
         stage.setScene(scene);
         stage.setTitle("User Management");
         stage.show();
-
-        try {
-            userProcessor = UserProcessor.getInstance();
-        } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't get the user processor.");
-            alert.show();
-        }
-
-
+        userProcessor = UserProcessor.getInstance();
         initTable();
         initButton();
         initButtonActions();
@@ -112,14 +104,11 @@ public class UserManagementWindow {
         typeCombo = new ComboBox<>();
         typeCombo.setLayoutX(390);
         typeCombo.setLayoutY(350);
-
-
         for (User.UserType s : User.UserType.values()) {
             if (s != User.UserType.ANONYMOUS) {
                 typeCombo.getItems().add(s.toString());
             }
         }
-
         pane.getChildren().add(typeCombo);
     }
 
@@ -169,8 +158,6 @@ public class UserManagementWindow {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Can't save the user to the database");
             alert.show();
         }
-
-
     }
 
     private void removeAction() {
@@ -202,7 +189,6 @@ public class UserManagementWindow {
         } else if (!validateInput()) {
             return;
         }
-
 
         try {
             userProcessor.setUsername(selectedId, usernameField.getText());

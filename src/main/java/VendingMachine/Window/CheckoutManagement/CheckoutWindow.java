@@ -8,8 +8,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class CheckoutWindow {
     private Stage stage;
     private AnchorPane pane;
@@ -19,12 +17,7 @@ public class CheckoutWindow {
     private double amount;
 
     public CheckoutWindow() {
-        try {
-            this.amount = UserProcessor.getInstance().getCurrentUser().getTotalPrice();
-        } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't get the user processor.");
-            alert.show();
-        }
+        this.amount = UserProcessor.getInstance().getCurrentUser().getTotalPrice();
         if (amount == 0) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Please purchase an item.");
             alert.show();

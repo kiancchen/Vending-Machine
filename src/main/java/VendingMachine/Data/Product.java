@@ -29,6 +29,10 @@ public class Product {
         this.code = code;
     }
 
+    public void sold(int sold) {
+        this.sold += sold;
+    }
+
     public Category getCategory() {
         return category;
     }
@@ -71,10 +75,6 @@ public class Product {
 
     public void setStock(int stock) {
         this.stock = stock;
-    }
-
-    public void sold(int sold) {
-        this.sold += sold;
     }
 
     public int getSold() {

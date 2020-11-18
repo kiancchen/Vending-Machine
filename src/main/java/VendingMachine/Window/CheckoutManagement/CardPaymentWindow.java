@@ -32,14 +32,7 @@ public class CardPaymentWindow {
         stage.setScene(scene);
         stage.setTitle("Card Payment");
         stage.show();
-
-        try {
-            currentUser = UserProcessor.getInstance().getCurrentUser();
-        } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't get the user processor.");
-            alert.show();
-        }
-
+        currentUser = UserProcessor.getInstance().getCurrentUser();
         initTextField();
         initBtn();
         initCheckBox();
@@ -103,24 +96,25 @@ public class CardPaymentWindow {
         String name = nameField.getText();
         String number = numberField.getText();
         CardProcessor cardProcessor;
-        try {
-            cardProcessor = CardProcessor.getInstance();
-        } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't get the card processor.");
-            alert.show();
-            return;
-        }
+
+        cardProcessor = CardProcessor.getInstance();
+
         CreditCard card = cardProcessor.validateCard(name, number);
         if (card != null) {
-            if (currentUser.pay(currentUser.getTotalPrice(), Transaction.Payment.CARD)){
-                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successful!");
-                alert.show();
-                if (checkBox.isSelected()) {
-                    currentUser.setCard(card);
+            try {
+                if (currentUser.pay(currentUser.getTotalPrice(), Transaction.Payment.CARD)) {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successful!");
+                    alert.show();
+                    if (checkBox.isSelected()) {
+                        currentUser.setCard(card);
+                    }
+                    stage.close();
+                } else {
+                    Alert alert = new Alert(Alert.AlertType.WARNING, "Fail to pay.");
+                    alert.show();
                 }
-                stage.close();
-            }else{
-                Alert alert = new Alert(Alert.AlertType.WARNING, "Fail to pay.");
+            } catch (IOException e) {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Can't save to the database.");
                 alert.show();
             }
         } else {

@@ -7,7 +7,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.*;
 
 public class CashManagementWindow {
@@ -29,15 +28,7 @@ public class CashManagementWindow {
         stage.setScene(scene);
         stage.setTitle("Cash Management");
         stage.show();
-
-        try {
-            cashProcessor = CashProcessor.getInstance();
-        } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't get the cash processor.");
-            alert.show();
-        }
-
-
+        cashProcessor = CashProcessor.getInstance();
         initTable();
         initButton();
         initTextFields();

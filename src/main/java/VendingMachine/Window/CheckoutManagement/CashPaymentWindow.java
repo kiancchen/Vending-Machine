@@ -78,12 +78,7 @@ public class CashPaymentWindow {
         valueCombo.setPromptText("Select value");
 
         Map<Double, Integer> cashMap = null;
-        try {
-            cashMap = CashProcessor.getInstance().getCashMap();
-        } catch (IOException e) {
-            alert(Alert.AlertType.WARNING, "Can't get the cash processor");
-            return;
-        }
+        cashMap = CashProcessor.getInstance().getCashMap();
 
         List<Double> values = cashMap.keySet().stream().sorted().collect(Collectors.toList());
         for (double value : values) {

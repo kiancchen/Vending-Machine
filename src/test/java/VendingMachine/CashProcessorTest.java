@@ -32,7 +32,7 @@ public class CashProcessorTest {
 
     @Before
     public void init() throws IOException {
-        cashProcessor = CashProcessor.reload();
+        cashProcessor = CashProcessor.load();
     }
 
     @Test

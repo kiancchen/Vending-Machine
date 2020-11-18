@@ -10,8 +10,6 @@ import VendingMachine.Window.ProductManagement.ProductTableEntry;
 import VendingMachine.Window.SoldHistory.SoldHistoryWindow;
 import VendingMachine.Window.TransactionHistory.TransactionHistoryWindow;
 import VendingMachine.Window.UserManagement.UserManagementWindow;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -43,12 +41,7 @@ public class MainWindow {
     private MainWindow() {
         pane = new AnchorPane();
         scene = new Scene(pane, 1150, 550);
-        try {
-            userProcessor = UserProcessor.getInstance();
-        } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't get the user processor.");
-            alert.show();
-        }
+        userProcessor = UserProcessor.getInstance();
         initButtons();
         initBtnActions();
         initLabels();
@@ -89,6 +82,10 @@ public class MainWindow {
                         Integer.toString(v), k.getId())));
     }
 
+    public void updateProductTable() {
+        this.productTable.updateTableData();
+    }
+
     private void initLabels() {
         Label productTableLabel = new Label("Product Table");
         productTableLabel.setLayoutX(250);
@@ -108,7 +105,6 @@ public class MainWindow {
         productManageBtn = new Button();
         soldHistoryBtn = new Button();
 
-
         Button[] buttons = {accountBtn, userManagementBtn, cashManagementBtn, productManageBtn};
         String[] texts = {"Account", "Manage User", "Manage Cash", "Manage Product"};
 
@@ -126,12 +122,12 @@ public class MainWindow {
         reportBtn.setLayoutY(10);
         reportBtn.setPrefWidth(140);
         pane.getChildren().add(reportBtn);
-        soldHistoryBtn .setLayoutX(40 + 130 * 3);
-        soldHistoryBtn .setLayoutY(490);
-        soldHistoryBtn .setPrefWidth(120);
-        soldHistoryBtn .setPrefHeight(30);
-        soldHistoryBtn .setText("Sold History");
-        pane.getChildren().add(soldHistoryBtn );
+        soldHistoryBtn.setLayoutX(40 + 130 * 3);
+        soldHistoryBtn.setLayoutY(490);
+        soldHistoryBtn.setPrefWidth(120);
+        soldHistoryBtn.setPrefHeight(30);
+        soldHistoryBtn.setText("Sold History");
+        pane.getChildren().add(soldHistoryBtn);
         initTransactionHistoryButton();
     }
 
@@ -184,7 +180,7 @@ public class MainWindow {
             }
         });
         transactionHistory.setOnAction(event -> {
-            if(userProcessor.getCurrentUser().getPermission(User.Permission.MANAGE_CASH)) {
+            if (userProcessor.getCurrentUser().getPermission(User.Permission.MANAGE_CASH)) {
                 new TransactionHistoryWindow();
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
@@ -362,10 +358,6 @@ public class MainWindow {
         setShoppingCartData();
         selectedQuantityCombo.getItems().clear();
         updateProductTable();
-    }
-
-    public void updateProductTable() {
-        this.productTable.updateTableData();
     }
 
     public Scene getScene() {

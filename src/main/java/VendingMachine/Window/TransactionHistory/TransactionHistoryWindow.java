@@ -2,16 +2,13 @@ package VendingMachine.Window.TransactionHistory;
 
 import VendingMachine.Data.Transaction;
 import VendingMachine.Processor.UserProcessor;
-import VendingMachine.Window.UserManagement.UserTableEntry;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 
 public class TransactionHistoryWindow {
@@ -29,14 +26,7 @@ public class TransactionHistoryWindow {
         stage.setScene(scene);
         stage.setTitle("Transaction History");
         stage.show();
-
-        try{
-            userProcessor = UserProcessor.getInstance();
-        } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't get the user processor.");
-            alert.show();
-        }
-
+        userProcessor = UserProcessor.getInstance();
         initTable();
     }
 
@@ -49,7 +39,7 @@ public class TransactionHistoryWindow {
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         pane.getChildren().add(table);
 
-        String[] colNames = {"Time", "Item Sold", "Money Paid", "Changes","Payment Method"};
+        String[] colNames = {"Time", "Item Sold", "Money Paid", "Changes", "Payment Method"};
         String[] properties = {"time", "itemSold", "moneyPaid", "changes", "paymentMethod"};
         for (int i = 0; i < colNames.length; i++) {
             String colName = colNames[i];
@@ -67,10 +57,10 @@ public class TransactionHistoryWindow {
         table.getItems().clear();
         for (Transaction transaction : Transaction.getTransactionList()) {
             DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            transaction.getShoppingList().forEach((k,v) -> {
+            transaction.getShoppingList().forEach((k, v) -> {
                 String itemSold = k.getName();
                 table.getItems().add(new TransactionHistoryTableEntry(transaction.getDate().format(fmt),
-                        itemSold,Double.toString(transaction.getPaidAmount()),
+                        itemSold, Double.toString(transaction.getPaidAmount()),
                         Double.toString(userProcessor.getCurrentUser().getChange()),
                         transaction.getStatus().toString()));
 
