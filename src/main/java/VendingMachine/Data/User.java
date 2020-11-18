@@ -63,8 +63,8 @@ public class User {
         return false;
     }
 
-    public boolean cancelShopping() {
-        shoppingCart.cancel();
+    public boolean cancelShopping(String reason) {
+        shoppingCart.cancel(reason);
         shoppingHistory.add(shoppingCart);
         shoppingCart = new Transaction();
         return true;

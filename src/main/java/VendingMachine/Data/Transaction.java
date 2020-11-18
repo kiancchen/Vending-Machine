@@ -19,6 +19,7 @@ public class Transaction {
     private double totalPrice;
     private double paidAmount;
     private ProductProcessor productProcessor;
+    private String reason;
 
     static {
         transactionList = new ArrayList<>();
@@ -81,8 +82,9 @@ public class Transaction {
         return true;
     }
 
-    public boolean cancel() {
+    public boolean cancel(String reason) {
         status = Status.CANCELLED;
+        this.reason = reason;
         return true;
     }
 
