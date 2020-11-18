@@ -3,15 +3,31 @@ package VendingMachine;
 import VendingMachine.Data.Transaction;
 import VendingMachine.Processor.CashProcessor;
 import VendingMachine.Processor.ProductProcessor;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 import static org.junit.Assert.*;
 
 public class TransactionTest {
     private Transaction transaction;
+
+    @Before
+    @After
+    public void restoreResources() {
+        try {
+            Files.copy(new File("src/main/resources/transactions_backup.json").toPath(),
+                    new File("src/main/resources/transactions.json").toPath(),
+                    StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Before
     public void init() throws IOException {
@@ -27,8 +43,6 @@ public class TransactionTest {
         assertEquals(5.0, transaction.getTotalPrice(), 0);
         assertTrue(transaction.set(1, 0));
         assertEquals(0, transaction.getTotalPrice(), 0);
-        transaction.add(2,1);
-        assertFalse(transaction.set(2,10));
     }
 
     @Test
@@ -52,8 +66,8 @@ public class TransactionTest {
     }
 
     @Test
-    public void testGetPayment() throws IOException{
-        transaction.pay(10, Transaction.Payment.CASH);
+    public void testGetPayment(){
+        transaction.pay(10, Transaction.Payment.CASH,1);
         assertEquals(Transaction.Payment.CASH,transaction.getPayment());
     }
 

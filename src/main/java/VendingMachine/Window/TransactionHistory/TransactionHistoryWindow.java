@@ -17,7 +17,6 @@ public class TransactionHistoryWindow {
     private final AnchorPane pane;
     private final UserProcessor userProcessor;
     private TableView<TransactionHistoryTableEntry> table;
-    private UserProcessor userProcessor;
     private Button viewButton;
 
     public TransactionHistoryWindow() {
@@ -44,9 +43,7 @@ public class TransactionHistoryWindow {
     }
 
     private void initBtnAction() {
-        viewButton.setOnAction(event -> {
-            new TransactionProductWindow();
-        });
+        viewButton.setOnAction(event -> new TransactionProductWindow());
     }
 
     private void initTable() {
@@ -78,9 +75,8 @@ public class TransactionHistoryWindow {
             DateTimeFormatter fmt = DateTimeFormatter.ofPattern("MM-dd HH:mm");
                 table.getItems().add(new TransactionHistoryTableEntry(transaction.getDate().format(fmt)
                         , Double.toString(transaction.getPaidAmount()),
-                        Double.toString(userProcessor.getCurrentUser().getChange()),
+                        Double.toString(transaction.getChange()),
                         transaction.getPayment().toString()));
-
         }
     }
 }

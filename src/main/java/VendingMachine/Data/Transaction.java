@@ -7,9 +7,7 @@ import VendingMachine.Processor.ProductProcessor;
 import VendingMachine.Processor.UserProcessor;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,6 +81,10 @@ public class Transaction {
             product.setStock(product.getStock() - qty);
         });
         return true;
+    }
+
+    public double getChange() {
+        return change;
     }
 
     public boolean hasProduct(int id) {
