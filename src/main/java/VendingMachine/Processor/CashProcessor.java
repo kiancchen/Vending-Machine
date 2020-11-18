@@ -22,18 +22,17 @@ public class CashProcessor {
         return cashProcessor;
     }
 
-    public void setCashNumber(double value, int number) throws IOException {
+    public boolean setCashNumber(double value, int number) {
         if (number >= 0) {
             cashMap.put(value, number);
-            DatabaseHandler.saveCashData(this.cashMap);
-        } else {
-            throw new IllegalArgumentException("Number can't be less than zero.");
+            return true;
         }
+        return false;
     }
 
-    public Map<Double, Integer> getChange(double amount) throws IOException {
+    public Map<Double, Integer> getChange(double amount) {
         if (amount < 0) {
-            throw new IllegalArgumentException("Amount can't be less than zero.");
+            return null;
         }
 
         List<Double> cashes = new ArrayList<>();
@@ -68,7 +67,6 @@ public class CashProcessor {
             for (Map.Entry<Double, Integer> entry : changes.entrySet()) {
                 this.cashMap.put(entry.getKey(), this.cashMap.get(entry.getKey()) - entry.getValue());
             }
-            DatabaseHandler.saveCashData(this.cashMap);
             return changes;
         }
         return null;

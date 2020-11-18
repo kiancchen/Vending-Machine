@@ -1,8 +1,10 @@
 package VendingMachine.Data;
 
 
+import VendingMachine.DatabaseHandler;
 import VendingMachine.Processor.CashProcessor;
 import VendingMachine.Processor.ProductProcessor;
+import VendingMachine.Processor.UserProcessor;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -14,25 +16,24 @@ import java.util.Map;
 
 public class Transaction {
     private static List<Transaction> transactionList;
-    private Map<Product, Integer> shoppingList;
     private LocalDateTime date;
+    private final Map<Integer, Integer> shoppingList;
+    private final transient ProductProcessor productProcessor;
     private Status status;
     private double totalPrice;
     private double paidAmount;
     private Map<Double, Integer> returnedChangeMap;
     private Payment payment;
-    private ProductProcessor productProcessor;
     private String reason;
     private double change;
+    private int payeeId;
 
-    static {
-        transactionList = new ArrayList<>();
+    public static void load() throws IOException {
+        transactionList = DatabaseHandler.loadTransactionData();
     }
 
     public Transaction() {
-
         productProcessor = ProductProcessor.getInstance();
-
         shoppingList = new HashMap<>();
         status = Status.UNPAID;
         totalPrice = 0;
@@ -42,61 +43,65 @@ public class Transaction {
         return transactionList;
     }
 
-    public boolean add(int id, int quantity) {
-        Product product = productProcessor.getProduct(id);
-        if (shoppingList.containsKey(product)) {
-            if (shoppingList.get(product) + quantity > product.getStock()) {
-                return false;
-            }
-            shoppingList.put(product, shoppingList.get(product) + quantity);
-        } else {
-            if (quantity > product.getStock()) {
-                return false;
-            }
-            shoppingList.put(product, quantity);
-        }
-        this.totalPrice += product.getPrice() * quantity;
-        return true;
-    }
-
     public boolean set(int id, int newQty) {
         Product product = productProcessor.getProduct(id);
-        if (newQty > product.getStock() + shoppingList.get(product)) {
+        int oldQty = 0;
+        if (shoppingList.containsKey(id)) {
+            oldQty = shoppingList.get(id);
+        }
+
+        if (newQty > product.getStock()) {
             return false;
         }
-        int oldQty = shoppingList.get(product);
-        shoppingList.put(product, newQty);
+
+        shoppingList.put(id, newQty);
         if (newQty == 0) {
-            shoppingList.remove(product);
+            shoppingList.remove(id);
         }
-        product.setStock(product.getStock() + (oldQty - newQty));
         this.totalPrice += product.getPrice() * (newQty - oldQty);
         return true;
     }
 
-    public boolean pay(double amount, Payment payment) throws IOException {
+    public boolean pay(double amount, Payment payment, int userId) {
         if (amount < this.totalPrice) {
             return false;
         }
+        this.payeeId = userId;
         this.payment = payment;
         this.paidAmount = amount;
         this.status = Status.PAID;
         transactionList.add(this);
-        this.shoppingList.forEach((product, soldNum) -> product.sold(soldNum));
         this.date = LocalDateTime.now();
+        this.shoppingList.forEach((id, soldNum) -> {
+            Product product = ProductProcessor.getInstance().getProduct(id);
+            product.sold(soldNum);
+        });
         this.change = amount - totalPrice;
         this.returnedChangeMap = CashProcessor.getInstance().getChange(change);
-        shoppingList.forEach((product, qty) -> {
+        shoppingList.forEach((id, qty) -> {
+            Product product = ProductProcessor.getInstance().getProduct(id);
             product.setStock(product.getStock() - qty);
         });
         return true;
     }
 
+    public boolean hasProduct(int id) {
+        return this.shoppingList.containsKey(id);
+    }
 
     public boolean cancel(String reason) {
         status = Status.CANCELLED;
         this.reason = reason;
         return true;
+    }
+
+    public User getPayee() {
+        for (User user : UserProcessor.getInstance().getUsers()) {
+            if (user.getId() == payeeId) {
+                return user;
+            }
+        }
+        return null;
     }
 
     public Map<Double, Integer> getReturnedChangeMap() {
@@ -116,7 +121,12 @@ public class Transaction {
     }
 
     public Map<Product, Integer> getShoppingList() {
-        return shoppingList;
+        Map<Product, Integer> list = new HashMap<>();
+        shoppingList.forEach((id, qty) -> {
+            Product product = ProductProcessor.getInstance().getProduct(id);
+            list.put(product, qty);
+        });
+        return list;
     }
 
     public LocalDateTime getDate() {

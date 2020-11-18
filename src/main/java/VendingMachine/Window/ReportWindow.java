@@ -19,9 +19,7 @@ import java.util.*;
 
 public class ReportWindow {
 
-    private Stage stage;
-    private Scene scene;
-    private AnchorPane pane;
+    private final AnchorPane pane;
     private Button userReportBtn;
     private Button cancelReportBtn;
     private Button transactionReportBtn;
@@ -30,9 +28,9 @@ public class ReportWindow {
     private Button changeReportBtn;
 
     public ReportWindow() throws IOException {
-        stage = new Stage();
+        Stage stage = new Stage();
         pane = new AnchorPane();
-        scene = new Scene(pane, 400, 400);
+        Scene scene = new Scene(pane, 400, 400);
         stage.setScene(scene);
         stage.setTitle("Report");
         stage.show();

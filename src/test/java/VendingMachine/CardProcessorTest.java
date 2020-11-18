@@ -1,7 +1,5 @@
 package VendingMachine;
 
-import static org.junit.Assert.*;
-
 import VendingMachine.Processor.CardProcessor;
 import org.junit.After;
 import org.junit.Before;
@@ -12,12 +10,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 public class CardProcessorTest {
 
     CardProcessor cardProcessor;
 
     @Before
-    public void init() throws IOException{
+    public void init() throws IOException {
         CardProcessor.load();
         cardProcessor = CardProcessor.getInstance();
     }
@@ -35,13 +36,13 @@ public class CardProcessorTest {
     }
 
     @Test
-    public void testCardProcessorConstructor() throws IOException{
+    public void testCardProcessorConstructor() {
         assertNotNull(CardProcessor.getInstance());
     }
 
     @Test
     public void testValidCard() {
-        cardProcessor.validateCard("Charles","40691");
-        assertNull(cardProcessor.validateCard("test","test"));
+        cardProcessor.validateCard("Charles", "40691");
+        assertNull(cardProcessor.validateCard("test", "test"));
     }
 }

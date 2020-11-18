@@ -1,13 +1,13 @@
 package VendingMachine.Window;
 
-import VendingMachine.Data.User;
 import VendingMachine.Data.Product;
 import VendingMachine.Data.Transaction;
+import VendingMachine.Data.User;
+import VendingMachine.Processor.ProductProcessor;
 import VendingMachine.Processor.UserProcessor;
 import VendingMachine.Window.CashManagement.CashManagementWindow;
 import VendingMachine.Window.CheckoutManagement.CheckoutWindow;
 import VendingMachine.Window.ProductManagement.ProductManagementWindow;
-import VendingMachine.Window.ProductManagement.ProductTable;
 import VendingMachine.Window.ProductManagement.ProductTableEntry;
 import VendingMachine.Window.SoldHistory.SoldHistoryWindow;
 import VendingMachine.Window.TransactionHistory.TransactionHistoryWindow;
@@ -20,12 +20,17 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class MainWindow {
     private static MainWindow mainWindow;
-    private Scene scene;
-    private AnchorPane pane;
+    private final Scene scene;
+    private final AnchorPane pane;
+    private final UserProcessor userProcessor;
     private Button accountBtn;
     private Button userManagementBtn;
     private Button cashManagementBtn;
@@ -34,29 +39,23 @@ public class MainWindow {
     private Button soldHistoryBtn;
     private Button transactionHistory;
     private Text currentUserInfo;
-    private ProductTable productTable;
     private Text selectedItemText;
     private ComboBox<Integer> selectedQuantityCombo;
-    private TableView<ProductTableEntry> shoppingCartTable;
     private TableView<ProductTableEntry> shoppingHistoryTable;
-    private UserProcessor userProcessor;
-    private ComboBox<Integer> setCartQtyCombo;
+    private TableView<ProductTableEntry> productTable;
 
     private MainWindow() {
         pane = new AnchorPane();
-        scene = new Scene(pane, 1700, 500);
+        scene = new Scene(pane, 1150, 460);
         userProcessor = UserProcessor.getInstance();
+        initProductTable();
         initButtons();
         initBtnActions();
         initLabels();
         initText();
         updateCurrencyUserInfo();
         initPurchaseNodes();
-        initShoppingCart();
         initShoppingHistory();
-
-        this.productTable = new ProductTable(50, 50, 500, 350);
-        pane.getChildren().add(productTable.getTable());
         setProductTableAction();
     }
 
@@ -68,9 +67,9 @@ public class MainWindow {
     }
 
     public void updateCurrencyUserInfo() {
-        currentUserInfo.setText("Current User with type: "
+        currentUserInfo.setText("Current User and Role: "
                 + userProcessor.getCurrentUser().getUsername()
-                + "   "
+                + "    "
                 + userProcessor.getCurrentUser().getType()
         );
     }
@@ -79,16 +78,62 @@ public class MainWindow {
         this.accountBtn.setText(text);
     }
 
-    public void setShoppingCartData() {
-        this.shoppingCartTable.getItems().clear();
-        userProcessor.getCurrentUser().getShoppingList().forEach((k, v) ->
-                this.shoppingCartTable.getItems().add(new ProductTableEntry(k.getCode(), k.getName(),
-                        k.getCategory().toString(), Double.toString(k.getPrice()),
-                        Integer.toString(v), k.getId())));
+    public void setShoppingHistoryData() {
+        this.shoppingHistoryTable.getItems().clear();
+        List<Transaction> shoppingHistory = UserProcessor.getInstance().getCurrentUser().getShoppingHistory();
+        int count = 0;
+        for (int i = shoppingHistory.size() - 1; i >= 0; i--) {
+            Transaction transaction = shoppingHistory.get(i);
+            Map<Product, Integer> boughtProducts = transaction.getShoppingList();
+            List<Entry<Product, Integer>> entrySet =
+                    boughtProducts.entrySet()
+                            .stream().sorted(Comparator.comparing(o -> o.getKey().getCode()))
+                            .collect(Collectors.toList());
+            for (Map.Entry<Product, Integer> entry : entrySet) {
+                Product product = entry.getKey();
+                Integer qty = entry.getValue();
+                this.shoppingHistoryTable.getItems().add(new ProductTableEntry(product.getCode(),
+                        product.getName(), product.getCategory().toString(),
+                        Double.toString(product.getPrice()), Integer.toString(qty),
+                        product.getId()));
+                count++;
+                if (count >= 5) {
+                    return;
+                }
+            }
+        }
+    }
+
+    public void update() {
+        updateProductTable();
+        updateCurrencyUserInfo();
+        setShoppingHistoryData();
     }
 
     public void updateProductTable() {
-        this.productTable.updateTableData();
+        // set data to table
+        productTable.getItems().clear();
+        Map<Integer, Product> productMap = ProductProcessor.getInstance().getProductMap();
+        List<Product> products =
+                productMap.values()
+                        .stream().sorted(Comparator.comparing(Product::getCategory))
+                        .collect(Collectors.toList());
+
+        products.forEach(product -> {
+            String code = product.getCode();
+            String name = product.getName();
+            String price = Double.toString(product.getPrice());
+            String quantity = Integer.toString(product.getStock());
+            String category = product.getCategory().toString();
+            Map<Product, Integer> currentShoppingCart = UserProcessor.getInstance()
+                    .getCurrentUser().getShoppingList();
+            String inCart = "0";
+            if (currentShoppingCart.containsKey(product)) {
+                inCart = Integer.toString(currentShoppingCart.get(product));
+            }
+            productTable.getItems().add(new ProductTableEntry(code, name, category, price, quantity,
+                    product.getId(), inCart));
+        });
     }
 
     private void initLabels() {
@@ -96,15 +141,11 @@ public class MainWindow {
         productTableLabel.setLayoutX(250);
         productTableLabel.setLayoutY(30);
 
-        Label shoppingCartLabel = new Label("Shopping Cart");
-        shoppingCartLabel.setLayoutX(810);
-        shoppingCartLabel.setLayoutY(30);
-
-        Label shoppingHistoryLabel = new Label("Shopping History");
-        shoppingHistoryLabel.setLayoutX(1370);
+        Label shoppingHistoryLabel = new Label("Latest bought items");
+        shoppingHistoryLabel.setLayoutX(810);
         shoppingHistoryLabel.setLayoutY(30);
 
-        pane.getChildren().addAll(productTableLabel, shoppingCartLabel, shoppingHistoryLabel);
+        pane.getChildren().addAll(productTableLabel, shoppingHistoryLabel);
     }
 
     private void initButtons() {
@@ -114,37 +155,42 @@ public class MainWindow {
         productManageBtn = new Button();
         soldHistoryBtn = new Button();
 
-        Button[] buttons = {accountBtn, userManagementBtn, cashManagementBtn, productManageBtn};
-        String[] texts = {"Account", "Manage User", "Manage Cash", "Manage Product"};
+        accountBtn.setText("Account");
+        accountBtn.setLayoutX(600);
+        accountBtn.setLayoutY(240);
+        accountBtn.setPrefWidth(110);
+        accountBtn.setPrefHeight(30);
+        pane.getChildren().add(accountBtn);
+
+        Button[] buttons = {userManagementBtn, cashManagementBtn, productManageBtn};
+        String[] texts = {"Manage User", "Manage Cash", "Manage Product"};
 
         for (int i = 0; i < buttons.length; i++) {
             Button button = buttons[i];
-            button.setLayoutX(40 + 130 * i);
-            button.setLayoutY(450);
-            button.setPrefWidth(120);
-            button.setPrefHeight(30);
             button.setText(texts[i]);
+            button.setLayoutX(990);
+            button.setLayoutY(240 + 50 * i);
+            button.setPrefWidth(110);
+            button.setPrefHeight(30);
             pane.getChildren().add(button);
         }
         reportBtn = new Button("Generate Report");
-        reportBtn.setLayoutX(960);
-        reportBtn.setLayoutY(10);
-        reportBtn.setPrefWidth(140);
+        reportBtn.setLayoutX(770);
+        reportBtn.setLayoutY(240);
+        reportBtn.setPrefWidth(150);
         pane.getChildren().add(reportBtn);
-        soldHistoryBtn.setLayoutX(40 + 130 * 3);
-        soldHistoryBtn.setLayoutY(490);
-        soldHistoryBtn.setPrefWidth(120);
+
+        soldHistoryBtn.setLayoutX(770);
+        soldHistoryBtn.setLayoutY(290);
+        soldHistoryBtn.setPrefWidth(150);
         soldHistoryBtn.setPrefHeight(30);
         soldHistoryBtn.setText("Sold History");
         pane.getChildren().add(soldHistoryBtn);
-        initTransactionHistoryButton();
-    }
 
-    private void initTransactionHistoryButton() {
         transactionHistory = new Button();
-        transactionHistory.setLayoutX(600);
-        transactionHistory.setLayoutY(450);
-        transactionHistory.setPrefWidth(180);
+        transactionHistory.setLayoutX(770);
+        transactionHistory.setLayoutY(340);
+        transactionHistory.setPrefWidth(150);
         transactionHistory.setPrefHeight(30);
         transactionHistory.setText("Transaction History");
         pane.getChildren().add(transactionHistory);
@@ -158,7 +204,7 @@ public class MainWindow {
             } else {
                 userProcessor.logoutUser();
                 accountBtn.setText("Account");
-                updateCurrencyUserInfo();
+                update();
             }
         }));
         userManagementBtn.setOnAction(event -> {
@@ -217,18 +263,18 @@ public class MainWindow {
 
     private void initText() {
         currentUserInfo = new Text();
-        currentUserInfo.setLayoutX(10);
-        currentUserInfo.setLayoutY(20);
+        currentUserInfo.setLayoutX(730);
+        currentUserInfo.setLayoutY(220);
         this.pane.getChildren().add(currentUserInfo);
     }
 
     private void setProductTableAction() {
-        this.productTable.setTableAction(event -> {
+        this.productTable.setOnMouseClicked(event -> {
             selectedQuantityCombo.getItems().clear();
-            if (!productTable.selectIsEmpty()) {
-                ProductTableEntry selected = productTable.getSelectedItem();
+            if (!productTable.getSelectionModel().isEmpty()) {
+                ProductTableEntry selected = productTable.getSelectionModel().getSelectedItem();
                 selectedItemText.setText(selected.getName());
-                for (int i = 1; i <= Integer.parseInt(selected.getQuantity()); i++) {
+                for (int i = 0; i <= Integer.parseInt(selected.getQuantity()); i++) {
                     selectedQuantityCombo.getItems().add(i);
                 }
                 selectedQuantityCombo.getSelectionModel().select(0);
@@ -239,53 +285,17 @@ public class MainWindow {
         });
     }
 
-    private void initShoppingCart() {
-        shoppingCartTable = new TableView<>();
-        shoppingCartTable.setLayoutX(600);
-        shoppingCartTable.setLayoutY(50);
-        shoppingCartTable.setPrefWidth(500);
-        shoppingCartTable.setPrefHeight(350);
-        shoppingCartTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        pane.getChildren().add(shoppingCartTable);
-
-        //create table
-        String[] colNames = {"Category", "Code", "Name", "Pice($)", "Quantity"};
-        String[] properties = {"category", "code", "name", "price", "quantity"};
-        for (int i = 0; i < colNames.length; i++) {
-            String colName = colNames[i];
-            TableColumn<ProductTableEntry, String> column = new TableColumn<>(colName);
-            column.setSortable(false);
-            column.setPrefWidth(118);
-            column.setStyle("-fx-alignment: CENTER;");
-            column.setCellValueFactory(new PropertyValueFactory<>(properties[i]));
-            shoppingCartTable.getColumns().add(column);
-        }
-
-        shoppingCartTable.setOnMouseClicked(event -> {
-            setCartQtyCombo.getItems().clear();
-            if (!shoppingCartTable.getSelectionModel().isEmpty()) {
-                ProductTableEntry selected = shoppingCartTable.getSelectionModel().getSelectedItem();
-                for (int i = 0; i <= Integer.parseInt(selected.getQuantity()); i++) {
-                    setCartQtyCombo.getItems().add(i);
-                }
-                setCartQtyCombo.getSelectionModel().select(Integer.parseInt(selected.getQuantity()));
-            } else {
-                setCartQtyCombo.setPromptText("Quantity");
-            }
-        });
-    }
-
     private void initShoppingHistory() {
         shoppingHistoryTable = new TableView<>();
-        shoppingHistoryTable.setLayoutX(1150);
+        shoppingHistoryTable.setLayoutX(600);
         shoppingHistoryTable.setLayoutY(50);
         shoppingHistoryTable.setPrefWidth(500);
-        shoppingHistoryTable.setPrefHeight(350);
+        shoppingHistoryTable.setPrefHeight(150);
         shoppingHistoryTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         pane.getChildren().add(shoppingHistoryTable);
 
         //create table
-        String[] colNames = {"Category", "Code", "Name", "Pice($)", "Quantity"};
+        String[] colNames = {"Category", "Code", "Name", "Price($)", "Quantity"};
         String[] properties = {"category", "code", "name", "price", "quantity"};
         for (int i = 0; i < colNames.length; i++) {
             String colName = colNames[i];
@@ -297,52 +307,6 @@ public class MainWindow {
             shoppingHistoryTable.getColumns().add(column);
         }
         this.setShoppingHistoryData();
-        /*
-        shoppingCartTable.setOnMouseClicked(event -> {
-            setCartQtyCombo.getItems().clear();
-            if (!shoppingCartTable.getSelectionModel().isEmpty()) {
-                ProductTableEntry selected = shoppingCartTable.getSelectionModel().getSelectedItem();
-                for (int i = 0; i <= Integer.parseInt(selected.getQuantity()); i++) {
-                    setCartQtyCombo.getItems().add(i);
-                }
-                setCartQtyCombo.getSelectionModel().select(Integer.parseInt(selected.getQuantity()));
-            } else {
-                setCartQtyCombo.setPromptText("Quantity");
-            }
-        });
-        */
-    }
-
-    public void setShoppingHistoryData() {
-        this.shoppingHistoryTable.getItems().clear();
-        List<Transaction> shoppingHistory = userProcessor.getCurrentUser().getShoppingHistory();
-        if (shoppingHistory.size() > 0) {
-          Transaction lastShoppingHistory = shoppingHistory.get(shoppingHistory.size()-1);
-          Map<Product, Integer> shoppingList = lastShoppingHistory.getShoppingList();
-          if (shoppingList.size() > 5) {
-            Set<Product> set = shoppingList.keySet();
-            Iterator<Product> iter = set.iterator();
-            for (int i = 0; i < shoppingList.size() - 5; i++) {
-              iter.next();
-            }
-            while (iter.hasNext()) {
-              Product key = iter.next();
-              Integer value = shoppingList.get(key);
-              this.shoppingHistoryTable.getItems().add(new ProductTableEntry(key.getCode(), key.getName(),
-              key.getCategory().toString(), Double.toString(key.getPrice()),
-              Integer.toString(value), key.getId()));
-            }
-          }
-          Set<Product> set = shoppingList.keySet();
-          Iterator<Product> iter = set.iterator();
-          while (iter.hasNext()) {
-            Product key = iter.next();
-            Integer value = shoppingList.get(key);
-            this.shoppingHistoryTable.getItems().add(new ProductTableEntry(key.getCode(), key.getName(),
-            key.getCategory().toString(), Double.toString(key.getPrice()),
-            Integer.toString(value), key.getId()));
-          }
-        }
     }
 
     private void initPurchaseNodes() {
@@ -360,62 +324,25 @@ public class MainWindow {
         selectedQuantityCombo.setPromptText("Quantity");
         pane.getChildren().add(selectedQuantityCombo);
 
-        setCartQtyCombo = new ComboBox<>();
-        setCartQtyCombo.setLayoutX(750);
-        setCartQtyCombo.setLayoutY(410);
-        setCartQtyCombo.setPrefWidth(120);
-        setCartQtyCombo.setPromptText("Quantity");
-        pane.getChildren().add(setCartQtyCombo);
-
         Button addToCartBtn = new Button();
         addToCartBtn.setLayoutX(300);
         addToCartBtn.setLayoutY(410);
         addToCartBtn.setPrefWidth(120);
-        addToCartBtn.setText("Add to Cart");
+        addToCartBtn.setText("Set Qty in Cart");
         addToCartBtn.setOnAction(event -> addToCart());
         pane.getChildren().add(addToCartBtn);
 
         Button checkout = new Button();
-        checkout.setLayoutX(920);
+        checkout.setLayoutX(430);
         checkout.setLayoutY(410);
         checkout.setPrefWidth(120);
         checkout.setText("Checkout");
         checkout.setOnAction(event -> new CheckoutWindow());
         pane.getChildren().add(checkout);
-
-        Button setQtyInCartBtn = new Button();
-        setQtyInCartBtn.setLayoutX(620);
-        setQtyInCartBtn.setLayoutY(410);
-        setQtyInCartBtn.setPrefWidth(120);
-        setQtyInCartBtn.setText("Set Qty");
-        setQtyInCartBtn.setOnAction(event -> setQtyInCart());
-        pane.getChildren().add(setQtyInCartBtn);
-    }
-
-    private void setQtyInCart() {
-        ProductTableEntry selectedItem = shoppingCartTable.getSelectionModel().getSelectedItem();
-        if (selectedItem == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Please select an item.");
-            alert.show();
-            return;
-        }
-
-        if (setCartQtyCombo.getSelectionModel().getSelectedItem() == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "No enough stock.");
-            alert.show();
-            return;
-        }
-
-        userProcessor.getCurrentUser().setItemInCart(selectedItem.getId(),
-                setCartQtyCombo.getSelectionModel().getSelectedItem());
-
-        setCartQtyCombo.getItems().clear();
-        this.setShoppingCartData();
-        updateProductTable();
     }
 
     private void addToCart() {
-        ProductTableEntry selectedItem = this.productTable.getSelectedItem();
+        ProductTableEntry selectedItem = this.productTable.getSelectionModel().getSelectedItem();
         if (selectedItem == null) {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Please select an item.");
             alert.show();
@@ -423,20 +350,43 @@ public class MainWindow {
         }
 
         if (selectedQuantityCombo.getSelectionModel().getSelectedItem() == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "No enough stock.");
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Please select quantity.");
             alert.show();
             return;
         }
 
-        if (!userProcessor.getCurrentUser().addToCart(selectedItem.getId(),
-                selectedQuantityCombo.getSelectionModel().getSelectedItem())) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "No enough stock.");
-            alert.show();
-        }
 
-        setShoppingCartData();
-        selectedQuantityCombo.getItems().clear();
+        userProcessor.getCurrentUser().setItemInCart(selectedItem.getId(),
+                selectedQuantityCombo.getSelectionModel().getSelectedItem());
+
+
         updateProductTable();
+        selectedQuantityCombo.getItems().clear();
+        selectedItemText.setText("Selected Item");
+    }
+
+    private void initProductTable() {
+        productTable = new TableView<>();
+        productTable.setLayoutX(50);
+        productTable.setLayoutY(50);
+        productTable.setPrefWidth(500);
+        productTable.setPrefHeight(350);
+        productTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        // create table
+        String[] colNames = {"Category", "Name", "Code", "Price ($)", "Quantity", "In the Cart"};
+        String[] properties = {"category", "name", "code", "price", "quantity", "inCart"};
+        for (int i = 0; i < colNames.length; i++) {
+            String colName = colNames[i];
+            TableColumn<ProductTableEntry, String> column = new TableColumn<>(colName);
+            column.setSortable(false);
+            column.setPrefWidth(118);
+            column.setStyle("-fx-alignment: CENTER;");
+            column.setCellValueFactory(new PropertyValueFactory<>(properties[i]));
+            productTable.getColumns().add(column);
+        }
+        updateProductTable();
+        pane.getChildren().add(productTable);
     }
 
     public Scene getScene() {
