@@ -41,6 +41,12 @@ public class TransactionTest {
     public void testPay() {
         transaction.pay(10);
         assertEquals(10, transaction.getPaidAmount(), 0);
+        assertFalse(transaction.pay(-1));
+    }
+
+    @Test
+    public void testCancel() {
+        assertTrue(transaction.cancel());
     }
 
 }

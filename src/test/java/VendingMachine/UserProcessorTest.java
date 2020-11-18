@@ -154,4 +154,36 @@ public class UserProcessorTest {
         }
         assertFalse(userProcessor.setUserType(10000, "CASHIER"));
     }
+
+    @Test
+    public void testGetInstance() throws IOException{
+        UserProcessor.getInstance();
+    }
+
+    @Test
+    public void testPay(){
+        assertTrue(userProcessor.getCurrentUser().pay(10));
+        assertFalse(userProcessor.getCurrentUser().pay(-1));
+    }
+
+    @Test
+    public void testCancel() {
+        assertTrue(userProcessor.getCurrentUser().cancelShopping());
+    }
+
+    @Test
+    public void testGetChange() {
+        userProcessor.getCurrentUser().pay(10);
+        assertEquals(10,userProcessor.getCurrentUser().getChange(),0);
+    }
+
+    @Test
+    public void testPaidAmount() {
+        assertEquals(0,userProcessor.getCurrentUser().getPaidAmount(),0);
+    }
+
+    @Test
+    public void testGetShoppingHistory() {
+        assertNotNull(userProcessor.getCurrentUser().getShoppingHistory());
+    }
 }
