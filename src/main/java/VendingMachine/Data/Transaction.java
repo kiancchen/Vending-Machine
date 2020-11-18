@@ -73,6 +73,11 @@ public class Transaction {
         this.paidAmount = amount;
         status = Status.PAID;
         transactionList.add(this);
+        shoppingList.forEach((product, soldNum) ->{
+            product.sold(soldNum);
+        });
+
+
         return true;
     }
 

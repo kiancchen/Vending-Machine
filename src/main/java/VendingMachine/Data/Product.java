@@ -17,6 +17,7 @@ public class Product {
         this.stock = -1;
         this.code = "";
         this.id = staticCode++;
+        this.sold = 0;
     }
 
     public Product(String code, Category category, String name, double price, int stock) {
@@ -72,6 +73,13 @@ public class Product {
         this.stock = stock;
     }
 
+    public void sold(int sold) {
+        this.sold += sold;
+    }
+
+    public int getSold() {
+        return sold;
+    }
 
     public enum Category {
         DRINK,
