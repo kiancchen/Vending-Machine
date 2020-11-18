@@ -27,6 +27,8 @@ public class TransactionTest {
         assertEquals(5.0, transaction.getTotalPrice(), 0);
         assertTrue(transaction.set(1, 0));
         assertEquals(0, transaction.getTotalPrice(), 0);
+        transaction.add(2,1);
+        assertFalse(transaction.set(2,10));
     }
 
     @Test
@@ -48,4 +50,17 @@ public class TransactionTest {
     public void testGetTransactionList() {
         assertNotNull(Transaction.getTransactionList());
     }
+
+    @Test
+    public void testGetPayment() throws IOException{
+        transaction.pay(10, Transaction.Payment.CASH);
+        assertEquals(Transaction.Payment.CASH,transaction.getPayment());
+    }
+
+    @Test
+    public void testGetReturnedChangeMap() {
+        assertNull(transaction.getReturnedChangeMap());
+    }
+
+
 }

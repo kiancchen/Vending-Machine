@@ -8,6 +8,7 @@ import VendingMachine.Processor.UserProcessor;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,9 +16,9 @@ import java.util.Map;
 
 public class Transaction {
     private static List<Transaction> transactionList;
+    private LocalDateTime date;
     private final Map<Integer, Integer> shoppingList;
     private final transient ProductProcessor productProcessor;
-    private LocalDate date;
     private Status status;
     private double totalPrice;
     private double paidAmount;
@@ -70,11 +71,11 @@ public class Transaction {
         this.paidAmount = amount;
         this.status = Status.PAID;
         transactionList.add(this);
+        this.date = LocalDateTime.now();
         this.shoppingList.forEach((id, soldNum) -> {
             Product product = ProductProcessor.getInstance().getProduct(id);
             product.sold(soldNum);
         });
-        this.date = LocalDate.now();
         this.change = amount - totalPrice;
         this.returnedChangeMap = CashProcessor.getInstance().getChange(change);
         shoppingList.forEach((id, qty) -> {
@@ -128,7 +129,7 @@ public class Transaction {
         return list;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 

@@ -46,6 +46,7 @@ public class UserProcessorTest {
     public void UserProcessorConstructor() {
         assertNotNull(userProcessor);
         assertEquals(User.UserType.ANONYMOUS, userProcessor.getCurrentUser().getType());
+        assertNotNull(UserProcessor.getInstance());
     }
 
     /**
