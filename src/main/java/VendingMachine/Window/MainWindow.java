@@ -10,6 +10,8 @@ import VendingMachine.Window.ProductManagement.ProductTableEntry;
 import VendingMachine.Window.SoldHistory.SoldHistoryWindow;
 import VendingMachine.Window.TransactionHistory.TransactionHistoryWindow;
 import VendingMachine.Window.UserManagement.UserManagementWindow;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -27,9 +29,9 @@ public class MainWindow {
     private Button userManagementBtn;
     private Button cashManagementBtn;
     private Button productManageBtn;
+    private Button reportBtn;
     private Button soldHistoryBtn;
     private Button transactionHistory;
-  
     private Text currentUserInfo;
     private ProductTable productTable;
     private Text selectedItemText;
@@ -119,6 +121,11 @@ public class MainWindow {
             button.setText(texts[i]);
             pane.getChildren().add(button);
         }
+        reportBtn = new Button("Generate Report");
+        reportBtn.setLayoutX(960);
+        reportBtn.setLayoutY(10);
+        reportBtn.setPrefWidth(140);
+        pane.getChildren().add(reportBtn);
         soldHistoryBtn .setLayoutX(40 + 130 * 3);
         soldHistoryBtn .setLayoutY(490);
         soldHistoryBtn .setPrefWidth(120);
@@ -192,6 +199,13 @@ public class MainWindow {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
                         "to do this action.");
                 alert.show();
+            }
+        });
+        reportBtn.setOnAction(event -> {
+            try {
+                new ReportWindow();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         });
     }
