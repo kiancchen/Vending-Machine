@@ -14,6 +14,7 @@ public class User {
     private UserType type;
     private List<Transaction> shoppingHistory;
     private Transaction shoppingCart;
+    private CreditCard card;
 
     public User() {
         this.username = "";
@@ -54,8 +55,8 @@ public class User {
         return this.permissions.get(permission);
     }
 
-    public boolean pay(double amount) {
-        if (shoppingCart.pay(amount)) {
+    public boolean pay(double amount, Transaction.Payment payment) {
+        if (shoppingCart.pay(amount, payment)) {
             shoppingHistory.add(shoppingCart);
             shoppingCart = new Transaction();
             return true;
@@ -126,6 +127,14 @@ public class User {
             this.setPermission(Permission.MANAGE_ITEM, true);
             this.setPermission(Permission.MANAGE_USER, true);
         }
+    }
+
+    public CreditCard getCard() {
+        return card;
+    }
+
+    public void setCard(CreditCard card) {
+        this.card = card;
     }
 
     public enum UserType {

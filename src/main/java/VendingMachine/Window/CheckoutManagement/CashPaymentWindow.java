@@ -1,5 +1,6 @@
 package VendingMachine.Window.CheckoutManagement;
 
+import VendingMachine.Data.Transaction;
 import VendingMachine.Processor.CashProcessor;
 import VendingMachine.Processor.UserProcessor;
 import javafx.scene.Scene;
@@ -19,13 +20,12 @@ public class CashPaymentWindow {
     private AnchorPane pane;
     private TableView<CashTableEntry> table;
     private Map<String, String> paidCashes;
-    private CheckoutWindow checkout;
     private ComboBox<String> valueCombo;
     private Button addButton;
     private Button payButton;
     private TextField numberField;
 
-    public CashPaymentWindow(CheckoutWindow checkout) {
+    public CashPaymentWindow() {
         stage = new Stage();
         pane = new AnchorPane();
         scene = new Scene(pane, 480, 600);
@@ -34,7 +34,6 @@ public class CashPaymentWindow {
         stage.show();
 
         this.paidCashes = new HashMap<>();
-        this.checkout = checkout;
 
         initLabel();
         initTable();
@@ -117,7 +116,7 @@ public class CashPaymentWindow {
 
         double payAmount = getPayAmount();
         try {
-            if (UserProcessor.getInstance().getCurrentUser().pay(payAmount)) {
+            if (UserProcessor.getInstance().getCurrentUser().pay(payAmount, Transaction.Payment.CASH)) {
                 new ChangeWindow();
                 stage.close();
             } else {

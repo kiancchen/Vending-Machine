@@ -50,12 +50,12 @@ public class ChangeWindow {
         okeyButton.setPrefHeight(30);
         okeyButton.setText("Okay");
         pane.getChildren().add(okeyButton);
-
     }
 
     private void initButtonAction() {
         okeyButton.setOnAction((event -> {
             MainWindow.getInstance().setShoppingCartData();
+            MainWindow.getInstance().updateProductTable();
             stage.close();
         }));
     }
@@ -100,6 +100,5 @@ public class ChangeWindow {
         for (Double value : list) {
             table.getItems().add(new CashTableEntry(value.toString(), changesMap.get(value).toString()));
         }
-
     }
 }

@@ -7,7 +7,7 @@ import java.util.*;
 
 public class CashProcessor {
     private static CashProcessor cashProcessor;
-    private Map<Double, Integer> cashMap;
+    private final Map<Double, Integer> cashMap;
 
     private CashProcessor() throws IOException {
         this.cashMap = DatabaseHandler.loadCashData();
@@ -80,6 +80,4 @@ public class CashProcessor {
     public Map<Double, Integer> getCashMap() {
         return cashMap;
     }
-
-
 }

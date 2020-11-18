@@ -2,6 +2,7 @@ package VendingMachine.Window.ProductManagement;
 
 import VendingMachine.Data.Product;
 import VendingMachine.Processor.ProductProcessor;
+import VendingMachine.Window.MainWindow;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -25,10 +26,9 @@ public class ProductManagementWindow {
     private int selectedId;
     private String originCategory;
     private ProductTable productTable;
-    private ProductTable mainTable;
     private ProductProcessor productProcessor;
 
-    public ProductManagementWindow(ProductTable mainTable) {
+    public ProductManagementWindow() {
         stage = new Stage();
         pane = new AnchorPane();
         scene = new Scene(pane, 600, 500);
@@ -42,8 +42,6 @@ public class ProductManagementWindow {
             alert.show();
         }
 
-
-        this.mainTable = mainTable;
         this.productTable = new ProductTable(50, 30, 500, 350);
         pane.getChildren().add(productTable.getTable());
         setTableAction();
@@ -173,7 +171,7 @@ public class ProductManagementWindow {
                     Double.parseDouble(priceField.getText()), Integer.parseInt(stockField.getText()))) {
                 alert(Alert.AlertType.INFORMATION, "Successfully add.");
                 this.productTable.updateTableData();
-                this.mainTable.updateTableData();
+                MainWindow.getInstance().updateProductTable();
                 selectedId = -1;
             } else {
                 alert(Alert.AlertType.WARNING, "Product exists.");
@@ -194,7 +192,7 @@ public class ProductManagementWindow {
             if (productProcessor.removeProduct(selectedId)) {
                 alert(Alert.AlertType.INFORMATION, "Successfully removed");
                 this.productTable.updateTableData();
-                this.mainTable.updateTableData();
+                MainWindow.getInstance().updateProductTable();
             }
         } catch (Exception e) {
             alert(Alert.AlertType.WARNING, "Product selected does not exist");
@@ -240,7 +238,7 @@ public class ProductManagementWindow {
         stockField.setText("");
         categoryCombo.getSelectionModel().clearSelection();
         this.productTable.updateTableData();
-        this.mainTable.updateTableData();
+        MainWindow.getInstance().updateProductTable();
         selectedId = -1;
     }
 

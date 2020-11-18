@@ -6,6 +6,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 import static org.junit.Assert.*;
 
@@ -39,8 +41,24 @@ public class TransactionTest {
 
     @Test
     public void testPay() {
-        transaction.pay(10);
+        transaction.pay(10, Transaction.Payment.CASH);
         assertEquals(10, transaction.getPaidAmount(), 0);
+        assertFalse(transaction.pay(-1, Transaction.Payment.CASH));
+        assertNotNull(transaction.getDate());
     }
+
+    @Test
+    public void testCancel() {
+        assertTrue(transaction.cancel("test"));
+        assertEquals(Transaction.Status.CANCELLED,transaction.getStatus());
+        assertEquals("test",transaction.getReason());
+    }
+
+    @Test
+    public void testGetTransactionList() {
+        assertNotNull(Transaction.getTransactionList());
+    }
+
+
 
 }
