@@ -6,6 +6,7 @@ import javafx.scene.control.Alert;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.Map;
 public class Transaction {
     private static List<Transaction> transactionList;
     private Map<Product, Integer> shoppingList;
-    private LocalDate date;
+    private LocalDateTime date;
     private Status status;
     private double totalPrice;
     private double paidAmount;
@@ -84,7 +85,7 @@ public class Transaction {
         this.status = Status.PAID;
         transactionList.add(this);
         this.shoppingList.forEach((product, soldNum) -> product.sold(soldNum));
-        this.date = LocalDate.now();
+        this.date = LocalDateTime.now();
 
         shoppingList.forEach((product, qty) -> {
             product.setStock(product.getStock() - qty);
@@ -118,7 +119,7 @@ public class Transaction {
         return shoppingList;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 

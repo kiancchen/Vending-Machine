@@ -66,13 +66,13 @@ public class TransactionHistoryWindow {
     private void setTableData() {
         table.getItems().clear();
         for (Transaction transaction : Transaction.getTransactionList()) {
-            DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            DateTimeFormatter fmt = DateTimeFormatter.ofPattern("MM-dd HH:mm");
             transaction.getShoppingList().forEach((k,v) -> {
                 String itemSold = k.getName();
                 table.getItems().add(new TransactionHistoryTableEntry(transaction.getDate().format(fmt),
                         itemSold,Double.toString(transaction.getPaidAmount()),
                         Double.toString(userProcessor.getCurrentUser().getChange()),
-                        transaction.getStatus().toString()));
+                        transaction.getPayment().toString()));
 
             });
 
