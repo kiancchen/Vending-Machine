@@ -8,7 +8,7 @@ import java.util.List;
 
 public class UserProcessor {
     private static UserProcessor userProcessor;
-    private List<User> users;
+    private final List<User> users;
     private User currentUser;
 
     private UserProcessor() throws IOException {
@@ -16,14 +16,11 @@ public class UserProcessor {
         this.currentUser = this.users.get(0);
     }
 
-    public static UserProcessor getInstance() throws IOException {
-        if (userProcessor == null) {
-            userProcessor = new UserProcessor();
-        }
+    public static UserProcessor getInstance() {
         return userProcessor;
     }
 
-    public static UserProcessor reload() throws IOException {
+    public static UserProcessor load() throws IOException {
         userProcessor = new UserProcessor();
         return userProcessor;
     }

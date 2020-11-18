@@ -1,5 +1,6 @@
 package VendingMachine.Data;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,8 +56,8 @@ public class User {
         return this.permissions.get(permission);
     }
 
-    public boolean pay(double amount) {
-        if (shoppingCart.pay(amount)) {
+    public boolean pay(double amount, Transaction.Payment payment) throws IOException {
+        if (shoppingCart.pay(amount, payment)) {
             shoppingHistory.add(shoppingCart);
             shoppingCart = new Transaction();
             return true;
@@ -135,6 +136,10 @@ public class User {
 
     public void setCard(CreditCard card) {
         this.card = card;
+    }
+
+    public Map<Double, Integer> getReturnChangeMap() {
+        return shoppingHistory.get(shoppingHistory.size() - 1).getReturnedChangeMap();
     }
 
     public enum UserType {

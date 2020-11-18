@@ -32,7 +32,7 @@ public class CashProcessorTest {
 
     @Before
     public void init() throws IOException {
-        cashProcessor = CashProcessor.reload();
+        cashProcessor = CashProcessor.load();
     }
 
     @Test
@@ -89,5 +89,8 @@ public class CashProcessorTest {
         Map<Double, Integer> changes = cashProcessor.getChange(-10);
     }
 
-
+    @Test
+    public void getInstance () throws IOException{
+        CashProcessor.getInstance();
+    }
 }

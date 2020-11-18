@@ -2,7 +2,6 @@ package VendingMachine;
 
 import VendingMachine.Data.Product;
 import VendingMachine.Processor.ProductProcessor;
-import javafx.scene.control.Alert;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -32,7 +31,7 @@ public class ProductProcessorTest {
 
     @Before
     public void init() throws IOException {
-            productProcessor = ProductProcessor.reload();
+            productProcessor = ProductProcessor.load();
     }
 
     @Test
@@ -113,6 +112,12 @@ public class ProductProcessorTest {
     public void testSetProductCode() throws IOException {
         assertFalse(productProcessor.setProductCode(1, "5"));
         assertTrue(productProcessor.setProductCode(1, "20"));
+    }
+
+    @Test
+    public void testSold() {
+        productProcessor.getProduct(1).sold(1);
+        assertEquals(1,productProcessor.getProduct(1).getSold(),0);
     }
 
 

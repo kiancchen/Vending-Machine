@@ -1,6 +1,7 @@
 package VendingMachine;
 
 import VendingMachine.Data.Transaction;
+import VendingMachine.Processor.CashProcessor;
 import VendingMachine.Processor.ProductProcessor;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,8 +15,9 @@ public class TransactionTest {
 
     @Before
     public void init() throws IOException {
+        ProductProcessor.load();
+        CashProcessor.load();
         transaction = new Transaction();
-        ProductProcessor.reload();
     }
 
     @Test
@@ -38,9 +40,22 @@ public class TransactionTest {
     }
 
     @Test
-    public void testPay() {
-        transaction.pay(10);
+    public void testPay() throws IOException {
+        transaction.pay(10, Transaction.Payment.CASH);
         assertEquals(10, transaction.getPaidAmount(), 0);
+        assertFalse(transaction.pay(-1, Transaction.Payment.CASH));
+        assertNotNull(transaction.getDate());
     }
 
+    @Test
+    public void testCancel() {
+        assertTrue(transaction.cancel("test"));
+        assertEquals(Transaction.Status.CANCELLED,transaction.getStatus());
+        assertEquals("test",transaction.getReason());
+    }
+
+    @Test
+    public void testGetTransactionList() {
+        assertNotNull(Transaction.getTransactionList());
+    }
 }

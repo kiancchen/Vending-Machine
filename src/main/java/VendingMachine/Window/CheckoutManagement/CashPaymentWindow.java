@@ -1,5 +1,6 @@
 package VendingMachine.Window.CheckoutManagement;
 
+import VendingMachine.Data.Transaction;
 import VendingMachine.Processor.CashProcessor;
 import VendingMachine.Processor.UserProcessor;
 import javafx.scene.Scene;
@@ -77,12 +78,7 @@ public class CashPaymentWindow {
         valueCombo.setPromptText("Select value");
 
         Map<Double, Integer> cashMap = null;
-        try {
-            cashMap = CashProcessor.getInstance().getCashMap();
-        } catch (IOException e) {
-            alert(Alert.AlertType.WARNING, "Can't get the cash processor");
-            return;
-        }
+        cashMap = CashProcessor.getInstance().getCashMap();
 
         List<Double> values = cashMap.keySet().stream().sorted().collect(Collectors.toList());
         for (double value : values) {
@@ -115,7 +111,7 @@ public class CashPaymentWindow {
 
         double payAmount = getPayAmount();
         try {
-            if (UserProcessor.getInstance().getCurrentUser().pay(payAmount)) {
+            if (UserProcessor.getInstance().getCurrentUser().pay(payAmount, Transaction.Payment.CASH)) {
                 new ChangeWindow();
                 stage.close();
             } else {
