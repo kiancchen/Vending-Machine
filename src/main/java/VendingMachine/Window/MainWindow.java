@@ -7,6 +7,7 @@ import VendingMachine.Window.CheckoutManagement.CheckoutWindow;
 import VendingMachine.Window.ProductManagement.ProductManagementWindow;
 import VendingMachine.Window.ProductManagement.ProductTable;
 import VendingMachine.Window.ProductManagement.ProductTableEntry;
+import VendingMachine.Window.TransactionHistory.TransactionHistoryWindow;
 import VendingMachine.Window.UserManagement.UserManagementWindow;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -25,6 +26,7 @@ public class MainWindow {
     private Button userManagementBtn;
     private Button cashManagementBtn;
     private Button productManageBtn;
+    private Button transactionHistory;
     private Text currentUserInfo;
     private ProductTable productTable;
     private Text selectedItemText;
@@ -100,6 +102,7 @@ public class MainWindow {
         cashManagementBtn = new Button();
         productManageBtn = new Button();
 
+
         Button[] buttons = {accountBtn, userManagementBtn, cashManagementBtn, productManageBtn};
         String[] texts = {"Account", "Manage User", "Manage Cash", "Manage Product"};
 
@@ -112,6 +115,21 @@ public class MainWindow {
             button.setText(texts[i]);
             pane.getChildren().add(button);
         }
+
+        initTransactionHistoryButton();
+    }
+
+    private void initTransactionHistoryButton() {
+        transactionHistory = new Button();
+        String string = "Transaction History";
+
+        transactionHistory.setLayoutX(600);
+        transactionHistory.setLayoutY(450);
+        transactionHistory.setPrefWidth(180);
+        transactionHistory.setPrefHeight(30);
+        transactionHistory.setText(string);
+        pane.getChildren().add(transactionHistory);
+
     }
 
     private void initBtnActions() {
@@ -146,6 +164,15 @@ public class MainWindow {
         productManageBtn.setOnAction(event -> {
             if (userProcessor.getCurrentUser().getPermission(User.Permission.MANAGE_ITEM)) {
                 new ProductManagementWindow(this.productTable);
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
+                        "to do this action.");
+                alert.show();
+            }
+        });
+        transactionHistory.setOnAction(event -> {
+            if(userProcessor.getCurrentUser().getPermission(User.Permission.MANAGE_CASH)) {
+                new TransactionHistoryWindow();
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
                         "to do this action.");
