@@ -89,5 +89,8 @@ public class CashProcessorTest {
         Map<Double, Integer> changes = cashProcessor.getChange(-10);
     }
 
-
+    @Test
+    public void getInstance () throws IOException{
+        CashProcessor.getInstance();
+    }
 }

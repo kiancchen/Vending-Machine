@@ -1,6 +1,8 @@
 package VendingMachine;
 
+import VendingMachine.Data.CreditCard;
 import VendingMachine.Data.User;
+import VendingMachine.Processor.CardProcessor;
 import VendingMachine.Processor.ProductProcessor;
 import VendingMachine.Processor.UserProcessor;
 import org.junit.After;
@@ -152,5 +154,44 @@ public class UserProcessorTest {
             assertEquals(userList.get(i).getType(), userProcessor.getUsers().get(i).getType());
         }
         assertFalse(userProcessor.setUserType(10000, "CASHIER"));
+    }
+
+    @Test
+    public void testGetInstance() throws IOException{
+        UserProcessor.getInstance();
+    }
+
+    @Test
+    public void testPay(){
+        assertTrue(userProcessor.getCurrentUser().pay(10));
+        assertFalse(userProcessor.getCurrentUser().pay(-1));
+    }
+
+    @Test
+    public void testCancel() {
+        assertTrue(userProcessor.getCurrentUser().cancelShopping("test"));
+    }
+
+    @Test
+    public void testGetChange() {
+        userProcessor.getCurrentUser().pay(10);
+        assertEquals(10,userProcessor.getCurrentUser().getChange(),0);
+    }
+
+    @Test
+    public void testPaidAmount() {
+        assertEquals(0,userProcessor.getCurrentUser().getPaidAmount(),0);
+    }
+
+    @Test
+    public void testGetShoppingHistory() {
+        assertNotNull(userProcessor.getCurrentUser().getShoppingHistory());
+    }
+
+    @Test
+    public void testCard(){
+        CreditCard creditCard = new CreditCard();
+        userProcessor.getCurrentUser().setCard(creditCard);
+        assertEquals(creditCard,userProcessor.getCurrentUser().getCard());
     }
 }
