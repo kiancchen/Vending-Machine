@@ -1,6 +1,7 @@
 package VendingMachine.Window.CheckoutManagement;
 
 import VendingMachine.Data.CreditCard;
+import VendingMachine.Data.Transaction;
 import VendingMachine.Data.User;
 import VendingMachine.Processor.CardProcessor;
 import VendingMachine.Processor.UserProcessor;
@@ -111,12 +112,17 @@ public class CardPaymentWindow {
         }
         CreditCard card = cardProcessor.validateCard(name, number);
         if (card != null) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successful!");
-            alert.show();
-            if (checkBox.isSelected()) {
-                currentUser.setCard(card);
+            if (currentUser.pay(currentUser.getTotalPrice(), Transaction.Payment.CARD)){
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successful!");
+                alert.show();
+                if (checkBox.isSelected()) {
+                    currentUser.setCard(card);
+                }
+                stage.close();
+            }else{
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Fail to pay.");
+                alert.show();
             }
-            stage.close();
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Card does not exist.");
             alert.show();

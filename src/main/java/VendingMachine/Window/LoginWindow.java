@@ -16,10 +16,8 @@ public class LoginWindow {
     private AnchorPane pane;
     private TextField inputUsername;
     private PasswordField inputPassword;
-    private MainWindow mainWindow;
 
-    public LoginWindow(MainWindow mainWindow) {
-        this.mainWindow = mainWindow;
+    public LoginWindow() {
 
         stage = new Stage();
         pane = new AnchorPane();
@@ -40,8 +38,8 @@ public class LoginWindow {
             if (UserProcessor.getInstance().verifyUser(usernameInp, passwordInp)) {
                 Alert alert = new Alert(AlertType.INFORMATION, "Sign in successfully.");
                 alert.show();
-                this.mainWindow.changeAccountButtonText("Logout");
-                this.mainWindow.updateCurrencyUserInfo();
+                MainWindow.getInstance().changeAccountButtonText("Logout");
+                MainWindow.getInstance().updateCurrencyUserInfo();
                 stage.close();
             } else {
                 Alert alert = new Alert(AlertType.WARNING, "Fail to sign in. Wrong username or " +
@@ -71,8 +69,8 @@ public class LoginWindow {
                 Alert alert = new Alert(AlertType.INFORMATION, "Sign up successfully.");
                 alert.show();
                 userProcessor.verifyUser(usernameInp, passwordInp);
-                this.mainWindow.changeAccountButtonText("Logout");
-                this.mainWindow.updateCurrencyUserInfo();
+                MainWindow.getInstance().changeAccountButtonText("Logout");
+                MainWindow.getInstance().updateCurrencyUserInfo();
                 stage.close();
             } else {
                 Alert alert = new Alert(AlertType.WARNING, "User exists");

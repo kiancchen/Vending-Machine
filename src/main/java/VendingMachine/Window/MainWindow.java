@@ -118,7 +118,7 @@ public class MainWindow {
         accountBtn.setOnAction((event -> {
             if (userProcessor.getCurrentUser().getType() == User.UserType.ANONYMOUS) {
                 // If the currency user is the Anonymous
-                new LoginWindow(this);
+                new LoginWindow();
             } else {
                 userProcessor.logoutUser();
                 accountBtn.setText("Account");
@@ -145,7 +145,7 @@ public class MainWindow {
         });
         productManageBtn.setOnAction(event -> {
             if (userProcessor.getCurrentUser().getPermission(User.Permission.MANAGE_ITEM)) {
-                new ProductManagementWindow(this.productTable);
+                new ProductManagementWindow();
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
                         "to do this action.");
@@ -270,7 +270,7 @@ public class MainWindow {
         }
 
         if (setCartQtyCombo.getSelectionModel().getSelectedItem() == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Not enough quantity.");
+            Alert alert = new Alert(Alert.AlertType.WARNING, "No enough stock.");
             alert.show();
             return;
         }
@@ -280,7 +280,7 @@ public class MainWindow {
 
         setCartQtyCombo.getItems().clear();
         this.setShoppingCartData();
-        this.productTable.updateTableData();
+        updateProductTable();
     }
 
     private void addToCart() {
@@ -292,19 +292,23 @@ public class MainWindow {
         }
 
         if (selectedQuantityCombo.getSelectionModel().getSelectedItem() == null) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Not enough quantity.");
+            Alert alert = new Alert(Alert.AlertType.WARNING, "No enough stock.");
             alert.show();
             return;
         }
 
         if (!userProcessor.getCurrentUser().addToCart(selectedItem.getId(),
                 selectedQuantityCombo.getSelectionModel().getSelectedItem())) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Not enough quantity.");
+            Alert alert = new Alert(Alert.AlertType.WARNING, "No enough stock.");
             alert.show();
         }
 
         setShoppingCartData();
         selectedQuantityCombo.getItems().clear();
+        updateProductTable();
+    }
+
+    public void updateProductTable() {
         this.productTable.updateTableData();
     }
 

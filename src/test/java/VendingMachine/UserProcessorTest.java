@@ -62,7 +62,6 @@ public class UserProcessorTest {
     @Test
     public void testSetItemInCart() {
         assertTrue(userProcessor.getCurrentUser().addToCart(1, 5));
-        assertFalse(userProcessor.getCurrentUser().setItemInCart(1, 10));
         assertTrue(userProcessor.getCurrentUser().setItemInCart(1, 3));
     }
 

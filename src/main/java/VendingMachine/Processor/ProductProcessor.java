@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class ProductProcessor {
     private static ProductProcessor productProcessor;
-    private Map<Integer, Product> productMap;
+    private final Map<Integer, Product> productMap;
 
     private ProductProcessor() throws IOException {
         productMap = DatabaseHandler.loadProductData();

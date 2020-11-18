@@ -1,5 +1,6 @@
 package VendingMachine.Window.CheckoutManagement;
 
+import VendingMachine.Data.Transaction;
 import VendingMachine.Processor.CashProcessor;
 import VendingMachine.Processor.UserProcessor;
 import javafx.scene.Scene;
@@ -115,7 +116,7 @@ public class CashPaymentWindow {
 
         double payAmount = getPayAmount();
         try {
-            if (UserProcessor.getInstance().getCurrentUser().pay(payAmount)) {
+            if (UserProcessor.getInstance().getCurrentUser().pay(payAmount, Transaction.Payment.CASH)) {
                 new ChangeWindow();
                 stage.close();
             } else {

@@ -55,8 +55,8 @@ public class User {
         return this.permissions.get(permission);
     }
 
-    public boolean pay(double amount) {
-        if (shoppingCart.pay(amount)) {
+    public boolean pay(double amount, Transaction.Payment payment) {
+        if (shoppingCart.pay(amount, payment)) {
             shoppingHistory.add(shoppingCart);
             shoppingCart = new Transaction();
             return true;

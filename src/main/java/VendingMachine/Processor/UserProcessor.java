@@ -8,7 +8,7 @@ import java.util.List;
 
 public class UserProcessor {
     private static UserProcessor userProcessor;
-    private List<User> users;
+    private final List<User> users;
     private User currentUser;
 
     private UserProcessor() throws IOException {

@@ -39,7 +39,7 @@ public class TransactionTest {
 
     @Test
     public void testPay() {
-        transaction.pay(10);
+        transaction.pay(10, Transaction.Payment.CASH);
         assertEquals(10, transaction.getPaidAmount(), 0);
     }
 

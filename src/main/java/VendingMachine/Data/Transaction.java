@@ -6,7 +6,6 @@ import javafx.scene.control.Alert;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +18,8 @@ public class Transaction {
     private Status status;
     private double totalPrice;
     private double paidAmount;
+    private Map<Double, Integer> returnedChangeMap;
+    private Payment payment;
     private ProductProcessor productProcessor;
     private String reason;
 
@@ -38,17 +39,23 @@ public class Transaction {
         totalPrice = 0;
     }
 
+    public static List<Transaction> getTransactionList() {
+        return transactionList;
+    }
+
     public boolean add(int id, int quantity) {
         Product product = productProcessor.getProduct(id);
-        if (quantity > product.getStock()) {
-            return false;
-        }
         if (shoppingList.containsKey(product)) {
+            if (shoppingList.get(product) + quantity > product.getStock()) {
+                return false;
+            }
             shoppingList.put(product, shoppingList.get(product) + quantity);
         } else {
+            if (quantity > product.getStock()) {
+                return false;
+            }
             shoppingList.put(product, quantity);
         }
-        product.setStock(product.getStock() - quantity);
         this.totalPrice += product.getPrice() * quantity;
         return true;
     }
@@ -68,15 +75,20 @@ public class Transaction {
         return true;
     }
 
-    public boolean pay(double amount) {
+    public boolean pay(double amount, Payment payment) {
         if (amount < this.totalPrice) {
             return false;
         }
+        this.payment = payment;
         this.paidAmount = amount;
-        status = Status.PAID;
+        this.status = Status.PAID;
         transactionList.add(this);
-        shoppingList.forEach((product, soldNum) -> product.sold(soldNum));
-        date = LocalDate.now();
+        this.shoppingList.forEach((product, soldNum) -> product.sold(soldNum));
+        this.date = LocalDate.now();
+
+        shoppingList.forEach((product, qty) -> {
+            product.setStock(product.getStock() - qty);
+        });
         return true;
     }
 
@@ -84,6 +96,14 @@ public class Transaction {
         status = Status.CANCELLED;
         this.reason = reason;
         return true;
+    }
+
+    public Map<Double, Integer> getReturnedChangeMap() {
+        return returnedChangeMap;
+    }
+
+    public Payment getPayment() {
+        return payment;
     }
 
     public double getTotalPrice() {
@@ -98,10 +118,6 @@ public class Transaction {
         return shoppingList;
     }
 
-    public static List<Transaction> getTransactionList() {
-        return transactionList;
-    }
-
     public LocalDate getDate() {
         return date;
     }
@@ -114,9 +130,14 @@ public class Transaction {
         return reason;
     }
 
-    enum Status {
+    public enum Status {
         PAID,
         UNPAID,
         CANCELLED
+    }
+
+    public enum Payment {
+        CASH,
+        CARD
     }
 }

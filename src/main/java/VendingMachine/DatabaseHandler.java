@@ -81,13 +81,4 @@ public class DatabaseHandler {
         reader.close();
         return products;
     }
-
-    public static void saveCreditCards(List<CreditCard> creditCards) throws IOException {
-        FileWriter fileWriter = new FileWriter(cardFile);
-        JsonWriter jsonWriter = new JsonWriter(fileWriter);
-        jsonWriter.setIndent(" ");
-        gson.toJson(creditCards, new TypeToken<List<CreditCard>>() {}.getType(), jsonWriter);
-        jsonWriter.flush();
-        jsonWriter.close();
-    }
 }

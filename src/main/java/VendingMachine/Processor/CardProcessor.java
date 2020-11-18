@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class CardProcessor {
-    private List<CreditCard> cards;
+    private final List<CreditCard> cards;
     private static CardProcessor cardProcessor;
 
     private CardProcessor() throws IOException {
