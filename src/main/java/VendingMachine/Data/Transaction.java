@@ -5,6 +5,7 @@ import VendingMachine.Processor.ProductProcessor;
 import javafx.scene.control.Alert;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,7 +15,7 @@ import java.util.Map;
 public class Transaction {
     private static List<Transaction> transactionList;
     private Map<Product, Integer> shoppingList;
-    private LocalDateTime date;
+    private LocalDate date;
     private Status status;
     private double totalPrice;
     private double paidAmount;
@@ -74,11 +75,8 @@ public class Transaction {
         this.paidAmount = amount;
         status = Status.PAID;
         transactionList.add(this);
-        shoppingList.forEach((product, soldNum) ->{
-            product.sold(soldNum);
-        });
-
-
+        shoppingList.forEach((product, soldNum) -> product.sold(soldNum));
+        date = LocalDate.now();
         return true;
     }
 
@@ -98,6 +96,22 @@ public class Transaction {
 
     public Map<Product, Integer> getShoppingList() {
         return shoppingList;
+    }
+
+    public static List<Transaction> getTransactionList() {
+        return transactionList;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public String getReason() {
+        return reason;
     }
 
     enum Status {
