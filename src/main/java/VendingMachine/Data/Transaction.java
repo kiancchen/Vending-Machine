@@ -83,14 +83,9 @@ public class Transaction {
         this.status = Status.PAID;
         transactionList.add(this);
         this.shoppingList.forEach((product, soldNum) -> product.sold(soldNum));
-<<<<<<< HEAD
         this.date = LocalDateTime.now();
-
-=======
-        this.date = LocalDate.now();
         this.change = amount - totalPrice;
         this.returnedChangeMap = CashProcessor.getInstance().getChange(change);
->>>>>>> 5e9f74c007f6217da4c657a27d6bceb44513bd5a
         shoppingList.forEach((product, qty) -> {
             product.setStock(product.getStock() - qty);
         });

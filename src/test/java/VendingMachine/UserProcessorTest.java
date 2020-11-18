@@ -44,6 +44,7 @@ public class UserProcessorTest {
     public void UserProcessorConstructor() {
         assertNotNull(userProcessor);
         assertEquals(User.UserType.ANONYMOUS, userProcessor.getCurrentUser().getType());
+        assertNotNull(UserProcessor.getInstance());
     }
 
     /**
@@ -154,11 +155,6 @@ public class UserProcessorTest {
             assertEquals(userList.get(i).getType(), userProcessor.getUsers().get(i).getType());
         }
         assertFalse(userProcessor.setUserType(10000, "CASHIER"));
-    }
-
-    @Test
-    public void testGetInstance() throws IOException{
-        UserProcessor.getInstance();
     }
 
     @Test

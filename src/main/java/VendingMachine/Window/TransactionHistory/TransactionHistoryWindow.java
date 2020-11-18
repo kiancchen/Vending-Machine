@@ -3,6 +3,7 @@ package VendingMachine.Window.TransactionHistory;
 import VendingMachine.Data.Transaction;
 import VendingMachine.Processor.UserProcessor;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -18,6 +19,7 @@ public class TransactionHistoryWindow {
     private AnchorPane pane;
     private TableView<TransactionHistoryTableEntry> table;
     private UserProcessor userProcessor;
+    private Button viewButton;
 
     public TransactionHistoryWindow() {
         stage = new Stage();
@@ -28,6 +30,24 @@ public class TransactionHistoryWindow {
         stage.show();
         userProcessor = UserProcessor.getInstance();
         initTable();
+        initBtn();
+        initBtnAction();
+    }
+
+    private void initBtn() {
+        viewButton = new Button();
+        viewButton.setLayoutY(440);
+        viewButton.setLayoutX(250);
+        viewButton.setPrefWidth(100);
+        viewButton.setPrefHeight(30);
+        viewButton.setText("View");
+        pane.getChildren().add(viewButton);
+    }
+
+    private void initBtnAction() {
+        viewButton.setOnAction(event -> {
+            new TransactionProductWindow();
+        });
     }
 
     private void initTable() {
@@ -35,12 +55,12 @@ public class TransactionHistoryWindow {
         table.setLayoutX(50);
         table.setLayoutY(15);
         table.setPrefWidth(500);
-        table.setPrefHeight(440);
+        table.setPrefHeight(400);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         pane.getChildren().add(table);
 
-        String[] colNames = {"Time", "Item Sold", "Money Paid", "Changes", "Payment Method"};
-        String[] properties = {"time", "itemSold", "moneyPaid", "changes", "paymentMethod"};
+        String[] colNames = {"Time", "Money Paid", "Changes", "Payment Method"};
+        String[] properties = {"time", "moneyPaid", "changes", "paymentMethod"};
         for (int i = 0; i < colNames.length; i++) {
             String colName = colNames[i];
             TableColumn<TransactionHistoryTableEntry, String> column = new TableColumn<>(colName);
@@ -56,16 +76,11 @@ public class TransactionHistoryWindow {
     private void setTableData() {
         table.getItems().clear();
         for (Transaction transaction : Transaction.getTransactionList()) {
-
             DateTimeFormatter fmt = DateTimeFormatter.ofPattern("MM-dd HH:mm");
-            transaction.getShoppingList().forEach((k,v) -> {
-                String itemSold = k.getName();
-                table.getItems().add(new TransactionHistoryTableEntry(transaction.getDate().format(fmt),
-                        itemSold, Double.toString(transaction.getPaidAmount()),
+                table.getItems().add(new TransactionHistoryTableEntry(transaction.getDate().format(fmt)
+                        , Double.toString(transaction.getPaidAmount()),
                         Double.toString(userProcessor.getCurrentUser().getChange()),
                         transaction.getPayment().toString()));
-
-            });
 
         }
     }
