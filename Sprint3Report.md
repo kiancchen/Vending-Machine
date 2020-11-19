@@ -25,14 +25,14 @@
   - [Sprint Goal](#sprint-goal)
   - [User Stories and Sprint Backlog](#user-stories-and-sprint-backlog)
   - [Burndown Chart](#burndown-chart)
+    - [Sprint 3 Burndown Chart](#sprint-3-burndown-chart)
+    - [Product Burndown Chart](#product-burndown-chart)
   - [Storyboard](#storyboard)
   - [Scrum Meetings](#scrum-meetings)
     - [Meeting 1 (Sprint Planning)](#meeting-1-sprint-planning)
     - [Meeting 2](#meeting-2)
     - [Meeting 3](#meeting-3)
   - [Sprint Review](#sprint-review)
-    - [Client Feedback](#client-feedback)
-    - [Revisited Sprint Backlog](#revisited-sprint-backlog)
   - [Sprint Retrospective](#sprint-retrospective)
 
 # Scrum Teams
@@ -70,7 +70,7 @@
    - Refactor the code to support new features
    - Continuously fix bugs
    - Review pull requests
-   
+
 2. Yuanqun Wang (ywan3184):
    - Timeout cancelled feature
    - User cancelled feature
@@ -91,8 +91,10 @@
    - Demo report
    - Story board
 6. Zehui Lin (zlin3338):
-   - A table display input notes
-   - A table display change notes
+   - A table display last five products bought by customer
+   - Prompt message for insufficient payment amount
+   - Prompt message for insufficient change in system amount
+   - Prompt message for the system does not have correct change combination 
 
 # Agile Development Tools and Practices
 
@@ -102,7 +104,7 @@ Same content in Sprint 1 Report, can be accessed at this [link](https://github.s
 
 ## UML Class Diagram
 
-<mark>TODO</mark>
+<img src='https://i.loli.net/2020/11/19/fKFEQcCzYepHn4L.png' alt='fKFEQcCzYepHn4L'/>
 
 ## Demo
 
@@ -273,21 +275,19 @@ The user can select products he wants to remove, then click the row which the pr
 
 ## Product Backlog
 
-<mark>TODO</mark>
-
 The product backlog contains a set of all features and sub-features to build the vending machine, including functions, requirements, enhancements and fixes identified from previous sprints. The items in product backlog are ordered by priority and constantly changed. Any additional requirements from client should be directly added to product backlog instead of sprint backlog.
 
-<img src='https://i.loli.net/2020/11/12/rM2aNhyep1wzvGH.png' alt='rM2aNhyep1wzvGH'/>
+<img src='https://i.loli.net/2020/11/19/fhx7j6zwtGqkUPi.png' alt='fhx7j6zwtGqkUPi'/>
 
 If you can't see this table clearly, please refer to this [link](https://docs.google.com/spreadsheets/d/1bW-7sIUqPr8Pr3uHav8PKmb57BtOSc3_Uw_Vm2mQ-A8/edit?usp=sharing) (google sheet).
 
 ## Sprint Goal
 
-   - Implement the code structure for `Transaction`
-   - Able to display transaction history
-   - Able to display cancelled transaction history
-   - Able to display sold product history
-   - Able to Pay by credit card
+   - Continues fix code structure for `Transaction`
+   - Able to display transaction history table
+   - Able to display cancelled transaction history tablee
+   - Able to display sold product history table
+   - Able to pay by credit card
    - Able to cancel the transaction
    - The user will be automatically logout after the checkout or cancelling the transaction
    - Save the credit card details if user wants to save, and it will be automatically filled in.
@@ -298,17 +298,25 @@ If you can't see this table clearly, please refer to this [link](https://docs.go
 
 The sprint backlog contains a set of items selected for this sprint. It is considered as a plan for delivering the product increment and realize the sprint goal. It is visible to anyone and to be added or modified by the development team.
 
-<mark>TODO</mark>
+<mark>Review</mark>
 
-<img src='https://i.loli.net/2020/11/12/NpFoXwTc7dAWZf9.png' alt='NpFoXwTc7dAWZf9'/>
+<img src='https://i.loli.net/2020/11/19/X251LGUxrkCcl38.png' alt='X251LGUxrkCcl38'/>
+
+**Notes:** Sprint 3 Backlog is colored with red.
 
 ## Burndown Chart
 
-<mark>TODD</mark>
+### Sprint 3 Burndown Chart
+
+<img src='https://i.loli.net/2020/11/19/4k578V6noPeUtMD.png' alt='4k578V6noPeUtMD'/>
+
+### Product Burndown Chart
+
+<img src='https://i.loli.net/2020/11/19/1UO9BNGeLXpjDm2.png' alt='1UO9BNGeLXpjDm2'/>
 
 ## Storyboard
 
-<mark>TODD</mark>
+<img src='https://i.loli.net/2020/11/19/HcD8gjV1CBukSpe.png' alt='HcD8gjV1CBukSpe'/>
 
 ## Scrum Meetings
 
@@ -352,8 +360,8 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
   - What I will do today:  Working on story board
   - Do I see any obstacles: None at the moment.
 - Zehui Lin:
-  - What did I do yesterday: 
-  - What I will do today: 
+  - What did I do yesterday: Working on the shopping history table which list last five products bought by customer.
+  - What I will do today: Continues working on shopping history table in main window.
   - Do I see any obstacles: None at the moment.
 
 ### Meeting 3
@@ -387,48 +395,39 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
   - What I will do today:  Finish the report demo and change the story board base on the new feature
   - Do I see any obstacles: None at the moment.
 - Zehui Lin:
-  - What did I do yesterday: 
-  - What I will do today: 
-  - Do I see any obstacles: 
+  - What did I do yesterday: Finished shopping history table display of last five products.
+  - What I will do today: Fix the bug in cash payment system.
+  - Do I see any obstacles: None at the moment.
 
 ## Sprint Review
 
-### Client Feedback
-
-<mark>TODO</mark>
-
-Our client is satisfied with output of current sprint, and do not have any comments for current progression. The client just asks to continue finishing requirement.
+<mark>Review</mark>
 
 - What has been done?
-  - The database that stores products.
-  - The owner and seller can modified amount of cash in machine.
-  - The user can add, change or remove product from shopping cart.
-  - The user can purchases the products by cash.
-  - The machine can display correct change back to user.
-  - A table of products can display.
-  - A table of shopping cart can display.
+   - Continues fix code structure for `Transaction`
+   - Able to display transaction history table
+   - Able to display cancelled transaction history tablee
+   - Able to display sold product history table
+   - Able to pay by credit card
+   - Able to cancel the transaction
+   - The user will be automatically logout after the checkout or cancelling the transaction
+   - Save the credit card details if user wants to save, and it will be automatically filled in.
+   - A shopping of last 5 products bought at the main window.
+   - Able to generate reports of items, transactions, cashes and users.
 - What has not been done?
-  - Have not implemented the code structure for `transaction`.
-  - Cannot display shopping history.
-
-### Revisited Sprint Backlog
-
-<mark>TODO</mark>
-
-The tasks have not assigned according to priority, some features cannot be implemented while other task have not completed. For example, one of our sprint backlog is to display a table of shopping history, however the backlog of payment by cash has just finished by due day, which makes impossible to finish displaying a table of shopping history.
-
-In the next sprint, we need to focus on the order to implement features and aims to finish all the required feature by the due day.
+  - All the tasks have been completed on time.
 
 ## Sprint Retrospective
 
-<mark>TODO</mark>
+<mark>Review</mark>
 
-- Date: 12th November
+- Date: 20th November
 - What went well during the Sprint?
-  - Completed most of tasks on time.
+  - Completed all of tasks on time.
+  - Extends some features from clients requirement.
+  - Improve experience of user interaction.
   - Worked on different features on different branches by different teammate well.
   - All agile tools and practices were utilized.
   - The communication among teammate was efficient so that we can adjust our tasks in time during the progress of the development.
 - What can be improved in the future?
-  - Prioritize all the tasks at the beginning.
-  - Do not write logic code in GUI window
+  - Parts of code could implement design patterns to improve reusability and extendability.
