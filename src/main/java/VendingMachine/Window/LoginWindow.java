@@ -33,8 +33,8 @@ public class LoginWindow {
         String passwordInp = inputPassword.getText();
 
         if (UserProcessor.getInstance().verifyUser(usernameInp, passwordInp)) {
-            Alert alert = new Alert(AlertType.INFORMATION, "Sign in successfully.");
-            alert.show();
+//            Alert alert = new Alert(AlertType.INFORMATION, "Sign in successfully.");
+//            alert.show();
             MainWindow.getInstance().changeAccountButtonText("Logout");
             MainWindow.getInstance().update();
             stage.close();
@@ -51,8 +51,8 @@ public class LoginWindow {
         UserProcessor userProcessor = UserProcessor.getInstance();
 
         if (userProcessor.addUser(usernameInp, passwordInp)) {
-            Alert alert = new Alert(AlertType.INFORMATION, "Sign up successfully.");
-            alert.show();
+//            Alert alert = new Alert(AlertType.INFORMATION, "Sign up successfully.");
+//            alert.show();
             userProcessor.verifyUser(usernameInp, passwordInp);
             MainWindow.getInstance().changeAccountButtonText("Logout");
             MainWindow.getInstance().update();
