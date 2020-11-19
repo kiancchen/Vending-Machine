@@ -132,16 +132,16 @@ public class CashPaymentWindow {
             time.stopTime();
             stage.close();
         } else if (status == 1) {
-            CancelOrReturn("You don't have enough money.");
+            CancelOrReturn("No enough money paid");
         } else {
-            CancelOrReturn("There is no available changes in the machine.");
+            CancelOrReturn("No available changes");
         }
     }
 
     private void CancelOrReturn(String reason) {
         ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
         ButtonType returN = new ButtonType("Return", ButtonBar.ButtonData.OK_DONE);
-        Alert alert = new Alert(Alert.AlertType.ERROR, reason+" Do you want to cancel this payment?", cancel, returN);
+        Alert alert = new Alert(Alert.AlertType.ERROR, reason+"Do you want to cancel this payment?", cancel, returN);
         alert.setResizable(true);
         alert.getDialogPane().setPrefSize(400, 150);
         alert.showAndWait();
@@ -149,6 +149,7 @@ public class CashPaymentWindow {
         if (alert.getResult() == cancel) {
             stage.close();
             UserProcessor.getInstance().getCurrentUser().cancelShopping(reason);
+            UserProcessor.getInstance().logoutUser();
             MainWindow.getInstance().update();
             time.stopTime();
         } else if(alert.getResult() == returN) {
