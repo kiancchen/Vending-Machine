@@ -11,8 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 
 public class CashProcessorTest {
@@ -32,7 +31,7 @@ public class CashProcessorTest {
 
     @Before
     public void init() throws IOException {
-        cashProcessor = CashProcessor.reload();
+        cashProcessor = CashProcessor.load();
     }
 
     @Test
@@ -45,7 +44,7 @@ public class CashProcessorTest {
     }
 
     @Test
-    public void testSetCashNumber() throws IOException {
+    public void testSetCashNumber() {
         Map<Double, Integer> cashes = cashProcessor.getCashMap();
         cashProcessor.setCashNumber(100.0, 10);
         assertEquals(10, (int) cashes.get(100.0));
@@ -57,14 +56,14 @@ public class CashProcessorTest {
         assertEquals(0, (int) cashes.get(0.5));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testSetNegativeCashNumber() throws IOException {
+    @Test
+    public void testSetNegativeCashNumber() {
         Map<Double, Integer> cashes = cashProcessor.getCashMap();
-        cashProcessor.setCashNumber(100.0, -1);
+        assertFalse(cashProcessor.setCashNumber(100.0, -1));
     }
 
     @Test
-    public void testGetChange1() throws IOException {
+    public void testGetChange1() {
         Map<Double, Integer> changes = cashProcessor.getChange(45);
         assertEquals(2, (int) changes.get(20.0));
         assertEquals(1, (int) changes.get(5.0));
@@ -73,21 +72,25 @@ public class CashProcessorTest {
     }
 
     @Test
-    public void testGetChange2() throws IOException {
+    public void testGetChange2() {
         Map<Double, Integer> changes = cashProcessor.getChange(10000.0);
         assertNull(changes);
     }
 
     @Test
-    public void testGetChange3() throws IOException {
+    public void testGetChange3() {
         Map<Double, Integer> changes = cashProcessor.getChange(0.01);
         assertNull(changes);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetNegativeChange1() throws IOException {
+    @Test
+    public void testGetNegativeChange1() {
         Map<Double, Integer> changes = cashProcessor.getChange(-10);
+        assertNull(changes);
     }
 
-
+    @Test
+    public void getInstance() {
+        assertNotNull(CashProcessor.getInstance());
+    }
 }

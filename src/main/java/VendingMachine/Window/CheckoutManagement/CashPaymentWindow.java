@@ -1,5 +1,6 @@
 package VendingMachine.Window.CheckoutManagement;
 
+import VendingMachine.Data.Transaction;
 import VendingMachine.Processor.CashProcessor;
 import VendingMachine.Processor.UserProcessor;
 import VendingMachine.Window.MainWindow;
@@ -12,18 +13,16 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import org.xml.sax.helpers.AttributesImpl;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class CashPaymentWindow {
-    private Stage stage;
-    private Scene scene;
-    private AnchorPane pane;
+    private final Stage stage;
+    private final AnchorPane pane;
+    private final Map<String, String> paidCashes;
     private TableView<CashTableEntry> table;
-    private Map<String, String> paidCashes;
     private ComboBox<String> valueCombo;
-    private Button addButton;
+    private Button setButton;
     private Button payButton;
     private TextField numberField;
     private Button cancelButton;
@@ -32,7 +31,7 @@ public class CashPaymentWindow {
     public CashPaymentWindow() {
         stage = new Stage();
         pane = new AnchorPane();
-        scene = new Scene(pane, 480, 600);
+        Scene scene = new Scene(pane, 480, 600);
         stage.setScene(scene);
         stage.setTitle("Cash Payment");
         stage.show();
@@ -57,18 +56,18 @@ public class CashPaymentWindow {
     }
 
     private void initButtons() {
-        addButton = new Button();
+        setButton = new Button();
         payButton = new Button();
         cancelButton = new Button("Cancel");
 
-        Button[] buttons = {addButton, payButton};
-        String[] texts = {"Add", "Pay"};
+        Button[] buttons = {setButton, payButton};
+        String[] texts = {"Set", "Pay"};
 
         for (int i = 0; i < buttons.length; i++) {
             Button button = buttons[i];
             button.setLayoutX(180);
-            button.setLayoutY(100 + 420 * i);
-            button.setPrefWidth(100);
+            button.setLayoutY(150 + 370 * i);
+            button.setPrefWidth(120);
             button.setPrefHeight(30);
             button.setText(texts[i]);
             pane.getChildren().add(button);
@@ -84,17 +83,11 @@ public class CashPaymentWindow {
     private void initCombobox() {
         valueCombo = new ComboBox<>();
         valueCombo.setLayoutX(80);
-        valueCombo.setLayoutY(150);
+        valueCombo.setLayoutY(100);
         valueCombo.setPrefWidth(120);
         valueCombo.setPromptText("Select value");
 
-        Map<Double, Integer> cashMap = null;
-        try {
-            cashMap = CashProcessor.getInstance().getCashMap();
-        } catch (IOException e) {
-            alert(Alert.AlertType.WARNING, "Can't get the cash processor");
-            return;
-        }
+        Map<Double, Integer> cashMap = CashProcessor.getInstance().getCashMap();
 
         List<Double> values = cashMap.keySet().stream().sorted().collect(Collectors.toList());
         for (double value : values) {
@@ -107,7 +100,7 @@ public class CashPaymentWindow {
     private void initTextFields() {
         numberField = new TextField();
         numberField.setLayoutX(280);
-        numberField.setLayoutY(150);
+        numberField.setLayoutY(100);
         numberField.setPrefWidth(120);
         numberField.setPromptText("Number");
 
@@ -115,7 +108,7 @@ public class CashPaymentWindow {
     }
 
     private void initButtonActions() {
-        addButton.setOnAction((event -> addAction()));
+        setButton.setOnAction((event -> setAction()));
         payButton.setOnAction((event -> payAction()));
         cancelButton.setOnAction((event -> cancelAction()));
     }
@@ -134,7 +127,7 @@ public class CashPaymentWindow {
 
     private void payAction() {
         if (table.getItems().isEmpty()) {
-            alert(Alert.AlertType.WARNING, "You don't pay any cashes.");
+            alert("You don't pay any cashes.");
             return;
         }
 
@@ -152,11 +145,23 @@ public class CashPaymentWindow {
             }
         } catch (IOException e) {
             alert(Alert.AlertType.WARNING, "Can't get the user processor");
+        double payAmount = this.getPayAmount();
+        int status = UserProcessor.getInstance().getCurrentUser().pay(payAmount,
+                Transaction.Payment.CASH);
+        if (status == 0) {
+            new ChangeWindow();
+            stage.close();
+        } else if (status == 1) {
+            alert("You don't have enough money.");
+            UserProcessor.getInstance().getCurrentUser().cancelShopping("change not available");
+          MainWindow.getInstance().update();
+        } else {
+            alert("There's no available changes in the machine.");
         }
     }
 
 
-    private void addAction() {
+    private void setAction() {
         String value = valueCombo.getSelectionModel().getSelectedItem();
         String number = numberField.getText();
 
@@ -165,10 +170,15 @@ public class CashPaymentWindow {
         }
 
         try {
-            this.paidCashes.put(value, number);
+            if ("0".equals(number)) {
+                this.paidCashes.remove(value);
+            } else {
+                this.paidCashes.put(value, number);
+            }
+
             setTableData();
         } catch (Exception e) {
-            alert(Alert.AlertType.WARNING, "Fail to add cash.");
+            alert("Fail to add cash.");
         }
     }
 
@@ -198,22 +208,23 @@ public class CashPaymentWindow {
         setTableData();
     }
 
-    private void alert(Alert.AlertType warning, String s) {
-        Alert alert = new Alert(warning, s);
+    private void alert(String msg) {
+        Alert alert = new Alert(Alert.AlertType.WARNING, msg);
         alert.show();
     }
 
     private boolean validateInput() {
         if (numberField.getText().trim().isEmpty() && valueCombo.getSelectionModel().isEmpty()) {
-            alert(Alert.AlertType.WARNING, "Nothing to add");
+            alert("Nothing to add");
             return false;
         } else if (numberField.getText().trim().isEmpty()) {
-            alert(Alert.AlertType.WARNING, "Number of cash needed");
+            alert("Number of cash needed");
             return false;
         } else if (valueCombo.getSelectionModel().isEmpty()) {
-            alert(Alert.AlertType.WARNING, "Cash value needed.");
+            alert("Cash value needed.");
             return false;
         }
+
         return true;
     }
 
@@ -221,7 +232,6 @@ public class CashPaymentWindow {
     private void setTableData() {
         // set data to table
         table.getItems().clear();
-
         Collection<String> keySet = paidCashes.keySet();
         List<String> list = new ArrayList<>(keySet);
         Collections.sort(list);

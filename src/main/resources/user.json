@@ -9,14 +9,14 @@
    "MANAGE_CASH": false
   },
   "type": "ANONYMOUS",
-  "transactions": [],
+  "shoppingHistory": [],
   "shoppingCart": {
-   "shoppingList": {
-    "VendingMachine.Data.Product@74a1b928": 1
-   },
-   "success": false,
-   "amount": 1.5,
-   "receivedMoney": 6.0
+   "shoppingList": {},
+   "status": "UNPAID",
+   "totalPrice": 0.0,
+   "paidAmount": 0.0,
+   "change": 0.0,
+   "payeeId": 0
   }
  },
  {
@@ -29,12 +29,14 @@
    "MANAGE_CASH": false
   },
   "type": "CUSTOMER",
-  "transactions": [],
+  "shoppingHistory": [],
   "shoppingCart": {
    "shoppingList": {},
-   "success": false,
-   "amount": 0.0,
-   "receivedMoney": 0.0
+   "status": "UNPAID",
+   "totalPrice": 0.0,
+   "paidAmount": 0.0,
+   "change": 0.0,
+   "payeeId": 0
   }
  },
  {
@@ -47,23 +49,14 @@
    "MANAGE_CASH": true
   },
   "type": "OWNER",
-  "transactions": [],
+  "shoppingHistory": [],
   "shoppingCart": {
    "shoppingList": {},
-   "success": false,
-   "amount": 0.0,
-   "receivedMoney": 0.0
+   "status": "UNPAID",
+   "totalPrice": 0.0,
+   "paidAmount": 0.0,
+   "change": 0.0,
+   "payeeId": 0
   }
- },
- {
-  "id": 4,
-  "username": "zzz",
-  "password": "admin",
-  "permissions": {
-   "MANAGE_ITEM": false,
-   "MANAGE_CASH": false,
-   "MANAGE_USER": false
-  },
-  "type": "CUSTOMER"
  }
 ]
