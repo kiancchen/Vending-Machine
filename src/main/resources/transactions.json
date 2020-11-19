@@ -1,1 +1,80 @@
-[]
+[
+ {
+  "date": {
+   "date": {
+    "year": 2020,
+    "month": 11,
+    "day": 19
+   },
+   "time": {
+    "hour": 17,
+    "minute": 22,
+    "second": 47,
+    "nano": 981639000
+   }
+  },
+  "shoppingList": {
+   "10": 1,
+   "7": 1
+  },
+  "status": "CANCELLED",
+  "totalPrice": 3.0,
+  "paidAmount": 0.0,
+  "reason": "user cancelled.",
+  "change": 0.0,
+  "userId": 0
+ },
+ {
+  "date": {
+   "date": {
+    "year": 2020,
+    "month": 11,
+    "day": 19
+   },
+   "time": {
+    "hour": 17,
+    "minute": 24,
+    "second": 54,
+    "nano": 342437000
+   }
+  },
+  "shoppingList": {
+   "11": 1
+  },
+  "status": "CANCELLED",
+  "totalPrice": 3.0,
+  "paidAmount": 0.0,
+  "reason": "timeout.",
+  "change": 0.0,
+  "userId": 0
+ },
+ {
+  "date": {
+   "date": {
+    "year": 2020,
+    "month": 11,
+    "day": 19
+   },
+   "time": {
+    "hour": 17,
+    "minute": 25,
+    "second": 57,
+    "nano": 235923000
+   }
+  },
+  "shoppingList": {
+   "11": 1
+  },
+  "status": "PAID",
+  "totalPrice": 3.0,
+  "paidAmount": 50.0,
+  "returnedChangeMap": {
+   "2.0": 1,
+   "20.0": 2,
+   "5.0": 1
+  },
+  "payment": "CASH",
+  "change": 47.0,
+  "userId": 0
+ }
+]

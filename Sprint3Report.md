@@ -59,20 +59,21 @@
 6. Developer4: Zehui Lin
 
 ## Individual Contribution
-<mark>TODO</mark>
+
 1. Cheng Chen (cche7436):
    - <mark>TODO</mark>
 2. Yuanqun Wang (ywan3184):
-   - Shopping cart GUI
-   - Add product in shoooping cart
-   - Change product in shopping cart
-   - Remove product in shopping cart
+   - Timeout cancelled feature
+   - User cancelled feature
+   - Change not available will automatically cancelled
+   - User have not  enough money will automatically cancelled
 3. Yufei Zuo (yzuo4982):
-   - Add product GUI
-   - Remove product GUI
-   - Change product GUI
-   - Product table
-   - Fix bug of cash payment GUI
+   - Current user cvs report
+   - All transactions csv report
+   - All cancelled transactions csv report
+   - All current products csv report
+   - All sold products csv report
+   - All current change csv report
 4. Zexuan Long (zlon4018):
    - Product options on main window
    - Write test for product management
@@ -297,8 +298,7 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
 - Attendance: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
 - Content:
   - Identify the Sprint Goal
-  - Discuss the data structure of transaction
-  - Implement the codebase of `transaction` together
+  - Discuss the data structure of cancelled feature and report feature
   - Refine, prioritize and assign tasks to team members
   - Produce the Sprint Backlog
 
@@ -317,12 +317,12 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
   - What I will do today: Working on finalize storyboard and fix bugs.
   - Do I see any obstacles: None at the moment.
 - Yuanqun Wang:
-  - What did I do yesterday: Finished shopping cart GUI.
-  - What I will do today: Working on modifying feature of shopping cart.
+  - What did I do yesterday: Finished user cancelled feature
+  - What I will do today: Working on other reason that allows cancel.
   - Do I see any obstacles: None at the moment.
 - Yufei Zuo:
-  - What did I do yesterday: Finished GUI of add and remove product.
-  - What I will do today: Working on GUI of change product.
+  - What did I do yesterday: Finished current user, current change csv report.
+  - What I will do today: Working on current product, sold product csv report.
   - Do I see any obstacles: None at the moment.
 - Zexuan Long:
   - What did I do yesterday: Finish product options on main window and write tests for logic part.
@@ -352,12 +352,12 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
   - What I will do today: continuos to debug
   - Do I see any obstacles: None at the moment.
 - Yuanqun Wang:
-  - What did I do yesterday: Finished remove product in shopping cart.
-  - What I will do today: Working on changing product quantity in shopping cart.
+  - What did I do yesterday: Finished all cancelled features
+  - What I will do today: Fix some bugs in cancelled features.
   - Do I see any obstacles: None at the moment.
 - Yufei Zuo:
-  - What did I do yesterday: Proofreading the report.
-  - What I will do today: Fix bugs in application.
+  - What did I do yesterday: Finished all report generation features.
+  - What I will do today: Fix bugs in transaction csv report in application.
   - Do I see any obstacles: None at the moment.
 - Zexuan Long:
   - What did I do yesterday: Finished test for logic.
