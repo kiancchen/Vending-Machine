@@ -1,24 +1,13 @@
 package VendingMachine.Window.CancelHistory;
 
-import VendingMachine.Data.Product;
 import VendingMachine.Data.Transaction;
-import VendingMachine.Processor.ProductProcessor;
-import VendingMachine.Window.SoldHistory.SoldTableEntry;
-import VendingMachine.Window.TransactionHistory.TransactionHistoryTableEntry;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class CancelHistoryWindow {
 
@@ -38,9 +27,11 @@ public class CancelHistoryWindow {
     public void updateTableData() {
         table.getItems().clear();
         for (Transaction transaction : Transaction.getTransactionList()) {
-            DateTimeFormatter fmt = DateTimeFormatter.ofPattern("MM-dd HH:mm");
-            table.getItems().add(new CancelTableEntry(transaction.getDate().format(fmt),
-                    transaction.getPayee().getUsername(), transaction.getReason()));
+            if (transaction.getStatus() == Transaction.Status.CANCELLED) {
+                DateTimeFormatter fmt = DateTimeFormatter.ofPattern("MM-dd HH:mm");
+                table.getItems().add(new CancelTableEntry(transaction.getDate().format(fmt),
+                        transaction.getPayee().getUsername(), transaction.getReason()));
+            }
         }
     }
 
