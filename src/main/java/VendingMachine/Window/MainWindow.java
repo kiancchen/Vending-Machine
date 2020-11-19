@@ -5,6 +5,7 @@ import VendingMachine.Data.Transaction;
 import VendingMachine.Data.User;
 import VendingMachine.Processor.ProductProcessor;
 import VendingMachine.Processor.UserProcessor;
+import VendingMachine.Window.CancelHistory.CancelHistoryWindow;
 import VendingMachine.Window.CashManagement.CashManagementWindow;
 import VendingMachine.Window.CheckoutManagement.CheckoutWindow;
 import VendingMachine.Window.ProductManagement.ProductManagementWindow;
@@ -37,7 +38,8 @@ public class MainWindow {
     private Button productManageBtn;
     private Button reportBtn;
     private Button soldHistoryBtn;
-    private Button transactionHistory;
+    private Button transactionHistoryBtn;
+    private Button cancelHistroyBtn;
     private Text currentUserInfo;
     private Text selectedItemText;
     private ComboBox<Integer> selectedQuantityCombo;
@@ -150,21 +152,39 @@ public class MainWindow {
 
     private void initButtons() {
         accountBtn = new Button();
+        reportBtn = new Button();
+        Button[] buttons = {accountBtn, reportBtn};
+        String[] texts = {"Account", "Generate Report"};
+        for (int i = 0; i < buttons.length; i++) {
+            Button button = buttons[i];
+            button.setText(texts[i]);
+            button.setLayoutX(600);
+            button.setLayoutY(240 + 50 * i);
+            button.setPrefWidth(110);
+            button.setPrefHeight(30);
+            pane.getChildren().add(button);
+        }
+
+        soldHistoryBtn = new Button();
+        transactionHistoryBtn = new Button();
+        cancelHistroyBtn = new Button();
+        buttons = new Button[]{soldHistoryBtn, transactionHistoryBtn, cancelHistroyBtn};
+        texts = new String[]{"Sold History", "Transaction History", "Cancelled History"};
+        for (int i = 0; i < buttons.length; i++) {
+            Button button = buttons[i];
+            button.setText(texts[i]);
+            button.setLayoutX(770);
+            button.setLayoutY(240 + 50 * i);
+            button.setPrefWidth(150);
+            button.setPrefHeight(30);
+            pane.getChildren().add(button);
+        }
+
         userManagementBtn = new Button();
         cashManagementBtn = new Button();
         productManageBtn = new Button();
-        soldHistoryBtn = new Button();
-
-        accountBtn.setText("Account");
-        accountBtn.setLayoutX(600);
-        accountBtn.setLayoutY(240);
-        accountBtn.setPrefWidth(110);
-        accountBtn.setPrefHeight(30);
-        pane.getChildren().add(accountBtn);
-
-        Button[] buttons = {userManagementBtn, cashManagementBtn, productManageBtn};
-        String[] texts = {"Manage User", "Manage Cash", "Manage Product"};
-
+        buttons = new Button[]{userManagementBtn, cashManagementBtn, productManageBtn};
+        texts = new String[]{"Manage User", "Manage Cash", "Manage Product"};
         for (int i = 0; i < buttons.length; i++) {
             Button button = buttons[i];
             button.setText(texts[i]);
@@ -174,26 +194,6 @@ public class MainWindow {
             button.setPrefHeight(30);
             pane.getChildren().add(button);
         }
-        reportBtn = new Button("Generate Report");
-        reportBtn.setLayoutX(770);
-        reportBtn.setLayoutY(240);
-        reportBtn.setPrefWidth(150);
-        pane.getChildren().add(reportBtn);
-
-        soldHistoryBtn.setLayoutX(770);
-        soldHistoryBtn.setLayoutY(290);
-        soldHistoryBtn.setPrefWidth(150);
-        soldHistoryBtn.setPrefHeight(30);
-        soldHistoryBtn.setText("Sold History");
-        pane.getChildren().add(soldHistoryBtn);
-
-        transactionHistory = new Button();
-        transactionHistory.setLayoutX(770);
-        transactionHistory.setLayoutY(340);
-        transactionHistory.setPrefWidth(150);
-        transactionHistory.setPrefHeight(30);
-        transactionHistory.setText("Transaction History");
-        pane.getChildren().add(transactionHistory);
     }
 
     private void initBtnActions() {
@@ -207,6 +207,41 @@ public class MainWindow {
                 update();
             }
         }));
+        reportBtn.setOnAction(event -> {
+            try {
+                new ReportWindow();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        soldHistoryBtn.setOnAction(event -> {
+            if (userProcessor.getCurrentUser().getPermission(User.Permission.MANAGE_ITEM)) {
+                new SoldHistoryWindow();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
+                        "to do this action.");
+                alert.show();
+            }
+        });
+        transactionHistoryBtn.setOnAction(event -> {
+            if (userProcessor.getCurrentUser().getPermission(User.Permission.MANAGE_CASH)) {
+                new TransactionHistoryWindow();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
+                        "to do this action.");
+                alert.show();
+            }
+        });
+        cancelHistroyBtn.setOnAction(event -> {
+            if (userProcessor.getCurrentUser().getPermission(User.Permission.MANAGE_USER)) {
+                new CancelHistoryWindow();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
+                        "to do this action.");
+                alert.show();
+            }
+        });
+
         userManagementBtn.setOnAction(event -> {
             if (userProcessor.getCurrentUser().getPermission(User.Permission.MANAGE_USER)) {
                 new UserManagementWindow();
@@ -232,31 +267,6 @@ public class MainWindow {
                 Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
                         "to do this action.");
                 alert.show();
-            }
-        });
-        transactionHistory.setOnAction(event -> {
-            if (userProcessor.getCurrentUser().getPermission(User.Permission.MANAGE_CASH)) {
-                new TransactionHistoryWindow();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
-                        "to do this action.");
-                alert.show();
-            }
-        });
-        soldHistoryBtn.setOnAction(event -> {
-            if (userProcessor.getCurrentUser().getPermission(User.Permission.MANAGE_ITEM)) {
-                new SoldHistoryWindow();
-            } else {
-                Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
-                        "to do this action.");
-                alert.show();
-            }
-        });
-        reportBtn.setOnAction(event -> {
-            try {
-                new ReportWindow();
-            } catch (IOException e) {
-                e.printStackTrace();
             }
         });
     }
