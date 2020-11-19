@@ -87,8 +87,9 @@
    - The Transaction window on main window
    - Write tests for logic part
 5. Songyin Li (soli3733):
-   - Change notes GUI
+   - Sold product history GUI
    - Demo report
+   - Story board
 6. Zehui Lin (zlin3338):
    - A table display last five products bought by customer
    - Prompt message for insufficient payment amount
@@ -355,8 +356,8 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
   - What I will do today: Continues write more tests.
   - Do I see any obstacles: None at the moment.
 - Songyin Li:
-  - What did I do yesterday:
-  - What I will do today:
+  - What did I do yesterday: Finish the sold history window om main window
+  - What I will do today:  Working on story board
   - Do I see any obstacles: None at the moment.
 - Zehui Lin:
   - What did I do yesterday: Working on the shopping history table which list last five products bought by customer.
@@ -390,9 +391,9 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
   - What I will do today: Fix the Transaction History window split it into two windows and continuous to add tests.
   - Do I see any obstacles: None at the moment.
 - Songyin Li:
-  - What did I do yesterday:
-  - What I will do today:
-  - Do I see any obstacles:
+  - What did I do yesterday: Finish the story board
+  - What I will do today:  Finish the report demo and change the story board base on the new feature
+  - Do I see any obstacles: None at the moment.
 - Zehui Lin:
   - What did I do yesterday: Finished shopping history table display of last five products.
   - What I will do today: Fix the bug in cash payment system.
