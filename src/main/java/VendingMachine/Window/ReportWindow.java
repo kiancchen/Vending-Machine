@@ -101,19 +101,13 @@ public class ReportWindow {
         });
 
         transactionReportBtn.setOnAction(event -> {
-            generateTransactionReport();
-//            try {
-//                if (UserProcessor.getInstance().getCurrentUser().getPermission(User.Permission.MANAGE_CASH)) {
-//                    generateTransactionReport();
-//                } else {
-//                    Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
-//                            "to do this action.");
-//                    alert.show();
-//                }
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-
+            if (UserProcessor.getInstance().getCurrentUser().getPermission(User.Permission.MANAGE_CASH)) {
+                generateTransactionReport();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "You don't have the permission " +
+                        "to do this action.");
+                alert.show();
+            }
         });
 
         userReportBtn.setOnAction(event -> {
