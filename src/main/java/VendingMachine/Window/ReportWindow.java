@@ -235,8 +235,8 @@ public class ReportWindow {
 
             List<Transaction> transactionList = Transaction.getTransactionList();
             for (Transaction t: transactionList) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
-                String date = t.getDate().format(formatter);
+                DateTimeFormatter fmt = DateTimeFormatter.ofPattern("MM-dd HH:mm");
+                String date = t.getDate().format(fmt);
                 String paidAmount = Double.toString(t.getPaidAmount());
                 String returnChange = Double.toString(t.getPaidAmount() - t.getTotalPrice());
                 String paidMethod = t.getPayment().toString();
@@ -294,8 +294,8 @@ public class ReportWindow {
             List<Transaction> transactionList = Transaction.getTransactionList();
             for (Transaction t: transactionList) {
                 if (t.getStatus() == Transaction.Status.CANCELLED) {
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd LLLL yyyy");
-                    String date = t.getDate().format(formatter);
+                    DateTimeFormatter fmt = DateTimeFormatter.ofPattern("MM-dd HH:mm");
+                    String date = t.getDate().format(fmt);
                     String user = t.getPayee().getUsername();
                     String reason = t.getReason();
                     List<String> texts = Arrays.asList(date, user, reason);
