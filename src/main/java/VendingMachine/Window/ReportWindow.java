@@ -229,6 +229,9 @@ public class ReportWindow {
 
             List<Transaction> transactionList = Transaction.getTransactionList();
             for (Transaction t: transactionList) {
+                if (t.getStatus() != Transaction.Status.PAID) {
+                    continue;
+                }
                 DateTimeFormatter fmt = DateTimeFormatter.ofPattern("MM-dd HH:mm");
                 String date = t.getDate().format(fmt);
                 String paidAmount = Double.toString(t.getPaidAmount());

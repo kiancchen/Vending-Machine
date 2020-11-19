@@ -32,6 +32,7 @@ public class Transaction {
         totalPrice = 0;
         this.userId = userId;
         this.date = LocalDateTime.now();
+        this.payment = Payment.UNPAID;
     }
 
     public static void load() throws IOException {
@@ -196,6 +197,7 @@ public class Transaction {
 
     public enum Payment {
         CASH,
-        CARD
+        CARD,
+        UNPAID
     }
 }
