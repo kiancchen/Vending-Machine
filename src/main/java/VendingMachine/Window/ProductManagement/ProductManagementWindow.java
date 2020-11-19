@@ -172,25 +172,22 @@ public class ProductManagementWindow {
         if (!validateInput()) {
             return;
         } else if (Integer.parseInt(stockField.getText()) > 15) {
-            alert(Alert.AlertType.WARNING, "Quantity exceed.");
+            alert(Alert.AlertType.WARNING, "Quantity exceed 15.");
             return;
         }
         String category = categoryCombo.getSelectionModel().getSelectedItem();
         String code = codeField.getText();
 
-        try {
-            if (productProcessor.addProduct(code, category, nameField.getText(),
-                    Double.parseDouble(priceField.getText()), Integer.parseInt(stockField.getText()))) {
-//                alert(Alert.AlertType.INFORMATION, "Successfully add.");
-                updateTableData();
-                MainWindow.getInstance().updateProductTable();
-                selectedId = -1;
-            } else {
-                alert(Alert.AlertType.WARNING, "Product exists.");
-            }
-        } catch (Exception e) {
-            alert(Alert.AlertType.WARNING, "Fail to add the product.");
+
+        if (productProcessor.addProduct(code, category, nameField.getText(),
+                Double.parseDouble(priceField.getText()), Integer.parseInt(stockField.getText()))) {
+            updateTableData();
+            MainWindow.getInstance().updateProductTable();
+            selectedId = -1;
+        } else {
+            alert(Alert.AlertType.WARNING, "Conflicting name/code");
         }
+
     }
 
     private void removeAction() {
@@ -199,15 +196,10 @@ public class ProductManagementWindow {
             alert(Alert.AlertType.WARNING, "You don't select any product.");
             return;
         }
+        if (productProcessor.removeProduct(selectedId)) {
 
-        try {
-            if (productProcessor.removeProduct(selectedId)) {
-//                alert(Alert.AlertType.INFORMATION, "Successfully removed");
-                updateTableData();
-                MainWindow.getInstance().updateProductTable();
-            }
-        } catch (Exception e) {
-            alert(Alert.AlertType.WARNING, "Product selected does not exist");
+            updateTableData();
+            MainWindow.getInstance().updateProductTable();
         }
     }
 
@@ -218,7 +210,7 @@ public class ProductManagementWindow {
         } else if (!validateInput()) {
             return;
         } else if (Integer.parseInt(stockField.getText()) > 15) {
-            alert(Alert.AlertType.WARNING, "Quantity exceed.");
+            alert(Alert.AlertType.WARNING, "Quantity exceeds 15.");
             return;
         }
 
@@ -229,16 +221,21 @@ public class ProductManagementWindow {
         String newName = nameField.getText();
         String oldCode = productProcessor.getProduct(selectedId).getCode();
 
-        if (productProcessor.setProductCode(selectedId, newCode) &&
-                productProcessor.setProductName(selectedId, newName) &&
-                productProcessor.setProductCategory(selectedId, newCategory) &&
-                productProcessor.setProductPrice(selectedId, newPrice) &&
-                productProcessor.setProductStock(selectedId, newStock)) {
-//            alert(Alert.AlertType.INFORMATION, "Change successfully");
-        } else {
-            productProcessor.setProductCode(selectedId, oldCode);
-            alert(Alert.AlertType.WARNING, "Fail to change");
+        if (!productProcessor.setProductCode(selectedId, newCode)) {
+            alert(Alert.AlertType.WARNING, "Conflicting code.");
+            return;
         }
+
+        if (!productProcessor.setProductName(selectedId, newName)) {
+            productProcessor.setProductCode(selectedId, oldCode);
+            alert(Alert.AlertType.WARNING, "Conflicting name.");
+            return;
+        }
+
+        productProcessor.setProductCategory(selectedId, newCategory);
+        productProcessor.setProductPrice(selectedId, newPrice);
+        productProcessor.setProductStock(selectedId, newStock);
+
         codeField.setText("");
         nameField.setText("");
         priceField.setText("");
