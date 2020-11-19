@@ -95,10 +95,6 @@ Same content in Sprint 1 Report, can be accessed at this [link](https://github.s
 
 
 
-The Product table on default page is available for every user include all the products that the machine has.
-
-
-
 ## Demo
 
 `blan` is an owner. Its password is `123`. Feel free to use this account to test functionalities.
