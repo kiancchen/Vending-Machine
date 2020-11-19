@@ -55,8 +55,17 @@ public class User {
         return this.permissions.get(permission);
     }
 
-    public int pay(double amount, Transaction.Payment payment) {
-        int status = shoppingCart.pay(amount, payment);
+    public int pay(double amount) {
+        int status = shoppingCart.pay(amount);
+        if (status == 0) {
+            shoppingHistory.add(shoppingCart);
+            shoppingCart = new Transaction(this.id);
+        }
+        return status;
+    }
+
+    public int pay(Map<Double, Integer> cashes) {
+        int status = shoppingCart.pay(cashes);
         if (status == 0) {
             shoppingHistory.add(shoppingCart);
             shoppingCart = new Transaction(this.id);

@@ -1,6 +1,5 @@
 package VendingMachine.Window.CheckoutManagement;
 
-import VendingMachine.Data.Transaction;
 import VendingMachine.Processor.CashProcessor;
 import VendingMachine.Processor.UserProcessor;
 import VendingMachine.Window.MainWindow;
@@ -18,9 +17,9 @@ import java.util.stream.Collectors;
 public class CashPaymentWindow {
     private final Stage stage;
     private final AnchorPane pane;
-    private final Map<String, String> paidCashes;
+    private final Map<Double, Integer> paidCashes;
     private TableView<CashTableEntry> table;
-    private ComboBox<String> valueCombo;
+    private ComboBox<Double> valueCombo;
     private Button setButton;
     private Button payButton;
     private TextField numberField;
@@ -90,7 +89,7 @@ public class CashPaymentWindow {
 
         List<Double> values = cashMap.keySet().stream().sorted().collect(Collectors.toList());
         for (double value : values) {
-            valueCombo.getItems().add(Double.toString(value));
+            valueCombo.getItems().add(value);
         }
         pane.getChildren().add(valueCombo);
 
@@ -127,9 +126,7 @@ public class CashPaymentWindow {
             return;
         }
 
-        double payAmount = this.getPayAmount();
-        int status = UserProcessor.getInstance().getCurrentUser().pay(payAmount,
-                Transaction.Payment.CASH);
+        int status = UserProcessor.getInstance().getCurrentUser().pay(paidCashes);
         if (status == 0) {
             new ChangeWindow();
             time.stopTime();
@@ -146,14 +143,14 @@ public class CashPaymentWindow {
 
 
     private void setAction() {
-        String value = valueCombo.getSelectionModel().getSelectedItem();
-        String number = numberField.getText();
+        double value = valueCombo.getSelectionModel().getSelectedItem();
+        int number = Integer.parseInt(numberField.getText());
 
         if (!validateInput()) {
             return;
         }
 
-        if ("0".equals(number)) {
+        if (number == 0) {
             this.paidCashes.remove(value);
         } else {
             this.paidCashes.put(value, number);
@@ -211,19 +208,12 @@ public class CashPaymentWindow {
     private void setTableData() {
         // set data to table
         table.getItems().clear();
-        Collection<String> keySet = paidCashes.keySet();
-        List<String> list = new ArrayList<>(keySet);
+        Collection<Double> keySet = paidCashes.keySet();
+        List<Double> list = new ArrayList<>(keySet);
         Collections.sort(list);
-        for (String value : list) {
-            table.getItems().add(new CashTableEntry(value, paidCashes.get(value)));
+        for (Double value : list) {
+            table.getItems().add(new CashTableEntry(Double.toString(value),
+                    Integer.toString(paidCashes.get(value))));
         }
-    }
-
-    private double getPayAmount() {
-        double payAmount = 0.0;
-        for (Map.Entry<String, String> entry : this.paidCashes.entrySet()) {
-            payAmount += Double.parseDouble(entry.getKey()) * Double.parseDouble(entry.getValue());
-        }
-        return payAmount;
     }
 }
