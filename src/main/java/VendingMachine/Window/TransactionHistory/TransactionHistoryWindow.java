@@ -72,6 +72,9 @@ public class TransactionHistoryWindow {
     private void setTableData() {
         table.getItems().clear();
         for (Transaction transaction : Transaction.getTransactionList()) {
+            if (transaction.getStatus() != Transaction.Status.PAID) {
+                continue;
+            }
             DateTimeFormatter fmt = DateTimeFormatter.ofPattern("MM-dd HH:mm");
                 table.getItems().add(new TransactionHistoryTableEntry(transaction.getDate().format(fmt),
                         Double.toString(transaction.getPaidAmount()),
