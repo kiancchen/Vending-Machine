@@ -1,6 +1,5 @@
 package VendingMachine.Data;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,7 +13,7 @@ public class User {
     private Map<Permission, Boolean> permissions;
     private UserType type;
     private List<Transaction> shoppingHistory;
-    private Transaction shoppingCart;
+    public Transaction shoppingCart;
     private CreditCard card;
 
     public User() {
