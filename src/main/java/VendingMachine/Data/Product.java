@@ -1,13 +1,15 @@
 package VendingMachine.Data;
 
+import java.util.Objects;
+
 public class Product {
     private static int staticCode = 1;
+    private final int id;
     private Category category;
     private String name;
     private double price;
     private String code;
     private int stock;
-    private int id;
     private int sold;
 
     public Product() {
@@ -27,6 +29,25 @@ public class Product {
         this.stock = stock;
         this.id = staticCode++;
         this.code = code;
+    }
+
+    public void sold(int sold) {
+        this.sold += sold;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return this == o;
+    }
+
+    @Override
+    public String toString() {
+        return Integer.toString(id);
     }
 
     public Category getCategory() {
@@ -71,10 +92,6 @@ public class Product {
 
     public void setStock(int stock) {
         this.stock = stock;
-    }
-
-    public void sold(int sold) {
-        this.sold += sold;
     }
 
     public int getSold() {

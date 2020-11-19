@@ -1,29 +1,29 @@
 package VendingMachine.Window.CheckoutManagement;
 
-import VendingMachine.Processor.CashProcessor;
 import VendingMachine.Processor.UserProcessor;
 import VendingMachine.Window.MainWindow;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.*;
 
 public class ChangeWindow {
-    private Stage stage;
-    private Scene scene;
-    private AnchorPane pane;
+    private final Stage stage;
+    private final AnchorPane pane;
     private TableView<CashTableEntry> table;
-    private Button okeyButton;
+    private Button okBtn;
 
     public ChangeWindow() {
         stage = new Stage();
         pane = new AnchorPane();
-        scene = new Scene(pane, 480, 600);
+        Scene scene = new Scene(pane, 480, 600);
         stage.setScene(scene);
         stage.setTitle("Cash Changes");
         stage.show();
@@ -43,19 +43,19 @@ public class ChangeWindow {
     }
 
     private void initButton() {
-        okeyButton = new Button();
-        okeyButton.setLayoutX(180);
-        okeyButton.setLayoutY(60 + 470);
-        okeyButton.setPrefWidth(120);
-        okeyButton.setPrefHeight(30);
-        okeyButton.setText("Okay");
-        pane.getChildren().add(okeyButton);
-
+        okBtn = new Button();
+        okBtn.setLayoutX(180);
+        okBtn.setLayoutY(60 + 470);
+        okBtn.setPrefWidth(120);
+        okBtn.setPrefHeight(30);
+        okBtn.setText("Okay");
+        pane.getChildren().add(okBtn);
     }
 
     private void initButtonAction() {
-        okeyButton.setOnAction((event -> {
-            MainWindow.getInstance().setShoppingCartData();
+        okBtn.setOnAction((event -> {
+            UserProcessor.getInstance().logoutUser();
+            MainWindow.getInstance().update();
             stage.close();
         }));
     }
@@ -81,25 +81,17 @@ public class ChangeWindow {
             column.setCellValueFactory(new PropertyValueFactory<>(properties[i]));
             table.getColumns().add(column);
         }
-        try {
-            setTableData();
-        } catch (IOException e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't load changes.");
-            alert.show();
-        }
+        setTableData();
     }
 
-    private void setTableData() throws IOException {
+    private void setTableData() {
         // set data to table
-        double changes = UserProcessor.getInstance().getCurrentUser().getChange();
-
-        Map<Double, Integer> changesMap = CashProcessor.getInstance().getChange(changes);
+        Map<Double, Integer> changesMap = UserProcessor.getInstance().getCurrentUser().getReturnChangeMap();
         Collection<Double> keySet = changesMap.keySet();
         List<Double> list = new ArrayList<>(keySet);
         Collections.sort(list);
         for (Double value : list) {
             table.getItems().add(new CashTableEntry(value.toString(), changesMap.get(value).toString()));
         }
-
     }
 }

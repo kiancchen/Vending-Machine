@@ -1,10 +1,10 @@
 package VendingMachine.Window.UserManagement;
 
 public class UserTableEntry {
-    private String id;
-    private String username;
-    private String password;
-    private String type;
+    private final String id;
+    private final String username;
+    private final String password;
+    private final String type;
 
     public UserTableEntry(String id, String username, String password, String type) {
         this.id = id;

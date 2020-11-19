@@ -1,5 +1,6 @@
 package VendingMachine.Window.CheckoutManagement;
 
+import VendingMachine.Data.Transaction;
 import VendingMachine.Processor.CashProcessor;
 import VendingMachine.Processor.UserProcessor;
 import javafx.scene.Scene;
@@ -9,16 +10,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class CashPaymentWindow {
-    private Stage stage;
-    private Scene scene;
-    private AnchorPane pane;
+    private final Stage stage;
+    private final AnchorPane pane;
+    private final Map<String, String> paidCashes;
     private TableView<CashTableEntry> table;
-    private Map<String, String> paidCashes;
     private ComboBox<String> valueCombo;
     private Button setButton;
     private Button payButton;
@@ -27,7 +26,7 @@ public class CashPaymentWindow {
     public CashPaymentWindow() {
         stage = new Stage();
         pane = new AnchorPane();
-        scene = new Scene(pane, 480, 600);
+        Scene scene = new Scene(pane, 480, 600);
         stage.setScene(scene);
         stage.setTitle("Cash Payment");
         stage.show();
@@ -76,13 +75,7 @@ public class CashPaymentWindow {
         valueCombo.setPrefWidth(120);
         valueCombo.setPromptText("Select value");
 
-        Map<Double, Integer> cashMap = null;
-        try {
-            cashMap = CashProcessor.getInstance().getCashMap();
-        } catch (IOException e) {
-            alert(Alert.AlertType.WARNING, "Can't get the cash processor");
-            return;
-        }
+        Map<Double, Integer> cashMap = CashProcessor.getInstance().getCashMap();
 
         List<Double> values = cashMap.keySet().stream().sorted().collect(Collectors.toList());
         for (double value : values) {
@@ -109,9 +102,10 @@ public class CashPaymentWindow {
 
     private void payAction() {
         if (table.getItems().isEmpty()) {
-            alert(Alert.AlertType.WARNING, "You don't pay any cashes.");
+            alert("You don't pay any cashes.");
             return;
         }
+
         Map<Double, Integer> cashMap = null;
         try {
             cashMap = CashProcessor.getInstance().getCashMap();
@@ -173,7 +167,7 @@ public class CashPaymentWindow {
             //this.paidCashes.put(value, number);
             setTableData();
         } catch (Exception e) {
-            alert(Alert.AlertType.WARNING, "Fail to add cash.");
+            alert("Fail to add cash.");
         }
     }
 
@@ -203,20 +197,20 @@ public class CashPaymentWindow {
         setTableData();
     }
 
-    private void alert(Alert.AlertType warning, String s) {
-        Alert alert = new Alert(warning, s);
+    private void alert(String msg) {
+        Alert alert = new Alert(Alert.AlertType.WARNING, msg);
         alert.show();
     }
 
     private boolean validateInput() {
         if (numberField.getText().trim().isEmpty() && valueCombo.getSelectionModel().isEmpty()) {
-            alert(Alert.AlertType.WARNING, "Nothing to add");
+            alert("Nothing to add");
             return false;
         } else if (numberField.getText().trim().isEmpty()) {
-            alert(Alert.AlertType.WARNING, "Number of cash needed");
+            alert("Number of cash needed");
             return false;
         } else if (valueCombo.getSelectionModel().isEmpty()) {
-            alert(Alert.AlertType.WARNING, "Cash value needed.");
+            alert("Cash value needed.");
             return false;
         }
 
