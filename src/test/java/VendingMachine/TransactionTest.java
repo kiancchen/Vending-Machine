@@ -48,9 +48,9 @@ public class TransactionTest {
 
     @Test
     public void testPay() {
-        transaction.pay(10, Transaction.Payment.CASH);
+        transaction.pay(10);
         assertEquals(10, transaction.getPaidAmount(), 0);
-        assertEquals(1, transaction.pay(-1, Transaction.Payment.CASH));
+        assertEquals(1, transaction.pay(-1));
         assertNotNull(transaction.getDate());
     }
 
@@ -68,8 +68,8 @@ public class TransactionTest {
 
     @Test
     public void testGetPayment(){
-        transaction.pay(10, Transaction.Payment.CASH);
-        assertEquals(Transaction.Payment.CASH,transaction.getPayment());
+        transaction.pay(10);
+        assertEquals(Transaction.Payment.CARD,transaction.getPayment());
     }
 
     @Test

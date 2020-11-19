@@ -155,8 +155,8 @@ public class UserProcessorTest {
 
     @Test
     public void testPay() {
-        assertEquals(0, userProcessor.getCurrentUser().pay(10, Transaction.Payment.CASH));
-        assertEquals(1, userProcessor.getCurrentUser().pay(-1, Transaction.Payment.CASH));
+        assertEquals(0, userProcessor.getCurrentUser().pay(10));
+        assertEquals(1, userProcessor.getCurrentUser().pay(-1));
     }
 
     @Test
@@ -166,7 +166,7 @@ public class UserProcessorTest {
 
     @Test
     public void testGetChange() {
-        userProcessor.getCurrentUser().pay(10, Transaction.Payment.CASH);
+        userProcessor.getCurrentUser().pay(10);
         assertEquals(10, userProcessor.getCurrentUser().getChange(), 0);
     }
 
