@@ -16,9 +16,6 @@ import javafx.scene.control.skin.TextFieldSkin;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.util.Timer;
-
 public class CardPaymentWindow {
     private final Stage stage;
     private final AnchorPane pane;
@@ -88,12 +85,8 @@ public class CardPaymentWindow {
     }
 
     private void cancelAction() {
-        try {
-            UserProcessor.getInstance().getCurrentUser().cancelShopping("user cancelled.");
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't get the user processor.");
-            alert.show();
-        }
+        UserProcessor.getInstance().getCurrentUser().cancelShopping("user cancelled.");
+        UserProcessor.getInstance().logoutUser();
         MainWindow.getInstance().update();
         time.stopTime();
         stage.close();
