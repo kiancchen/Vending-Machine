@@ -62,6 +62,7 @@ public class CheckoutWindow {
         UserProcessor.getInstance().getCurrentUser().cancelShopping("User cancelled.");
         time.stopTime();
         stage.close();
+
         UserProcessor.getInstance().logoutUser();
         MainWindow.getInstance().update();
     }

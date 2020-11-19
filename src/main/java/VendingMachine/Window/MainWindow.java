@@ -71,7 +71,7 @@ public class MainWindow {
     public void updateCurrencyUserInfo() {
         currentUserInfo.setText("Username: "
                 + userProcessor.getCurrentUser().getUsername()
-                + "\tRole: "
+                + "\t\tRole: "
                 + userProcessor.getCurrentUser().getType()
         );
         if (userProcessor.getCurrentUser().getType() == User.UserType.ANONYMOUS) {
