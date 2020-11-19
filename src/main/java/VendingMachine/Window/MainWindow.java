@@ -74,6 +74,9 @@ public class MainWindow {
                 + "\tRole: "
                 + userProcessor.getCurrentUser().getType()
         );
+        if (userProcessor.getCurrentUser().getType() == User.UserType.ANONYMOUS) {
+            accountBtn.setText("Account");
+        }
     }
 
     public void changeAccountButtonText(String text) {

@@ -113,14 +113,11 @@ public class CashPaymentWindow {
     }
 
     private void cancelAction() {
-        try {
-            UserProcessor.getInstance().getCurrentUser().cancelShopping("user cancelled.");
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't get the user processor.");
-            alert.show();
-        }
+        UserProcessor.getInstance().getCurrentUser().cancelShopping("user cancelled.");
+
         stage.close();
         time.stopTime();
+        UserProcessor.getInstance().logoutUser();
         MainWindow.getInstance().update();
     }
 
@@ -156,17 +153,12 @@ public class CashPaymentWindow {
             return;
         }
 
-        try {
-            if ("0".equals(number)) {
-                this.paidCashes.remove(value);
-            } else {
-                this.paidCashes.put(value, number);
-            }
-
-            setTableData();
-        } catch (Exception e) {
-            alert("Fail to add cash.");
+        if ("0".equals(number)) {
+            this.paidCashes.remove(value);
+        } else {
+            this.paidCashes.put(value, number);
         }
+        setTableData();
     }
 
 
