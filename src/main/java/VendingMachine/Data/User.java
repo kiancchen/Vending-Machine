@@ -13,7 +13,7 @@ public class User {
     private Map<Permission, Boolean> permissions;
     private UserType type;
     private List<Transaction> shoppingHistory;
-    public Transaction shoppingCart;
+    private Transaction shoppingCart;
     private CreditCard card;
 
     public User() {
