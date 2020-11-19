@@ -305,7 +305,7 @@ public class MainWindow {
         pane.getChildren().add(shoppingHistoryTable);
 
         //create table
-        String[] colNames = {"Category", "Code", "Name", "Price($)", "Quantity"};
+        String[] colNames = {"Category", "Code", "Name", "Price($)", "Stock"};
         String[] properties = {"category", "code", "name", "price", "quantity"};
         for (int i = 0; i < colNames.length; i++) {
             String colName = colNames[i];

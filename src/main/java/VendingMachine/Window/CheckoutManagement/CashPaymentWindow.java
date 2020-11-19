@@ -106,46 +106,14 @@ public class CashPaymentWindow {
             return;
         }
 
-        Map<Double, Integer> cashMap = null;
-        try {
-            cashMap = CashProcessor.getInstance().getCashMap();
-            double totalCash = 0;
-            for (Map.Entry<Double, Integer> entry : cashMap.entrySet()) {
-                totalCash += entry.getKey() * entry.getValue();
-            }
-            double expectedChanges = this.getPayAmount() - UserProcessor.getInstance().getCurrentUser().getTotalPrice();
-            Map<Double, Integer> actualChanges = CashProcessor.getInstance().getChange(expectedChanges);
-            if (totalCash < expectedChanges) {
-                alert(Alert.AlertType.WARNING, "There is no enough change provided, please change to a small amount.");
-                return;
-            } else if (actualChanges == null) {
-                alert(Alert.AlertType.WARNING, "There is no enough change provided, please change to a small amount.");
-                return;
-            }
-            double payAmount = this.getPayAmount();
-            if (UserProcessor.getInstance().getCurrentUser().pay(payAmount)) {
-                new ChangeWindow();
-                stage.close();
-            } else {
-                alert(Alert.AlertType.WARNING, "You don't have enough money.");
-            }
-        } catch (IOException e) {
-            alert(Alert.AlertType.WARNING, "Can't get the cash processor");
-            return;
-        }
-        /*
         double payAmount = this.getPayAmount();
-        try {
-            if (UserProcessor.getInstance().getCurrentUser().pay(payAmount)) {
-                new ChangeWindow();
-                stage.close();
-            } else {
-                alert(Alert.AlertType.WARNING, "You don't have enough money.");
-            }
-        } catch (IOException e) {
-            alert(Alert.AlertType.WARNING, "Can't get the user processor");
+
+        if (UserProcessor.getInstance().getCurrentUser().pay(payAmount, Transaction.Payment.CASH)) {
+            new ChangeWindow();
+            stage.close();
+        } else {
+            alert("You don't have enough money.");
         }
-        */
     }
 
 
@@ -158,13 +126,12 @@ public class CashPaymentWindow {
         }
 
         try {
-
-            if (!number.equals('0')) {
-
-              this.paidCashes.put(value, number);
-
+            if ("0".equals(number)) {
+                this.paidCashes.remove(number);
+            }else{
+                this.paidCashes.put(value, number);
             }
-            //this.paidCashes.put(value, number);
+
             setTableData();
         } catch (Exception e) {
             alert("Fail to add cash.");
@@ -221,15 +188,11 @@ public class CashPaymentWindow {
     private void setTableData() {
         // set data to table
         table.getItems().clear();
-
         Collection<String> keySet = paidCashes.keySet();
         List<String> list = new ArrayList<>(keySet);
         Collections.sort(list);
         for (String value : list) {
-            if (paidCashes.get(value).equals('0') == false) {
-              table.getItems().add(new CashTableEntry(value, paidCashes.get(value)));
-            }
-            //table.getItems().add(new CashTableEntry(value, paidCashes.get(value)));
+            table.getItems().add(new CashTableEntry(value, paidCashes.get(value)));
         }
     }
 
