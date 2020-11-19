@@ -94,7 +94,7 @@
    - A table display last five products bought by customer
    - Prompt message for insufficient payment amount
    - Prompt message for insufficient change in system amount
-   - Prompt message for the system does not have correct change combination 
+   - Prompt message for the system does not have correct change combination
 
 # Agile Development Tools and Practices
 
@@ -322,7 +322,7 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
 
 ### Meeting 1 (Sprint Planning)
 
-- Date: 12th November
+- Date: 14th November
 - Attendance: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
 - Content:
   - Identify the Sprint Goal
@@ -332,9 +332,7 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
 
 ### Meeting 2
 
-<mark>TODO</mark>
-
-- Date : 15th November
+- Date : 16th November
 - Attendance: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
 - Content:
   - Track and review the current progress.
@@ -344,12 +342,12 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
   - What I will do today: Add mores methods to support more features
   - Do I see any obstacles: None at the moment.
 - Yuanqun Wang:
-  - What did I do yesterday: User can cancel transaction
+  - What did I do yesterday: User can cancel transaction.
   - What I will do today: Working on other reason that allows cancelling.
   - Do I see any obstacles: None at the moment.
 - Yufei Zuo:
-  - What did I do yesterday: Generate the user and cash report
-  - What I will do today: Generate the product and transaction report
+  - What did I do yesterday: Generate the user and cash report.
+  - What I will do today: Generate the product and transaction report.
   - Do I see any obstacles: None at the moment.
 - Zexuan Long:
   - What did I do yesterday: Finish Transaction History window on main window and write tests for logic part.
@@ -357,7 +355,7 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
   - Do I see any obstacles: None at the moment.
 - Songyin Li:
   - What did I do yesterday: Finish the sold history window om main window
-  - What I will do today:  Working on story board
+  - What I will do today:  Working on story board.
   - Do I see any obstacles: None at the moment.
 - Zehui Lin:
   - What did I do yesterday: Working on the shopping history table which list last five products bought by customer.
@@ -365,8 +363,6 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
   - Do I see any obstacles: None at the moment.
 
 ### Meeting 3
-
-<mark>TODO</mark>
 
 - Date : 18th November
 - Attendance: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
