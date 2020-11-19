@@ -51,6 +51,7 @@ public class CheckoutWindow {
         initButtons();
         intiText();
         initButtonActions();
+
         time = new TimeRemain(stage, pane, 30, 125);
     }
 
