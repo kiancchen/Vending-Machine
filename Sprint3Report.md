@@ -329,7 +329,7 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
   - What I will do today: Continues write more tests.
   - Do I see any obstacles: None at the moment.
 - Songyin Li:
-  - What did I do yesterday: Finished GUI of changing amount of notes.
+  - What did I do yesterday: Finished GUI of sold product histroy.
   - What I will do today: Continues fixing bugs.
   - Do I see any obstacles: None at the moment.
 - Zehui Lin:
@@ -364,8 +364,8 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
   - What I will do today: Continuous to add tests.
   - Do I see any obstacles: None at the moment.
 - Songyin Li:
-  - What did I do yesterday: Working on demo report
-  - What I will do today: Continue working on demo report.
+  - What did I do yesterday: Finished fixing bug.
+  - What I will do today: Continue working on report.
   - Do I see any obstacles: None at the moment.
 - Zehui Lin:
   - What did I do yesterday: Finished table display of input notes.
