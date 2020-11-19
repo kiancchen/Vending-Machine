@@ -202,7 +202,8 @@ The owner can select which users he want to remove, then click the row which the
 
 ### Display Cash
 
-The cash management window is only available for owner and cashier users. If current user is not them, it will display an alert to notify current user have no access to this feature.
+The cash management window is only available for the owner and cashier users. If current user is not
+ them, it will display an alert to notify current user have no access to this feature.
 
 <img src="https://i.loli.net/2020/11/12/u7wckC8IEB5vW3s.png" >
 
@@ -220,7 +221,8 @@ The user can select which value he wants to change, then click the row which the
 
 ### Manage Product
 
-The product management window is only available for owner and seller users. If current user is not them, it will display an alert to notify current user have no access to this feature.
+The product management window is only available for the owner and seller users. If current user is
+ not them, it will display an alert to notify current user have no access to this feature.
 
 <img src="https://i.loli.net/2020/11/12/u7wckC8IEB5vW3s.png" >
 
@@ -244,11 +246,12 @@ If users input the repeated code or name then click on `Add` button, it will dis
 
 <a href="https://sm.ms/image/Cl2ULbuFWf8KHx6" target="_blank"><img src="https://i.loli.net/2020/11/12/Cl2ULbuFWf8KHx6.png" ></a>
 
-The user first need to select which product he want to change, then click on the row where the product is, then the relevant information of this product will be automatically filled in the information field, then edit the code,name,price,quantity and category. then click on `Change` button. An alert box will notify it is successfully changed and the table will update accordingly.
+The user first need to select products he wants to change, then click on the row where the
+ product is, then the relevant information of this product will be automatically filled in the information field, then edit the code,name,price,quantity and category. then click on `Change` button. An alert box will notify it is successfully changed and the table will update accordingly.
 
 ![截屏2020-11-12 下午12.11.33.png](https://i.loli.net/2020/11/12/lSA7WcqazLxE8bn.png)
 
-If user input invalid price like lettes or symbols. An alert box will notify it is failed changed.
+If user input invalid price like letters or symbols. An alert box will notify it is failed changed.
 
 ![截屏2020-11-12 下午12.14.09.png](https://i.loli.net/2020/11/12/cnVwloX4rN9UEZ8.png)
 
