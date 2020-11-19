@@ -43,6 +43,7 @@ public class TransactionTest {
         assertEquals(5.0, transaction.getTotalPrice(), 0);
         assertTrue(transaction.set(1, 0));
         assertEquals(0, transaction.getTotalPrice(), 0);
+        assertFalse(transaction.set(1,10));
     }
 
     @Test
@@ -76,5 +77,13 @@ public class TransactionTest {
         assertNull(transaction.getReturnedChangeMap());
     }
 
+    @Test
+    public void testGetChange() {
+        Transaction transaction = new Transaction(1);
+        transaction.set(1,1);
+        transaction.hasProduct(1);
+        transaction.pay(10, Transaction.Payment.CASH);
+        assertEquals(9,(transaction.getChange()),0);
+    }
 
 }
