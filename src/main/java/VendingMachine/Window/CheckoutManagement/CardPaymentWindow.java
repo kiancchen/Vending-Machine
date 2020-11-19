@@ -98,7 +98,7 @@ public class CardPaymentWindow {
         CardProcessor cardProcessor = CardProcessor.getInstance();
         CreditCard card = cardProcessor.validateCard(name, number);
         if (card != null) {
-                if (currentUser.pay(currentUser.getTotalPrice(), Transaction.Payment.CARD)) {
+                if (currentUser.pay(currentUser.getTotalPrice(), Transaction.Payment.CARD) == 0) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successful!");
                     alert.show();
                     if (checkBox.isSelected()) {

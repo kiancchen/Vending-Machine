@@ -155,8 +155,8 @@ public class UserProcessorTest {
 
     @Test
     public void testPay() {
-        assertTrue(userProcessor.getCurrentUser().pay(10, Transaction.Payment.CASH));
-        assertFalse(userProcessor.getCurrentUser().pay(-1, Transaction.Payment.CASH));
+        assertEquals(0, userProcessor.getCurrentUser().pay(10, Transaction.Payment.CASH));
+        assertEquals(1, userProcessor.getCurrentUser().pay(-1, Transaction.Payment.CASH));
     }
 
     @Test

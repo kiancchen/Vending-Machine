@@ -53,13 +53,13 @@ public class User {
         return this.permissions.get(permission);
     }
 
-    public boolean pay(double amount, Transaction.Payment payment) {
-        if (shoppingCart.pay(amount, payment, this.id)) {
+    public int pay(double amount, Transaction.Payment payment) {
+        int status = shoppingCart.pay(amount, payment, this.id);
+        if (status == 0) {
             shoppingHistory.add(shoppingCart);
             shoppingCart = new Transaction();
-            return true;
         }
-        return false;
+        return status;
     }
 
     public boolean cancelShopping(String reason) {

@@ -57,10 +57,22 @@ public class Transaction {
         return true;
     }
 
-    public boolean pay(double amount, Payment payment, int userId) {
+    public int pay(double amount, Payment payment, int userId) {
         if (amount < this.totalPrice) {
-            return false;
+            // money not enough
+            return 1;
         }
+        this.change = amount - totalPrice;
+        if (payment == Payment.CASH) {
+            this.returnedChangeMap = CashProcessor.getInstance().getChange(change);
+            if (returnedChangeMap == null) {
+                // no available changes
+                return 2;
+            }
+        }else{
+            this.returnedChangeMap = new HashMap<>();
+        }
+
         this.payeeId = userId;
         this.payment = payment;
         this.paidAmount = amount;
@@ -71,13 +83,12 @@ public class Transaction {
             Product product = ProductProcessor.getInstance().getProduct(id);
             product.sold(soldNum);
         });
-        this.change = amount - totalPrice;
-        this.returnedChangeMap = CashProcessor.getInstance().getChange(change);
+
         shoppingList.forEach((id, qty) -> {
             Product product = ProductProcessor.getInstance().getProduct(id);
             product.setStock(product.getStock() - qty);
         });
-        return true;
+        return 0;
     }
 
     public double getChange() {

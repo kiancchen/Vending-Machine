@@ -107,12 +107,17 @@ public class CashPaymentWindow {
         }
 
         double payAmount = this.getPayAmount();
+        int status = UserProcessor.getInstance().getCurrentUser().pay(payAmount,
+                Transaction.Payment.CASH);
 
-        if (UserProcessor.getInstance().getCurrentUser().pay(payAmount, Transaction.Payment.CASH)) {
+
+        if (status == 0) {
             new ChangeWindow();
             stage.close();
-        } else {
+        } else if (status == 1) {
             alert("You don't have enough money.");
+        } else {
+            alert("There's no available changes in the machine.");
         }
     }
 
@@ -127,8 +132,8 @@ public class CashPaymentWindow {
 
         try {
             if ("0".equals(number)) {
-                this.paidCashes.remove(number);
-            }else{
+                this.paidCashes.remove(value);
+            } else {
                 this.paidCashes.put(value, number);
             }
 
