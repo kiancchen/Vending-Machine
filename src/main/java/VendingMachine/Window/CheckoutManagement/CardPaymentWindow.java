@@ -26,7 +26,6 @@ public class CardPaymentWindow {
     private TextField nameField;
     private TextField numberField;
     private CheckBox checkBox;
-    private User currentUser;
     private TimeRemain time;
 
     public CardPaymentWindow() {
@@ -95,7 +94,7 @@ public class CardPaymentWindow {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Can't get the user processor.");
             alert.show();
         }
-        MainWindow.getInstance().setShoppingCartData();
+        MainWindow.getInstance().update();
         time.stopTime();
         stage.close();
     }

@@ -1,7 +1,7 @@
 [
   {
     "id": 0,
-    "username": "",
+    "username": "ANONYMOUS",
     "password": "",
     "permissions": {
       "MANAGE_USER": false,

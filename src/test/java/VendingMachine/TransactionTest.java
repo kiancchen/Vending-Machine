@@ -34,7 +34,7 @@ public class TransactionTest {
         ProductProcessor.load();
         CashProcessor.load();
         Transaction.load();
-        transaction = new Transaction();
+        transaction = new Transaction(0);
     }
 
     @Test
@@ -47,9 +47,9 @@ public class TransactionTest {
 
     @Test
     public void testPay() {
-        transaction.pay(10, Transaction.Payment.CASH, 1);
+        transaction.pay(10, Transaction.Payment.CASH);
         assertEquals(10, transaction.getPaidAmount(), 0);
-        assertEquals(1, transaction.pay(-1, Transaction.Payment.CASH, 1));
+        assertEquals(1, transaction.pay(-1, Transaction.Payment.CASH));
         assertNotNull(transaction.getDate());
     }
 
@@ -67,7 +67,7 @@ public class TransactionTest {
 
     @Test
     public void testGetPayment(){
-        transaction.pay(10, Transaction.Payment.CASH,1);
+        transaction.pay(10, Transaction.Payment.CASH);
         assertEquals(Transaction.Payment.CASH,transaction.getPayment());
     }
 

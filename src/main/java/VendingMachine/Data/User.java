@@ -23,7 +23,7 @@ public class User {
         this.setType(UserType.ANONYMOUS);
         this.id = totalId++;
         this.shoppingHistory = new ArrayList<>();
-        this.shoppingCart = new Transaction();
+        this.shoppingCart = new Transaction(this.id);
     }
 
     public User(String username, String password, UserType type) {
@@ -31,6 +31,8 @@ public class User {
         this.password = password;
         this.setType(type);
         this.id = totalId++;
+        this.shoppingHistory = new ArrayList<>();
+        this.shoppingCart = new Transaction(this.id);
     }
 
 
@@ -54,10 +56,10 @@ public class User {
     }
 
     public int pay(double amount, Transaction.Payment payment) {
-        int status = shoppingCart.pay(amount, payment, this.id);
+        int status = shoppingCart.pay(amount, payment);
         if (status == 0) {
             shoppingHistory.add(shoppingCart);
-            shoppingCart = new Transaction();
+            shoppingCart = new Transaction(this.id);
         }
         return status;
     }
@@ -65,7 +67,7 @@ public class User {
     public boolean cancelShopping(String reason) {
         shoppingCart.cancel(reason);
         shoppingHistory.add(shoppingCart);
-        shoppingCart = new Transaction();
+        shoppingCart = new Transaction(this.id);
         return true;
     }
 

@@ -51,7 +51,7 @@ public class TimeRemain {
             }
             stage.close();
             timeline.stop();
-            MainWindow.getInstance().setShoppingCartData();
+            MainWindow.getInstance().update();
         }
     }
 

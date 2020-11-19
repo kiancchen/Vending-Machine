@@ -11,7 +11,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import org.xml.sax.helpers.AttributesImpl;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -122,7 +121,7 @@ public class CashPaymentWindow {
         }
         stage.close();
         time.stopTime();
-        MainWindow.getInstance().setShoppingCartData();
+        MainWindow.getInstance().update();
     }
 
     private void payAction() {
@@ -131,33 +130,21 @@ public class CashPaymentWindow {
             return;
         }
 
-        double payAmount = getPayAmount();
-        try {
-            if (UserProcessor.getInstance().getCurrentUser().pay(payAmount)) {
-                new ChangeWindow();
-                time.stopTime();
-                stage.close();
-            } else {
-                alert(Alert.AlertType.WARNING, "You don't have enough money.");
-                UserProcessor.getInstance().getCurrentUser().cancelShopping("change not available");
-                MainWindow.getInstance().setShoppingCartData();
-                stage.close();
-            }
-        } catch (IOException e) {
-            alert(Alert.AlertType.WARNING, "Can't get the user processor");
         double payAmount = this.getPayAmount();
         int status = UserProcessor.getInstance().getCurrentUser().pay(payAmount,
                 Transaction.Payment.CASH);
         if (status == 0) {
             new ChangeWindow();
+            time.stopTime();
             stage.close();
         } else if (status == 1) {
             alert("You don't have enough money.");
             UserProcessor.getInstance().getCurrentUser().cancelShopping("change not available");
-          MainWindow.getInstance().update();
+            MainWindow.getInstance().update();
         } else {
             alert("There's no available changes in the machine.");
         }
+
     }
 
 

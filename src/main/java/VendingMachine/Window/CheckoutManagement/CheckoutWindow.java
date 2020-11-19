@@ -3,18 +3,12 @@ package VendingMachine.Window.CheckoutManagement;
 import VendingMachine.Processor.UserProcessor;
 import VendingMachine.Window.MainWindow;
 import VendingMachine.Window.TimeRemain;
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 public class CheckoutWindow {
     private final double amount;
@@ -23,7 +17,6 @@ public class CheckoutWindow {
     private Button cashBtn;
     private Button cardBtn;
     private Button cancel;
-    private double amount;
     private TimeRemain time;
 
 
@@ -66,15 +59,10 @@ public class CheckoutWindow {
     }
 
     private void cancel() {
-        try {
-            UserProcessor.getInstance().getCurrentUser().cancelShopping("user cancelled.");
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't get the user processor.");
-            alert.show();
-        }
+        UserProcessor.getInstance().getCurrentUser().cancelShopping("User cancelled.");
         stage.close();
         time.stopTime();
-        MainWindow.getInstance().setShoppingCartData();
+        MainWindow.getInstance().update();
     }
 
     private void intiText() {

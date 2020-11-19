@@ -56,7 +56,7 @@ public class MainWindow {
         initLabels();
         initText();
         updateCurrencyUserInfo();
-        initPurchaseNodes();
+        initShoppingNodes();
         initShoppingHistory();
         setProductTableAction();
     }
@@ -69,9 +69,9 @@ public class MainWindow {
     }
 
     public void updateCurrencyUserInfo() {
-        currentUserInfo.setText("Current User and Role: "
+        currentUserInfo.setText("Username: "
                 + userProcessor.getCurrentUser().getUsername()
-                + "    "
+                + "\tRole: "
                 + userProcessor.getCurrentUser().getType()
         );
     }
@@ -86,6 +86,9 @@ public class MainWindow {
         int count = 0;
         for (int i = shoppingHistory.size() - 1; i >= 0; i--) {
             Transaction transaction = shoppingHistory.get(i);
+            if (transaction.getStatus() != Transaction.Status.PAID) {
+                continue;
+            }
             Map<Product, Integer> boughtProducts = transaction.getShoppingList();
             List<Entry<Product, Integer>> entrySet =
                     boughtProducts.entrySet()
@@ -287,7 +290,12 @@ public class MainWindow {
                 for (int i = 0; i <= Integer.parseInt(selected.getQuantity()); i++) {
                     selectedQuantityCombo.getItems().add(i);
                 }
-                selectedQuantityCombo.getSelectionModel().select(0);
+
+                if (selectedQuantityCombo.getItems().size() > 0) {
+                    selectedQuantityCombo.getSelectionModel().select(1);
+                } else {
+                    selectedQuantityCombo.getSelectionModel().select(0);
+                }
             } else {
                 selectedItemText.setText("Selected Item");
                 selectedQuantityCombo.setPromptText("Quantity");
@@ -319,7 +327,7 @@ public class MainWindow {
         this.setShoppingHistoryData();
     }
 
-    private void initPurchaseNodes() {
+    private void initShoppingNodes() {
         selectedItemText = new Text();
         selectedItemText.setLayoutX(50);
         selectedItemText.setLayoutY(430);

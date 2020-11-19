@@ -7,7 +7,6 @@ import VendingMachine.Processor.ProductProcessor;
 import VendingMachine.Processor.UserProcessor;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -24,22 +23,22 @@ public class Transaction {
     private Payment payment;
     private String reason;
     private double change;
-    private int payeeId;
-    private final ProductProcessor productProcessor;
+    private int userId;
 
     public static void load() throws IOException {
         transactionList = DatabaseHandler.loadTransactionData();
     }
 
-    public Transaction() {
-        productProcessor = ProductProcessor.getInstance();
+    public Transaction(int userId) {
         shoppingList = new HashMap<>();
         status = Status.UNPAID;
         totalPrice = 0;
+        this.userId = userId;
+        this.date = LocalDateTime.now();
     }
 
     public boolean set(int id, int newQty) {
-        Product product = productProcessor.getProduct(id);
+        Product product = ProductProcessor.getInstance().getProduct(id);
         int oldQty = 0;
         if (shoppingList.containsKey(id)) {
             oldQty = shoppingList.get(id);
@@ -57,7 +56,7 @@ public class Transaction {
         return true;
     }
 
-    public int pay(double amount, Payment payment, int userId) {
+    public int pay(double amount, Payment payment) {
         if (amount < this.totalPrice) {
             // money not enough
             return 1;
@@ -72,8 +71,6 @@ public class Transaction {
         }else{
             this.returnedChangeMap = new HashMap<>();
         }
-
-        this.payeeId = userId;
         this.payment = payment;
         this.paidAmount = amount;
         this.status = Status.PAID;
@@ -102,12 +99,14 @@ public class Transaction {
     public boolean cancel(String reason) {
         status = Status.CANCELLED;
         this.reason = reason;
+        transactionList.add(this);
+        this.date = LocalDateTime.now();
         return true;
     }
 
     public User getPayee() {
         for (User user : UserProcessor.getInstance().getUsers()) {
-            if (user.getId() == payeeId) {
+            if (user.getId() == userId) {
                 return user;
             }
         }
