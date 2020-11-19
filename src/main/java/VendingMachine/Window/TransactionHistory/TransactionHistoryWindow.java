@@ -73,8 +73,8 @@ public class TransactionHistoryWindow {
         table.getItems().clear();
         for (Transaction transaction : Transaction.getTransactionList()) {
             DateTimeFormatter fmt = DateTimeFormatter.ofPattern("MM-dd HH:mm");
-                table.getItems().add(new TransactionHistoryTableEntry(transaction.getDate().format(fmt)
-                        , Double.toString(transaction.getPaidAmount()),
+                table.getItems().add(new TransactionHistoryTableEntry(transaction.getDate().format(fmt),
+                        Double.toString(transaction.getPaidAmount()),
                         Double.toString(transaction.getChange()),
                         transaction.getPayment().toString()));
         }
