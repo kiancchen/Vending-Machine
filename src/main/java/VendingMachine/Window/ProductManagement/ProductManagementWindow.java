@@ -181,7 +181,7 @@ public class ProductManagementWindow {
         try {
             if (productProcessor.addProduct(code, category, nameField.getText(),
                     Double.parseDouble(priceField.getText()), Integer.parseInt(stockField.getText()))) {
-                alert(Alert.AlertType.INFORMATION, "Successfully add.");
+//                alert(Alert.AlertType.INFORMATION, "Successfully add.");
                 updateTableData();
                 MainWindow.getInstance().updateProductTable();
                 selectedId = -1;
@@ -202,7 +202,7 @@ public class ProductManagementWindow {
 
         try {
             if (productProcessor.removeProduct(selectedId)) {
-                alert(Alert.AlertType.INFORMATION, "Successfully removed");
+//                alert(Alert.AlertType.INFORMATION, "Successfully removed");
                 updateTableData();
                 MainWindow.getInstance().updateProductTable();
             }
@@ -234,7 +234,7 @@ public class ProductManagementWindow {
                 productProcessor.setProductCategory(selectedId, newCategory) &&
                 productProcessor.setProductPrice(selectedId, newPrice) &&
                 productProcessor.setProductStock(selectedId, newStock)) {
-            alert(Alert.AlertType.INFORMATION, "Change successfully");
+//            alert(Alert.AlertType.INFORMATION, "Change successfully");
         } else {
             productProcessor.setProductCode(selectedId, oldCode);
             alert(Alert.AlertType.WARNING, "Fail to change");
