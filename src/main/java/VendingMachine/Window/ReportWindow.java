@@ -65,7 +65,6 @@ public class ReportWindow {
 
     private void initBtnActions() {
         currentItemReportBtn.setOnAction(event -> {
-
             if (UserProcessor.getInstance().getCurrentUser().getPermission(User.Permission.MANAGE_ITEM)) {
                 generateCurrentItemReport();
             } else {
@@ -73,11 +72,9 @@ public class ReportWindow {
                         "to do this action.");
                 alert.show();
             }
-
         });
 
         soldItemReportBtn.setOnAction(event -> {
-
             if (UserProcessor.getInstance().getCurrentUser().getPermission(User.Permission.MANAGE_ITEM)) {
                 generateSoldItemReport();
             } else {
@@ -85,11 +82,9 @@ public class ReportWindow {
                         "to do this action.");
                 alert.show();
             }
-
         });
 
         changeReportBtn.setOnAction(event -> {
-
             if (UserProcessor.getInstance().getCurrentUser().getPermission(User.Permission.MANAGE_CASH)) {
                 generateChangeReport();
             } else {
@@ -97,7 +92,6 @@ public class ReportWindow {
                         "to do this action.");
                 alert.show();
             }
-
         });
 
         transactionReportBtn.setOnAction(event -> {
@@ -111,7 +105,6 @@ public class ReportWindow {
         });
 
         userReportBtn.setOnAction(event -> {
-
             if (UserProcessor.getInstance().getCurrentUser().getPermission(User.Permission.MANAGE_USER)) {
                 generateUserReport();
             } else {
@@ -119,11 +112,9 @@ public class ReportWindow {
                         "to do this action.");
                 alert.show();
             }
-
         });
 
         cancelReportBtn.setOnAction(event -> {
-
             if (UserProcessor.getInstance().getCurrentUser().getPermission(User.Permission.MANAGE_USER)) {
                 generateCancelReport();
             } else {
@@ -131,7 +122,6 @@ public class ReportWindow {
                         "to do this action.");
                 alert.show();
             }
-
         });
     }
 
@@ -158,7 +148,6 @@ public class ReportWindow {
                     e.printStackTrace();
                 }
             });
-
             csvWriter.flush();
             csvWriter.close();
         } catch (IOException e) {
@@ -187,7 +176,6 @@ public class ReportWindow {
                     e.printStackTrace();
                 }
             });
-
             csvWriter.flush();
             csvWriter.close();
         } catch (IOException e) {
@@ -211,7 +199,6 @@ public class ReportWindow {
                 csvWriter.append(String.join(",", texts));
                 csvWriter.append("\n");
             }
-
             csvWriter.flush();
             csvWriter.close();
         } catch (IOException e) {
@@ -229,6 +216,9 @@ public class ReportWindow {
 
             List<Transaction> transactionList = Transaction.getTransactionList();
             for (Transaction t: transactionList) {
+                if (t.getStatus() != Transaction.Status.PAID) {
+                    continue;
+                }
                 DateTimeFormatter fmt = DateTimeFormatter.ofPattern("MM-dd HH:mm");
                 String date = t.getDate().format(fmt);
                 String paidAmount = Double.toString(t.getPaidAmount());
@@ -247,7 +237,6 @@ public class ReportWindow {
                     }
                 });
             }
-
             csvWriter.flush();
             csvWriter.close();
         } catch (IOException e) {
@@ -269,7 +258,6 @@ public class ReportWindow {
                 csvWriter.append(String.join(",", texts));
                 csvWriter.append("\n");
             }
-
             csvWriter.flush();
             csvWriter.close();
         } catch (IOException e) {
@@ -301,7 +289,6 @@ public class ReportWindow {
                     }
                 }
             }
-
             csvWriter.flush();
             csvWriter.close();
         } catch (IOException e) {
