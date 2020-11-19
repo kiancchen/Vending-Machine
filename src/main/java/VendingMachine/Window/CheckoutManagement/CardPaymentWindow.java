@@ -6,6 +6,7 @@ import VendingMachine.Data.User;
 import VendingMachine.Processor.CardProcessor;
 import VendingMachine.Processor.UserProcessor;
 import VendingMachine.Window.MainWindow;
+import VendingMachine.Window.TimeRemain;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -16,6 +17,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Timer;
 
 public class CardPaymentWindow {
     private final Stage stage;
@@ -24,6 +26,8 @@ public class CardPaymentWindow {
     private TextField nameField;
     private TextField numberField;
     private CheckBox checkBox;
+    private User currentUser;
+    private TimeRemain time;
 
     public CardPaymentWindow() {
         pane = new AnchorPane();
@@ -36,6 +40,7 @@ public class CardPaymentWindow {
         initTextField();
         initBtn();
         initCheckBox();
+        time = new TimeRemain(stage, pane, 10, 11);
     }
 
     private void initTextField() {
@@ -74,6 +79,25 @@ public class CardPaymentWindow {
         checkBtn.setLayoutY(60);
         pane.getChildren().add(checkBtn);
         checkBtn.setOnAction(event -> checkAction());
+
+        Button cancelBtn = new Button();
+        cancelBtn.setText("Cancel");
+        cancelBtn.setLayoutX(230);
+        cancelBtn.setLayoutY(60);
+        pane.getChildren().add(cancelBtn);
+        cancelBtn.setOnAction(event -> cancelAction());
+    }
+
+    private void cancelAction() {
+        try {
+            UserProcessor.getInstance().getCurrentUser().cancelShopping("user cancelled.");
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't get the user processor.");
+            alert.show();
+        }
+        MainWindow.getInstance().setShoppingCartData();
+        time.stopTime();
+        stage.close();
     }
 
     private void initCheckBox() {
@@ -93,6 +117,7 @@ public class CardPaymentWindow {
     }
 
     private void checkAction() {
+        time.stopTime();
         String name = nameField.getText();
         String number = numberField.getText();
         CardProcessor cardProcessor = CardProcessor.getInstance();
@@ -104,6 +129,7 @@ public class CardPaymentWindow {
                     if (checkBox.isSelected()) {
                         currentUser.setCard(card);
                     }
+                    time.stopTime();
                     UserProcessor.getInstance().logoutUser();
                     MainWindow.getInstance().update();
                     stage.close();

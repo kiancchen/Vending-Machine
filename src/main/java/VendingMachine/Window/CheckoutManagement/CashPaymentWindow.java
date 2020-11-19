@@ -3,12 +3,15 @@ package VendingMachine.Window.CheckoutManagement;
 import VendingMachine.Data.Transaction;
 import VendingMachine.Processor.CashProcessor;
 import VendingMachine.Processor.UserProcessor;
+import VendingMachine.Window.MainWindow;
+import VendingMachine.Window.TimeRemain;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import org.xml.sax.helpers.AttributesImpl;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -22,6 +25,8 @@ public class CashPaymentWindow {
     private Button setButton;
     private Button payButton;
     private TextField numberField;
+    private Button cancelButton;
+    private TimeRemain time;
 
     public CashPaymentWindow() {
         stage = new Stage();
@@ -39,7 +44,7 @@ public class CashPaymentWindow {
         initButtonActions();
         initCombobox();
         initTextFields();
-
+        time = new TimeRemain(stage, pane, 15, 15);
     }
 
     private void initLabel() {
@@ -53,6 +58,7 @@ public class CashPaymentWindow {
     private void initButtons() {
         setButton = new Button();
         payButton = new Button();
+        cancelButton = new Button("Cancel");
 
         Button[] buttons = {setButton, payButton};
         String[] texts = {"Set", "Pay"};
@@ -66,6 +72,12 @@ public class CashPaymentWindow {
             button.setText(texts[i]);
             pane.getChildren().add(button);
         }
+
+        cancelButton.setLayoutX(300);
+        cancelButton.setLayoutY(520);
+        cancelButton.setPrefWidth(100);
+        cancelButton.setPrefHeight(30);
+        pane.getChildren().add(cancelButton);
     }
 
     private void initCombobox() {
@@ -98,6 +110,19 @@ public class CashPaymentWindow {
     private void initButtonActions() {
         setButton.setOnAction((event -> setAction()));
         payButton.setOnAction((event -> payAction()));
+        cancelButton.setOnAction((event -> cancelAction()));
+    }
+
+    private void cancelAction() {
+        try {
+            UserProcessor.getInstance().getCurrentUser().cancelShopping("user cancelled.");
+        } catch (Exception e) {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't get the user processor.");
+            alert.show();
+        }
+        stage.close();
+        time.stopTime();
+        MainWindow.getInstance().setShoppingCartData();
     }
 
     private void payAction() {
@@ -106,16 +131,30 @@ public class CashPaymentWindow {
             return;
         }
 
+        double payAmount = getPayAmount();
+        try {
+            if (UserProcessor.getInstance().getCurrentUser().pay(payAmount)) {
+                new ChangeWindow();
+                time.stopTime();
+                stage.close();
+            } else {
+                alert(Alert.AlertType.WARNING, "You don't have enough money.");
+                UserProcessor.getInstance().getCurrentUser().cancelShopping("change not available");
+                MainWindow.getInstance().setShoppingCartData();
+                stage.close();
+            }
+        } catch (IOException e) {
+            alert(Alert.AlertType.WARNING, "Can't get the user processor");
         double payAmount = this.getPayAmount();
         int status = UserProcessor.getInstance().getCurrentUser().pay(payAmount,
                 Transaction.Payment.CASH);
-
-
         if (status == 0) {
             new ChangeWindow();
             stage.close();
         } else if (status == 1) {
             alert("You don't have enough money.");
+            UserProcessor.getInstance().getCurrentUser().cancelShopping("change not available");
+          MainWindow.getInstance().update();
         } else {
             alert("There's no available changes in the machine.");
         }
