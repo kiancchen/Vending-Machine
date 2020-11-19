@@ -13,7 +13,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -157,6 +159,7 @@ public class UserProcessorTest {
     public void testPay() {
         assertEquals(0, userProcessor.getCurrentUser().pay(10));
         assertEquals(1, userProcessor.getCurrentUser().pay(-1));
+        assertTrue(userProcessor.getCurrentUser().setItemInCart(1,1));
     }
 
     @Test
@@ -166,8 +169,10 @@ public class UserProcessorTest {
 
     @Test
     public void testGetChange() {
+        assertEquals(-1,userProcessor.getCurrentUser().getChange(),0);
         userProcessor.getCurrentUser().pay(10);
         assertEquals(10, userProcessor.getCurrentUser().getChange(), 0);
+
     }
 
     @Test
@@ -185,5 +190,11 @@ public class UserProcessorTest {
         CreditCard creditCard = new CreditCard();
         userProcessor.getCurrentUser().setCard(creditCard);
         assertEquals(creditCard, userProcessor.getCurrentUser().getCard());
+    }
+
+    @Test
+    public void testHasProduct() {
+        assertFalse(userProcessor.getCurrentUser().hasSelected(1));
+
     }
 }

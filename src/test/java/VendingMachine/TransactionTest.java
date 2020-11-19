@@ -11,6 +11,8 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -48,9 +50,14 @@ public class TransactionTest {
 
     @Test
     public void testPay() {
-        transaction.pay(10);
-        assertEquals(10, transaction.getPaidAmount(), 0);
-        assertEquals(1, transaction.pay(-1));
+        Map<Double, Integer> cashes = new HashMap<>();
+        cashes.put(10.0,1);
+        transaction.set(1,1);
+        assertEquals(0,transaction.pay(cashes));
+        transaction.set(1,2);
+        cashes.remove(10.0);
+        cashes.put(1.0,1);
+        assertEquals(1,transaction.pay(cashes));
         assertNotNull(transaction.getDate());
     }
 
@@ -82,8 +89,6 @@ public class TransactionTest {
         Transaction transaction = new Transaction(1);
         transaction.set(1,1);
         transaction.hasProduct(1);
-        transaction.pay(10, Transaction.Payment.CASH);
-        assertEquals(9,(transaction.getChange()),0);
     }
 
 }
