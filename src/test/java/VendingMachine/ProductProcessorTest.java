@@ -120,6 +120,13 @@ public class ProductProcessorTest {
         assertEquals(1, productProcessor.getProduct(1).getSold(), 0);
     }
 
+    @Test
+    public void testGetHashCode() {
+       int hashCode = productProcessor.getProduct(1).hashCode();
+       String test = productProcessor.getProduct(1).toString();
+       assertEquals(productProcessor.getProduct(1), productProcessor.getProduct(1));
+    }
+
 
 }
 
