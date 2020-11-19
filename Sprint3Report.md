@@ -81,8 +81,10 @@
    - Change notes GUI
    - Demo report
 6. Zehui Lin (zlin3338):
-   - A table display input notes
-   - A table display change notes
+   - A table display last five products bought by customer
+   - Prompt message for insufficient payment amount
+   - Prompt message for insufficient change in system amount
+   - Prompt message for the system does not have correct change combination 
 
 # Agile Development Tools and Practices
 
@@ -333,8 +335,8 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
   - What I will do today: Continues fixing bugs.
   - Do I see any obstacles: None at the moment.
 - Zehui Lin:
-  - What did I do yesterday: Working on GUI of cash payment.
-  - What I will do today: Continues working on cash payment GUI.
+  - What did I do yesterday: Working on the shopping history table which list last five products bought by customer.
+  - What I will do today: Continues working on shopping history table in main window.
   - Do I see any obstacles: None at the moment.
 
 ### Meeting 3
@@ -368,9 +370,9 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
   - What I will do today: Continue working on report.
   - Do I see any obstacles: None at the moment.
 - Zehui Lin:
-  - What did I do yesterday: Finished table display of input notes.
-  - What I will do today: Working on table display of changes notes.
-  - Do I see any obstacles: The table is not display correctly.
+  - What did I do yesterday: Finished shopping history table display of last five products.
+  - What I will do today: Fix the bug in cash payment system.
+  - Do I see any obstacles: None at the moment.
 
 ## Sprint Review
 
