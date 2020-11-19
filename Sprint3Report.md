@@ -61,7 +61,16 @@
 ## Individual Contribution
 
 1. Cheng Chen (cche7436):
-   - <mark>TODO</mark>
+   - The data structure of `Transaction`
+   - The saving of all data
+   - The interaction between the user and transaction
+   - The design of the shopping process
+   - Pay by the credit card
+   - Improve the experience of the user interaction
+   - Refactor the code to support new features
+   - Continuously fix bugs
+   - Review pull requests
+   
 2. Yuanqun Wang (ywan3184):
    - Timeout cancelled feature
    - User cancelled feature
@@ -100,7 +109,8 @@ Same content in Sprint 1 Report, can be accessed at this [link](https://github.s
 
 `blan` is an owner. Its password is `123`. Feel free to use this account to test functionalities.
 
-Here we are using the code with tag `1.1` for demonstration which you can see on Release page on Github.
+Here we are using the code with tag `2.0` for demonstration which you can see on Release page on
+ Github.
 
 ### Sign In or Sign Up
 
@@ -248,7 +258,10 @@ If user input invalid price like lettes or symbols. An alert box will notify it 
 
 ![截屏2020-11-12 下午12.17.26.png](https://i.loli.net/2020/11/12/OFZ1TarV2HNbJ4d.png)
 
-The user can select which product he want to remove, then click the row which the product is, after that this product's relevant information will be automatically filled in the information field, then click on `Remove` button. An alert box will notify it is successfully removed and the table will update accordingly.
+The user can select products he wants to remove, then click the row which the product is, after
+ that the product's relevant information will be automatically filled in the information field
+ , then click on `Remove` button. An alert box will notify if it is successfully removed, and the
+  table will update accordingly.
 
 ![截屏2020-11-12 下午12.19.20.png](https://i.loli.net/2020/11/12/rH82p3FjC7PJzDM.png)
 
@@ -271,8 +284,11 @@ If you can't see this table clearly, please refer to this [link](https://docs.go
    - Able to display cancelled transaction history
    - Able to display sold product history
    - Able to Pay by credit card
-   - Save the credit card details if user want to save and it will automatically filled in.
-   - A shopping of last 5 products purchased at main window.
+   - Able to cancel the transaction
+   - The user will be automatically logout after the checkout or cancelling the transaction
+   - Save the credit card details if user wants to save, and it will be automatically filled in.
+   - A shopping of last 5 products bought at the main window.
+   - Able to generate reports of items, transactions, cashes and users.
 
 ## User Stories and Sprint Backlog
 
@@ -298,7 +314,7 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
 - Attendance: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
 - Content:
   - Identify the Sprint Goal
-  - Discuss the data structure of cancelled feature and report feature
+  - Discuss how the previous data structure adapted to the new features
   - Refine, prioritize and assign tasks to team members
   - Produce the Sprint Backlog
 
@@ -306,50 +322,49 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
 
 <mark>TODO</mark>
 
-- Date : 10th November
+- Date : 15th November
 - Attendance: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
 - Content:
-  - Emphasize the naming conventions of methods.
-  - Discussion the GUI of transaction.
-  - Review the progress of project.
+  - Track and review the current progress.
+  - Talk about the obstacles met
 - Cheng Chen:
-  - What did I do yesterday: Finished write code for logic part of `Product` and `Transaction`.
-  - What I will do today: Working on finalize storyboard and fix bugs.
+  - What did I do yesterday: The interaction between `User` and `Transaction`
+  - What I will do today: Add mores methods to support more features
   - Do I see any obstacles: None at the moment.
 - Yuanqun Wang:
-  - What did I do yesterday: Finished user cancelled feature
-  - What I will do today: Working on other reason that allows cancel.
+  - What did I do yesterday: User can cancel transaction
+  - What I will do today: Working on other reason that allows cancelling.
   - Do I see any obstacles: None at the moment.
 - Yufei Zuo:
-  - What did I do yesterday: Finished current user, current change csv report.
-  - What I will do today: Working on current product, sold product csv report.
+  - What did I do yesterday: Generate the user and cash report
+  - What I will do today: Generate the product and transaction report
   - Do I see any obstacles: None at the moment.
 - Zexuan Long:
-  - What did I do yesterday: Finish product options on main window and write tests for logic part.
-  - What I will do today: Continues write more tests.
+  - What did I do yesterday: 
+  - What I will do today: 
   - Do I see any obstacles: None at the moment.
 - Songyin Li:
-  - What did I do yesterday: Finished GUI of sold product histroy.
-  - What I will do today: Continues fixing bugs.
+  - What did I do yesterday: 
+  - What I will do today: 
   - Do I see any obstacles: None at the moment.
 - Zehui Lin:
-  - What did I do yesterday: Working on GUI of cash payment.
-  - What I will do today: Continues working on cash payment GUI.
+  - What did I do yesterday: 
+  - What I will do today: 
   - Do I see any obstacles: None at the moment.
 
 ### Meeting 3
 
 <mark>TODO</mark>
 
-- Date : 12th November
+- Date : 18th November
 - Attendance: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
 - Content:
-  - Discussion about the progress of the sprint
+  - Track the progress of the sprint
   - Report any bugs of current application
   - Determine the content during demo with client
 - Cheng Chen:
-  - What did I do yesterday: refactor the code
-  - What I will do today: continuos to debug
+  - What did I do yesterday: Fix bugs and improve the interaction between `User` and `Transaction`
+  - What I will do today: Fix bugs
   - Do I see any obstacles: None at the moment.
 - Yuanqun Wang:
   - What did I do yesterday: Finished all cancelled features
@@ -360,17 +375,17 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
   - What I will do today: Fix bugs in transaction csv report in application.
   - Do I see any obstacles: None at the moment.
 - Zexuan Long:
-  - What did I do yesterday: Finished test for logic.
-  - What I will do today: Continuous to add tests.
-  - Do I see any obstacles: None at the moment.
+  - What did I do yesterday: 
+  - What I will do today: 
+  - Do I see any obstacles: 
 - Songyin Li:
-  - What did I do yesterday: Finished fixing bug.
-  - What I will do today: Continue working on report.
-  - Do I see any obstacles: None at the moment.
+  - What did I do yesterday: 
+  - What I will do today: 
+  - Do I see any obstacles: 
 - Zehui Lin:
-  - What did I do yesterday: Finished table display of input notes.
-  - What I will do today: Working on table display of changes notes.
-  - Do I see any obstacles: The table is not display correctly.
+  - What did I do yesterday: 
+  - What I will do today: 
+  - Do I see any obstacles: 
 
 ## Sprint Review
 
