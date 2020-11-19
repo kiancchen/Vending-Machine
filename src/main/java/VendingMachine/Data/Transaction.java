@@ -68,15 +68,7 @@ public class Transaction {
             return 1;
         }
         this.change = amount - totalPrice;
-        if (payment == Payment.CASH) {
-            this.returnedChangeMap = CashProcessor.getInstance().getChange(change);
-            if (returnedChangeMap == null) {
-                // no available changes
-                return 2;
-            }
-        } else {
-            this.returnedChangeMap = new HashMap<>();
-        }
+        this.returnedChangeMap = new HashMap<>();
         this.payment = Payment.CARD;
         this.paidAmount = amount;
         this.status = Status.PAID;
