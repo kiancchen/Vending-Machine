@@ -3,6 +3,7 @@ package VendingMachine;
 import VendingMachine.Data.CreditCard;
 import VendingMachine.Data.Transaction;
 import VendingMachine.Data.User;
+import VendingMachine.Processor.CashProcessor;
 import VendingMachine.Processor.ProductProcessor;
 import VendingMachine.Processor.UserProcessor;
 import org.junit.After;
@@ -168,11 +169,16 @@ public class UserProcessorTest {
     }
 
     @Test
-    public void testGetChange() {
+    public void testGetChange() throws IOException{
         assertEquals(-1,userProcessor.getCurrentUser().getChange(),0);
         userProcessor.getCurrentUser().pay(10);
         assertEquals(10, userProcessor.getCurrentUser().getChange(), 0);
-
+        CashProcessor.load();
+        Map<Double, Integer> cashes = new HashMap<>();
+        cashes.put(10.0,1);
+        userProcessor.getCurrentUser().setItemInCart(1,1);
+        userProcessor.getCurrentUser().pay(cashes);
+        userProcessor.getCurrentUser().getReturnChangeMap();
     }
 
     @Test
@@ -195,6 +201,5 @@ public class UserProcessorTest {
     @Test
     public void testHasProduct() {
         assertFalse(userProcessor.getCurrentUser().hasSelected(1));
-
     }
 }

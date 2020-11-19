@@ -75,8 +75,8 @@
    - All sold products csv report
    - All current change csv report
 4. Zexuan Long (zlon4018):
-   - Product options on main window
-   - Write test for product management
+   - The Transaction window on main window
+   - Write tests for logic part
 5. Songyin Li (soli3733):
    - Change notes GUI
    - Demo report
@@ -325,7 +325,7 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
   - What I will do today: Working on current product, sold product csv report.
   - Do I see any obstacles: None at the moment.
 - Zexuan Long:
-  - What did I do yesterday: Finish product options on main window and write tests for logic part.
+  - What did I do yesterday: Finish Transaction History window on main window and write tests for logic part.
   - What I will do today: Continues write more tests.
   - Do I see any obstacles: None at the moment.
 - Songyin Li:
@@ -360,8 +360,8 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
   - What I will do today: Fix bugs in transaction csv report in application.
   - Do I see any obstacles: None at the moment.
 - Zexuan Long:
-  - What did I do yesterday: Finished test for logic.
-  - What I will do today: Continuous to add tests.
+  - What did I do yesterday: Finished the Transaction History window on main window and write tests for logic.
+  - What I will do today: Fix the Transaction History window split it into two windows and continuous to add tests.
   - Do I see any obstacles: None at the moment.
 - Songyin Li:
   - What did I do yesterday: Finished fixing bug.

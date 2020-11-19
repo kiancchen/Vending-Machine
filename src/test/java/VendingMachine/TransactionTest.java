@@ -3,6 +3,7 @@ package VendingMachine;
 import VendingMachine.Data.Transaction;
 import VendingMachine.Processor.CashProcessor;
 import VendingMachine.Processor.ProductProcessor;
+import VendingMachine.Processor.UserProcessor;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -89,6 +90,16 @@ public class TransactionTest {
         Transaction transaction = new Transaction(1);
         transaction.set(1,1);
         transaction.hasProduct(1);
+        assertEquals(0,transaction.getChange(),0);
+    }
+
+    @Test
+    public void getPayee() throws IOException{
+        UserProcessor userProcessor = UserProcessor.load();
+        userProcessor.getCurrentUser().setItemInCart(1,1);
+        userProcessor.getCurrentUser().pay(10);
+        userProcessor.getCurrentUser().getShoppingHistory().get(0).getPayee();
+
     }
 
 }
