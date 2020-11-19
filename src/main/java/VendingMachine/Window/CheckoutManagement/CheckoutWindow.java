@@ -95,7 +95,6 @@ public class CheckoutWindow {
         cardBtn = new Button();
         cashBtn = new Button();
         cancel = new Button();
-
         Button[] btns = {cardBtn, cancel, cashBtn};
         String[] names = {"Card", "Cancel", "Cash"};
         for (int i = 0; i < btns.length; i++) {
