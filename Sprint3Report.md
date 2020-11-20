@@ -902,11 +902,12 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
 
 - Date: 20th November
 - What went well during the Sprint?
-  - Completed all of tasks on time.
+  - Completed all tasks on time.
   - Extends some features from clients requirement.
   - Improve experience of user interaction.
   - Worked on different features on different branches by different teammate well.
   - All agile tools and practices were utilized.
   - The communication among teammate was efficient so that we can adjust our tasks in time during the progress of the development.
 - What can be improved in the future?
-  - Parts of code could implement design patterns to improve reusability and extendability.
+  - Consider the extendability of the code at the very beginning of the development.
+  - Parts of code could be implemented in design patterns to improve reusability and extendability.
