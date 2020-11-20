@@ -36,7 +36,7 @@ dependencies {
 
 javafx {
     version = "11"
-    modules = [ 'javafx.controls', 'javafx.fxml']
+    modules = ['javafx.controls', 'javafx.fxml']
 }
 
 jacoco {
@@ -51,6 +51,16 @@ jacocoTestReport {
         html.destination file("${buildDir}/jacocoHtml")
     }
 }
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'VendingMachine.Launcher'
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
 
 application {
     // Define the main class for the application.
