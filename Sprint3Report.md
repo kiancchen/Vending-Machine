@@ -117,14 +117,13 @@ Same content in Sprint 1 Report, can be accessed at this [link](https://github.s
 
 <img src='https://i.loli.net/2020/11/19/fKFEQcCzYepHn4L.png' alt='fKFEQcCzYepHn4L'/>
 
-
-
 ## Demo
 
 `blan` is an owner. Its password is `123`. Feel free to use this account to test functionalities.
 
-Here we are using the code with tag `2.0` for demonstration which you can see on Release page on
- Github.
+One of credit cards has name `Charles` and card number `40691`. Feel free to use this card to test functionalities.
+
+Here we are using the code with tag `2.0` for demonstration which you can see on Release page on Github.
 
 ### Sign In or Sign Up
 
@@ -136,17 +135,13 @@ After click on `Account` button, it display a window to sign in or sign up.
 
 <img src='https://i.loli.net/2020/11/05/EGFWUjfksDiKBrM.png' alt='EGFWUjfksDiKBrM'/>
 
-When it sign in with correct username and password, it will display an alert to show sign in successfully, and the main window will display corresponding username and its type on the top right corner, as well as the text on button will change to `Logout` instead of `Account`.
+When it sign in with correct username and password the main window will display corresponding username and its type on the top right corner, as well as the text on button will change to `Logout` instead of `Account`.
 
-![Screen Shot 2020-11-19 at 9.56.17 PM.png](https://i.loli.net/2020/11/19/hsfMGWBQw1DELgy.png)
+<a href="https://sm.ms/image/ig7YMaljtQCvZez" target="_blank"><img src="https://i.loli.net/2020/11/20/ig7YMaljtQCvZez.png" ></a>
 
 When it sign in with wrong username or password, it will display an alert to notify user it has wrong username or password.
 
 <img src='https://i.loli.net/2020/11/05/RsQorqTLCEMVWZa.png' alt='RsQorqTLCEMVWZa'/>
-
-When it sign up with different username not exists in the database, it will display an alert to notify sign up successfully.
-
-<img src='https://i.loli.net/2020/11/05/FMrwN2eBJaX9EC5.png' alt='FMrwN2eBJaX9EC5'/>
 
 ### Display Product
 
@@ -180,11 +175,9 @@ The Checkout window is available for every users. If current cart table has noth
 
 ![Screen Shot 2020-11-19 at 9.58.21 PM.png](https://i.loli.net/2020/11/19/Rbx2XtHATY6Gfsw.png)
 
-After click `Checkout` button, there is a window display items' amount in cart. Besides, there are three more operations, card, cash or cancel. And in the middle there is 120s countdown, when it comes to 0, it will automatically back to default window.
+After click `Checkout` button, there is a window display items' amount in cart. Besides, there are three more operations, card, cash or cancel. And in the middle there is 120s countdown, when it comes to 0, it will automatically back to default window, and record this transaction to be cancelled with reason "timeout".
 
 ![Screen Shot 2020-11-19 at 9.59.17 PM.png](https://i.loli.net/2020/11/19/YmyXugcSDkZnzMd.png)
-
-
 
 ### Card Payment
 
@@ -192,53 +185,61 @@ After click the `Card` button, it need user input card name and number.  Besides
 
 ![Screen Shot 2020-11-20 at 1.17.47 AM.png](https://i.loli.net/2020/11/20/qF1aWQxd4mVIE6Z.png)
 
-After tick the `Save card` , if user is anonymous, it will display an alert to notify user is anonymous which does not right to save the card.
+User input the name and number of the card he want to pay this transaction.
 
-![Screen Shot 2020-11-20 at 1.24.01 AM.png](https://i.loli.net/2020/11/20/TBa8CVXLJlFpQgx.png)
+![Screen Shot 2020-11-20 at 2.33.20 PM.png](https://i.loli.net/2020/11/20/4k8L7hq6X1ndluD.png)
 
-After click the `Cancel` button, it will back to default window.
+If user save the card before, System will automatically filled the information.
+
+![Screen Shot 2020-11-20 at 3.00.37 PM.png](https://i.loli.net/2020/11/20/DejKxI4AXYvU6W9.png)
+
+After click the `Cancel` button, it will back to default window and record this transaction to be cancelled with reason "user cancelled".
 
 ### Check card
 
+After click the `check` button, if the card information is incorrect, it will display an alert notify current user the card is wrong. If the information is correct, this transaction is succeeded.
+
+![Screen Shot 2020-11-20 at 3.06.00 PM.png](https://i.loli.net/2020/11/20/EL5eHJ4KOFqbMtv.png)
+
 ![Screen Shot 2020-11-19 at 10.02.02 PM.png](https://i.loli.net/2020/11/20/oGTPhIwsXMNfWr8.png)
 
+If the user tick the `Save card` and click `Check` button. if user is anonymous, it will display an alert to notify user is anonymous which does not right to save the card.
 
+![Screen Shot 2020-11-20 at 3.00.37 PM.png](https://i.loli.net/2020/11/20/rSQKeTAFvxk3JWZ.png)
 
-After click the `check` button, if the card information is not correct, it will display an alert notify current user the card is wrong, when the information is correct. it will display an information box notify the user transaction has been successed.
-
-![Screen Shot 2020-11-19 at 10.02.02 PM.png](https://i.loli.net/2020/11/20/aGq2OfxiY9osVhZ.png)
-
-
+![Screen Shot 2020-11-20 at 1.24.01 AM.png](https://i.loli.net/2020/11/20/TBa8CVXLJlFpQgx.png)
 
 ### Cash Payment
 
-After click the `Cash` button, there is a table include the cash's value and number.  Besides, there are two more operations, set,pay and cancel. And in the upper left corner there is 120s countdown, when it comes to 0, it will automatically back to default window.
+After click the `Cash` button, there is a table include the cash's value and number.  Besides, there are two more operations, set, pay and cancel. In addition, in the upper left corner there is 120s countdown, when it comes to 0, it will automatically back to default window, and record this transaction to be cancelled with reason "timeout".
 
 ![Screen Shot 2020-11-19 at 10.02.02 PM.png](https://i.loli.net/2020/11/19/hUwDjcamTgzvPL1.png)
-
-
 
 ### Set Cash to Pay
 
 ![Screen Shot 2020-11-19 at 10.04.15 PM.png](https://i.loli.net/2020/11/19/pEbWNTgs1zwnFZv.png)
 
-The user can input cashtype and amount. Then click the`Set` button, after that the table will update accordingly.
+The user can input cash type and its amount. Then click the`Set` button, after that the table will update accordingly.
 
 ![Screen Shot 2020-11-19 at 10.04.23 PM.png](https://i.loli.net/2020/11/19/RXM7ZjG4A8J3viY.png)
 
 ### Pay
 
- If user didn't add any cash. It will display an alert to notify current user doesn't pay any cashes.
+If user didn't add any cash. It will display an alert to notify current user doesn't pay any cashes.
 
 ![Screen Shot 2020-11-12 at 7.27.54 PM.png](https://i.loli.net/2020/11/12/zBiTOxtRXC4G75V.png)
 
-After click the `Pay` button. There is a table of change include different values and amount.  And the cash in the machine will be reduced accordingly.
+After click the `Pay` button. There is a table of change include different values and amount. The cash in the machine also will be reduced accordingly.
 
 ![32131605174938_.pic.jpg](https://i.loli.net/2020/11/12/yDHv5XOYoZzQKgG.png)
 
+If user didn't pay enough money to purchase, it will automatically cancelled this transaction with reason "no enough money paid".
+
+If vending machine does not have enough money to give back change, it will also automatically cancelled this transaction with reason "no available changes".
+
 ### Display the latest 5 Products
 
-The latest bought items table on default page is available for every user. If you have login, it will show your purchase history, else it will show the anonymous's last 5 bought items.
+The latest bought items table on default page is available for every user. If you have login, it will show your purchase history, else it will show the anonymous' last 5 bought items.
 
 ![Screen Shot 2020-11-19 at 11.06.53 PM.png](https://i.loli.net/2020/11/19/kJ54rwRtx3E2cDe.png)
 
@@ -254,17 +255,17 @@ After click the `Sold History` button. There is a table of all the product that 
 
 ### Display Transaction History
 
-The  Transaction History  window is only available for owner and cashier users. If current user is not owner or seller, it will display an alert to notify current user have no access to this feature.
+The  Transaction History  window is only available for owner and cashier users. If current user is not owner or cashier, it will display an alert to notify current user have no access to this feature.
 
 ![截屏2020-11-12 下午3.03.15.png]( https://i.loli.net/2020/11/19/EerYG6ysmFgoq1W.png)
 
 After click the `Transaction History` button. There is a table of transactions that includes transaction date and time, item sold, amount of money paid, returned change and payment method. Besides, there is one more operation, view transaction product history.
 
-![Screen Shot 2020-11-20 at 12.57.04 AM.png](https://i.loli.net/2020/11/20/Azj3QavM7Wlibfx.png)
+![Screen Shot 2020-11-20 at 2.33.43 PM.png](https://i.loli.net/2020/11/20/lNa1zkdXSg6Eu4H.png)
 
-After click the `View` button, there is a table of the products transaction history include name category price and quantity.
+The owner can select which history he want to view, then then click on `View details` button. There is a table of all products sold in this transaction include name, category, price and quantity.
 
-![Screen Shot 2020-11-20 at 12.57.11 AM.png](https://i.loli.net/2020/11/20/w4FJi5q1fgvSrRT.png)
+![Screen Shot 2020-11-20 at 2.33.49 PM.png](https://i.loli.net/2020/11/20/QkTlZ32IC8px5Hu.png)
 
 ### Display Cancelled History
 
@@ -274,15 +275,15 @@ The user management window is only available for owner users. If current user is
 
 After click the `Cancelled History` button. There is a table of cancelled transaction during this system includes date and time of the cancelled, the user and the reasons.
 
-![Screen Shot 2020-11-20 at 1.03.45 AM.png](https://i.loli.net/2020/11/20/5ysxcDvNXo4Q2uT.png)
+![Screen Shot 2020-11-20 at 2.50.26 PM.png](https://i.loli.net/2020/11/20/53AG9vUu2SVNKPO.png)
 
 ### Generate Report
 
-After click the `Generate Report` button. There are some operations which can generate different report.
-
 ![Screen Shot 2020-11-20 at 1.12.40 AM.png](https://i.loli.net/2020/11/20/nbldTSsXNvCmL3q.png)
 
+After click the `Generae Report` button. There are some operations which can generate different report . After click these buttons, a new folder called `report` will be created, and then according to different permissions, different csv reports can be generated in the `report` folder.
 
+![Screen Shot 2020-11-20 at 2.34.53 PM.png](https://i.loli.net/2020/11/20/XUSivCYakFQ8WNz.png)
 
 ### Display Users
 
@@ -298,34 +299,31 @@ After click the `Manage User` button. There is a table of all the users that hav
 
 <a href="https://sm.ms/image/fr5Uy8JKEpTtXAS" target="_blank"><img src="https://i.loli.net/2020/11/12/fr5Uy8JKEpTtXAS.png" ></a>
 
-The owner can input new username, password and user type, then click on `Add` button. An alert box will notify it is successfully added and the table will update accordingly.
+The owner can input new username, password and user type, then click on `Add` button. The table will update accordingly.
 
-<a href="https://sm.ms/image/nLSW9KEQj6tfUgT" target="_blank"><img src="https://i.loli.net/2020/11/12/zGhavCTcXV1pIsk.png" ></a>
+<img src="https://i.loli.net/2020/11/12/hELAuvcTClirbmQ.png" >
 
 If owner does not input full relevant information then click on `Add` button, it will display an alert to notify current owner to fill in the missing information.
 
-![Screen Shot 2020-11-12 at 6.48.19 PM.png](https://i.loli.net/2020/11/12/vPpgOF9CDBqTbMN.png)
+![Screen Shot 2020-11-20 at 2.38.21 PM.png](https://i.loli.net/2020/11/20/9reMsNWm1GoULO5.png)
 
 ### Change Users
 
 <a href="https://sm.ms/image/hELAuvcTClirbmQ" target="_blank"><img src="https://i.loli.net/2020/11/12/hELAuvcTClirbmQ.png" ></a>
 
-The owner first need to select which users he want to change, then click on the row where the user is, then the relevant information of this user will be automatically filled in the information field, then edit the username, password or user which users want to be change, then click on `Change` button. An alert box will notify it is successfully changed and the table will update accordingly.
-
-![Screen Shot 2020-11-12 at 6.53.43 PM.png](https://i.loli.net/2020/11/12/PzRLIiwY2fhDa9A.png)
+The owner first need to select which users he want to change, then click on the row where the user is, then the relevant information of this user will be automatically filled in the information field, then edit the username, password or user which users want to be change, then click on `Change` button. The table will update accordingly.
 
 ### Remove Users
 
 <img src="https://i.loli.net/2020/11/12/hELAuvcTClirbmQ.png" >
 
-The owner can select which users he want to remove, then click the row which the user is, after that this user's relevant information will be automatically filled in the information field, then click on `Remove` button. An alert box will notify it is successfully removed and the table will update accordingly.
+The owner can select which users he want to remove, then click the row which the user is, after that this user's relevant information will be automatically filled in the information field, then click on `Remove` button.  the table will update accordingly.
 
-![Screen Shot 2020-11-12 at 6.58.38 PM.png](https://i.loli.net/2020/11/12/UQ5rhc6LDZESeKa.png)
+![Screen Shot 2020-11-20 at 2.42.57 PM.png](https://i.loli.net/2020/11/20/e8Ri71Lqu49lz2h.png)
 
 ### Display Cash
 
-The cash management window is only available for the owner and cashier users. If current user is not
- them, it will display an alert to notify current user have no access to this feature.
+The cash management window is only available for owner and cashier users. If current user is not them, it will display an alert to notify current user have no access to this feature.
 
 ![截屏2020-11-12 下午3.03.15.png]( https://i.loli.net/2020/11/19/EerYG6ysmFgoq1W.png)
 
@@ -337,9 +335,7 @@ After click the `Manage Cash` button, there is a table has all types of cash exi
 
 <a href="https://sm.ms/image/5GQh6q7bvIAKiSo" target="_blank"><img src="https://i.loli.net/2020/11/12/5GQh6q7bvIAKiSo.png" ></a>
 
-The user can select which value he wants to change, then click the row which the value is, after that the relevant information of this value will be automatically filled in the information field. Input the new number which the user want, then click the `Change number` button. An alert box will notify it is successfully changed and table will update accordingly.
-
-![Screen Shot 2020-11-12 at 7.28.59 PM.png](https://i.loli.net/2020/11/12/c5u6thgmkOTRKdY.png)
+The user can select which value he wants to change, then click the row which the value is, after that the relevant information of this value will be automatically filled in the information field. Input the new number which the user want, then click the `Change number` button.  The table will update accordingly.
 
 If the user input symbol or letters. An alert box will notify it  is fail to change.
 
@@ -349,8 +345,7 @@ If the user input symbol or letters. An alert box will notify it  is fail to cha
 
 ### Manage Product
 
-The product management window is only available for the owner and seller users. If current user is
- not them, it will display an alert to notify current user have no access to this feature.
+The product management window is only available for owner and seller users. If current user is not them, it will display an alert to notify current user have no access to this feature.
 
 ![截屏2020-11-12 下午3.03.15.png]( https://i.loli.net/2020/11/19/EerYG6ysmFgoq1W.png)
 
@@ -358,14 +353,13 @@ After click the `Manage Product` button, there is a table of all the products th
 
 <a href="https://sm.ms/image/eKgdJUSvxuiNYj9" target="_blank"><img src="https://i.loli.net/2020/11/12/eKgdJUSvxuiNYj9.png" ></a>
 
-
 ### Add Product
 
 <a href="https://sm.ms/image/3a4CNjrhck5Et8q" target="_blank"><img src="https://i.loli.net/2020/11/12/3a4CNjrhck5Et8q.png" ></a>
 
 The user can input new code, Name, Price and Quantity, then click on `Add` button. An alert box will notify it is successfully added and the table will update accordingly.
 
-![Screen Shot 2020-11-12 at 7.32.18 PM.png](https://i.loli.net/2020/11/12/IKDnuYSfZjMOB5p.png)
+![Screen Shot 2020-11-20 at 2.58.12 PM.png](https://i.loli.net/2020/11/20/3nYacXBKGDzLt17.png)
 
 If users input the repeated code or name then click on `Add` button, it will display an alert to notify current user the product exists in the system.![Screen Shot 2020-11-12 at 7.34.17 PM.png](https://i.loli.net/2020/11/12/DdxVQ1iSBzjKyw6.png)
 
@@ -373,11 +367,9 @@ If users input the repeated code or name then click on `Add` button, it will dis
 
 <a href="https://sm.ms/image/Cl2ULbuFWf8KHx6" target="_blank"><img src="https://i.loli.net/2020/11/12/Cl2ULbuFWf8KHx6.png" ></a>
 
-The user first need to select which product he want to change, then click on the row where the product is, then the relevant information of this product will be automatically filled in the information field, then edit the code,name,price,quantity and category which user want. then click on `Change` button. An alert box will notify it is successfully changed and the table will update accordingly.
+The user first need to select which product he want to change, then click on the row where the product is, then the relevant information of this product will be automatically filled in the information field, then edit the code,name,price,quantity and category which user want. then click on `Change` button. The table will update accordingly.
 
-![Screen Shot 2020-11-12 at 7.39.24 PM.png](https://i.loli.net/2020/11/12/zxmK8bGLjwZETaN.png)
-
-If user input invalid price like letters or symbols. An alert box will notify it is failed changed.
+If user input invalid price like lettes or symbols. An alert box will notify it is failed changed.
 
 ![截屏2020-11-12 下午12.14.09.png](https://i.loli.net/2020/11/12/cnVwloX4rN9UEZ8.png)
 
@@ -387,12 +379,7 @@ If user input invalid price like letters or symbols. An alert box will notify it
 
 ![截屏2020-11-12 下午12.17.26.png](https://i.loli.net/2020/11/12/OFZ1TarV2HNbJ4d.png)
 
-The user can select products he wants to remove, then click the row which the product is, after
- that the product's relevant information will be automatically filled in the information field
- , then click on `Remove` button. An alert box will notify if it is successfully removed, and the
-  table will update accordingly.
-
-![Screen Shot 2020-11-12 at 7.46.33 PM.png](https://i.loli.net/2020/11/12/sQd2jZqrKnYaEHz.png)
+The user can select which product he want to remove, then click the row which the product is, after that this product's relevant information will be automatically filled in the information field, then click on `Remove` button. The table will update accordingly.
 
 # Sprint Artifacts
 
