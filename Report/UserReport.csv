@@ -1,0 +1,4 @@
+ID,Username,Password,Type
+0,ANONYMOUS,,ANONYMOUS
+1,alan,123,CUSTOMER
+2,blan,123,OWNER

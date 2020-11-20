@@ -16,9 +16,6 @@ import javafx.scene.control.skin.TextFieldSkin;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.util.Timer;
-
 public class CardPaymentWindow {
     private final Stage stage;
     private final AnchorPane pane;
@@ -36,9 +33,14 @@ public class CardPaymentWindow {
         stage.setTitle("Card Payment");
         stage.show();
         currentUser = UserProcessor.getInstance().getCurrentUser();
+        initCheckBox();
         initTextField();
         initBtn();
-        initCheckBox();
+        if (currentUser.getType() != User.UserType.ANONYMOUS && currentUser.getCard() != null) {
+            nameField.setText(currentUser.getCard().getName());
+            numberField.setText(currentUser.getCard().getNumber());
+            checkBox.setSelected(true);
+        }
         time = new TimeRemain(stage, pane, 10, 11);
     }
 
@@ -64,11 +66,6 @@ public class CardPaymentWindow {
 
         pane.getChildren().add(nameField);
         pane.getChildren().add(numberField);
-
-        if (currentUser.getType() != User.UserType.ANONYMOUS && currentUser.getCard() != null) {
-            nameField.setText(currentUser.getCard().getName());
-            numberField.setText(currentUser.getCard().getNumber());
-        }
     }
 
     private void initBtn() {
@@ -88,12 +85,8 @@ public class CardPaymentWindow {
     }
 
     private void cancelAction() {
-        try {
-            UserProcessor.getInstance().getCurrentUser().cancelShopping("user cancelled.");
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.WARNING, "Can't get the user processor.");
-            alert.show();
-        }
+        UserProcessor.getInstance().getCurrentUser().cancelShopping("user cancelled.");
+        UserProcessor.getInstance().logoutUser();
         MainWindow.getInstance().update();
         time.stopTime();
         stage.close();
@@ -122,11 +115,13 @@ public class CardPaymentWindow {
         CardProcessor cardProcessor = CardProcessor.getInstance();
         CreditCard card = cardProcessor.validateCard(name, number);
         if (card != null) {
-                if (currentUser.pay(currentUser.getTotalPrice(), Transaction.Payment.CARD) == 0) {
+                if (currentUser.pay(currentUser.getTotalPrice()) == 0) {
                     Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successful!");
                     alert.show();
                     if (checkBox.isSelected()) {
                         currentUser.setCard(card);
+                    }else{
+                        currentUser.setCard(null);
                     }
                     time.stopTime();
                     UserProcessor.getInstance().logoutUser();

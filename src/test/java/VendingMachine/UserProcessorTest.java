@@ -3,6 +3,7 @@ package VendingMachine;
 import VendingMachine.Data.CreditCard;
 import VendingMachine.Data.Transaction;
 import VendingMachine.Data.User;
+import VendingMachine.Processor.CashProcessor;
 import VendingMachine.Processor.ProductProcessor;
 import VendingMachine.Processor.UserProcessor;
 import org.junit.After;
@@ -13,7 +14,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -155,8 +158,9 @@ public class UserProcessorTest {
 
     @Test
     public void testPay() {
-        assertEquals(0, userProcessor.getCurrentUser().pay(10, Transaction.Payment.CASH));
-        assertEquals(1, userProcessor.getCurrentUser().pay(-1, Transaction.Payment.CASH));
+        assertEquals(0, userProcessor.getCurrentUser().pay(10));
+        assertEquals(1, userProcessor.getCurrentUser().pay(-1));
+        assertTrue(userProcessor.getCurrentUser().setItemInCart(1,1));
     }
 
     @Test
@@ -165,9 +169,16 @@ public class UserProcessorTest {
     }
 
     @Test
-    public void testGetChange() {
-        userProcessor.getCurrentUser().pay(10, Transaction.Payment.CASH);
+    public void testGetChange() throws IOException{
+        assertEquals(-1,userProcessor.getCurrentUser().getChange(),0);
+        userProcessor.getCurrentUser().pay(10);
         assertEquals(10, userProcessor.getCurrentUser().getChange(), 0);
+        CashProcessor.load();
+        Map<Double, Integer> cashes = new HashMap<>();
+        cashes.put(10.0,1);
+        userProcessor.getCurrentUser().setItemInCart(1,1);
+        userProcessor.getCurrentUser().pay(cashes);
+        userProcessor.getCurrentUser().getReturnChangeMap();
     }
 
     @Test
@@ -185,5 +196,10 @@ public class UserProcessorTest {
         CreditCard creditCard = new CreditCard();
         userProcessor.getCurrentUser().setCard(creditCard);
         assertEquals(creditCard, userProcessor.getCurrentUser().getCard());
+    }
+
+    @Test
+    public void testHasProduct() {
+        assertFalse(userProcessor.getCurrentUser().hasSelected(1));
     }
 }

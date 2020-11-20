@@ -25,14 +25,14 @@
   - [Sprint Goal](#sprint-goal)
   - [User Stories and Sprint Backlog](#user-stories-and-sprint-backlog)
   - [Burndown Chart](#burndown-chart)
+    - [Sprint 3 Burndown Chart](#sprint-3-burndown-chart)
+    - [Product Burndown Chart](#product-burndown-chart)
   - [Storyboard](#storyboard)
   - [Scrum Meetings](#scrum-meetings)
     - [Meeting 1 (Sprint Planning)](#meeting-1-sprint-planning)
     - [Meeting 2](#meeting-2)
     - [Meeting 3](#meeting-3)
   - [Sprint Review](#sprint-review)
-    - [Client Feedback](#client-feedback)
-    - [Revisited Sprint Backlog](#revisited-sprint-backlog)
   - [Sprint Retrospective](#sprint-retrospective)
 
 # Scrum Teams
@@ -59,29 +59,42 @@
 6. Developer4: Zehui Lin
 
 ## Individual Contribution
-<mark>TODO</mark>
+
 1. Cheng Chen (cche7436):
-   - <mark>TODO</mark>
+   - The data structure of `Transaction`
+   - The saving of all data
+   - The interaction between the user and transaction
+   - The design of the shopping process
+   - Pay by the credit card
+   - Improve the experience of the user interaction
+   - Refactor the code to support new features
+   - Continuously fix bugs
+   - Review pull requests
+
 2. Yuanqun Wang (ywan3184):
-   - Shopping cart GUI
-   - Add product in shoooping cart
-   - Change product in shopping cart
-   - Remove product in shopping cart
+   - Timeout cancelled feature
+   - User cancelled feature
+   - Change not available will automatically cancelled
+   - User have not  enough money will automatically cancelled
 3. Yufei Zuo (yzuo4982):
-   - Add product GUI
-   - Remove product GUI
-   - Change product GUI
-   - Product table
-   - Fix bug of cash payment GUI
+   - Current user cvs report
+   - All transactions csv report
+   - All cancelled transactions csv report
+   - All current products csv report
+   - All sold products csv report
+   - All current change csv report
 4. Zexuan Long (zlon4018):
-   - Product options on main window
-   - Write test for product management
+   - The Transaction window on main window
+   - Write tests for logic part
 5. Songyin Li (soli3733):
-   - Change notes GUI
+   - Sold product history GUI
    - Demo report
+   - Story board
 6. Zehui Lin (zlin3338):
-   - A table display input notes
-   - A table display change notes
+   - A table display last five products bought by customer
+   - Prompt message for insufficient payment amount
+   - Prompt message for insufficient change in system amount
+   - Prompt message for the system does not have correct change combination
 
 # Agile Development Tools and Practices
 
@@ -91,7 +104,7 @@ Same content in Sprint 1 Report, can be accessed at this [link](https://github.s
 
 ## UML Class Diagram
 
-<mark>TODO</mark>
+<img src='https://i.loli.net/2020/11/19/fKFEQcCzYepHn4L.png' alt='fKFEQcCzYepHn4L'/>
 
 
 
@@ -99,7 +112,8 @@ Same content in Sprint 1 Report, can be accessed at this [link](https://github.s
 
 `blan` is an owner. Its password is `123`. Feel free to use this account to test functionalities.
 
-Here we are using the code with tag `1.1` for demonstration which you can see on Release page on Github.
+Here we are using the code with tag `2.0` for demonstration which you can see on Release page on
+ Github.
 
 ### Sign In or Sign Up
 
@@ -299,7 +313,8 @@ The owner can select which users he want to remove, then click the row which the
 
 ### Display Cash
 
-The cash management window is only available for owner and cashier users. If current user is not them, it will display an alert to notify current user have no access to this feature.
+The cash management window is only available for the owner and cashier users. If current user is not
+ them, it will display an alert to notify current user have no access to this feature.
 
 ![截屏2020-11-12 下午3.03.15.png]( https://i.loli.net/2020/11/19/EerYG6ysmFgoq1W.png)
 
@@ -323,14 +338,14 @@ If the user input symbol or letters. An alert box will notify it  is fail to cha
 
 ### Manage Product
 
-The product management window is only available for owner and seller users. If current user is not them, it will display an alert to notify current user have no access to this feature.
+The product management window is only available for the owner and seller users. If current user is
+ not them, it will display an alert to notify current user have no access to this feature.
 
 ![截屏2020-11-12 下午3.03.15.png]( https://i.loli.net/2020/11/19/EerYG6ysmFgoq1W.png)
 
 After click the `Manage Product` button, there is a table of all the products that the machine has. Besides, there are three more operations, add or change or remove products.
 
 <a href="https://sm.ms/image/eKgdJUSvxuiNYj9" target="_blank"><img src="https://i.loli.net/2020/11/12/eKgdJUSvxuiNYj9.png" ></a>
-
 
 
 ### Add Product
@@ -351,7 +366,7 @@ The user first need to select which product he want to change, then click on the
 
 ![Screen Shot 2020-11-12 at 7.39.24 PM.png](https://i.loli.net/2020/11/12/zxmK8bGLjwZETaN.png)
 
-If user input invalid price like lettes or symbols. An alert box will notify it is failed changed.
+If user input invalid price like letters or symbols. An alert box will notify it is failed changed.
 
 ![截屏2020-11-12 下午12.14.09.png](https://i.loli.net/2020/11/12/cnVwloX4rN9UEZ8.png)
 
@@ -361,7 +376,10 @@ If user input invalid price like lettes or symbols. An alert box will notify it 
 
 ![截屏2020-11-12 下午12.17.26.png](https://i.loli.net/2020/11/12/OFZ1TarV2HNbJ4d.png)
 
-The user can select which product he want to remove, then click the row which the product is, after that this product's relevant information will be automatically filled in the information field, then click on `Remove` button. An alert box will notify it is successfully removed and the table will update accordingly.
+The user can select products he wants to remove, then click the row which the product is, after
+ that the product's relevant information will be automatically filled in the information field
+ , then click on `Remove` button. An alert box will notify if it is successfully removed, and the
+  table will update accordingly.
 
 ![Screen Shot 2020-11-12 at 7.46.33 PM.png](https://i.loli.net/2020/11/12/sQd2jZqrKnYaEHz.png)
 
@@ -369,161 +387,155 @@ The user can select which product he want to remove, then click the row which th
 
 ## Product Backlog
 
-<mark>TODO</mark>
-
 The product backlog contains a set of all features and sub-features to build the vending machine, including functions, requirements, enhancements and fixes identified from previous sprints. The items in product backlog are ordered by priority and constantly changed. Any additional requirements from client should be directly added to product backlog instead of sprint backlog.
 
-<img src='https://i.loli.net/2020/11/12/rM2aNhyep1wzvGH.png' alt='rM2aNhyep1wzvGH'/>
+<img src='https://i.loli.net/2020/11/19/fhx7j6zwtGqkUPi.png' alt='fhx7j6zwtGqkUPi'/>
 
 If you can't see this table clearly, please refer to this [link](https://docs.google.com/spreadsheets/d/1bW-7sIUqPr8Pr3uHav8PKmb57BtOSc3_Uw_Vm2mQ-A8/edit?usp=sharing) (google sheet).
 
 ## Sprint Goal
 
-   - Implement the code structure for `Transaction`
-   - Able to display transaction history
-   - Able to display cancelled transaction history
-   - Able to display sold product history
-   - Able to Pay by credit card
-   - Save the credit card details if user want to save and it will automatically filled in.
-   - A shopping of last 5 products purchased at main window.
+   - Continues fix code structure for `Transaction`
+   - Able to display transaction history table
+   - Able to display cancelled transaction history tablee
+   - Able to display sold product history table
+   - Able to pay by credit card
+   - Able to cancel the transaction
+   - The user will be automatically logout after the checkout or cancelling the transaction
+   - Save the credit card details if user wants to save, and it will be automatically filled in.
+   - A shopping of last 5 products bought at the main window.
+   - Able to generate reports of items, transactions, cashes and users.
 
 ## User Stories and Sprint Backlog
 
 The sprint backlog contains a set of items selected for this sprint. It is considered as a plan for delivering the product increment and realize the sprint goal. It is visible to anyone and to be added or modified by the development team.
 
-<mark>TODO</mark>
+<mark>Review</mark>
 
-<img src='https://i.loli.net/2020/11/12/NpFoXwTc7dAWZf9.png' alt='NpFoXwTc7dAWZf9'/>
+<img src='https://i.loli.net/2020/11/19/X251LGUxrkCcl38.png' alt='X251LGUxrkCcl38'/>
+
+**Notes:** Sprint 3 Backlog is colored with red.
 
 ## Burndown Chart
 
-<mark>TODD</mark>
+### Sprint 3 Burndown Chart
+
+<img src='https://i.loli.net/2020/11/19/4k578V6noPeUtMD.png' alt='4k578V6noPeUtMD'/>
+
+### Product Burndown Chart
+
+<img src='https://i.loli.net/2020/11/19/1UO9BNGeLXpjDm2.png' alt='1UO9BNGeLXpjDm2'/>
 
 ## Storyboard
 
-<mark>TODD</mark>
+<img src='https://i.loli.net/2020/11/19/HcD8gjV1CBukSpe.png' alt='HcD8gjV1CBukSpe'/>
 
 ## Scrum Meetings
 
 ### Meeting 1 (Sprint Planning)
 
-- Date: 12th November
+- Date: 14th November
 - Attendance: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
 - Content:
   - Identify the Sprint Goal
-  - Discuss the data structure of transaction
-  - Implement the codebase of `transaction` together
+  - Discuss how the previous data structure adapted to the new features
   - Refine, prioritize and assign tasks to team members
   - Produce the Sprint Backlog
 
 ### Meeting 2
 
-<mark>TODO</mark>
-
-- Date : 10th November
+- Date : 16th November
 - Attendance: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
 - Content:
-  - Emphasize the naming conventions of methods.
-  - Discussion the GUI of transaction.
-  - Review the progress of project.
+  - Track and review the current progress.
+  - Talk about the obstacles met
 - Cheng Chen:
-  - What did I do yesterday: Finished write code for logic part of `Product` and `Transaction`.
-  - What I will do today: Working on finalize storyboard and fix bugs.
+  - What did I do yesterday: The interaction between `User` and `Transaction`
+  - What I will do today: Add mores methods to support more features
   - Do I see any obstacles: None at the moment.
 - Yuanqun Wang:
-  - What did I do yesterday: Finished shopping cart GUI.
-  - What I will do today: Working on modifying feature of shopping cart.
+  - What did I do yesterday: User can cancel transaction.
+  - What I will do today: Working on other reason that allows cancelling.
   - Do I see any obstacles: None at the moment.
 - Yufei Zuo:
-  - What did I do yesterday: Finished GUI of add and remove product.
-  - What I will do today: Working on GUI of change product.
+  - What did I do yesterday: Generate the user and cash report.
+  - What I will do today: Generate the product and transaction report.
   - Do I see any obstacles: None at the moment.
 - Zexuan Long:
-  - What did I do yesterday: Finish product options on main window and write tests for logic part.
+  - What did I do yesterday: Finish Transaction History window on main window and write tests for logic part.
   - What I will do today: Continues write more tests.
   - Do I see any obstacles: None at the moment.
 - Songyin Li:
-  - What did I do yesterday: Finished GUI of changing amount of notes.
-  - What I will do today: Continues fixing bugs.
+  - What did I do yesterday: Finish the sold history window om main window
+  - What I will do today:  Working on story board.
   - Do I see any obstacles: None at the moment.
 - Zehui Lin:
-  - What did I do yesterday: Working on GUI of cash payment.
-  - What I will do today: Continues working on cash payment GUI.
+  - What did I do yesterday: Working on the shopping history table which list last five products bought by customer.
+  - What I will do today: Continues working on shopping history table in main window.
   - Do I see any obstacles: None at the moment.
 
 ### Meeting 3
 
-<mark>TODO</mark>
-
-- Date : 12th November
+- Date : 18th November
 - Attendance: Cheng Chen. Yuanqun Wang, Yufei Zuo, Zexuan Long, Songyin Li, Zehui Lin
 - Content:
-  - Discussion about the progress of the sprint
+  - Track the progress of the sprint
   - Report any bugs of current application
   - Determine the content during demo with client
 - Cheng Chen:
-  - What did I do yesterday: refactor the code
-  - What I will do today: continuos to debug
+  - What did I do yesterday: Fix bugs and improve the interaction between `User` and `Transaction`
+  - What I will do today: Fix bugs
   - Do I see any obstacles: None at the moment.
 - Yuanqun Wang:
-  - What did I do yesterday: Finished remove product in shopping cart.
-  - What I will do today: Working on changing product quantity in shopping cart.
+  - What did I do yesterday: Finished all cancelled features
+  - What I will do today: Fix some bugs in cancelled features.
   - Do I see any obstacles: None at the moment.
 - Yufei Zuo:
-  - What did I do yesterday: Proofreading the report.
-  - What I will do today: Fix bugs in application.
+  - What did I do yesterday: Finished all report generation features.
+  - What I will do today: Fix bugs in transaction csv report in application.
   - Do I see any obstacles: None at the moment.
 - Zexuan Long:
-  - What did I do yesterday: Finished test for logic.
-  - What I will do today: Continuous to add tests.
+  - What did I do yesterday: Finished the Transaction History window on main window and write tests for logic.
+  - What I will do today: Fix the Transaction History window split it into two windows and continuous to add tests.
   - Do I see any obstacles: None at the moment.
 - Songyin Li:
-  - What did I do yesterday: Working on demo report
-  - What I will do today: Continue working on demo report.
+  - What did I do yesterday: Finish the story board
+  - What I will do today:  Finish the report demo and change the story board base on the new feature
   - Do I see any obstacles: None at the moment.
 - Zehui Lin:
-  - What did I do yesterday: Finished table display of input notes.
-  - What I will do today: Working on table display of changes notes.
-  - Do I see any obstacles: The table is not display correctly.
+  - What did I do yesterday: Finished shopping history table display of last five products.
+  - What I will do today: Fix the bug in cash payment system.
+  - Do I see any obstacles: None at the moment.
 
 ## Sprint Review
 
-### Client Feedback
-
-<mark>TODO</mark>
-
-Our client is satisfied with output of current sprint, and do not have any comments for current progression. The client just asks to continue finishing requirement.
+<mark>Review</mark>
 
 - What has been done?
-  - The database that stores products.
-  - The owner and seller can modified amount of cash in machine.
-  - The user can add, change or remove product from shopping cart.
-  - The user can purchases the products by cash.
-  - The machine can display correct change back to user.
-  - A table of products can display.
-  - A table of shopping cart can display.
+   - Continues fix code structure for `Transaction`
+   - Able to display transaction history table
+   - Able to display cancelled transaction history tablee
+   - Able to display sold product history table
+   - Able to pay by credit card
+   - Able to cancel the transaction
+   - The user will be automatically logout after the checkout or cancelling the transaction
+   - Save the credit card details if user wants to save, and it will be automatically filled in.
+   - A shopping of last 5 products bought at the main window.
+   - Able to generate reports of items, transactions, cashes and users.
 - What has not been done?
-  - Have not implemented the code structure for `transaction`.
-  - Cannot display shopping history.
-
-### Revisited Sprint Backlog
-
-<mark>TODO</mark>
-
-The tasks have not assigned according to priority, some features cannot be implemented while other task have not completed. For example, one of our sprint backlog is to display a table of shopping history, however the backlog of payment by cash has just finished by due day, which makes impossible to finish displaying a table of shopping history.
-
-In the next sprint, we need to focus on the order to implement features and aims to finish all the required feature by the due day.
+  - All the tasks have been completed on time.
 
 ## Sprint Retrospective
 
-<mark>TODO</mark>
+<mark>Review</mark>
 
-- Date: 12th November
+- Date: 20th November
 - What went well during the Sprint?
-  - Completed most of tasks on time.
+  - Completed all of tasks on time.
+  - Extends some features from clients requirement.
+  - Improve experience of user interaction.
   - Worked on different features on different branches by different teammate well.
   - All agile tools and practices were utilized.
   - The communication among teammate was efficient so that we can adjust our tasks in time during the progress of the development.
 - What can be improved in the future?
-  - Prioritize all the tasks at the beginning.
-  - Do not write logic code in GUI window
+  - Parts of code could implement design patterns to improve reusability and extendability.

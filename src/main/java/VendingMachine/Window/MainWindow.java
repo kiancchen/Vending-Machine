@@ -71,7 +71,7 @@ public class MainWindow {
     public void updateCurrencyUserInfo() {
         currentUserInfo.setText("Username: "
                 + userProcessor.getCurrentUser().getUsername()
-                + "\tRole: "
+                + "\t\tRole: "
                 + userProcessor.getCurrentUser().getType()
         );
         if (userProcessor.getCurrentUser().getType() == User.UserType.ANONYMOUS) {
@@ -316,7 +316,7 @@ public class MainWindow {
         pane.getChildren().add(shoppingHistoryTable);
 
         //create table
-        String[] colNames = {"Category", "Code", "Name", "Price($)", "Stock"};
+        String[] colNames = {"Category", "Code", "Name", "Price($)", "Quantity"};
         String[] properties = {"category", "code", "name", "price", "quantity"};
         for (int i = 0; i < colNames.length; i++) {
             String colName = colNames[i];
@@ -395,7 +395,7 @@ public class MainWindow {
         productTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         // create table
-        String[] colNames = {"Category", "Name", "Code", "Price ($)", "Quantity", "In the Cart"};
+        String[] colNames = {"Category", "Name", "Code", "Price ($)", "Stock", "In the Cart"};
         String[] properties = {"category", "name", "code", "price", "quantity", "inCart"};
         for (int i = 0; i < colNames.length; i++) {
             String colName = colNames[i];

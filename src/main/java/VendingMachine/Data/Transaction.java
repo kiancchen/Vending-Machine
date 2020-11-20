@@ -14,20 +14,17 @@ import java.util.Map;
 
 public class Transaction {
     private static List<Transaction> transactionList;
-    private LocalDateTime date;
     private final Map<Integer, Integer> shoppingList;
+    private LocalDateTime date;
     private Status status;
     private double totalPrice;
     private double paidAmount;
     private Map<Double, Integer> returnedChangeMap;
+    private Map<Double, Integer> paidCashes;
     private Payment payment;
     private String reason;
     private double change;
     private int userId;
-
-    public static void load() throws IOException {
-        transactionList = DatabaseHandler.loadTransactionData();
-    }
 
     public Transaction(int userId) {
         shoppingList = new HashMap<>();
@@ -35,6 +32,15 @@ public class Transaction {
         totalPrice = 0;
         this.userId = userId;
         this.date = LocalDateTime.now();
+        this.payment = Payment.UNPAID;
+    }
+
+    public static void load() throws IOException {
+        transactionList = DatabaseHandler.loadTransactionData();
+    }
+
+    public static List<Transaction> getTransactionList() {
+        return transactionList;
     }
 
     public boolean set(int id, int newQty) {
@@ -56,22 +62,14 @@ public class Transaction {
         return true;
     }
 
-    public int pay(double amount, Payment payment) {
+    public int pay(double amount) {
         if (amount < this.totalPrice) {
             // money not enough
             return 1;
         }
         this.change = amount - totalPrice;
-        if (payment == Payment.CASH) {
-            this.returnedChangeMap = CashProcessor.getInstance().getChange(change);
-            if (returnedChangeMap == null) {
-                // no available changes
-                return 2;
-            }
-        }else{
-            this.returnedChangeMap = new HashMap<>();
-        }
-        this.payment = payment;
+        this.returnedChangeMap = new HashMap<>();
+        this.payment = Payment.CARD;
         this.paidAmount = amount;
         this.status = Status.PAID;
         transactionList.add(this);
@@ -79,17 +77,45 @@ public class Transaction {
         this.shoppingList.forEach((id, soldNum) -> {
             Product product = ProductProcessor.getInstance().getProduct(id);
             product.sold(soldNum);
+            product.setStock(product.getStock() - soldNum);
         });
 
-        shoppingList.forEach((id, qty) -> {
-            Product product = ProductProcessor.getInstance().getProduct(id);
-            product.setStock(product.getStock() - qty);
-        });
         return 0;
     }
 
-    public double getChange() {
-        return change;
+    public int pay(Map<Double, Integer> cashes) {
+        this.paidCashes = cashes;
+        double amount = 0;
+        for (Map.Entry<Double, Integer> entry : cashes.entrySet()) {
+            Double value = entry.getKey();
+            Integer num = entry.getValue();
+            amount += value * num;
+        }
+
+        if (amount < this.totalPrice) {
+            // money not enough
+            return 1;
+        }
+        this.change = amount - totalPrice;
+        this.returnedChangeMap = CashProcessor.getInstance().getChange(change);
+        if (returnedChangeMap == null) {
+            // no available changes
+            return 2;
+        }
+        this.payment = Payment.CASH;
+        this.paidAmount = amount;
+        this.status = Status.PAID;
+        transactionList.add(this);
+        this.date = LocalDateTime.now();
+        this.shoppingList.forEach((id, soldNum) -> {
+            Product product = ProductProcessor.getInstance().getProduct(id);
+            product.sold(soldNum);
+            product.setStock(product.getStock() - soldNum);
+        });
+        paidCashes.forEach((value, num)-> CashProcessor.getInstance().setCashNumber(value,
+                CashProcessor.getInstance().getCashMap().get(value) + num));
+
+        return 0;
     }
 
     public boolean hasProduct(int id) {
@@ -102,6 +128,10 @@ public class Transaction {
         transactionList.add(this);
         this.date = LocalDateTime.now();
         return true;
+    }
+
+    public double getChange() {
+        return change;
     }
 
     public User getPayee() {
@@ -138,10 +168,6 @@ public class Transaction {
         return list;
     }
 
-    public static List<Transaction> getTransactionList() {
-        return transactionList;
-    }
-
     public LocalDateTime getDate() {
 
         return date;
@@ -163,6 +189,7 @@ public class Transaction {
 
     public enum Payment {
         CASH,
-        CARD
+        CARD,
+        UNPAID
     }
 }
