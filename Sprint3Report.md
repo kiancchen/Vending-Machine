@@ -10,6 +10,17 @@
     - [Display cart](#display-cart)
     - [Add to Cart](#add-to-cart)
     - [Remove Cart](#remove-cart)
+    - [Checkout Window](#checkout-window)
+    - [Card Payment](#card-payment)
+    - [Check card](#check-card)
+    - [Cash Payment](#cash-payment)
+    - [Set Cash to Pay](#set-cash-to-pay)
+    - [Pay](#pay)
+    - [Display the latest 5 Products](#display-the-latest-5-products)
+    - [Display Sold History](#display-sold-history)
+    - [Display Transaction History](#display-transaction-history)
+    - [Display Cancelled History](#display-cancelled-history)
+    - [Generate Report](#generate-report)
     - [Display Users](#display-users)
     - [Add Users](#add-users)
     - [Change Users](#change-users)
@@ -181,7 +192,7 @@ After click the `Card` button, it need user input card name and number.  Besides
 
 ![Screen Shot 2020-11-20 at 1.17.47 AM.png](https://i.loli.net/2020/11/20/qF1aWQxd4mVIE6Z.png)
 
-After tick the `Save card` , if user is anoymous, it will display an alert to notify user is anoymous which does not right to save the card.
+After tick the `Save card` , if user is anonymous, it will display an alert to notify user is anonymous which does not right to save the card.
 
 ![Screen Shot 2020-11-20 at 1.24.01 AM.png](https://i.loli.net/2020/11/20/TBa8CVXLJlFpQgx.png)
 
@@ -237,13 +248,13 @@ The sold history window is only available for owner and seller users. If current
 
 ![截屏2020-11-12 下午3.03.15.png]( https://i.loli.net/2020/11/19/EerYG6ysmFgoq1W.png)
 
-After click the `Sold History` button. There is a table of all the product that have been sold in the system. 
+After click the `Sold History` button. There is a table of all the product that have been sold in the system.
 
 ![Screen Shot 2020-11-20 at 12.02.14 AM.png](https://i.loli.net/2020/11/20/BWj7oeMc9y1gDYa.png)
 
-### Display Transaction History 
+### Display Transaction History
 
-The  Transaction History  window is only available for owner and seller users. If current user is not owner or seller, it will display an alert to notify current user have no access to this feature.
+The  Transaction History  window is only available for owner and cashier users. If current user is not owner or seller, it will display an alert to notify current user have no access to this feature.
 
 ![截屏2020-11-12 下午3.03.15.png]( https://i.loli.net/2020/11/19/EerYG6ysmFgoq1W.png)
 
@@ -251,7 +262,7 @@ After click the `Transaction History` button. There is a table of transactions t
 
 ![Screen Shot 2020-11-20 at 12.57.04 AM.png](https://i.loli.net/2020/11/20/Azj3QavM7Wlibfx.png)
 
-After click the` View` button, there is a table of the products transaction history include name category price and quantity.
+After click the `View` button, there is a table of the products transaction history include name category price and quantity.
 
 ![Screen Shot 2020-11-20 at 12.57.11 AM.png](https://i.loli.net/2020/11/20/w4FJi5q1fgvSrRT.png)
 
@@ -267,7 +278,7 @@ After click the `Cancelled History` button. There is a table of cancelled transa
 
 ### Generate Report
 
-After click the `Generae Report` button. There are some operations which can generate different report.
+After click the `Generate Report` button. There are some operations which can generate different report.
 
 ![Screen Shot 2020-11-20 at 1.12.40 AM.png](https://i.loli.net/2020/11/20/nbldTSsXNvCmL3q.png)
 
