@@ -26,3 +26,5 @@ One of credit cards has name `Charles` and card number `40691`. Feel free to use
 
 Elaborated usage can be found in the Demo part in [Sprint 3 Report](https://github.sydney.edu.au/SOFT2412-2020S2/R18B-Group5-VendingMachine/blob/master/Sprint3Report.md#demo).
 
+Demo Video can be found in [here](https://drive.google.com/file/d/1oJh5g9-3mkF9J4Bx8wsgP_gNsFWXzBlz/view?usp=sharing).
+

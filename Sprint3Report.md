@@ -2,35 +2,69 @@
   - [Roles](#roles)
   - [Individual Contribution](#individual-contribution)
 - [Agile Development Tools and Practices](#agile-development-tools-and-practices)
+  - [Github](#github)
+    - [Workflow](#workflow)
+    - [Branch](#branch)
+      - [Issues of Branches](#issues-of-branches)
+    - [Pull Request](#pull-request)
+      - [Pull request history](#pull-request-history)
+    - [Conflict Issues History](#conflict-issues-history)
+    - [Release History](#release-history)
+  - [Gradle](#gradle)
+    - [build.gradle File](#buildgradle-file)
+    - [Gradle command](#gradle-command)
+  - [JUnit and Jacoco](#junit-and-jacoco)
+    - [How to Check Test Report](#how-to-check-test-report)
+      - [JUnit](#junit)
+      - [Jacoco](#jacoco)
+    - [Quality of Testing](#quality-of-testing)
+  - [Jenkins](#jenkins)
+    - [Initial Setup](#initial-setup)
+      - [Plugins in Jenkins](#plugins-in-jenkins)
+      - [Setup GitHub in Jenkins](#setup-github-in-jenkins)
+      - [Setup Gradle in Jenkins](#setup-gradle-in-jenkins)
+      - [Setup JUnit in Jenkins](#setup-junit-in-jenkins)
+      - [Setup Jacoco in Jenkins](#setup-jacoco-in-jenkins)
+      - [Host Jenkins on internet and Connect to Github](#host-jenkins-on-internet-and-connect-to-github)
+    - [Outstanding Example](#outstanding-example)
+      - [Failure Build Example](#failure-build-example)
+      - [Success Build Example](#success-build-example)
+    - [Adopted CI Practices](#adopted-ci-practices)
 - [Application Development](#application-development)
   - [UML Class Diagram](#uml-class-diagram)
   - [Demo](#demo)
     - [Sign In or Sign Up](#sign-in-or-sign-up)
-    - [Display Product](#display-product)
-    - [Display cart](#display-cart)
-    - [Add to Cart](#add-to-cart)
-    - [Remove Cart](#remove-cart)
-    - [Checkout Window](#checkout-window)
-    - [Card Payment](#card-payment)
-    - [Check card](#check-card)
-    - [Cash Payment](#cash-payment)
-    - [Set Cash to Pay](#set-cash-to-pay)
-    - [Pay](#pay)
-    - [Display the latest 5 Products](#display-the-latest-5-products)
-    - [Display Sold History](#display-sold-history)
-    - [Display Transaction History](#display-transaction-history)
-    - [Display Cancelled History](#display-cancelled-history)
-    - [Generate Report](#generate-report)
-    - [Display Users](#display-users)
-    - [Add Users](#add-users)
-    - [Change Users](#change-users)
-    - [Remove Users](#remove-users)
-    - [Display Cash](#display-cash)
-    - [Change Cash](#change-cash)
-    - [Manage Product](#manage-product)
-    - [Add Product](#add-product)
-    - [Change Product](#change-product)
-    - [Remove Product](#remove-product)
+    - [Shopping Cart](#shopping-cart)
+      - [Display Product](#display-product)
+      - [Display cart](#display-cart)
+      - [Add to Cart](#add-to-cart)
+      - [Remove Cart](#remove-cart)
+    - [Purchase Item](#purchase-item)
+      - [Checkout Window](#checkout-window)
+      - [Card Payment](#card-payment)
+      - [Check card](#check-card)
+      - [Cash Payment](#cash-payment)
+      - [Set Cash to Pay](#set-cash-to-pay)
+      - [Pay](#pay)
+    - [Display Information](#display-information)
+      - [Display the latest 5 Products](#display-the-latest-5-products)
+      - [Display Sold History](#display-sold-history)
+      - [Display Transaction History](#display-transaction-history)
+      - [Display Cancelled History](#display-cancelled-history)
+      - [Generate Report](#generate-report)
+    - [User Management](#user-management)
+      - [Display Users](#display-users)
+      - [Add Users](#add-users)
+      - [Change Users](#change-users)
+      - [Remove Users](#remove-users)
+    - [Cash Management](#cash-management)
+      - [Display Cash](#display-cash)
+      - [Change Cash](#change-cash)
+    - [Product Management](#product-management)
+      - [Display Product](#display-product-1)
+      - [Add Product](#add-product)
+      - [Change Product](#change-product)
+      - [Remove Product](#remove-product)
 - [Sprint Artifacts](#sprint-artifacts)
   - [Product Backlog](#product-backlog)
   - [Sprint Goal](#sprint-goal)
@@ -106,8 +140,6 @@
    - Prompt message for insufficient payment amount
    - Prompt message for insufficient change in system amount
    - Prompt message for the system does not have correct change combination
-
-# Agile Development Tools and Practices
 
 # Agile Development Tools and Practices
 
@@ -237,17 +269,21 @@ Regarding the issues of `branch`, because we have wrote all the process of `bran
 
 ### Release History
 
-![CleanShot 2020-11-05 at 20.34.32@2x](https://i.loli.net/2020/11/05/Q2K8Px1IoRGmJte.png)
+<img src='https://i.loli.net/2020/11/20/NJ9GYfHdZpgctK4.png' alt='NJ9GYfHdZpgctK4'/>
 
-This is the version that's submmitted as the product at the end of Sprint 1.
+This is the version that's submitted as the product at the end of Sprint 3.
 
-You can use the account `blan` with password `123` to test functionalities.
+You can use the following information to test functionality.
+- Account `blan` with password `123`
+- Credit card `Charles` with number `40691`
 
-Note if you run tests, the database will be restored to the initial state and all changed you made will lose (Note `gradle build` will run the tests automatically).
+**NOTE: If you run the test, it will restore all resources to the initial state for a uniform testing environment. All changes on users, cashes or products will lose.**
+
+**NOTE: `gradle build` will run the tests automatically. If you want to build the program again but want to keep the resources, please use `gradle build -x test` to exclude testing. Or if you just want to run the program again, please use `gradle run`.**
 
 ## Gradle
 
-## build.gradle File
+### build.gradle File
 
 We have following content in this file
 
@@ -295,7 +331,7 @@ We define the main class `VendingMachine.App` for the application
 
   ![CleanShot 2020-11-05 at 13.46.21@2x](https://i.loli.net/2020/11/05/K7D1pdkN4QmBzXv.png)
 
-## Gradle command
+### Gradle command
 
 - `gradle clean`: clean the output of last build
 
@@ -492,6 +528,8 @@ We maintained two projects on Jenkins, one is for master branch only, and the ot
 
 ## Demo
 
+**Notes: Demo Video can be found in [here](https://drive.google.com/file/d/1oJh5g9-3mkF9J4Bx8wsgP_gNsFWXzBlz/view?usp=sharing)**
+
 `blan` is an owner. Its password is `123`. Feel free to use this account to test functionalities.
 
 One of credit cards has name `Charles` and card number `40691`. Feel free to use this card to test functionalities.
@@ -516,25 +554,27 @@ When it sign in with wrong username or password, it will display an alert to not
 
 <img src='https://i.loli.net/2020/11/05/RsQorqTLCEMVWZa.png' alt='RsQorqTLCEMVWZa'/>
 
-### Display Product
+### Shopping Cart
+
+#### Display Product
 
 The Product table on default page is available for every user include all the products that the machine has.
 
 ![Screen Shot 2020-11-19 at 9.25.53 PM.png](https://i.loli.net/2020/11/19/1wu3kqCRMzKDQg8.png)
 
-### Display cart
+#### Display cart
 
 The cart display on product table on default page is available for every user include all the products were selected by current user.
 
 ![Screen Shot 2020-11-19 at 9.23.17 PM.png](https://i.loli.net/2020/11/19/PNF53hZKXsVxajG.png)
 
-### Add to Cart
+#### Add to Cart
 
 The user can select which product he want to add to cart, then click the row which the product is, after that this product's name will be automatically filled in the item name field, then choose the quantity he want. After that click on `Set Qty in cart` button. The cart table will update accordingly.
 
 ![Screen Shot 2020-11-19 at 9.37.05 PM.png](https://i.loli.net/2020/11/19/V6NQiOWn28kAwJL.png)
 
-### Remove Cart
+#### Remove Cart
 
 ![Screen Shot 2020-11-19 at 9.39.47 PM.png](https://i.loli.net/2020/11/19/KMJj852vYg7hbCo.png)
 
@@ -542,7 +582,9 @@ The user can select which product he want to remove, then click the row which th
 
 ![Screen Shot 2020-11-19 at 9.40.26 PM.png](https://i.loli.net/2020/11/19/ExUvHzhpyrjlksm.png)
 
-### Checkout Window
+### Purchase Item
+
+#### Checkout Window
 
 The Checkout window is available for every users. If current cart table has nothing, after click `Checkout` button, it will display an alert to notify current user have no item to purchase.
 
@@ -552,7 +594,7 @@ After click `Checkout` button, there is a window display items' amount in cart. 
 
 ![Screen Shot 2020-11-19 at 9.59.17 PM.png](https://i.loli.net/2020/11/19/YmyXugcSDkZnzMd.png)
 
-### Card Payment
+#### Card Payment
 
 After click the `Card` button, it need user input card name and number.  Besides, there are two more operations, check and pay. And in the upper left corner there is 120s countdown, when it comes to 0, it will automatically back to default window. And in the lower left corner, user can tick to save the card information or not.
 
@@ -568,7 +610,7 @@ If user save the card before, System will automatically filled the information.
 
 After click the `Cancel` button, it will back to default window and record this transaction to be cancelled with reason "user cancelled".
 
-### Check card
+#### Check card
 
 After click the `check` button, if the card information is incorrect, it will display an alert notify current user the card is wrong. If the information is correct, this transaction is succeeded.
 
@@ -582,13 +624,13 @@ If the user tick the `Save card` and click `Check` button. if user is anonymous,
 
 ![Screen Shot 2020-11-20 at 1.24.01 AM.png](https://i.loli.net/2020/11/20/TBa8CVXLJlFpQgx.png)
 
-### Cash Payment
+#### Cash Payment
 
 After click the `Cash` button, there is a table include the cash's value and number.  Besides, there are two more operations, set, pay and cancel. In addition, in the upper left corner there is 120s countdown, when it comes to 0, it will automatically back to default window, and record this transaction to be cancelled with reason "timeout".
 
 ![Screen Shot 2020-11-19 at 10.02.02 PM.png](https://i.loli.net/2020/11/19/hUwDjcamTgzvPL1.png)
 
-### Set Cash to Pay
+#### Set Cash to Pay
 
 ![Screen Shot 2020-11-19 at 10.04.15 PM.png](https://i.loli.net/2020/11/19/pEbWNTgs1zwnFZv.png)
 
@@ -596,7 +638,7 @@ The user can input cash type and its amount. Then click the`Set` button, after t
 
 ![Screen Shot 2020-11-19 at 10.04.23 PM.png](https://i.loli.net/2020/11/19/RXM7ZjG4A8J3viY.png)
 
-### Pay
+#### Pay
 
 If user didn't add any cash. It will display an alert to notify current user doesn't pay any cashes.
 
@@ -610,13 +652,15 @@ If user didn't pay enough money to purchase, it will automatically cancelled thi
 
 If vending machine does not have enough money to give back change, it will also automatically cancelled this transaction with reason "no available changes".
 
-### Display the latest 5 Products
+### Display Information
+
+#### Display the latest 5 Products
 
 The latest bought items table on default page is available for every user. If you have login, it will show your purchase history, else it will show the anonymous' last 5 bought items.
 
 ![Screen Shot 2020-11-19 at 11.06.53 PM.png](https://i.loli.net/2020/11/19/kJ54rwRtx3E2cDe.png)
 
-### Display Sold History
+#### Display Sold History
 
 The sold history window is only available for owner and seller users. If current user is not them, it will display an alert to notify current user have no access to this feature.
 
@@ -626,7 +670,7 @@ After click the `Sold History` button. There is a table of all the product that 
 
 ![Screen Shot 2020-11-20 at 12.02.14 AM.png](https://i.loli.net/2020/11/20/BWj7oeMc9y1gDYa.png)
 
-### Display Transaction History
+#### Display Transaction History
 
 The  Transaction History  window is only available for owner and cashier users. If current user is not owner or cashier, it will display an alert to notify current user have no access to this feature.
 
@@ -640,7 +684,7 @@ The owner can select which history he want to view, then then click on `View det
 
 ![Screen Shot 2020-11-20 at 2.33.49 PM.png](https://i.loli.net/2020/11/20/QkTlZ32IC8px5Hu.png)
 
-### Display Cancelled History
+#### Display Cancelled History
 
 The user management window is only available for owner users. If current user is not owner, it will display an alert to notify current user have no access to this feature.
 
@@ -650,7 +694,7 @@ After click the `Cancelled History` button. There is a table of cancelled transa
 
 ![Screen Shot 2020-11-20 at 2.50.26 PM.png](https://i.loli.net/2020/11/20/53AG9vUu2SVNKPO.png)
 
-### Generate Report
+#### Generate Report
 
 ![Screen Shot 2020-11-20 at 1.12.40 AM.png](https://i.loli.net/2020/11/20/nbldTSsXNvCmL3q.png)
 
@@ -658,7 +702,9 @@ After click the `Generae Report` button. There are some operations which can gen
 
 ![Screen Shot 2020-11-20 at 2.34.53 PM.png](https://i.loli.net/2020/11/20/XUSivCYakFQ8WNz.png)
 
-### Display Users
+### User Management
+
+#### Display Users
 
 The user management window is only available for owner users. If current user is not owner, it will display an alert to notify current user have no access to this feature.
 
@@ -668,7 +714,7 @@ After click the `Manage User` button. There is a table of all the users that hav
 
 <a href="https://sm.ms/image/uVJlwexs8d5XNrR" target="_blank"><img src="https://i.loli.net/2020/11/12/uVJlwexs8d5XNrR.png" ></a>
 
-### Add Users
+#### Add Users
 
 <a href="https://sm.ms/image/fr5Uy8JKEpTtXAS" target="_blank"><img src="https://i.loli.net/2020/11/12/fr5Uy8JKEpTtXAS.png" ></a>
 
@@ -680,13 +726,13 @@ If owner does not input full relevant information then click on `Add` button, it
 
 ![Screen Shot 2020-11-20 at 2.38.21 PM.png](https://i.loli.net/2020/11/20/9reMsNWm1GoULO5.png)
 
-### Change Users
+#### Change Users
 
 <a href="https://sm.ms/image/hELAuvcTClirbmQ" target="_blank"><img src="https://i.loli.net/2020/11/12/hELAuvcTClirbmQ.png" ></a>
 
 The owner first need to select which users he want to change, then click on the row where the user is, then the relevant information of this user will be automatically filled in the information field, then edit the username, password or user which users want to be change, then click on `Change` button. The table will update accordingly.
 
-### Remove Users
+#### Remove Users
 
 <img src="https://i.loli.net/2020/11/12/hELAuvcTClirbmQ.png" >
 
@@ -694,7 +740,9 @@ The owner can select which users he want to remove, then click the row which the
 
 ![Screen Shot 2020-11-20 at 2.42.57 PM.png](https://i.loli.net/2020/11/20/e8Ri71Lqu49lz2h.png)
 
-### Display Cash
+### Cash Management
+
+#### Display Cash
 
 The cash management window is only available for owner and cashier users. If current user is not them, it will display an alert to notify current user have no access to this feature.
 
@@ -704,7 +752,7 @@ After click the `Manage Cash` button, there is a table has all types of cash exi
 
 <a href="https://sm.ms/image/uWpcfbNvVwKgyFC" target="_blank"><img src="https://i.loli.net/2020/11/12/uWpcfbNvVwKgyFC.png" ></a>
 
-### Change Cash
+#### Change Cash
 
 <a href="https://sm.ms/image/5GQh6q7bvIAKiSo" target="_blank"><img src="https://i.loli.net/2020/11/12/5GQh6q7bvIAKiSo.png" ></a>
 
@@ -716,7 +764,9 @@ If the user input symbol or letters. An alert box will notify it  is fail to cha
 
 ![Screen Shot 2020-11-12 at 7.30.26 PM.png](https://i.loli.net/2020/11/12/MvQ6oEKbcSIWXP3.png)
 
-### Manage Product
+### Product Management
+
+#### Display Product
 
 The product management window is only available for owner and seller users. If current user is not them, it will display an alert to notify current user have no access to this feature.
 
@@ -726,7 +776,7 @@ After click the `Manage Product` button, there is a table of all the products th
 
 <a href="https://sm.ms/image/eKgdJUSvxuiNYj9" target="_blank"><img src="https://i.loli.net/2020/11/12/eKgdJUSvxuiNYj9.png" ></a>
 
-### Add Product
+#### Add Product
 
 <a href="https://sm.ms/image/3a4CNjrhck5Et8q" target="_blank"><img src="https://i.loli.net/2020/11/12/3a4CNjrhck5Et8q.png" ></a>
 
@@ -736,7 +786,7 @@ The user can input new code, Name, Price and Quantity, then click on `Add` butto
 
 If users input the repeated code or name then click on `Add` button, it will display an alert to notify current user the product exists in the system.![Screen Shot 2020-11-12 at 7.34.17 PM.png](https://i.loli.net/2020/11/12/DdxVQ1iSBzjKyw6.png)
 
-### Change Product
+#### Change Product
 
 <a href="https://sm.ms/image/Cl2ULbuFWf8KHx6" target="_blank"><img src="https://i.loli.net/2020/11/12/Cl2ULbuFWf8KHx6.png" ></a>
 
@@ -748,7 +798,7 @@ If user input invalid price like lettes or symbols. An alert box will notify it 
 
 ![Screen Shot 2020-11-12 at 7.45.52 PM.png](https://i.loli.net/2020/11/12/BLDsrO2ANq9FVit.png)
 
-### Remove Product
+#### Remove Product
 
 ![截屏2020-11-12 下午12.17.26.png](https://i.loli.net/2020/11/12/OFZ1TarV2HNbJ4d.png)
 
@@ -780,8 +830,6 @@ If you can't see this table clearly, please refer to this [link](https://docs.go
 ## User Stories and Sprint Backlog
 
 The sprint backlog contains a set of items selected for this sprint. It is considered as a plan for delivering the product increment and realize the sprint goal. It is visible to anyone and to be added or modified by the development team.
-
-<mark>Review</mark>
 
 <img src='https://i.loli.net/2020/11/19/X251LGUxrkCcl38.png' alt='X251LGUxrkCcl38'/>
 
@@ -880,8 +928,6 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
 
 ## Sprint Review
 
-<mark>Review</mark>
-
 - What has been done?
    - Continues fix code structure for `Transaction`
    - Able to display transaction history table
@@ -897,8 +943,6 @@ The sprint backlog contains a set of items selected for this sprint. It is consi
   - All the tasks have been completed on time.
 
 ## Sprint Retrospective
-
-<mark>Review</mark>
 
 - Date: 20th November
 - What went well during the Sprint?
