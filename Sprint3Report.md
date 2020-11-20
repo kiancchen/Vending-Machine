@@ -123,7 +123,7 @@ Same content in Sprint 1 Report, can be accessed at this [link](https://github.s
 
 `blan` is an owner. Its password is `123`. Feel free to use this account to test functionalities.
 
-Here we are using the code with tag `1.1` for demonstration which you can see on Release page on Github.
+Here we are using the code with tag `2.0` for demonstration which you can see on Release page on Github.
 
 ### Sign In or Sign Up
 
