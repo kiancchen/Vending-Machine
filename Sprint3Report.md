@@ -117,11 +117,11 @@ Same content in Sprint 1 Report, can be accessed at this [link](https://github.s
 
 <img src='https://i.loli.net/2020/11/19/fKFEQcCzYepHn4L.png' alt='fKFEQcCzYepHn4L'/>
 
-
-
 ## Demo
 
 `blan` is an owner. Its password is `123`. Feel free to use this account to test functionalities.
+
+One of credit cards has name `Charles` and card number `40691`. Feel free to use this card to test functionalities.
 
 Here we are using the code with tag `2.0` for demonstration which you can see on Release page on Github.
 
@@ -136,6 +136,8 @@ After click on `Account` button, it display a window to sign in or sign up.
 <img src='https://i.loli.net/2020/11/05/EGFWUjfksDiKBrM.png' alt='EGFWUjfksDiKBrM'/>
 
 When it sign in with correct username and password the main window will display corresponding username and its type on the top right corner, as well as the text on button will change to `Logout` instead of `Account`.
+
+<a href="https://sm.ms/image/ig7YMaljtQCvZez" target="_blank"><img src="https://i.loli.net/2020/11/20/ig7YMaljtQCvZez.png" ></a>
 
 When it sign in with wrong username or password, it will display an alert to notify user it has wrong username or password.
 
@@ -173,11 +175,9 @@ The Checkout window is available for every users. If current cart table has noth
 
 ![Screen Shot 2020-11-19 at 9.58.21 PM.png](https://i.loli.net/2020/11/19/Rbx2XtHATY6Gfsw.png)
 
-After click `Checkout` button, there is a window display items' amount in cart. Besides, there are three more operations, card, cash or cancel. And in the middle there is 120s countdown, when it comes to 0, it will automatically back to default window.
+After click `Checkout` button, there is a window display items' amount in cart. Besides, there are three more operations, card, cash or cancel. And in the middle there is 120s countdown, when it comes to 0, it will automatically back to default window, and record this transaction to be cancelled with reason "timeout".
 
 ![Screen Shot 2020-11-19 at 9.59.17 PM.png](https://i.loli.net/2020/11/19/YmyXugcSDkZnzMd.png)
-
-
 
 ### Card Payment
 
@@ -193,21 +193,17 @@ If user save the card before, System will automatically filled the information.
 
 ![Screen Shot 2020-11-20 at 3.00.37 PM.png](https://i.loli.net/2020/11/20/DejKxI4AXYvU6W9.png)
 
-
-
-
-
-After click the `Cancel` button, it will back to default window.
+After click the `Cancel` button, it will back to default window and record this transaction to be cancelled with reason "user cancelled".
 
 ### Check card
 
-After click the `check` button, if the card information is not correct, it will display an alert notify current user the card is wrong, when the information is correct. it will back to default window.
+After click the `check` button, if the card information is incorrect, it will display an alert notify current user the card is wrong. If the information is correct, this transaction is succeeded.
 
 ![Screen Shot 2020-11-20 at 3.06.00 PM.png](https://i.loli.net/2020/11/20/EL5eHJ4KOFqbMtv.png)
 
 ![Screen Shot 2020-11-19 at 10.02.02 PM.png](https://i.loli.net/2020/11/20/oGTPhIwsXMNfWr8.png)
 
-If the user tick the `Save card` and click `Check` button. if user is anoymous, it will display an alert to notify user is anoymous which does not right to save the card.
+If the user tick the `Save card` and click `Check` button. if user is anonymous, it will display an alert to notify user is anonymous which does not right to save the card.
 
 ![Screen Shot 2020-11-20 at 3.00.37 PM.png](https://i.loli.net/2020/11/20/rSQKeTAFvxk3JWZ.png)
 
@@ -215,33 +211,35 @@ If the user tick the `Save card` and click `Check` button. if user is anoymous, 
 
 ### Cash Payment
 
-After click the `Cash` button, there is a table include the cash's value and number.  Besides, there are two more operations, set,pay and cancel. And in the upper left corner there is 120s countdown, when it comes to 0, it will automatically back to default window.
+After click the `Cash` button, there is a table include the cash's value and number.  Besides, there are two more operations, set, pay and cancel. In addition, in the upper left corner there is 120s countdown, when it comes to 0, it will automatically back to default window, and record this transaction to be cancelled with reason "timeout".
 
 ![Screen Shot 2020-11-19 at 10.02.02 PM.png](https://i.loli.net/2020/11/19/hUwDjcamTgzvPL1.png)
-
-
 
 ### Set Cash to Pay
 
 ![Screen Shot 2020-11-19 at 10.04.15 PM.png](https://i.loli.net/2020/11/19/pEbWNTgs1zwnFZv.png)
 
-The user can input cashtype and amount. Then click the`Set` button, after that the table will update accordingly.
+The user can input cash type and its amount. Then click the`Set` button, after that the table will update accordingly.
 
 ![Screen Shot 2020-11-19 at 10.04.23 PM.png](https://i.loli.net/2020/11/19/RXM7ZjG4A8J3viY.png)
 
 ### Pay
 
- If user didn't add any cash. It will display an alert to notify current user doesn't pay any cashes.
+If user didn't add any cash. It will display an alert to notify current user doesn't pay any cashes.
 
 ![Screen Shot 2020-11-12 at 7.27.54 PM.png](https://i.loli.net/2020/11/12/zBiTOxtRXC4G75V.png)
 
-After click the `Pay` button. There is a table of change include different values and amount.  And the cash in the machine will be reduced accordingly.
+After click the `Pay` button. There is a table of change include different values and amount. The cash in the machine also will be reduced accordingly.
 
 ![32131605174938_.pic.jpg](https://i.loli.net/2020/11/12/yDHv5XOYoZzQKgG.png)
 
+If user didn't pay enough money to purchase, it will automatically cancelled this transaction with reason "no enough money paid".
+
+If vending machine does not have enough money to give back change, it will also automatically cancelled this transaction with reason "no available changes".
+
 ### Display the latest 5 Products
 
-The latest bought items table on default page is available for every user. If you have login, it will show your purchase history, else it will show the anonymous's last 5 bought items.
+The latest bought items table on default page is available for every user. If you have login, it will show your purchase history, else it will show the anonymous' last 5 bought items.
 
 ![Screen Shot 2020-11-19 at 11.06.53 PM.png](https://i.loli.net/2020/11/19/kJ54rwRtx3E2cDe.png)
 
@@ -251,13 +249,13 @@ The sold history window is only available for owner and seller users. If current
 
 ![截屏2020-11-12 下午3.03.15.png]( https://i.loli.net/2020/11/19/EerYG6ysmFgoq1W.png)
 
-After click the `Sold History` button. There is a table of all the product that have been sold in the system. 
+After click the `Sold History` button. There is a table of all the product that have been sold in the system.
 
 ![Screen Shot 2020-11-20 at 12.02.14 AM.png](https://i.loli.net/2020/11/20/BWj7oeMc9y1gDYa.png)
 
-### Display Transaction History 
+### Display Transaction History
 
-The  Transaction History  window is only available for owner and seller users. If current user is not owner or seller, it will display an alert to notify current user have no access to this feature.
+The  Transaction History  window is only available for owner and cashier users. If current user is not owner or cashier, it will display an alert to notify current user have no access to this feature.
 
 ![截屏2020-11-12 下午3.03.15.png]( https://i.loli.net/2020/11/19/EerYG6ysmFgoq1W.png)
 
@@ -265,7 +263,7 @@ After click the `Transaction History` button. There is a table of transactions t
 
 ![Screen Shot 2020-11-20 at 2.33.43 PM.png](https://i.loli.net/2020/11/20/lNa1zkdXSg6Eu4H.png)
 
-The owner can select which history he want to remove, then click the row which the history is, then click on `View details` button. There is a table of which products have been bought in this transaction include name, category, price and quantity.
+The owner can select which history he want to view, then then click on `View details` button. There is a table of all products sold in this transaction include name, category, price and quantity.
 
 ![Screen Shot 2020-11-20 at 2.33.49 PM.png](https://i.loli.net/2020/11/20/QkTlZ32IC8px5Hu.png)
 
@@ -286,8 +284,6 @@ After click the `Cancelled History` button. There is a table of cancelled transa
 After click the `Generae Report` button. There are some operations which can generate different report . After click these buttons, a new folder called `report` will be created, and then according to different permissions, different csv reports can be generated in the `report` folder.
 
 ![Screen Shot 2020-11-20 at 2.34.53 PM.png](https://i.loli.net/2020/11/20/XUSivCYakFQ8WNz.png)
-
-
 
 ### Display Users
 
@@ -310,8 +306,6 @@ The owner can input new username, password and user type, then click on `Add` bu
 If owner does not input full relevant information then click on `Add` button, it will display an alert to notify current owner to fill in the missing information.
 
 ![Screen Shot 2020-11-20 at 2.38.21 PM.png](https://i.loli.net/2020/11/20/9reMsNWm1GoULO5.png)
-
-
 
 ### Change Users
 
@@ -358,8 +352,6 @@ The product management window is only available for owner and seller users. If c
 After click the `Manage Product` button, there is a table of all the products that the machine has. Besides, there are three more operations, add or change or remove products.
 
 <a href="https://sm.ms/image/eKgdJUSvxuiNYj9" target="_blank"><img src="https://i.loli.net/2020/11/12/eKgdJUSvxuiNYj9.png" ></a>
-
-
 
 ### Add Product
 
