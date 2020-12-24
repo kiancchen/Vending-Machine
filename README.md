@@ -14,11 +14,11 @@ You can use `gradle build` first to build the program. After that, you can use `
 
 I'm working on using MySQL to manage database instead of csv.
 
-[x] Cash system can support MySQL
+- [x] Cash system can support MySQL
 
-[ ] Product System
+- [ ] Product System
 
-[ ] User System
+- [ ] User System
 
 # Usage
 
