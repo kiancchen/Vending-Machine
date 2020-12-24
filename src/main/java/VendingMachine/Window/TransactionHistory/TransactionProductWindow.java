@@ -30,7 +30,7 @@ public class TransactionProductWindow {
         table.getItems().clear();
         selected.getShoppingList().forEach((k, v) -> table.getItems()
                 .add(new TransactionProductTableEntry(k.getName(), k.getCategory().toString(),
-                Double.toString(k.getPrice()), Integer.toString(k.getSold()))));
+                        Double.toString(k.getPrice()), Integer.toString(k.getSold()))));
     }
 
     private void initTable() {

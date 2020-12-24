@@ -10,7 +10,7 @@ public class ProductProcessor {
     private static ProductProcessor productProcessor;
     private final Map<Integer, Product> productMap;
 
-    private ProductProcessor() throws IOException {
+    private ProductProcessor() {
         productMap = DatabaseHandler.loadProductData();
     }
 
@@ -18,7 +18,7 @@ public class ProductProcessor {
         return productProcessor;
     }
 
-    public static ProductProcessor load() throws IOException {
+    public static ProductProcessor load() {
         productProcessor = new ProductProcessor();
         return productProcessor;
     }
@@ -38,7 +38,8 @@ public class ProductProcessor {
             }
         }
 
-        Product product = new Product(code, Product.Category.valueOf(category), name, price, stock);
+        Product product = new Product(code, Product.Category.valueOf(category), name, price,
+                stock, 0);
         productMap.put(product.getId(), product);
         return true;
     }

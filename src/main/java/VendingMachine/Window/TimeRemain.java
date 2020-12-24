@@ -24,6 +24,10 @@ public class TimeRemain {
         initTime(x, y);
     }
 
+    public void stopTime() {
+        timeline.stop();
+    }
+
     private void initTime(int x, int y) {
         Text label = new Text();
         label.setLayoutY(y);
@@ -42,7 +46,7 @@ public class TimeRemain {
     private void timeUpdate(IntegerProperty i, Text label) {
         i.set(i.get() - 1);
         label.setText("Time remaining: " + i.get() + " seconds");
-        if(i.get() < 0) {
+        if (i.get() < 0) {
             try {
                 UserProcessor.getInstance().getCurrentUser().cancelShopping("timeout.");
             } catch (Exception e) {
@@ -53,9 +57,5 @@ public class TimeRemain {
             timeline.stop();
             MainWindow.getInstance().update();
         }
-    }
-
-    public void stopTime() {
-        timeline.stop();
     }
 }

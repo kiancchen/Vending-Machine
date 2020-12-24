@@ -38,6 +38,7 @@ public class App extends Application {
 
     @Override
     public void stop() throws Exception {
+        DatabaseHandler.saveCashData(CashProcessor.getInstance().getCashMap());
         DatabaseHandler.saveProductData(ProductProcessor.getInstance().getProductMap());
         DatabaseHandler.saveUserData(UserProcessor.getInstance().getUsers());
         DatabaseHandler.saveTransactionData(Transaction.getTransactionList());

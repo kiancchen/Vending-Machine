@@ -112,7 +112,7 @@ public class Transaction {
             product.sold(soldNum);
             product.setStock(product.getStock() - soldNum);
         });
-        paidCashes.forEach((value, num)-> CashProcessor.getInstance().setCashNumber(value,
+        paidCashes.forEach((value, num) -> CashProcessor.getInstance().setCashNumber(value,
                 CashProcessor.getInstance().getCashMap().get(value) + num));
         return 0;
     }

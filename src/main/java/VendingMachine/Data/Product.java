@@ -12,23 +12,26 @@ public class Product {
     private int stock;
     private int sold;
 
-    public Product() {
-        this.category = null;
-        this.name = "";
-        this.price = -1;
-        this.stock = -1;
-        this.code = "";
-        this.id = staticCode++;
-        this.sold = 0;
-    }
-
-    public Product(String code, Category category, String name, double price, int stock) {
+    public Product(String code, Category category, String name, double price, int stock, int sold) {
         this.category = category;
         this.name = name;
         this.price = price;
         this.stock = stock;
         this.id = staticCode++;
         this.code = code;
+        this.sold = sold;
+    }
+
+    public Product(int id, String code, Category category, String name, double price, int stock,
+                   int sold) {
+        this.id = id;
+        staticCode++;
+        this.category = category;
+        this.name = name;
+        this.price = price;
+        this.stock = stock;
+        this.code = code;
+        this.sold = sold;
     }
 
     public void sold(int sold) {

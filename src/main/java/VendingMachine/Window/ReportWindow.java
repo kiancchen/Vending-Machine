@@ -215,7 +215,7 @@ public class ReportWindow {
             csvWriter.append("\n");
 
             List<Transaction> transactionList = Transaction.getTransactionList();
-            for (Transaction t: transactionList) {
+            for (Transaction t : transactionList) {
                 if (t.getStatus() != Transaction.Status.PAID) {
                     continue;
                 }
@@ -274,7 +274,7 @@ public class ReportWindow {
             csvWriter.append("\n");
 
             List<Transaction> transactionList = Transaction.getTransactionList();
-            for (Transaction t: transactionList) {
+            for (Transaction t : transactionList) {
                 if (t.getStatus() == Transaction.Status.CANCELLED) {
                     DateTimeFormatter fmt = DateTimeFormatter.ofPattern("MM-dd HH:mm");
                     String date = t.getDate().format(fmt);

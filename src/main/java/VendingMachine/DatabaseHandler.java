@@ -19,8 +19,6 @@ import java.util.Map;
 public class DatabaseHandler {
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private static final File userFile = new File("src/main/resources/user.json");
-    private static final File cashFile = new File("src/main/resources/cash.json");
-    private static final File productFile = new File("src/main/resources/product.json");
     private static final File cardFile = new File("src/main/resources/credit_cards.json");
     private static final File tranFile = new File("src/main/resources/transactions.json");
     private static Statement statement;
@@ -70,41 +68,64 @@ public class DatabaseHandler {
         return null;
     }
 
-    public static void executeUpdate(String sql){
-        try {
-            statement.executeUpdate(sql);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+    public static void saveCashData(Map<Double, Integer> cashMap) {
+        cashMap.forEach((value, number) -> {
+            try {
+                PreparedStatement stmt = connection.prepareStatement(
+                        "UPDATE Cash " +
+                                "Set number=? " +
+                                "WHERE value=?");
+                stmt.setInt(1, number);
+                stmt.setDouble(2, value);
+                stmt.executeUpdate();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
     }
 
-    public static PreparedStatement getPreparedStatement(String sql){
+    public static void saveProductData(Map<Integer, Product> productMap) {
+        productMap.forEach((key, value) -> {
+            try {
+                PreparedStatement preparedStatement = connection.prepareStatement(
+                        "UPDATE Product " +
+                                "SET code=?, category=?, name=?, price=?, stock=?, sold=? " +
+                                "where id=?");
+                preparedStatement.setString(1, value.getCode());
+                preparedStatement.setString(2, value.getCategory().toString());
+                preparedStatement.setString(3, value.getName());
+                preparedStatement.setDouble(4, value.getPrice());
+                preparedStatement.setInt(5, value.getStock());
+                preparedStatement.setInt(6, value.getSold());
+                preparedStatement.setInt(7, value.getId());
+                preparedStatement.executeUpdate();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+        });
+
+    }
+
+    public static Map<Integer, Product> loadProductData() {
         try {
-            return connection.prepareStatement(sql);
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM Product");
+            Map<Integer, Product> productMap = new HashMap<>();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String code = resultSet.getString("code");
+                Product.Category category = Product.Category.valueOf(resultSet.getString("category"));
+                String name = resultSet.getString("name");
+                double price = resultSet.getDouble("price");
+                int stock = resultSet.getInt("stock");
+                int sold = resultSet.getInt("sold");
+
+                productMap.put(id, new Product(id, code, category, name, price, stock, sold));
+            }
+            return productMap;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
         return null;
-    }
-
-
-
-    public static void saveProductData(Map<Integer, Product> productMap) throws IOException {
-        FileWriter fileWriter = new FileWriter(productFile);
-        JsonWriter jsonWriter = new JsonWriter(fileWriter);
-        jsonWriter.setIndent(" ");
-        gson.toJson(productMap, new TypeToken<Map<Integer, Product>>() {}.getType(), jsonWriter);
-        jsonWriter.flush();
-        jsonWriter.close();
-    }
-
-    public static Map<Integer, Product> loadProductData() throws IOException {
-        InputStream input = new FileInputStream(productFile);
-        JsonReader reader = new JsonReader(new InputStreamReader(input));
-        Map<Integer, Product> products = gson.fromJson(reader,
-                new TypeToken<Map<Integer, Product>>() {}.getType());
-        reader.close();
-        return products;
     }
 
     public static List<CreditCard> loadCreditCards() throws IOException {

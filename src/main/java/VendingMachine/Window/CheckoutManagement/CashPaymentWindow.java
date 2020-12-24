@@ -141,7 +141,7 @@ public class CashPaymentWindow {
     private void CancelOrReturn(String reason) {
         ButtonType cancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
         ButtonType returN = new ButtonType("Return", ButtonBar.ButtonData.OK_DONE);
-        Alert alert = new Alert(Alert.AlertType.ERROR, reason+"Do you want to cancel this payment?", cancel, returN);
+        Alert alert = new Alert(Alert.AlertType.ERROR, reason + "Do you want to cancel this payment?", cancel, returN);
         alert.setResizable(true);
         alert.getDialogPane().setPrefSize(400, 150);
         alert.showAndWait();
@@ -152,11 +152,10 @@ public class CashPaymentWindow {
             UserProcessor.getInstance().logoutUser();
             MainWindow.getInstance().update();
             time.stopTime();
-        } else if(alert.getResult() == returN) {
+        } else if (alert.getResult() == returN) {
             alert.close();
         }
     }
-
 
 
     private void setAction() {

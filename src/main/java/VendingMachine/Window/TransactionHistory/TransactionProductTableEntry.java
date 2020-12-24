@@ -7,7 +7,7 @@ public class TransactionProductTableEntry {
     private String category;
     private String quantity;
 
-    public TransactionProductTableEntry(String name,String category , String price, String quantity) {
+    public TransactionProductTableEntry(String name, String category, String price, String quantity) {
         this.name = name;
         this.price = price;
         this.category = category;

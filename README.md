@@ -20,7 +20,11 @@ I'm working on using MySQL to manage database instead of csv.
 
 - [x] Cash system can support MySQL
 
-- [ ] Product System
+- [x] Product System
+
+- [ ] Card System
+
+- [ ] Transaction System
 
 - [ ] User System
 

@@ -2,16 +2,13 @@ package VendingMachine.Processor;
 
 import VendingMachine.DatabaseHandler;
 
-import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.*;
 
 public class CashProcessor {
     private static CashProcessor cashProcessor;
     private final Map<Double, Integer> cashMap;
 
-    private CashProcessor() throws IOException {
+    private CashProcessor() {
         this.cashMap = DatabaseHandler.loadCashData();
     }
 
@@ -19,7 +16,7 @@ public class CashProcessor {
         return cashProcessor;
     }
 
-    public static CashProcessor load() throws IOException {
+    public static CashProcessor load() {
         cashProcessor = new CashProcessor();
         return cashProcessor;
     }
@@ -27,19 +24,6 @@ public class CashProcessor {
     public boolean setCashNumber(double value, int number) {
         if (number >= 0) {
             cashMap.put(value, number);
-            PreparedStatement stmt = DatabaseHandler.getPreparedStatement(
-                    "UPDATE Cash " +
-                            "Set number=? " +
-                            "WHERE value=?");
-
-            try {
-                stmt.setInt(1, number);
-                stmt.setDouble(2, value);
-                stmt.executeUpdate();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
-
             return true;
         }
         return false;

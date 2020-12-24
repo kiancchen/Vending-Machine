@@ -1,7 +1,6 @@
 package VendingMachine.Window.CheckoutManagement;
 
 import VendingMachine.Data.CreditCard;
-import VendingMachine.Data.Transaction;
 import VendingMachine.Data.User;
 import VendingMachine.Processor.CardProcessor;
 import VendingMachine.Processor.UserProcessor;
@@ -115,22 +114,22 @@ public class CardPaymentWindow {
         CardProcessor cardProcessor = CardProcessor.getInstance();
         CreditCard card = cardProcessor.validateCard(name, number);
         if (card != null) {
-                if (currentUser.pay(currentUser.getTotalPrice()) == 0) {
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successful!");
-                    alert.show();
-                    if (checkBox.isSelected()) {
-                        currentUser.setCard(card);
-                    }else{
-                        currentUser.setCard(null);
-                    }
-                    time.stopTime();
-                    UserProcessor.getInstance().logoutUser();
-                    MainWindow.getInstance().update();
-                    stage.close();
+            if (currentUser.pay(currentUser.getTotalPrice()) == 0) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION, "Successful!");
+                alert.show();
+                if (checkBox.isSelected()) {
+                    currentUser.setCard(card);
                 } else {
-                    Alert alert = new Alert(Alert.AlertType.WARNING, "Fail to pay.");
-                    alert.show();
+                    currentUser.setCard(null);
                 }
+                time.stopTime();
+                UserProcessor.getInstance().logoutUser();
+                MainWindow.getInstance().update();
+                stage.close();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING, "Fail to pay.");
+                alert.show();
+            }
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Card does not exist.");
             alert.show();

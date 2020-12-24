@@ -49,7 +49,7 @@ public class TransactionHistoryWindow {
                 Alert alert =
                         new Alert(Alert.AlertType.WARNING, "Please select a transaction");
                 alert.show();
-            }else{
+            } else {
                 new TransactionProductWindow(this.table.getSelectionModel().getSelectedItem());
             }
 
