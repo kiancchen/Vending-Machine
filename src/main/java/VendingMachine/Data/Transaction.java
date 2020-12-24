@@ -114,7 +114,6 @@ public class Transaction {
         });
         paidCashes.forEach((value, num)-> CashProcessor.getInstance().setCashNumber(value,
                 CashProcessor.getInstance().getCashMap().get(value) + num));
-
         return 0;
     }
 

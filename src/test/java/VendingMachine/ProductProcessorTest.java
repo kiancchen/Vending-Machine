@@ -4,6 +4,7 @@ import VendingMachine.Data.Product;
 import VendingMachine.Processor.ProductProcessor;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.File;
@@ -27,6 +28,11 @@ public class ProductProcessorTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @BeforeClass
+    public static void t() {
+
     }
 
     @Before

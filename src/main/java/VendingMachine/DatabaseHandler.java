@@ -11,6 +11,8 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
 import java.io.*;
+import java.sql.*;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +23,20 @@ public class DatabaseHandler {
     private static final File productFile = new File("src/main/resources/product.json");
     private static final File cardFile = new File("src/main/resources/credit_cards.json");
     private static final File tranFile = new File("src/main/resources/transactions.json");
+    private static Statement statement;
+    private static Connection connection;
+
+    static {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost" +
+                    "/Vending_Machine?useSSL=false", "root", "12352000");
+            statement = connection.createStatement();
+
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 
 
     public static void saveUserData(List<User> users) throws IOException {
@@ -40,23 +56,38 @@ public class DatabaseHandler {
         return users;
     }
 
-    public static void saveCashData(Map<Double, Integer> cashes) throws IOException {
-        FileWriter fileWriter = new FileWriter(cashFile);
-        JsonWriter jsonWriter = new JsonWriter(fileWriter);
-        jsonWriter.setIndent(" ");
-        gson.toJson(cashes, new TypeToken<Map<Double, Integer>>() {}.getType(), jsonWriter);
-        jsonWriter.flush();
-        jsonWriter.close();
+    public static Map<Double, Integer> loadCashData() {
+        try {
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM Cash");
+            Map<Double, Integer> cashes = new HashMap<>();
+            while (resultSet.next()) {
+                cashes.put(resultSet.getDouble("value"), resultSet.getInt("number"));
+            }
+            return cashes;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
     }
 
-    public static Map<Double, Integer> loadCashData() throws IOException {
-        InputStream input = new FileInputStream(cashFile);
-        JsonReader reader = new JsonReader(new InputStreamReader(input));
-        Map<Double, Integer> cashes = gson.fromJson(reader,
-                new TypeToken<Map<Double, Integer>>() {}.getType());
-        reader.close();
-        return cashes;
+    public static void executeUpdate(String sql){
+        try {
+            statement.executeUpdate(sql);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
+
+    public static PreparedStatement getPreparedStatement(String sql){
+        try {
+            return connection.prepareStatement(sql);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+
 
     public static void saveProductData(Map<Integer, Product> productMap) throws IOException {
         FileWriter fileWriter = new FileWriter(productFile);

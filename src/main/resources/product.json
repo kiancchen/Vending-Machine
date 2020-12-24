@@ -50,8 +50,8 @@
   "name": "Mars",
   "price": 1.0,
   "code": "6",
-  "stock": 7,
-  "sold": 0
+  "stock": 6,
+  "sold": 1
  },
  "7": {
   "id": 7,
@@ -77,8 +77,8 @@
   "name": "Snickers",
   "price": 4.0,
   "code": "9",
-  "stock": 7,
-  "sold": 0
+  "stock": 6,
+  "sold": 1
  },
  "10": {
   "id": 10,
@@ -86,8 +86,8 @@
   "name": "Smiths",
   "price": 1.0,
   "code": "10",
-  "stock": 7,
-  "sold": 0
+  "stock": 6,
+  "sold": 1
  },
  "11": {
   "id": 11,

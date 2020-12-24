@@ -1,1 +1,94 @@
-[]
+[
+ {
+  "shoppingList": {
+   "6": 1
+  },
+  "date": {
+   "date": {
+    "year": 2020,
+    "month": 12,
+    "day": 24
+   },
+   "time": {
+    "hour": 19,
+    "minute": 1,
+    "second": 8,
+    "nano": 918540000
+   }
+  },
+  "status": "PAID",
+  "totalPrice": 1.0,
+  "paidAmount": 10.0,
+  "returnedChangeMap": {
+   "2.0": 2,
+   "5.0": 1
+  },
+  "paidCashes": {
+   "10.0": 1
+  },
+  "payment": "CASH",
+  "change": 9.0,
+  "userId": 2
+ },
+ {
+  "shoppingList": {
+   "10": 1
+  },
+  "date": {
+   "date": {
+    "year": 2020,
+    "month": 12,
+    "day": 24
+   },
+   "time": {
+    "hour": 19,
+    "minute": 11,
+    "second": 36,
+    "nano": 522129000
+   }
+  },
+  "status": "PAID",
+  "totalPrice": 1.0,
+  "paidAmount": 10.0,
+  "returnedChangeMap": {
+   "2.0": 2,
+   "5.0": 1
+  },
+  "paidCashes": {
+   "10.0": 1
+  },
+  "payment": "CASH",
+  "change": 9.0,
+  "userId": 0
+ },
+ {
+  "shoppingList": {
+   "9": 1
+  },
+  "date": {
+   "date": {
+    "year": 2020,
+    "month": 12,
+    "day": 24
+   },
+   "time": {
+    "hour": 19,
+    "minute": 15,
+    "second": 14,
+    "nano": 76774000
+   }
+  },
+  "status": "PAID",
+  "totalPrice": 4.0,
+  "paidAmount": 5.0,
+  "returnedChangeMap": {
+   "1.0": 1
+  },
+  "paidCashes": {
+   "5.0": 1
+  },
+  "payment": "CASH",
+  "change": 1.0,
+  "userId": 0
+ }
+]
