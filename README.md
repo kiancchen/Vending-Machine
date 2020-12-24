@@ -4,11 +4,9 @@ A vending machine that sells different types of snacks, can be paid by cash or c
 
 # How to run the program
 
-First, you have to set up the connection to the MySQL database in `src/main/java/VendingMachine
-/DatabaseHandler.java`. You can import the sample database `Vending_Machine.sql`.
+First, you have to set up the connection to the MySQL database in `src/main/java/VendingMachine/DatabaseHandler.java`. You can import the sample database `Vending_Machine.sql`.
 
-Then, you can use `gradle build` first to build the program. After that, you can use `gradle run` to
- run the program.
+Then, you can use `gradle build` first to build the program. After that, you can use `gradle run` to run the program.
 
 **NOTE: If you run the test, it will restore all resources to the initial state for a uniform testing environment. All changes on users, cashes or products will lose.**
 
@@ -22,7 +20,7 @@ I'm working on using MySQL to manage database instead of csv.
 
 - [x] Product System
 
-- [ ] Card System
+- [x] Card System
 
 - [ ] Transaction System
 
@@ -218,7 +216,7 @@ After click the `Manage User` button. There is a table of all the users that hav
 
 The owner can input new username, password and user type, then click on `Add` button. The table will update accordingly.
 
-<img src="https://i.loli.net/2020/11/12/hELAuvcTClirbmQ.png" >
+![截屏2020-11-12 上午10.56.48.png](https://i.loli.net/2020/11/12/hELAuvcTClirbmQ.png)
 
 If owner does not input full relevant information then click on `Add` button, it will display an alert to notify current owner to fill in the missing information.
 
@@ -232,7 +230,7 @@ The owner first need to select which users he want to change, then click on the 
 
 ### Remove Users
 
-<img src="https://i.loli.net/2020/11/12/hELAuvcTClirbmQ.png" >
+![截屏2020-11-12 上午10.56.48.png](https://i.loli.net/2020/11/12/hELAuvcTClirbmQ.png)
 
 The owner can select which users he want to remove, then click the row which the user is, after that this user's relevant information will be automatically filled in the information field, then click on `Remove` button.  the table will update accordingly.
 

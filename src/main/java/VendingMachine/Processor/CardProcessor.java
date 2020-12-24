@@ -10,7 +10,7 @@ public class CardProcessor {
     private static CardProcessor cardProcessor;
     private final List<CreditCard> cards;
 
-    private CardProcessor() throws IOException {
+    private CardProcessor() {
         cards = DatabaseHandler.loadCreditCards();
     }
 
@@ -19,7 +19,7 @@ public class CardProcessor {
         return cardProcessor;
     }
 
-    public static CardProcessor load() throws IOException {
+    public static CardProcessor load() {
         cardProcessor = new CardProcessor();
         return cardProcessor;
     }

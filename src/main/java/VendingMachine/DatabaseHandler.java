@@ -12,6 +12,7 @@ import com.google.gson.stream.JsonWriter;
 
 import java.io.*;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,6 @@ import java.util.Map;
 public class DatabaseHandler {
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private static final File userFile = new File("src/main/resources/user.json");
-    private static final File cardFile = new File("src/main/resources/credit_cards.json");
     private static final File tranFile = new File("src/main/resources/transactions.json");
     private static Statement statement;
     private static Connection connection;
@@ -128,13 +128,19 @@ public class DatabaseHandler {
         return null;
     }
 
-    public static List<CreditCard> loadCreditCards() throws IOException {
-        InputStream input = new FileInputStream(cardFile);
-        JsonReader reader = new JsonReader(new InputStreamReader(input));
-        List<CreditCard> products = gson.fromJson(reader,
-                new TypeToken<List<CreditCard>>() {}.getType());
-        reader.close();
-        return products;
+    public static List<CreditCard> loadCreditCards() {
+        try {
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM Credit_Card");
+            List<CreditCard> cardList = new ArrayList<>();
+            while (resultSet.next()) {
+                cardList.add(new CreditCard(resultSet.getString("name"),
+                        Integer.toString(resultSet.getInt("number"))));
+            }
+            return cardList;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
     }
 
     public static void saveTransactionData(List<Transaction> transactions) throws IOException {
