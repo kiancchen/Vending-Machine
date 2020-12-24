@@ -4,7 +4,11 @@ A vending machine that sells different types of snacks, can be paid by cash or c
 
 # How to run the program
 
-You can use `gradle build` first to build the program. After that, you can use `gradle run` to run the program.
+First, you have to set up the connection to the MySQL database in `src/main/java/VendingMachine
+/DatabaseHandler.java`. You can import the sample database `Vending_Machine.sql`.
+
+Then, you can use `gradle build` first to build the program. After that, you can use `gradle run` to
+ run the program.
 
 **NOTE: If you run the test, it will restore all resources to the initial state for a uniform testing environment. All changes on users, cashes or products will lose.**
 
